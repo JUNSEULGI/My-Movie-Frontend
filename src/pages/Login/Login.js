@@ -7,6 +7,7 @@ function Login() {
   return (
     <div>
       <LoginButton variant="text">Text</LoginButton>
+      <h1>asdada</h1>
     </div>
   );
 }
