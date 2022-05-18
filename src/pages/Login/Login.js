@@ -7,7 +7,7 @@ function Login() {
   return (
     <div>
       <LoginButton variant="outlined">Text</LoginButton>
-      <h1>asdada</h1>
+      <SubButton>asdf</SubButton>
     </div>
   );
 }
@@ -21,6 +21,9 @@ const LoginButton = styled(Button)`
     background-color: ${({ theme }) => theme.palette.error.dark};
     border-color: ${({ theme }) => theme.palette.error.main};
   }
+`;
+const SubButton = styled(Button)`
+  color: ${theme => theme.palette.error.main};
 `;
 
 export default Login;
