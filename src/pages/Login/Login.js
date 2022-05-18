@@ -7,7 +7,6 @@ function Login() {
   return (
     <div>
       <LoginButton variant="outlined">Text</LoginButton>
-      <SubButton>asdf</SubButton>
     </div>
   );
 }
