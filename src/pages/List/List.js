@@ -6,7 +6,7 @@ import { Box, Typography } from '@mui/material';
 function List() {
   return (
     <Box>
-      <Typography>List</Typography>
+      <Typography>수인님의 인생영화</Typography>
       <MovieCard />
     </Box>
   );
