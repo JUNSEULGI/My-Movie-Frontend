@@ -27,14 +27,15 @@ const Footer = styled.div``;
 
 const Main = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: 46px;
   margin: 0 auto;
+  /* background-color: antiquewhite; */
 `;
 
 const Left = styled.aside`
   flex-shrink: 0;
-  width: 280px;
+  /* width: 280px; */
 `;
 
 /* 
@@ -88,8 +89,8 @@ const Center = styled.main`
 
 const Right = styled.aside`
   flex-shrink: 0;
-  width: 230px;
-  margin: 32px 30px 0 0;
+  /* width: 230px; */
+  /* margin: 32px 30px 0 0; */
 `;
 //   @media screen and (max-width: ${({ theme }) =>
 //       theme.breakpoints.values.sm}px) {
