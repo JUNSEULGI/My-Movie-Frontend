@@ -39,7 +39,6 @@ export default Login;
 const LoginPage = styled(Container)`
   margin: 0 auto;
   height: 100vh;
-  background-color: ${({ theme }) => theme.palette.background.paper};
 `;
 
 const LoginBox = styled.div`
@@ -49,7 +48,7 @@ const LoginBox = styled.div`
   text-align: center;
   width: 760px;
   height: 580px;
-  background-color: ${({ theme }) => theme.palette?.background.card};
+  background-color: rgba(37, 37, 37, 0.9);
   border-radius: 8px;
 `;
 
