@@ -1,13 +1,29 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { Typography, AppBar, Toolbar } from '@mui/material';
 
 function Nav() {
   return (
-    <Header>
-      <Logo>My View!</Logo>
-    </Header>
+    <NavBar>
+      <Toolbar>
+        <Logo component="h1">My View!</Logo>
+        <SignUp>회원가입</SignUp>
+      </Toolbar>
+    </NavBar>
   );
 }
+
+const NavBar = styled(AppBar)`
+  padding: 10px 40px;
+
+  &.MuiPaper-root {
+    background: none;
+
+    &.MuiAppBar-root {
+      box-shadow: none;
+    }
+  }
+`;
 
 const Header = styled.header`
   display: flex;
@@ -24,8 +40,16 @@ const Header = styled.header`
   z-index: 50;
 `;
 
-const Logo = styled.h1`
+const Logo = styled(Typography)`
   color: ${({ theme }) => theme.palette.common.white};
+  font-weight: bold;
+  font-size: 32px;
+`;
+
+const SignUp = styled(Typography)`
+  color: ${({ theme }) => theme.palette.common.white};
+  font-weight: bold;
+  font-size: 32px;
 `;
 
 export default Nav;
