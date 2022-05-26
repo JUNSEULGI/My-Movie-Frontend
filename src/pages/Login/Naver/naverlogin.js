@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { BASE_URL, NAVER_CALLBACK_URL, NAVER_ID } from '../../../Modules/API';
 import { Box, Button, Container, Typography, Link } from '@mui/material';
 import { atom } from 'recoil';
-import naver from '../../../assets/images/naverLogin.png';
+import naver from '../../../assets/images/naverlogin.png';
 
 function NaverLogin() {
   const location = useLocation();
@@ -51,7 +51,6 @@ function NaverLogin() {
     <Link
       href={`https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_ID}&redirect_uri=${NAVER_CALLBACK_URL}&state=state`}
     >
-      네이버 로그인 버튼
       <img alt="네이버 로그인 버튼" src={naver} />
     </Link>
   );
