@@ -26,7 +26,6 @@ function Login() {
             </SocialContainer>
           </LoginBox>
         </LoginPage>
-        <NaverLogin />
       </>
     );
   }

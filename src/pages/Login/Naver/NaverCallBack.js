@@ -29,24 +29,24 @@ function NaverCallBack() {
     profile_image,
   } = userProfile;
 
-  const initializeNaverLogin = () => {
-    const { naver } = window;
-    var naverLogin = new naver.LoginWithNaverId({
-      clientId: `${NAVER_ID}`,
-      callbackUrl: `${NAVER_CALLBACK_URL}`,
-      isPopup: false,
-      loginButton: { color: 'white', type: 1, height: '47' },
-    });
-    naverLogin.init();
-  };
+  // const initializeNaverLogin = () => {
+  //   const { naver } = window;
+  //   var naverLogin = new naver.LoginWithNaverId({
+  //     clientId: `${NAVER_ID}`,
+  //     callbackUrl: `${NAVER_CALLBACK_URL}`,
+  //     isPopup: false,
+  //     loginButton: { color: 'white', type: 1, height: '47' },
+  //   });
+  //   naverLogin.init();
+  // };
 
-  const access_token = location.hash.split('=')[1].split('&')[0];
-  console.log('네이버토큰', access_token);
-  localStorage.setItem('access_token', access_token);
+  // const access_token = location.search.split('=')[1].split('&')[0];
+  // console.log('네이버토큰', access_token);
+  // localStorage.setItem('access_token', access_token);
   localStorage.setItem('test', 'test');
 
   useEffect(() => {
-    initializeNaverLogin();
+    // initializeNaverLogin();
     // getNaverToken();
   });
 
