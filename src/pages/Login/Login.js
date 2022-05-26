@@ -5,7 +5,8 @@ import { useLocation } from 'react-router-dom';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { atom } from 'recoil';
 import MyViewLayout from '../../layout/Layout';
-import NaverLogin from './Naver/NaverLogin';
+import NaverLogin from './Naver/Naverlogin';
+import KakaoLogin from './Kakao/KakaoLogin';
 import ReactDOM from 'react-dom';
 
 function Login() {
@@ -22,7 +23,7 @@ function Login() {
               <NaverLogin />
               {/* Kakao 로그인 버튼 */}
               <LoginText>카카오로 로그인하기</LoginText>
-              {/* //여기다가 카카오 로그인 넣어주시면 될 것 같아요! // <KaKaoLogin /> */}
+              <KakaoLogin />
             </SocialContainer>
           </LoginBox>
         </LoginPage>
