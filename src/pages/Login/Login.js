@@ -31,7 +31,12 @@ function Login() {
     );
   }
 
-  return <MyViewLayout center={<LoginContainer />} />;
+  return (
+    <MyViewLayout
+      // leftMenu={}
+      center={<LoginContainer />}
+    />
+  );
 }
 
 export default Login;
