@@ -7,7 +7,7 @@ const MyViewLayout = ({ leftMenu, center, rightMenu }) => {
     <Layout>
       <Nav />
       <Main>
-        <Left>{leftMenu}</Left>
+        <LeftMenu>{leftMenu}</LeftMenu>
         <Center>{center}</Center>
         <Right>
           <RightMenu>{rightMenu}</RightMenu>
@@ -34,23 +34,26 @@ const Main = styled.div`
   /* background-color: antiquewhite; */
 `;
 
-const Left = styled.aside`
-  flex-shrink: 0;
-  /* width: 280px; */
-`;
+// const Left = styled.aside`
+//   flex-shrink: 0;
+//   width: 280px;
+//   background-color: yellow;
+// `;
 
-/* 
 const LeftMenu = styled.aside`
-  ${({ leftMenu }) => leftMenu && 'display: none;'};
   position: fixed;
-  top: 46px;
-  width: 280px;
+  top: 64px;
+  left: 0;
+  width: 64px;
   height: calc(100% - 46px);
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
   overflow: scroll;
   //정수인 수정 0407
-  padding: 32px 0 16px 0;
   box-shadow: -1px 0px 0px 0px #898d903d inset;
-`; */
+  background-color: black;
+`;
 
 const Center = styled.main`
   flex-grow: 1;
