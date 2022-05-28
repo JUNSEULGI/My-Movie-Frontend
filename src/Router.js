@@ -4,7 +4,7 @@ import List from './pages/List/List';
 import Login from './pages/Login/Login';
 import Movie from './pages/Movie/Movie';
 // import Mypage from './pages/Mypage/Mypage';
-import Components from './components/Nav/Components';
+import Components from './components/Components';
 import NaverCallBack from './pages/Login/Naver/NaverCallBack';
 
 function Router() {
