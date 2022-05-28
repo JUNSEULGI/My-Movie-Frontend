@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Typography, AppBar, Toolbar, Avatar } from '@mui/material';
-import { style } from '@mui/system';
+import { Avatar } from '@mui/material';
 import Netflix from '../assets/images/Netflix_Symbol_RGB.png';
 
 function Aside() {
@@ -14,8 +13,6 @@ function Aside() {
   );
 }
 
-export default Aside;
-
 const OTTLogo = styled(Avatar)`
   padding: 4px;
   margin-bottom: 16px;
@@ -23,3 +20,5 @@ const OTTLogo = styled(Avatar)`
 `;
 
 const AsideContainer = styled.div``;
+
+export default Aside;

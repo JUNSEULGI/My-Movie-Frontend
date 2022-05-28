@@ -11,8 +11,8 @@ function List() {
   return <MyViewLayout leftMenu={<Aside />} center={<ListLayout />} />;
 }
 
-export default List;
-
 const Test = styled.div`
   background-color: antiquewhite;
 `;
+
+export default List;
