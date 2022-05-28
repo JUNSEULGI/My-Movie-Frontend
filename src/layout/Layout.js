@@ -57,7 +57,7 @@ const LeftMenu = styled.aside`
 
 const Center = styled.main`
   flex-grow: 1;
-  max-width: 815px;
+  max-width: 1152px;
   margin: 32px 60px 0;
 
   @media screen and (max-width: 1300px) {
