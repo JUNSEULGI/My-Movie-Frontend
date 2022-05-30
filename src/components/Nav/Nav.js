@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Typography, AppBar, Toolbar } from '@mui/material';
+import { Typography, AppBar, Toolbar, Avatar } from '@mui/material';
 
 function Nav() {
   return (
     <NavBar>
-      <Toolbar>
+      <MyToolbar>
         <Logo component="h1">My View!</Logo>
-        <SignUp>회원가입</SignUp>
-      </Toolbar>
+
+        {localStorage.access_token ? <Avatar /> : <SignUp />}
+      </MyToolbar>
     </NavBar>
   );
 }
@@ -23,6 +24,11 @@ const NavBar = styled(AppBar)`
       box-shadow: none;
     }
   }
+`;
+
+const MyToolbar = styled(Toolbar)`
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Header = styled.header`

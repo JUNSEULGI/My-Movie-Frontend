@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { atom } from 'recoil';
 import MyViewLayout from '../../layout/Layout';
-import NaverLogin from './Naver/Naverlogin';
+import NaverLogin from './Naver/naverlogin';
 import KakaoLogin from './Kakao/KakaoLogin';
 import ReactDOM from 'react-dom';
 
@@ -27,12 +27,16 @@ function Login() {
             </SocialContainer>
           </LoginBox>
         </LoginPage>
-        <NaverLogin />
       </>
     );
   }
 
-  return <MyViewLayout center={<LoginContainer />} />;
+  return (
+    <MyViewLayout
+      // leftMenu={}
+      center={<LoginContainer />}
+    />
+  );
 }
 
 export default Login;
