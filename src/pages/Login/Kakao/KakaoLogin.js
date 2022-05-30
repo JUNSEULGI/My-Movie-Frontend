@@ -27,6 +27,7 @@ function KakaoLogin() {
   }, []);
 
   return (
+    // 백엔드와 연결되지 않았을 때 임시 로그인
     // <Link href={KAKAO_AUTH_URL}>
     <Link href="/list">
       <KakaoBtn alt="kakao login button" src={Kakao} />
