@@ -27,7 +27,8 @@ function KakaoLogin() {
   }, []);
 
   return (
-    <Link href={KAKAO_AUTH_URL}>
+    // <Link href={KAKAO_AUTH_URL}>
+    <Link href="/list">
       <KakaoBtn alt="kakao login button" src={Kakao} />
     </Link>
   );

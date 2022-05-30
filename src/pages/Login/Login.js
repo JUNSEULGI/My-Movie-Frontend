@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { atom } from 'recoil';
 import MyViewLayout from '../../layout/Layout';
-import NaverLogin from './Naver/naverlogin';
+import NaverLogin from './Naver/NaverLogin';
 import KakaoLogin from './Kakao/KakaoLogin';
 import ReactDOM from 'react-dom';
 

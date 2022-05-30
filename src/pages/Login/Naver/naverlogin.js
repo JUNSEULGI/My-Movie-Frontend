@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { BASE_URL, NAVER_CALLBACK_URL, NAVER_ID } from '../../../Modules/API';
 import { Box, Button, Container, Typography, Link } from '@mui/material';
 import { atom } from 'recoil';
-import naver from '../../../assets/images/naverlogin.png';
+import naver from '../../../assets/images/naverLogin.png';
 
 function NaverLogin() {
   const location = useLocation();
