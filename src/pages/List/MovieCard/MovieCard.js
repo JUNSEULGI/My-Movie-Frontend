@@ -2,8 +2,12 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Box, Card, CardMedia, Typography, Rating, Chip } from '@mui/material';
 
-function MovieCard() {
-  return (
+function MovieCard({ addCard }) {
+  return addCard ? (
+    <AddCardBox>
+      <AddBtn />
+    </AddCardBox>
+  ) : (
     <CardBox>
       <Poster
         component="img"
@@ -33,6 +37,22 @@ const CardBox = styled(Card)`
   height: 460px;
   border-radius: 8px;
   background-color: ${({ theme }) => theme.palette.background.card};
+`;
+
+const AddCardBox = styled(CardBox)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.palette.background.disabled};
+`;
+
+const AddBtn = styled.div`
+  height: 121px;
+  width: 121px;
+  background-color: ${({ theme }) => theme.palette.secondary.main};
+  border-radius: 50%;
+  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0px 6px 10px rgba(0, 0, 0, 0.14), 0px 1px 18px rgba(0, 0, 0, 0.12);
 `;
 
 const Poster = styled(CardMedia)`

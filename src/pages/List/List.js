@@ -11,7 +11,10 @@ function List() {
     return (
       <Box>
         <Typography>수인님의 인생영화</Typography>
-        <MovieCard />
+        <Box>
+          <MovieCard />
+          <MovieCard addCard={true} />
+        </Box>
       </Box>
     );
   }
