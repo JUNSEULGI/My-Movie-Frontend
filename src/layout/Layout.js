@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Nav from '../components/Nav/Nav';
 
-const MyViewLayout = ({ leftMenu, center, rightMenu }) => {
+const MyViewLayout = ({ leftMenu, none, center, rightMenu }) => {
   return (
     <Layout>
       <Nav />
@@ -31,7 +31,8 @@ const Main = styled.div`
   justify-content: center;
   margin-top: 80px;
 
-  /* background-color: antiquewhite; */
+  /* background: linear-gradient(#fe7d01, #3a3a3a); */
+  background-color: #2f3437;
 `;
 
 // const Left = styled.aside`
@@ -50,7 +51,6 @@ const LeftMenu = styled.aside`
   justify-content: center;
   padding: 32px 0;
   overflow: scroll;
-  //정수인 수정 0407
   box-shadow: -1px 0px 0px 0px #898d903d inset;
   background-color: black;
 `;

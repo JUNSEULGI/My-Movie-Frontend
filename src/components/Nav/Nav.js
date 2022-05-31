@@ -31,22 +31,23 @@ const MyToolbar = styled(Toolbar)`
   justify-content: space-between;
 `;
 
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 46px;
-  padding: 0 16px;
-  margin-bottom: 300px;
-  background-color: ${({ theme }) => theme.palette.background.paper};
-  border-bottom: 1px solid rgba(137, 141, 144, 0.24);
-  z-index: 50;
-`;
+// const Header = styled.header`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   position: fixed;
+//   top: 0;
+//   width: 100%;
+//   height: 46px;
+//   padding: 0 16px;
+//   margin-bottom: 300px;
+//   background-color: ${({ theme }) => theme.palette.background.paper};
+//   border-bottom: 1px solid rgba(137, 141, 144, 0.24);
+//   z-index: 50;
+// `;
 
 const Logo = styled(Typography)`
+  /* color: #fe7d01; */
   color: ${({ theme }) => theme.palette.common.white};
   font-weight: bold;
   font-size: 32px;
