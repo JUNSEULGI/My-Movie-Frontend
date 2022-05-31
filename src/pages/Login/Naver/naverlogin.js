@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { BASE_URL, NAVER_CALLBACK_URL, NAVER_ID } from '../../../Modules/API';
 import { Box, Button, Container, Typography, Link } from '@mui/material';

@@ -1,14 +1,25 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Box, Card, CardMedia, Typography, Rating, Chip } from '@mui/material';
 
-function MovieCard({ addCard }) {
+function MovieCard({ addCard, setOpen }) {
+  const navigation = useNavigate();
+
+  const showMovie = id => {
+    navigation(`/movie/${id}`);
+  };
+
+  const addMovie = () => {
+    setOpen(true);
+  };
+
   return addCard ? (
-    <AddCardBox>
+    <AddCardBox onClick={addMovie}>
       <AddBtn />
     </AddCardBox>
   ) : (
-    <CardBox>
+    <CardBox onClick={showMovie}>
       <Poster
         component="img"
         image="https://file2.nocutnews.co.kr/newsroom/image/2022/04/08/202204081311322351_0.jpg"
