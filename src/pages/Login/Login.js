@@ -1,33 +1,25 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { Box, Button, Container, Typography } from '@mui/material';
-import { atom } from 'recoil';
+import { Container, Typography } from '@mui/material';
 import MyViewLayout from '../../layout/Layout';
-import NaverLogin from './Naver/naverlogin';
+import NaverLogin from './Naver/NaverLogin';
 import KakaoLogin from './Kakao/KakaoLogin';
-import ReactDOM from 'react-dom';
 
 function Login() {
   function LoginContainer() {
     return (
-      <>
-        <LoginPage>
-          <LoginBox>
-            <MyView>My View</MyView>
-            <Produce>소셜 로그인으로 더 간단하게 로그인하세요.</Produce>
-            <SocialContainer>
-              {/* Naver 로그인 버튼 */}
-              <LoginText>네이버로 로그인하기</LoginText>
-              <NaverLogin />
-              {/* Kakao 로그인 버튼 */}
-              <LoginText>카카오로 로그인하기</LoginText>
-              <KakaoLogin />
-            </SocialContainer>
-          </LoginBox>
-        </LoginPage>
-      </>
+      <LoginPage>
+        <LoginBox>
+          <MyView>My View</MyView>
+          <Produce>소셜 로그인으로 더 간단하게 로그인하세요.</Produce>
+          <SocialContainer>
+            <LoginText>네이버로 로그인하기</LoginText>
+            <NaverLogin />
+            <LoginText>카카오로 로그인하기</LoginText>
+            <KakaoLogin />
+          </SocialContainer>
+        </LoginBox>
+      </LoginPage>
     );
   }
 
@@ -38,8 +30,6 @@ function Login() {
     />
   );
 }
-
-export default Login;
 
 const LoginPage = styled(Container)`
   margin: 0 auto;
@@ -77,3 +67,5 @@ const LoginText = styled.div`
   margin: 20px 0;
   color: white;
 `;
+
+export default Login;
