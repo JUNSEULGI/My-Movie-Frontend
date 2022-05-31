@@ -64,9 +64,9 @@ const ActorContainer = styled(CardContainer)`
 `;
 
 const TrailerContainer = styled(ActorContainer)`
-  width: 60%;
+  width: 49%;
 `;
 
 const GalleryContainer = styled(ActorContainer)`
-  width: 38%;
+  width: 49%;
 `;
