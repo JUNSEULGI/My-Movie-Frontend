@@ -23,12 +23,7 @@ function Login() {
     );
   }
 
-  return (
-    <MyViewLayout
-      // leftMenu={}
-      center={<LoginContainer />}
-    />
-  );
+  return <MyViewLayout center={<LoginContainer />} />;
 }
 
 const LoginPage = styled(Container)`

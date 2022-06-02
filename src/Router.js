@@ -14,7 +14,7 @@ function Router() {
         <Route path="/list" element={<List />} />
         <Route path="/" element={<Login />} />
         <Route path="/navercallback" element={<NaverCallBack />} />
-        <Route path="/movie" element={<Movie />} />
+        <Route path="/movie/:id" element={<Movie />} />
         {/* <Route path="/mypage" element={<Mypage />} /> */}
         <Route path="/components" element={<Components />} />
       </Routes>

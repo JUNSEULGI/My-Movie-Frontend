@@ -7,7 +7,7 @@ const MyViewLayout = ({ leftMenu, none, center, rightMenu }) => {
     <Layout>
       <Nav />
       <Main>
-        <LeftMenu>{leftMenu}</LeftMenu>
+        <LeftMenu leftMenu={leftMenu}>{leftMenu}</LeftMenu>
         <Center>{center}</Center>
         <Right>
           <RightMenu>{rightMenu}</RightMenu>
@@ -42,12 +42,12 @@ const Main = styled.div`
 // `;
 
 const LeftMenu = styled.aside`
+  display: ${({ leftMenu }) => (leftMenu ? 'flex' : 'none')};
   position: fixed;
   top: 64px;
   left: 0;
   width: 64px;
   height: calc(100% - 46px);
-  display: flex;
   justify-content: center;
   padding: 32px 0;
   overflow: scroll;

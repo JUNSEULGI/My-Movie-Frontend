@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import MyViewLayout from '../../layout/Layout';
 import { CardContainer } from './CardContainer';
@@ -9,6 +9,22 @@ import { Container } from '@mui/material';
 import { Box } from '@mui/system';
 
 function Movie() {
+  const [movieData, setMovieData] = useState({});
+
+  useEffect(() => {
+    fetch('http://172.30.1.11:8000/movies/1')
+      .then(res => res.json())
+      .then(res => {
+        // console.log(res.data);
+        setMovieData(res.data);
+      });
+  }, []);
+
+  const { title, description, release_date, country, category, genre, actor } =
+    movieData;
+
+  console.log(movieData);
+
   function MovieContainer() {
     return (
       <>
@@ -17,16 +33,9 @@ function Movie() {
           <ActorContainer>
             <ContainerTitle>출연/제작</ContainerTitle>
             <Box sx={{ display: 'flex', overflow: 'scroll' }}>
-              <Actor />
-              <Actor />
-              <Actor />
-              <Actor />
-              <Actor />
-              <Actor />
-              <Actor />
-              <Actor />
-              <Actor />
-              <Actor />
+              {actor?.map(actor => (
+                <Actor actor={actor} />
+              ))}
             </Box>
           </ActorContainer>
           <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>

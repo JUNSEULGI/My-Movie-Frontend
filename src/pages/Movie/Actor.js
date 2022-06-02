@@ -2,12 +2,15 @@ import React from 'react';
 import styled from '@emotion/styled';
 import ActorImage from '../../assets/images/actor.jpeg';
 
-function Actor() {
+function Actor({ actor }) {
+  const { id, name, role_name, role } = actor;
   return (
-    <ActorCard>
+    <ActorCard id={id}>
       <ActorImg src={ActorImage} />
-      <ActorName>베네딕트 컴버배치</ActorName>
-      <Role>주연 | 닥터 스트레인지</Role>
+      <ActorName>{name}</ActorName>
+      <Role>
+        {role} | {role_name}
+      </Role>
     </ActorCard>
   );
 }
