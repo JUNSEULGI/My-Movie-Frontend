@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import styled from '@emotion/styled';
 import { Box, Typography } from '@mui/material';
 import MyViewLayout from '../../layout/Layout';
 import Aside from '../../components/Aside';
 import MovieCard from './MovieCard/MovieCard';
-import Search from './Search/Search';
+import AddReview from './AddReview/AddReview';
 
 function List() {
   function ListLayout() {
@@ -19,7 +18,7 @@ function List() {
             <MovieCard addCard={true} setOpen={setOpen} />
           </Box>
         </Box>
-        <Search open={open} setOpen={setOpen} />
+        <AddReview open={open} setOpen={setOpen} />
       </>
     );
   }
