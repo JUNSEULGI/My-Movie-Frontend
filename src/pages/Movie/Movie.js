@@ -5,6 +5,9 @@ import { CardContainer } from './CardContainer';
 import MovieCard from './MovieCard';
 import Actor from './Actor';
 import Trailer from './Trailer';
+import NoReview from './NoReview';
+import MyReview from './MyReview';
+import MovieGallery from './MovieGallery';
 import { Container } from '@mui/material';
 import { Box } from '@mui/system';
 
@@ -30,24 +33,27 @@ function Movie() {
       <>
         <MovieBackGround>
           <MovieCard />
+          <ContainerTitle>출연/제작</ContainerTitle>
           <ActorContainer>
-            <ContainerTitle>출연/제작</ContainerTitle>
             <Box sx={{ display: 'flex', overflow: 'scroll' }}>
               {actor?.map(actor => (
                 <Actor actor={actor} />
               ))}
             </Box>
           </ActorContainer>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <TrailerContainer>
-              <ContainerTitle>예고편</ContainerTitle>
-              <Trailer />
-            </TrailerContainer>
-            <GalleryContainer>
-              <ContainerTitle>갤러리</ContainerTitle>
-              <Trailer />
-            </GalleryContainer>
-          </Box>
+          <NoReview />
+          <ContainerTitle>나의 리뷰</ContainerTitle>
+          <MyReview />
+          <ContainerTitle>예고편</ContainerTitle>
+          <TrailerContainer>
+            <Trailer />
+            <Trailer />
+            <Trailer />
+            <Trailer />
+          </TrailerContainer>
+
+          <ContainerTitle>갤러리</ContainerTitle>
+          <MovieGallery />
         </MovieBackGround>
       </>
     );
@@ -64,18 +70,15 @@ const MovieBackGround = styled.div`
 `;
 
 const ContainerTitle = styled.h4`
-  /* margin-bottom: 37px; */
-  margin: 0;
+  margin: 20px 0 6px;
+  color: ${({ theme }) => theme.palette.common.white};
 `;
 
 const ActorContainer = styled(CardContainer)`
   display: block;
 `;
 
-const TrailerContainer = styled(ActorContainer)`
-  width: 49%;
-`;
-
-const GalleryContainer = styled(ActorContainer)`
-  width: 49%;
+const TrailerContainer = styled.div`
+  display: flex;
+  overflow-x: scroll;
 `;

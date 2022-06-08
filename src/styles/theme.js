@@ -7,6 +7,14 @@ const darkTheme = createTheme({
       black: '#000',
       white: '#fff',
     },
+    test: {
+      main: '#FF6E01',
+      second: '#FF9201',
+      third: '#FEAB41',
+      four: '#FFD281',
+      card: 'rgba(21,21,21,0.7)',
+      background: 'rgba(15,23,46,0.5)',
+    },
     primary: {
       main: '#90caf9',
       light: '#e3f2fd',
@@ -51,7 +59,7 @@ const darkTheme = createTheme({
     },
     divider: '#ffffff1f',
     background: {
-      paper: '#2F3437',
+      paper: '#080D18',
       card: 'rgba(21, 21, 21, 0.9)',
       disabled: '#555555',
     },

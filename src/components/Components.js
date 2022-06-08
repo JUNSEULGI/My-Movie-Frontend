@@ -54,8 +54,29 @@ function Components() {
         overline text
       </Typography>
       <Button>asdf</Button>
+      <MainColor>MainColor</MainColor>
+      <SecondColor>SecondColor</SecondColor>
+      <ThirdColor>ThirdColor</ThirdColor>
+      <FourColor>FourColor</FourColor>
     </>
   );
 }
 
 export default Components;
+
+const MainColor = styled.div`
+  /* background-color: #ff6d00; */
+  /* color: #f09819; */
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
+`;
+const SecondColor = styled.div`
+  background-color: #ff9201;
+`;
+const ThirdColor = styled.div`
+  background-color: #ffab41;
+`;
+const FourColor = styled.div`
+  background-color: #ffd181;
+`;
