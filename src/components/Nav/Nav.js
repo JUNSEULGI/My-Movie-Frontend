@@ -6,8 +6,9 @@ function Nav() {
   return (
     <NavBar>
       <MyToolbar>
-        <Logo component="h1">My View!</Logo>
-
+        <a href="/list">
+          <Logo component="h1">My View!</Logo>
+        </a>
         {localStorage.access_token ? <Avatar /> : <SignUp />}
       </MyToolbar>
     </NavBar>
@@ -22,6 +23,7 @@ const NavBar = styled(AppBar)`
 
     &.MuiAppBar-root {
       box-shadow: none;
+      background-color: transparent;
     }
   }
 `;
@@ -29,26 +31,16 @@ const NavBar = styled(AppBar)`
 const MyToolbar = styled(Toolbar)`
   display: flex;
   justify-content: space-between;
-`;
 
-// const Header = styled.header`
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   position: fixed;
-//   top: 0;
-//   width: 100%;
-//   height: 46px;
-//   padding: 0 16px;
-//   margin-bottom: 300px;
-//   background-color: ${({ theme }) => theme.palette.background.paper};
-//   border-bottom: 1px solid rgba(137, 141, 144, 0.24);
-//   z-index: 50;
-// `;
+  a {
+    text-decoration: none;
+  }
+`;
 
 const Logo = styled(Typography)`
   /* color: #fe7d01; */
-  color: ${({ theme }) => theme.palette.common.white};
+  color: ${({ theme }) => theme.palette.test.main};
+  font-family: 'Galada', cursive;
   font-weight: bold;
   font-size: 32px;
 `;

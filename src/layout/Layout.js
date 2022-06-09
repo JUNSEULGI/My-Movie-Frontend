@@ -2,11 +2,12 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Nav from '../components/Nav/Nav';
 
-const MyViewLayout = ({ leftMenu, none, center, rightMenu }) => {
+const MyViewLayout = ({ leftMenu, movie, center, rightMenu }) => {
   return (
     <Layout>
       <Nav />
       <Main>
+        <MovieScene movie={movie} />
         <LeftMenu leftMenu={leftMenu}>{leftMenu}</LeftMenu>
         <Center>{center}</Center>
         <Right>
@@ -24,15 +25,22 @@ const Layout = styled.div`
   background-position-y: 10%;
 `;
 
-const Footer = styled.div``;
-
 const Main = styled.div`
   display: flex;
+  /* padding-top: 90px; */
   justify-content: center;
-  margin-top: 80px;
-
-  /* background: linear-gradient(#fe7d01, #3a3a3a); */
-  background-color: #2f3437;
+  background-color: #080d18;
+`;
+const MovieScene = styled.div`
+  display: ${({ movie }) => (movie ? '' : 'none')};
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 300px;
+  background-color: black;
+  background-image: url('https://m.media-amazon.com/images/M/MV5BOTIxN2FiNzYtZDk4YS00MGI3LTk1MDctNDg1OGJhYzdjOTU4XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_FMjpg_UX1280_.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 `;
 
 // const Left = styled.aside`
@@ -56,6 +64,7 @@ const LeftMenu = styled.aside`
 `;
 
 const Center = styled.main`
+  z-index: 1;
   flex-grow: 1;
   max-width: 1152px;
   margin: 32px 60px 0;

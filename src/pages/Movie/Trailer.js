@@ -8,10 +8,20 @@ import { ReactComponent as PlayIcon } from '../../assets/images/Play.svg';
 function Trailer() {
   return (
     <MovieTrailer>
-      <PlayButton />
+      {/* <PlayButton /> */}
       <DarkPaperContainer>
-        <DarkPaper />
-        <MovieImg src={TrailerImg} />
+        {/* <DarkPaper /> */}
+        <MovieVideo
+          style={{ border: 'none' }}
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/OEZc_c7A7Ko"
+          title="YouTube video player"
+          allow="accelerometer;
+        autoplay; clipboard-write; encrypted-media; gyroscope;
+        picture-in-picture"
+          allowfullscreen
+        />
       </DarkPaperContainer>
     </MovieTrailer>
   );
@@ -42,7 +52,7 @@ const DarkPaper = styled.div`
   opacity: 0.4;
 `;
 
-const MovieImg = styled.img``;
+const MovieVideo = styled.iframe``;
 
 const PlayButton = styled(PlayIcon)`
   position: absolute;

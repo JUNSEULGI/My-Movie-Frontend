@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import MyViewLayout from '../../layout/Layout';
 import { CardContainer } from './CardContainer';
-import MovieCard from './MovieCard';
+import MovieInfo from './MovieInfo';
 import Actor from './Actor';
 import Trailer from './Trailer';
 import NoReview from './NoReview';
@@ -32,7 +32,7 @@ function Movie() {
     return (
       <>
         <MovieBackGround>
-          <MovieCard />
+          <MovieInfo />
           <ContainerTitle>출연/제작</ContainerTitle>
           <ActorContainer>
             <Box sx={{ display: 'flex', overflow: 'scroll' }}>
@@ -42,8 +42,10 @@ function Movie() {
             </Box>
           </ActorContainer>
           <NoReview />
-          <ContainerTitle>나의 리뷰</ContainerTitle>
-          <MyReview />
+          <ContainerTitle>리뷰</ContainerTitle>
+          <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+            <MyReview />
+          </Box>
           <ContainerTitle>예고편</ContainerTitle>
           <TrailerContainer>
             <Trailer />
@@ -51,7 +53,6 @@ function Movie() {
             <Trailer />
             <Trailer />
           </TrailerContainer>
-
           <ContainerTitle>갤러리</ContainerTitle>
           <MovieGallery />
         </MovieBackGround>
@@ -59,14 +60,13 @@ function Movie() {
     );
   }
 
-  return <MyViewLayout center={<MovieContainer />} />;
+  return <MyViewLayout movie center={<MovieContainer />} />;
 }
 
 export default Movie;
 
 const MovieBackGround = styled.div`
-  padding: 30px;
-  /* background-color: white; */
+  padding: 80px;
 `;
 
 const ContainerTitle = styled.h4`
@@ -81,4 +81,9 @@ const ActorContainer = styled(CardContainer)`
 const TrailerContainer = styled.div`
   display: flex;
   overflow-x: scroll;
+  -ms-overflow-style: none; /* Explorer */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome */
+  }
 `;
