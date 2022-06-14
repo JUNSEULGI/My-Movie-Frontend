@@ -83,7 +83,6 @@ function Movie() {
         'https://search.pstatic.net/common?quality=75&direct=true&src=https%3A%2F%2Fmovie-phinf.pstatic.net%2F20220426_19%2F16509365610560EIGm_JPEG%2Fmovie_image.jpg',
         'https://search.pstatic.net/common?quality=75&direct=true&src=https%3A%2F%2Fmovie-phinf.pstatic.net%2F20220426_19%2F16509365610560EIGm_JPEG%2Fmovie_image.jpg',
         'https://search.pstatic.net/common?quality=75&direct=true&src=https%3A%2F%2Fmovie-phinf.pstatic.net%2F20220426_19%2F16509365610560EIGm_JPEG%2Fmovie_image.jpg',
-
         'https://search.pstatic.net/common?quality=75&direct=true&src=https%3A%2F%2Fmovie-phinf.pstatic.net%2F20220426_19%2F16509365610560EIGm_JPEG%2Fmovie_image.jpg',
         'https://search.pstatic.net/common?quality=75&direct=true&src=https%3A%2F%2Fmovie-phinf.pstatic.net%2F20220426_19%2F16509365610560EIGm_JPEG%2Fmovie_image.jpg',
         'https://search.pstatic.net/common?quality=75&direct=true&src=https%3A%2F%2Fmovie-phinf.pstatic.net%2F20220426_19%2F16509365610560EIGm_JPEG%2Fmovie_image.jpg',
@@ -116,22 +115,28 @@ function Movie() {
       <>
         <MovieBackGround>
           <MovieInfo data={Data.data} />
-          <ContainerTitle>출연/제작</ContainerTitle>
-          <ActorContainer>
-            <Box sx={{ display: 'flex', overflow: 'scroll' }}>
-              {/* {actor?.map(actor => ( */}
-              {Data.data.actor?.map(actor => (
-                <Actor actor={actor} />
-              ))}
-            </Box>
-          </ActorContainer>
+          {Data.data.actor.length != 0 ? (
+            <>
+              <ContainerTitle>출연/제작</ContainerTitle>
+              <ActorContainer>
+                <Box sx={{ display: 'flex', overflow: 'scroll' }}>
+                  {/* {actor?.map(actor => ( */}
+                  {Data.data.actor?.map(actor => (
+                    <Actor actor={actor} />
+                  ))}
+                </Box>
+              </ActorContainer>
+            </>
+          ) : (
+            ''
+          )}
           <ContainerTitle>리뷰</ContainerTitle>
           {Object.entries(ReviewData).length ? (
             <MyReview review={ReviewData.data} />
           ) : (
             <NoReview />
           )}
-          {Data.data.trailer ? (
+          {Data.data.trailer.length != 0 ? (
             <>
               <ContainerTitle>예고편</ContainerTitle>
               <TrailerContainer>
@@ -143,8 +148,14 @@ function Movie() {
           ) : (
             ''
           )}
-          <ContainerTitle>갤러리</ContainerTitle>
-          <MovieGallery movie_image={Data.data.movie_image} />
+          {Data.data.movie_image.length != 0 ? (
+            <>
+              <ContainerTitle>갤러리</ContainerTitle>
+              <MovieGallery movie_image={Data.data.movie_image} />
+            </>
+          ) : (
+            ''
+          )}
         </MovieBackGround>
       </>
     );
