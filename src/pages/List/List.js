@@ -13,8 +13,9 @@ function List() {
       <>
         <Box>
           <Typography>수인님의 인생영화</Typography>
-          <Box>
+          <Box sx={{ display: 'flex' }}>
             <MovieCard />
+
             <MovieCard addCard={true} setOpen={setOpen} />
           </Box>
         </Box>

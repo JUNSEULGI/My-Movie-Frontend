@@ -40,7 +40,14 @@ const SearchContainer = styled(Box)`
 const SearchBar = styled(Autocomplete)`
   width: 478px;
   margin: 30px 0;
-  color: ${({ theme }) => theme.palette.common.white};
+
+  // & .MuiAutocomplete-listbox .MuiAutocomplete-option {
+  //   color: ${({ theme }) => theme.palette.common.white};
+  // }
+
+  & .MuiInputBase-input {
+    color: white;
+  }
 `;
 
 const SearchInput = styled(TextField)`

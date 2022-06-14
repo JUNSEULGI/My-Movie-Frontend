@@ -17,7 +17,7 @@ function AddReview({ open, setOpen }) {
   // }, []);
 
   // useEffect(() => {
-  //   if (selected.length > 0) {
+  //   if (selected.title) {
   //   fetch(`영화 정보 받는 api/${selected.id}`)
   //     .then(res => res.json)
   //     .then(data => setMovieDetail(data));
@@ -57,7 +57,7 @@ function AddReview({ open, setOpen }) {
   return (
     <MyViewModal
       open={open}
-      onClose={closeModal}
+      closeModal={closeModal}
       movies={movies}
       nowRunning={movies}
       selected={selected}
