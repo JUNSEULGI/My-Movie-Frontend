@@ -1,22 +1,19 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import MovieImage from '../../assets/images/movie_image.jpeg';
-
 import { CardContainer } from './CardContainer';
-import { Avatar, Box, Typography } from '@mui/material';
-import { MoviePoster } from './MoviePoster';
-import { style } from '@mui/system';
+import { Box, Typography } from '@mui/material';
+import MovieRating from './MovieRating';
 
 function MyReview({ review }) {
   const { oneline, rating, my_review, reviewer } = review;
   return (
     <MyReviewContainer>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Logo>My View!</Logo>
-        <p>{rating}</p>
+        <MovieRating rating={rating} />
       </Box>
       <MyBox>
-        <MyReviewTitle variant="h6">{oneline}</MyReviewTitle>
+        <MyReviewTitle variant="h5">{oneline}</MyReviewTitle>
       </MyBox>
       <MyReviewContent>{my_review} </MyReviewContent>
     </MyReviewContainer>
@@ -45,6 +42,7 @@ const MyReviewContainer = styled(CardContainer)`
 const MyBox = styled.div``;
 
 const MyReviewTitle = styled(Typography)`
+  margin-bottom: 8px;
   font-weight: bold;
 `;
 
@@ -54,6 +52,7 @@ const Logo = styled(Typography)`
   font-family: 'Galada', cursive;
   font-weight: bold;
   font-size: 20px;
+  margin-bottom: 8px;
 `;
 
 const MyReviewContent = styled(Typography)`

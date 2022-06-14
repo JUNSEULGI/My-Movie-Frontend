@@ -5,14 +5,24 @@ import MovieImage from '../../assets/images/movie_image.jpeg';
 import { CardContainer } from './CardContainer';
 import { Box } from '@mui/system';
 import SeeMoreButton from './SeeMoreButton';
+import MovieRating from './MovieRating';
 
-function MovieInfo({ data }) {
+function MovieInfo({ data, rating }) {
   const { title, description, release_date, country, category, genre } = data;
   return (
     <CardContainer>
       <MovieImg component="img" height="100%" image={MovieImage} />
       <Box sx={{ paddingLeft: '22px' }}>
-        <MovieTitle variant="h6">{title}</MovieTitle>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <MovieTitle variant="h4">{title}</MovieTitle>
+          <MovieRating rating={rating} />
+        </Box>
         <SubInfo variant="subtitle2">
           Doctor Strange in the Multiverse of Madness//영문(원) 제목
           <br />
@@ -57,7 +67,7 @@ const SummaryContainer = styled.div`
   overflow: hidden;
 
   p {
-    width: 600px;
+    /* width: 600px; */
     margin: 0;
     padding: 0;
   }
