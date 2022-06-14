@@ -30,7 +30,8 @@ function Movie() {
   const Data = {
     data: {
       title: '범죄도시',
-      description: '장첸의 활약',
+      description:
+        '자바스크립트에서 문자열을 자르기 위해서는 substr(), substring(), slice() 함수를 사용하면 된다. 문자열을 뒤에서부터 자르기 위해서는 slice() 함수를 사용하면 효율적이며 타 언어의 Right 함수와 비슷하다고 생각하면 된다. 세 가지의 함수 중 상황에 맞는 적절한 함수를 사용하면 된다.세 가지의 함수 중 상황에 맞는 적절한 함수를 사용하면 된다.세 가지의 함수 중 상황에 맞는 적절한 함수를 사용하면 된다.세 가지의 함수 중 상황에 맞는 적절한 함수를 사용하면 된다.세 가지의 함수 중 상황에 맞는 적절한 함수를 사용하면 된다.세 가지의 함수 중 상황에 맞는 적절한 함수를 사용하면 된다.세 가지의 함수 중 상황에 맞는 적절한 함수를 사용하면 된다.세 가지의 함수 중 상황에 맞는 적절한 함수를 사용하면 된다.',
       release_date: '2022-01-01',
       country: 'korea',
       category: 'movie',
@@ -69,6 +70,7 @@ function Movie() {
       ],
       thumbnail_image: 'manager',
       movie_image: [
+        'https://search.pstatic.net/common?quality=75&direct=true&src=https%3A%2F%2Fmovie-phinf.pstatic.net%2F20220420_22%2F16504370785559wHfw_JPEG%2Fmovie_image.jpg',
         'https://search.pstatic.net/common?quality=75&direct=true&src=https%3A%2F%2Fmovie-phinf.pstatic.net%2F20220426_19%2F16509365610560EIGm_JPEG%2Fmovie_image.jpg',
         'https://search.pstatic.net/common?quality=75&direct=true&src=https%3A%2F%2Fmovie-phinf.pstatic.net%2F20220426_19%2F16509365610560EIGm_JPEG%2Fmovie_image.jpg',
         'https://search.pstatic.net/common?quality=75&direct=true&src=https%3A%2F%2Fmovie-phinf.pstatic.net%2F20220426_19%2F16509365610560EIGm_JPEG%2Fmovie_image.jpg',
@@ -123,17 +125,24 @@ function Movie() {
               ))}
             </Box>
           </ActorContainer>
-          <NoReview />
           <ContainerTitle>리뷰</ContainerTitle>
-          {/* <Box sx={{ display: 'flex' }}> */}
-          <MyReview review={ReviewData.data} />
-          {/* </Box> */}
-          <ContainerTitle>예고편</ContainerTitle>
-          <TrailerContainer>
-            {Data.data.trailer.map(video => (
-              <Trailer video={video} />
-            ))}
-          </TrailerContainer>
+          {Object.entries(ReviewData).length ? (
+            <MyReview review={ReviewData.data} />
+          ) : (
+            <NoReview />
+          )}
+          {Data.data.trailer ? (
+            <>
+              <ContainerTitle>예고편</ContainerTitle>
+              <TrailerContainer>
+                {Data.data.trailer.map(video => (
+                  <Trailer video={video} />
+                ))}
+              </TrailerContainer>
+            </>
+          ) : (
+            ''
+          )}
           <ContainerTitle>갤러리</ContainerTitle>
           <MovieGallery movie_image={Data.data.movie_image} />
         </MovieBackGround>
@@ -141,7 +150,13 @@ function Movie() {
     );
   }
 
-  return <MyViewLayout movie center={<MovieContainer />} />;
+  return (
+    <MyViewLayout
+      movie
+      background={Data.data.movie_image[1]}
+      center={<MovieContainer />}
+    />
+  );
 }
 
 export default Movie;

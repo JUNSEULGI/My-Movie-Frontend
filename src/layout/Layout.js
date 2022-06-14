@@ -2,12 +2,13 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Nav from '../components/Nav/Nav';
 
-const MyViewLayout = ({ leftMenu, movie, center, rightMenu }) => {
+const MyViewLayout = ({ leftMenu, movie, background, center, rightMenu }) => {
+  console.log('사진', background);
   return (
     <Layout>
       <Nav />
       <Main>
-        <MovieScene movie={movie} />
+        <MovieScene movie img={background} />
         <LeftMenu leftMenu={leftMenu}>{leftMenu}</LeftMenu>
         <Center>{center}</Center>
         <Right>
@@ -32,14 +33,14 @@ const Main = styled.div`
   background-color: #080d18;
 `;
 const MovieScene = styled.div`
+  /* max-width: 1004px; */
   display: ${({ movie }) => (movie ? '' : 'none')};
   position: absolute;
   z-index: 0;
   width: 100%;
   height: 300px;
-  background-color: black;
-  background-image: url('https://m.media-amazon.com/images/M/MV5BOTIxN2FiNzYtZDk4YS00MGI3LTk1MDctNDg1OGJhYzdjOTU4XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_FMjpg_UX1280_.jpg');
-  background-repeat: no-repeat;
+  /* background-color: black; */
+  background: ${background => `url(${background.img}) no-repeat`};
   background-size: cover;
 `;
 
