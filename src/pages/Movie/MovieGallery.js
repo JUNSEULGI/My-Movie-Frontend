@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Masonry } from '@mui/lab';
 import { Paper, Box } from '@mui/material';
 
-function MovieGallery() {
+function MovieGallery({ movie_image }) {
   const Label = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -15,13 +15,13 @@ function MovieGallery() {
   }));
 
   return (
-    <Box sx={{ width: 1004, minHeight: 429 }}>
+    <Box sx={{ width: '100%', minHeight: 429 }}>
       <Masonry columns={4} spacing={2}>
-        {itemData.map((item, index) => (
+        {movie_image?.map((item, index) => (
           <div key={index}>
             <img
-              src={`${item.img}?w=162&auto=format`}
-              srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
+              src={`${item}?w=162&auto=format`}
+              srcSet={`${item}?w=162&auto=format&dpr=2 2x`}
               alt={item.title}
               loading="lazy"
               style={{

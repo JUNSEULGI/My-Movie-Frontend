@@ -6,19 +6,25 @@ import { CardContainer } from './CardContainer';
 import { Box } from '@mui/system';
 import SeeMoreButton from './SeeMoreButton';
 
-function MovieInfo() {
+function MovieInfo({ data }) {
+  const { title, descriotion, release_date, country, category, genre } = data;
+
   return (
     <CardContainer>
       <MovieImg component="img" height="100%" image={MovieImage} />
       <Box sx={{ paddingLeft: '22px' }}>
-        <MovieTitle variant="h6">닥터 스트레인지: 대혼돈의 멀티버스</MovieTitle>
+        <MovieTitle variant="h6">{title}</MovieTitle>
         <SubInfo variant="subtitle2">
-          Doctor Strange in the Multiverse of Madness
-          <br /> 2022 · 미국 · 액션
-          <br /> 2시간 6분 · 12세 별점
+          Doctor Strange in the Multiverse of Madness//영문(원) 제목
+          <br />
+          {release_date.substr(0, 4)} · {country} ·{' '}
+          {genre?.map(genreItems => (
+            <span style={{ marginRight: '10px' }}>{genreItems}</span>
+          ))}
+          <br /> 2시간 6분 · 12세 별점 //러닝 타임
         </SubInfo>
 
-        <Summary variant="subtitle1">줄거리</Summary>
+        <Summary variant="subtitle1">줄거리 //필요</Summary>
         <Box sx={{ display: 'flex' }}>
           <SummaryContainer>
             <p>

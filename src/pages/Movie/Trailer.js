@@ -5,7 +5,7 @@ import TrailerImg from '../../assets/images/block.jpeg';
 import { Container, SvgIcon } from '@mui/material';
 import { ReactComponent as PlayIcon } from '../../assets/images/Play.svg';
 
-function Trailer() {
+function Trailer({ video }) {
   return (
     <MovieTrailer>
       {/* <PlayButton /> */}
@@ -16,7 +16,6 @@ function Trailer() {
           width="560"
           height="315"
           src="https://www.youtube.com/embed/OEZc_c7A7Ko"
-          title="YouTube video player"
           allow="accelerometer;
         autoplay; clipboard-write; encrypted-media; gyroscope;
         picture-in-picture"
