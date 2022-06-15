@@ -13,8 +13,10 @@ import {
   Popper,
   Autocomplete,
   TextField,
+  Paper,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { hover } from '@testing-library/user-event/dist/hover';
 
 function Nav() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -27,46 +29,23 @@ function Nav() {
     window.addEventListener('scroll', updateScroll);
   });
 
-  const mytheme = createTheme({
-    components: {
-      MuiAutocomplete: {
-        styleOverrides: {
-          option: {
-            '&[aria-selected="true"]': {
-              backgroundColor: '#e3abed',
-            },
-
-            '&:hover': {
-              backgroundColor: '#9c27b0',
-            },
-            backgroundColor: '#fff',
-          },
-        },
-      },
-    },
-  });
-
   console.log(scrollPosition);
   return (
     <NavBar scrollPosition={scrollPosition}>
-      <MyToolbar>
+      <MyToolbar sx={{ display: 'flex', alignContent: 'center' }}>
         <a href="/list">
           <Logo scrollPosition={scrollPosition} component="h1">
             My View!
           </Logo>
         </a>
-        <Box sx={{ display: 'flex' }}>
-          {/* <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="영화 제목을 검색하세요"
-              inputProps={{ 'aria-label': 'search' }}
-            /> */}
+        <Box sx={{ display: 'flex', alignContent: 'baseline' }}>
           <NavSearch
+            sx={{ marginTop: '-6px' }}
+            PaperComponent={StyledPaper}
             PopperComponent={StyledPopper}
             freeSolo
+            autoHighlight="true"
+            autoComplete
             color="orange"
             id="free-solo-2-demo"
             disableClearable
@@ -82,8 +61,6 @@ function Nav() {
               />
             )}
           />
-          {/* </Search> */}
-
           {localStorage.access_token ? <Avatar /> : <SignUp />}
         </Box>
       </MyToolbar>
@@ -93,6 +70,8 @@ function Nav() {
 
 const NavBar = styled(AppBar)`
   padding: 10px 40px;
+  display: flex;
+  align-content: center;
 
   &.MuiPaper-root {
     background: none;
@@ -128,54 +107,6 @@ const SignUp = styled(Typography)`
   font-weight: bold;
   font-size: 32px;
 `;
-
-// const Search = styled('div')(({ theme }) => ({
-//   position: 'relative',
-//   marginRight: '20px',
-//   borderRadius: '80px',
-//   backgroundColor: 'transparent',
-//   color: 'white',
-
-//   '&:hover': {
-//     border: '1px solid #FF6E01',
-//     backgroundColor: 'transparent',
-//     transition: 'all 1s',
-//   },
-//   marginLeft: 0,
-//   width: '100%',
-//   [theme.breakpoints.up('sm')]: {
-//     marginLeft: theme.spacing(1),
-//     width: 'auto',
-//   },
-// }));
-
-// const SearchIconWrapper = styled('div')(({ theme }) => ({
-//   padding: theme.spacing(0, 2),
-//   height: '100%',
-//   position: 'absolute',
-//   pointerEvents: 'none',
-//   display: 'flex',
-//   alignItems: 'center',
-//   justifyContent: 'center',
-// }));
-
-// const StyledInputBase = styled(InputBase)(({ theme }) => ({
-//   color: 'inherit',
-//   '& .MuiInputBase-input': {
-//     fontWeight: 'bold',
-//     padding: theme.spacing(1, 1, 1, 0),
-//     // vertical padding + font size from searchIcon
-//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-//     transition: theme.transitions.create('width'),
-//     width: '100%',
-//     [theme.breakpoints.up('sm')]: {
-//       width: '18ch',
-//       '&:focus': {
-//         width: '26ch',
-//       },
-//     },
-//   },
-// }));
 
 const NavSearch = styled(Autocomplete)`
   & .MuiAutocomplete-popper {
@@ -236,15 +167,20 @@ const NavSearch = styled(Autocomplete)`
 `;
 
 const StyledPopper = styled(Popper)(({ theme }) => ({
-  '& .MuiAutocomplete-paper': {
-    backgroundColor: 'white',
-  },
   ///드디어 찾았다.
   '& .MuiAutocomplete-groupLabel': {
-    backgroundColor: 'white',
+    backgroundColor: 'yellow',
     color: theme.palette.common.white,
   },
 }));
+
+const StyledPaper = styled(Paper)`
+  color: white;
+  .MuiAutocomplete-paper {
+    background-color: white;
+  }
+`;
+
 // const NavSearch = styled(Autocomplete)(({ mytheme }) => ({
 //   '& .MuiAutocomplete-listbox': {
 //     backgroundColor: 'white',

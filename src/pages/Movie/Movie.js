@@ -119,12 +119,10 @@ function Movie() {
             <>
               <ContainerTitle>출연/제작</ContainerTitle>
               <ActorContainer>
-                <Box sx={{ display: 'flex', overflow: 'scroll' }}>
-                  {/* {actor?.map(actor => ( */}
-                  {Data.data.actor?.map(actor => (
-                    <Actor actor={actor} />
-                  ))}
-                </Box>
+                {/* {actor?.map(actor => ( */}
+                {Data.data.actor?.map(actor => (
+                  <Actor actor={actor} />
+                ))}
               </ActorContainer>
             </>
           ) : (
@@ -182,7 +180,13 @@ const ContainerTitle = styled.h4`
 `;
 
 const ActorContainer = styled(CardContainer)`
-  display: block;
+  display: flex;
+  overflow-x: scroll;
+  -ms-overflow-style: none; /* Explorer */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome */
+  }
 `;
 
 const TrailerContainer = styled.div`
