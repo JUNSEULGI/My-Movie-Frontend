@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Box, Button, ButtonGroup, Modal } from '@mui/material';
 import SearchBox from './SearchBox/SearchBox';
@@ -14,18 +14,33 @@ function MyViewModal({
   setSelected,
   selected,
 }) {
+  const [isSaving, setIsSaving] = useState(false);
+
   return (
-    <MyModal open={open} onClose={closeModal} disableScrollLock={true}>
+    <MyModal
+      open={open}
+      onClose={closeModal}
+      disableScrollLock={true}
+      disableEscapeKeyDown={true}
+    >
       <Container>
         <Step breadcrumbs={breadcrumbs}>{breadcrumbs}</Step>
         <Buttons variant="text">
-          {selected.title && <ModalButton>Save</ModalButton>}
+          {selected.title && (
+            <ModalButton
+              onClick={() => {
+                setIsSaving(true);
+              }}
+            >
+              Save
+            </ModalButton>
+          )}
           <ModalButton onClick={closeModal}>Close</ModalButton>
         </Buttons>
         <Content>
           <Poster url="https://file2.nocutnews.co.kr/newsroom/image/2022/04/08/202204081311322351_0.jpg" />
           {selected.title ? (
-            <ReviewBox />
+            <ReviewBox isSaving={isSaving} />
           ) : (
             <SearchBox
               movies={movies}
@@ -41,8 +56,6 @@ function MyViewModal({
 
 const MyModal = styled(Modal)`
   position: absolute;
-
-  left: 10%;
   // display: flex;
   // justify-content: center;
   width: 100%;
@@ -53,10 +66,9 @@ const MyModal = styled(Modal)`
 const Container = styled(Box)`
   position: relative;
   // top: 50%;
-  // left: 50%;
-  // transform: translate(-50%, -50%);
+  left: 50%;
+  transform: translate(-50%, 0);
   width: 987px;
-  // height: 530px;
   padding: 70px 60px;
   margin-bottom: 100px;
   background-color: ${({ theme }) => theme.palette.background.card};

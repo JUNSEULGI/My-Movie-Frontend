@@ -46,7 +46,7 @@ const SearchBar = styled(Autocomplete)`
   // }
 
   & .MuiInputBase-input {
-    color: white;
+    color: ${({ theme }) => theme.palette.common.white};
   }
 `;
 
