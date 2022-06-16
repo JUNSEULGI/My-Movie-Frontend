@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { useState, useEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { hover } from '@testing-library/user-event/dist/hover';
+import { useLocation } from 'react-router-dom';
 
 function Nav() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -29,7 +30,6 @@ function Nav() {
     window.addEventListener('scroll', updateScroll);
   });
 
-  console.log(scrollPosition);
   return (
     <NavBar scrollPosition={scrollPosition}>
       <MyToolbar sx={{ display: 'flex', alignContent: 'center' }}>
@@ -87,6 +87,7 @@ const NavBar = styled(AppBar)`
 
 const MyToolbar = styled(Toolbar)`
   display: flex;
+  padding-top: 10px;
   justify-content: space-between;
 
   a {
@@ -109,37 +110,10 @@ const SignUp = styled(Typography)`
 `;
 
 const NavSearch = styled(Autocomplete)`
-  & .MuiAutocomplete-popper {
-    background-color: yellow;
-    & .MuiAutocomplete-paper {
-      background-color: yellow;
-    }
-  }
-
   margin-right: 40px;
-  width: 200px;
-  .MuiAutocomplete-paper {
-    background-color: yellow;
-  }
-  & :focus {
-    width: 300px;
-  }
-
-  & .MuiAutocomplete-listbox {
-    background-color: yellow;
-    &.MuiAutocomplete-option {
-      background-color: yellow;
-    }
-  }
-
-  height: 10px;
   padding: 0;
-  &.MuiAutocomplete-popper {
-    color: white;
-    & .MuiAutocomplete-paper {
-      background-color: yellow;
-    }
-  }
+  width: 200px;
+  height: 10px;
 
   //눌렀을 때 lable색
   label.Mui-focused {
@@ -166,68 +140,17 @@ const NavSearch = styled(Autocomplete)`
   }
 `;
 
-const StyledPopper = styled(Popper)(({ theme }) => ({
-  ///드디어 찾았다.
-  '& .MuiAutocomplete-groupLabel': {
-    backgroundColor: 'yellow',
-    color: theme.palette.common.white,
-  },
-}));
+const StyledPopper = styled(Popper)``;
 
 const StyledPaper = styled(Paper)`
   color: white;
-  .MuiAutocomplete-paper {
-    background-color: white;
+  :focus {
+    background-color: yellow;
   }
 `;
 
-// const NavSearch = styled(Autocomplete)(({ mytheme }) => ({
-//   '& .MuiAutocomplete-listbox': {
-//     backgroundColor: 'white',
-//     '&.MuiAutocomplete-option': {
-//       backgroundColor: 'white',
-//     },
-//   },
-//   marginRight: '40px',
-//   width: '200px',
-//   '&:focus': {
-//     width: '300px',
-//   },
-//   '& .MuiAutocomplete-listbox': {
-//     backgroundColor: 'yellow',
-//   },
-
-//   height: '10px',
-//   padding: '0',
-//   '&.MuiAutocomplete-popper': {
-//     color: 'white',
-//   },
-
-//   //눌렀을 때 lable색
-//   '& label.Mui-focused': {
-//     color: 'orange',
-//   },
-//   '& .MuiInput-underline:after': {
-//     borderBottomColor: 'orange',
-//   },
-//   //아무것도 안했을 때
-//   '& .MuiOutlinedInput-root': {
-//     color: 'white',
-
-//     '& fieldset': {
-//       borderColor: 'translate',
-//       color: 'orange',
-//     },
-//     '&:hover fieldset': {
-//       borderColor: 'orange',
-//     },
-//     '&.Mui-focused fieldset': {
-//       borderColor: 'orange',
-//     },
-//   },
-// }));
-
 export default Nav;
+
 const top100Films = [
   { title: 'The Shawshank Redemption', year: 1994 },
   { title: 'The Godfather', year: 1972 },
