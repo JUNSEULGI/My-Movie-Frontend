@@ -9,10 +9,11 @@ function MyViewModal({
   open,
   closeModal,
   breadcrumbs,
-  movies,
+  titles,
   nowRunning,
   setSelected,
   selected,
+  movieDetail,
 }) {
   const [isSaving, setIsSaving] = useState(false);
 
@@ -38,12 +39,12 @@ function MyViewModal({
           <ModalButton onClick={closeModal}>Close</ModalButton>
         </Buttons>
         <Content>
-          <Poster url="https://file2.nocutnews.co.kr/newsroom/image/2022/04/08/202204081311322351_0.jpg" />
+          <Poster url={movieDetail.thumbnail_image_url} />
           {selected.title ? (
-            <ReviewBox isSaving={isSaving} />
+            <ReviewBox isSaving={isSaving} movieDetail={movieDetail} />
           ) : (
             <SearchBox
-              movies={movies}
+              titles={titles}
               nowRunning={nowRunning}
               setSelected={setSelected}
             />

@@ -2,11 +2,11 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Autocomplete, Box, Typography, TextField } from '@mui/material';
 
-function SearchBox({ movies, nowRunning, setSelected }) {
+function SearchBox({ titles, nowRunning, setSelected }) {
   return (
     <SearchContainer>
       <SearchBar
-        options={movies}
+        options={titles}
         getOptionLabel={option => option.title}
         renderInput={params => (
           <SearchInput
@@ -24,8 +24,8 @@ function SearchBox({ movies, nowRunning, setSelected }) {
       <Box>
         <NowRunning>지금 상영중인 영화</NowRunning>
         {nowRunning.map(movie => (
-          <RankedMovie key={movie.rank}>
-            {movie.rank}. {movie.title}
+          <RankedMovie key={movie.id}>
+            {movie.ranking}. {movie.title}
           </RankedMovie>
         ))}
       </Box>

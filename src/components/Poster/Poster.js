@@ -21,7 +21,7 @@ const NoImage = styled(Card)`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  height: 390px;
   background-color: ${({ theme }) => theme.palette.background.disabled};
   border-radius: 8px;
 `;

@@ -5,36 +5,68 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-function ReviewBox({ isSaving }) {
+function ReviewBox({ isSaving, movieDetail }) {
+  const token = localStorage.getItem('token');
+
   const [rating, setRating] = useState(0);
   const [data, setData] = useState({
-    review: '',
-    date: new Date().toISOString(),
+    content: '',
+    date: new Date(),
     place: '',
     people: '',
   });
 
+  const handleReview = e => {
+    setData(prev => {
+      return { ...prev, content: e.target.value };
+    });
+  };
+
   useEffect(() => {
     if (!isSaving) return;
-    fetch('uri', {
+
+    const saveData = {
+      ...data,
+      date: timestamp(data.date),
+      rating,
+      // with_user: data.people,
+      tag: [],
+      movie_id: movieDetail.id,
+    };
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(saveData));
+
+    fetch('http://172.30.1.39:8000/reviews', {
       method: 'POST',
-      body: JSON.stringify({ data }),
+      headers: {
+        Authorization: token,
+      },
+      body: formData,
     });
   }, [isSaving]);
 
-  console.log(data);
+  const timestamp = date => {
+    const koDate = new Date(date.setHours(date.getHours() + 9));
+    console.log(date, koDate);
+    return koDate.toISOString().replace('T', ' ').substring(0, 19);
+  };
+
+  console.log(movieDetail);
 
   return (
     <Container>
       <RowBox>
         <Box>
-          <MovieTitle variant="h3">
-            닥터 스트레인지: 대혼돈의 멀티버스
-          </MovieTitle>
+          <MovieTitle variant="h3">{movieDetail.title}</MovieTitle>
           <BoldText variant="subtitle2">
-            Doctor Strange in the Multiverse of Madness
-            <br />
-            2022 · 미국 · 액션 / 2시간 6분 · 12세
+            {movieDetail.en_title} <br />
+            2022 · {movieDetail.country} ·{' '}
+            {movieDetail.genre?.map((genreItems, index) => (
+              <span key={index} style={{ marginRight: '10px' }}>
+                {genreItems}
+              </span>
+            ))}{' '}
+            / {movieDetail.running_time} · {movieDetail.age}세
           </BoldText>
         </Box>
         <Rating
@@ -51,12 +83,9 @@ function ReviewBox({ isSaving }) {
         label="리뷰를 남겨보세요."
         multiline
         minRows={3}
-        value={data.review}
-        onChange={e => {
-          setData(prev => {
-            return { ...prev, review: e.target.value };
-          });
-        }}
+        maxRows={20}
+        value={data.content}
+        onChange={e => handleReview(e)}
       />
       <RowLabel variant="h4">관람정보</RowLabel>
       <GridBox>
@@ -65,15 +94,16 @@ function ReviewBox({ isSaving }) {
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <WatchDate
               label="언제 보셨나요?"
-              inputFormat="yyyy.MM.dd hh:mm"
+              inputFormat="yyyy.MM.dd HH:mm"
+              mask="____.__.__ __:__"
               disableFuture={true}
               renderInput={params => <WhiteTextField {...params} />}
               value={data.date}
               onChange={newValue => {
-                setData(prev => {
-                  return { ...prev, date: newValue.toISOString() };
-                });
                 console.log(newValue);
+                setData(prev => {
+                  return { ...prev, date: newValue };
+                });
               }}
             />
           </LocalizationProvider>
@@ -149,16 +179,10 @@ const WatchInfoLabel = styled(BoldText)`
   margin-bottom: 15px;
 `;
 
-const WatchDate = styled(DateTimePicker)`
-  & .MuiInputBase-input-MuiOutlinedInput-input {
-    color: ${({ theme }) => theme.palette.common.white};
-  }
-`;
+const WatchDate = styled(DateTimePicker)``;
 
 const WhiteTextField = styled(TextField)`
-  color: ${({ theme }) => theme.palette.common.white};
-
-  & .MuiInputBase-input-MuiOutlinedInput-input {
+  & .MuiOutlinedInput-root {
     color: ${({ theme }) => theme.palette.common.white};
   }
 `;
