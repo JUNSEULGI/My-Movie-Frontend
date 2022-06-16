@@ -17,9 +17,10 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { hover } from '@testing-library/user-event/dist/hover';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Nav() {
+  const navigate = useNavigate();
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const updateScroll = () => {
@@ -30,6 +31,26 @@ function Nav() {
     window.addEventListener('scroll', updateScroll);
   });
 
+  const moveMoviePage = id => {
+    navigate(`/movie/${id}`);
+  };
+
+  const finalTheme = createTheme({
+    root: {
+      backgroundColor: 'yellow',
+    },
+    clearIndicator: {
+      backgroundColor: 'gray',
+      '& span': {
+        '& svg': {
+          '& path': {
+            d: "path('M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z')", // your svg icon path here
+          },
+        },
+      },
+    },
+  });
+
   return (
     <NavBar scrollPosition={scrollPosition}>
       <MyToolbar sx={{ display: 'flex', alignContent: 'center' }}>
@@ -37,19 +58,27 @@ function Nav() {
           <Logo scrollPosition={scrollPosition} component="h1">
             My View!
           </Logo>
+          <a href="/">로그인으로</a>
         </a>
         <Box sx={{ display: 'flex', alignContent: 'baseline' }}>
           <NavSearch
             sx={{ marginTop: '-6px' }}
             PaperComponent={StyledPaper}
             PopperComponent={StyledPopper}
+            // componentsProps={{
+            //   clearIndicatorDirty: .clearIndicator,
+            // }}
             freeSolo
             autoHighlight="true"
             autoComplete
             color="orange"
             id="free-solo-2-demo"
+            onChange={(e, value) => {
+              moveMoviePage(value.id);
+            }}
             disableClearable
-            options={top100Films.map(option => option.title)}
+            getOptionLabel={option => option.title}
+            options={top100Films}
             renderInput={params => (
               <TextField
                 {...params}
@@ -72,7 +101,7 @@ const NavBar = styled(AppBar)`
   padding: 10px 40px;
   display: flex;
   align-content: center;
-
+  background: white;
   &.MuiPaper-root {
     background: none;
 
@@ -110,6 +139,9 @@ const SignUp = styled(Typography)`
 `;
 
 const NavSearch = styled(Autocomplete)`
+  & .MuiAutocomplete-clearIndicator {
+    color: aqua;
+  }
   margin-right: 40px;
   padding: 0;
   width: 200px;
@@ -152,8 +184,8 @@ const StyledPaper = styled(Paper)`
 export default Nav;
 
 const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
+  { title: '닥터스트레인지', year: 1994, id: 1 },
+  { title: 'The Godfather', year: 1972, id: 2 },
   { title: 'The Godfather: Part II', year: 1974 },
   { title: 'The Dark Knight', year: 2008 },
   { title: '12 Angry Men', year: 1957 },

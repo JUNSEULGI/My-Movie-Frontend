@@ -8,10 +8,28 @@ import SeeMoreButton from './SeeMoreButton';
 import MovieRating from './MovieRating';
 
 function MovieInfo({ data, rating }) {
-  const { title, description, release_date, country, category, genre } = data;
+  const {
+    title,
+    en_title,
+    age,
+    description,
+    release_date,
+    country,
+    category,
+    running_time,
+    genre,
+    thumbnail_image_url,
+  } = data;
+  console.log(description);
+
+  function createMarkup() {
+    return { __html: `${description}` };
+  }
+
   return (
     <CardContainer>
-      <MovieImg component="img" height="100%" image={MovieImage} />
+      <MovieImg component="img" height="100%" image={thumbnail_image_url} />
+      {/* <MovieImg component="img" height="100%" image={MovieImage} /> */}
       <Box sx={{ paddingLeft: '22px' }}>
         <Box
           sx={{
@@ -24,19 +42,22 @@ function MovieInfo({ data, rating }) {
           <MovieRating rating={rating} />
         </Box>
         <SubInfo variant="subtitle2">
-          Doctor Strange in the Multiverse of Madness//영문(원) 제목
+          {en_title}
           <br />
-          {release_date.substr(0, 4)} · {country} ·{' '}
-          {genre?.map(genreItems => (
-            <span style={{ marginRight: '10px' }}>{genreItems}</span>
+          {release_date?.substr(0, 4)} · {country} ·{' '}
+          {genre?.map((genreItems, index) => (
+            <span id={index} style={{ marginRight: '10px' }}>
+              {genreItems}
+            </span>
           ))}
-          <br /> 2시간 6분 · 12세 별점 //러닝 타임
+          <br />
+          {running_time}분 · {age}세
         </SubInfo>
+        {/* 러닝 타임은 00:00:00 형태로 */}
 
         <Summary variant="subtitle1">줄거리 //필요</Summary>
-
         <SummaryContainer>
-          <p>{description}</p>
+          <div dangerouslySetInnerHTML={createMarkup()} />
         </SummaryContainer>
         <Box sx={{ display: 'flex', justifyContent: 'end' }}>
           {<SeeMoreButton />}
@@ -77,3 +98,5 @@ const Summary = styled(Typography)`
   font-weight: bold;
   margin-top: 70px;
 `;
+
+const Content = styled.p``;

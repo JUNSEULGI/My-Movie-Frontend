@@ -14,6 +14,8 @@ function MovieGallery({ movie_image }) {
     borderBottomRightRadius: 0,
   }));
 
+  console.log('test', movie_image);
+
   return (
     <Box sx={{ width: '100%', minHeight: 429 }}>
       <Masonry columns={4} spacing={2}>
@@ -22,7 +24,7 @@ function MovieGallery({ movie_image }) {
             <img
               src={`${item}?w=162&auto=format`}
               srcSet={`${item}?w=162&auto=format&dpr=2 2x`}
-              alt={item.title}
+              // alt={item.title}
               loading="lazy"
               style={{
                 borderRadius: 8,

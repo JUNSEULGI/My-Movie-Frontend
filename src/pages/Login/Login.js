@@ -26,13 +26,14 @@ function Login() {
   return <MyViewLayout center={<LoginContainer />} />;
 }
 
-const LoginPage = styled(Container)`
-  margin: 0 auto;
-  height: 100vh;
-  /* background-color: antiquewhite; */
-`;
+const LoginPage = styled(Container)``;
 
 const LoginBox = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: antiquewhite;
   box-sizing: border-box;
   margin: 0 auto;
   padding: 40px 20px;

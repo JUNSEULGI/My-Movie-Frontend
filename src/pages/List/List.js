@@ -18,7 +18,12 @@ function List() {
       </Box>
     );
   }
-  return <MyViewLayout leftMenu={<Aside />} center={<ListLayout />} />;
+  return (
+    <MyViewLayout
+      // leftMenu={<Aside />}
+      center={<ListLayout />}
+    />
+  );
 }
 
 export default List;

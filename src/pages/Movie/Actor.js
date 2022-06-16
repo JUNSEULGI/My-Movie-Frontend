@@ -3,10 +3,10 @@ import styled from '@emotion/styled';
 import ActorImage from '../../assets/images/actor.jpeg';
 
 function Actor({ actor }) {
-  const { id, name, role_name, role } = actor;
+  const { id, name, role_name, image, role } = actor;
   return (
     <ActorCard id={id}>
-      <ActorImg src={ActorImage} />
+      <ActorImg src={image} />
       <ActorName>{name}</ActorName>
       <Role>
         {role} | {role_name}
