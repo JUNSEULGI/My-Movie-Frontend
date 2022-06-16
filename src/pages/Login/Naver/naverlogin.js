@@ -33,19 +33,18 @@ function NaverLogin() {
   console.log('네이버 인증 코드', access_code);
 
   //백으로 인증 코드 주는 함수
-  const sendNaverCode = () => {
-    fetch(`${BASE_URL}?code=${access_code}`, {
-      method: 'GET',
-    })
+  useEffect(() => {
+    fetch(
+      `http://172.30.1.20:8000/users/login/naver/callback?code=${access_code}`,
+      {
+        method: 'GET',
+      }
+    )
       .then(res => res.json())
       .then(res => {
         console.log(res);
       });
-  };
-
-  useEffect(() => {
-    sendNaverCode();
-  });
+  }, []);
 
   return (
     <Link
