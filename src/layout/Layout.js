@@ -2,12 +2,14 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Nav from '../components/Nav/Nav';
 
-const MyViewLayout = ({ leftMenu, center, rightMenu }) => {
+const MyViewLayout = ({ leftMenu, movie, background, center, rightMenu }) => {
+  console.log('사진', background);
   return (
     <Layout>
       <Nav />
       <Main>
-        <LeftMenu>{leftMenu}</LeftMenu>
+        <MovieScene movie img={background} />
+        <LeftMenu leftMenu={leftMenu}>{leftMenu}</LeftMenu>
         <Center>{center}</Center>
         <Right>
           <RightMenu>{rightMenu}</RightMenu>
@@ -24,14 +26,22 @@ const Layout = styled.div`
   background-position-y: 10%;
 `;
 
-const Footer = styled.div``;
-
 const Main = styled.div`
   display: flex;
+  /* padding-top: 90px; */
   justify-content: center;
-  margin-top: 80px;
-
-  /* background-color: antiquewhite; */
+  background-color: #080d18;
+`;
+const MovieScene = styled.div`
+  /* max-width: 1004px; */
+  display: ${({ movie }) => (movie ? '' : 'none')};
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  height: 300px;
+  /* background-color: black; */
+  background: ${background => `url(${background.img}) no-repeat`};
+  background-size: cover;
 `;
 
 // const Left = styled.aside`
@@ -41,21 +51,21 @@ const Main = styled.div`
 // `;
 
 const LeftMenu = styled.aside`
+  display: ${({ leftMenu }) => (leftMenu ? 'flex' : 'none')};
   position: fixed;
   top: 64px;
   left: 0;
   width: 64px;
   height: calc(100% - 46px);
-  display: flex;
   justify-content: center;
   padding: 32px 0;
   overflow: scroll;
-  //정수인 수정 0407
   box-shadow: -1px 0px 0px 0px #898d903d inset;
   background-color: black;
 `;
 
 const Center = styled.main`
+  z-index: 1;
   flex-grow: 1;
   max-width: 1152px;
   margin: 32px 60px 0;
