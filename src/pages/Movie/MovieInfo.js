@@ -7,7 +7,7 @@ import { Box } from '@mui/system';
 import SeeMoreButton from './SeeMoreButton';
 import MovieRating from './MovieRating';
 
-function MovieInfo({ data, rating }) {
+function MovieInfo({ data }) {
   const {
     title,
     en_title,
@@ -16,6 +16,7 @@ function MovieInfo({ data, rating }) {
     release_date,
     country,
     category,
+    ratings,
     running_time,
     genre,
     thumbnail_image_url,
@@ -39,7 +40,7 @@ function MovieInfo({ data, rating }) {
           }}
         >
           <MovieTitle variant="h4">{title}</MovieTitle>
-          <MovieRating rating={rating} />
+          <MovieRating rating={ratings} />
         </Box>
         <SubInfo variant="subtitle2">
           {en_title}

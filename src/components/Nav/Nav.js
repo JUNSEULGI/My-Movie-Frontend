@@ -58,7 +58,7 @@ function Nav() {
           <Logo scrollPosition={scrollPosition} component="h1">
             My View!
           </Logo>
-          <a href="/">로그인으로</a>
+          {/* <a href="/">로그인으로</a> */}
         </a>
         <Box sx={{ display: 'flex', alignContent: 'baseline' }}>
           <NavSearch
