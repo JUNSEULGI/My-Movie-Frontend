@@ -152,7 +152,6 @@ function Movie() {
       </>
     );
   }
-  // console.log(image_url[0]);
 
   //이거 추가해
   // if (!movieData.image_url) return null;

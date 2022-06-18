@@ -8,10 +8,10 @@ import SeeMoreButton from './SeeMoreButton';
 import MovieRating from './MovieRating';
 
 function MovieInfo({ data }) {
+  let age = data;
   const {
     title,
     en_title,
-    age,
     description,
     release_date,
     country,
@@ -21,11 +21,20 @@ function MovieInfo({ data }) {
     genre,
     thumbnail_image_url,
   } = data;
-  console.log(description);
 
-  function createMarkup() {
-    return { __html: `${description}` };
+  // \n을 <br/>로 바꿔주는
+  function replaceBrTag(str) {
+    if (str == undefined || str == null) {
+      return { __html: '내용이 없습니다' };
+    }
+
+    str = str.replace(/\r\n/gi, '<br>');
+    str = str.replace(/\\n/gi, '<br>');
+    str = str.replace(/\n/gi, '<br>');
+    return { __html: str };
   }
+
+  let agee = age.age == 0 ? 'ALL' : age.age + '세';
 
   return (
     <CardContainer>
@@ -45,20 +54,20 @@ function MovieInfo({ data }) {
         <SubInfo variant="subtitle2">
           {en_title}
           <br />
-          {release_date?.substr(0, 4)} · {country} ·{' '}
+          {release_date?.substr(0, 4)} · {country}
           {genre?.map((genreItems, index) => (
             <span id={index} style={{ marginRight: '10px' }}>
               {genreItems}
             </span>
           ))}
           <br />
-          {running_time}분 · {age}세
+          {running_time}분 · {agee}
         </SubInfo>
         {/* 러닝 타임은 00:00:00 형태로 */}
 
-        <Summary variant="subtitle1">줄거리 //필요</Summary>
+        <Summary variant="subtitle1">줄거리</Summary>
         <SummaryContainer>
-          <div dangerouslySetInnerHTML={createMarkup()} />
+          <div dangerouslySetInnerHTML={replaceBrTag(description)} />
         </SummaryContainer>
         <Box sx={{ display: 'flex', justifyContent: 'end' }}>
           {<SeeMoreButton />}
