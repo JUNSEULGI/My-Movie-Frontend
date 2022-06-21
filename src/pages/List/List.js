@@ -1,21 +1,26 @@
-import React from 'react';
-import styled from '@emotion/styled';
+import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import { style } from '@mui/system';
 import MyViewLayout from '../../layout/Layout';
 import Aside from '../../components/Aside';
 import MovieCard from './MovieCard/MovieCard';
+import AddReview from './AddReview/AddReview';
 
 function List() {
   function ListLayout() {
+    const [open, setOpen] = useState(false);
+
     return (
-      <Box>
-        <Typography>수인님의 인생영화</Typography>
+      <>
         <Box>
-          <MovieCard />
-          <MovieCard addCard={true} />
+          <Typography>수인님의 인생영화</Typography>
+          <Box sx={{ display: 'flex' }}>
+            <MovieCard />
+
+            <MovieCard addCard={true} setOpen={setOpen} />
+          </Box>
         </Box>
-      </Box>
+        <AddReview open={open} setOpen={setOpen} />
+      </>
     );
   }
   return (
