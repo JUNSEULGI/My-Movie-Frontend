@@ -6,8 +6,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 function ReviewBox({ isSaving, movieDetail }) {
-  const token = localStorage.getItem('token');
-
+  // const token = localStorage.getItem('token');
+  const token =
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsImV4cCI6MTY1NTM5NzczOH0.CvG5oNklqcKavT7xMl0pVFEfP9eg5MkM9SyCHroi0NY';
+  const [user, setUser] = useState({});
   const [rating, setRating] = useState(0);
   const [data, setData] = useState({
     content: '',
@@ -21,6 +23,18 @@ function ReviewBox({ isSaving, movieDetail }) {
       return { ...prev, content: e.target.value };
     });
   };
+  useEffect(() => {
+    fetch('http://172.30.1.39:8000/users/info', {
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.result);
+        setUser(data.result);
+      });
+  }, []);
 
   useEffect(() => {
     if (!isSaving) return;
@@ -33,6 +47,7 @@ function ReviewBox({ isSaving, movieDetail }) {
       tag: [],
       movie_id: movieDetail.id,
     };
+    console.log(saveData);
     const formData = new FormData();
     formData.append('data', JSON.stringify(saveData));
 
@@ -66,7 +81,7 @@ function ReviewBox({ isSaving, movieDetail }) {
                 {genreItems}
               </span>
             ))}{' '}
-            / {movieDetail.running_time} · {movieDetail.age}세
+            / {movieDetail.running_time}분 · {movieDetail.age}세
           </BoldText>
         </Box>
         <Rating
@@ -78,7 +93,7 @@ function ReviewBox({ isSaving, movieDetail }) {
           size="large"
         />
       </RowBox>
-      <RowLabel variant="h4">수인님의 솔직후기</RowLabel>
+      <RowLabel variant="h4">{user.nickname}님의 솔직후기</RowLabel>
       <ReviewField
         label="리뷰를 남겨보세요."
         multiline

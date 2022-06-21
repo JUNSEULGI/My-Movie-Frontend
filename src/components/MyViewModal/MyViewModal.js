@@ -56,16 +56,17 @@ function MyViewModal({
 }
 
 const MyModal = styled(Modal)`
-  position: absolute;
-  // display: flex;
-  // justify-content: center;
   width: 100%;
   margin: 100px auto;
-  margin-bottom: 300px;
+  // 위아래 코드 모두 margin-bottom 먹지 않음.
+  // margin-bottom: 300px;
 `;
 
 const Container = styled(Box)`
-  position: relative;
+  position: absolute;
+  // breadcrumbs나 버튼을 위해 relative로 했었음.
+  // position: relative;
+  // 세로 중앙 정렬 위해 top 했으나 바닥에서 띄우는 거 먼저 해결해야 함.
   // top: 50%;
   left: 50%;
   transform: translate(-50%, 0);
@@ -79,6 +80,7 @@ const Container = styled(Box)`
 const Content = styled(Box)`
   display: grid;
   grid-template-columns: 273px 1fr;
+  // 컨테이너가 늘어나면서 높이를 100%로 고정할 수 없게 됨.
   // height: 100%;
 `;
 
@@ -93,6 +95,7 @@ const Buttons = styled(ButtonGroup)`
   position: absolute;
   top: 30px;
   right: 60px;
+
   & .MuiButtonGroup-grouped:not(:last-of-type) {
     border-right: 0px;
   }
@@ -103,6 +106,7 @@ const ModalButton = styled(Button)`
   color: #fc6c2e;
 `;
 
+// Poster 컴포넌트 사용하지 않았을 때
 // const Poster = styled.div`
 //   width: 242px;
 //   height: 346px;

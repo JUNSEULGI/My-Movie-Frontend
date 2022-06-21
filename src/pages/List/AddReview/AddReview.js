@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import styled from '@emotion/styled';
 import MyViewModal from '../../../components/MyViewModal/MyViewModal';
 import MyStep from './MyStep';
 
 function AddReview({ open, setOpen }) {
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
 
   const [movies, setMovies] = useState({ titles: [], ranks: [] });
   const [selected, setSelected] = useState({});
@@ -33,22 +32,6 @@ function AddReview({ open, setOpen }) {
         });
     }
   }, [selected]);
-
-  // const uploadReview = () => {
-  //   fetch('리뷰 업로드 api', {
-  //     method: 'POST',
-  //     headers: {
-  //       Authorization: token,
-  //     },
-  //     body: JSON.stringify({
-  //       rating: 4.0,
-  //       content: '리뷰 내용오오오옹',
-  //       date: 'Wed Jun 01 2022 14:51:08 GMT+0900 (한국 표준시)',
-  //       place: 'CGV 성신여대점',
-  //       movie_id: 1,
-  //     }),
-  //   });
-  // };
 
   const closeModal = (_, reason) => {
     if (reason === 'backdropClick') return;

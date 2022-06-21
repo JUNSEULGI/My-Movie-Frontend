@@ -41,6 +41,7 @@ const SearchBar = styled(Autocomplete)`
   width: 478px;
   margin: 30px 0;
 
+  // autocomplete 안의 option들의 색깔을 바꾸고 싶음.
   // & .MuiAutocomplete-listbox .MuiAutocomplete-option {
   //   color: ${({ theme }) => theme.palette.common.white};
   // }
