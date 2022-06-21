@@ -112,6 +112,16 @@ function Movie() {
     },
   };
 
+  // const myImg = new Image();
+  // myImg.crossOrigin = 'Anonymous';
+  // myImg.onload = () => {
+  //   const context = document.createElement('canvas').getContext('2d');
+  //   context.drawImage(myImg, 0, 0);
+  //   const { data } = context.getImageData(10, 10, 1, 1);
+  //   console.log('이거임', data);
+  // };
+  // myImg.src = DATA.image_url[0];
+
   function MovieContainer() {
     return (
       <>
@@ -148,6 +158,7 @@ function Movie() {
           {/* // */}
           <ContainerTitle>갤러리</ContainerTitle>
           <MovieGallery movie_image={DATA.image_url} />
+          <Test>여기</Test>
         </MovieBackGround>
       </>
     );
@@ -168,6 +179,13 @@ function Movie() {
 }
 
 export default Movie;
+
+const Test = styled.div`
+  width: 400px;
+  height: 400px;
+  background-color: antiquewhite;
+  color: white;
+`;
 
 const MovieBackGround = styled.div`
   padding: 80px;

@@ -14,8 +14,6 @@ function MovieGallery({ movie_image }) {
     borderBottomRightRadius: 0,
   }));
 
-  console.log('test', movie_image);
-
   return (
     <Box sx={{ width: '100%', minHeight: 429 }}>
       <Masonry columns={4} spacing={2}>

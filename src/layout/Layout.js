@@ -36,6 +36,10 @@ const MovieScene = styled.div`
   height: 300px;
   background: ${({ img }) => `url(${img}) no-repeat`};
   background-size: cover;
+
+  @media screen and (min-width: 1440px) {
+    width: 992px;
+  }
 `;
 
 // const Left = styled.aside`
