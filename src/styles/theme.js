@@ -51,6 +51,12 @@ const darkTheme = createTheme({
       dark: '#388e3c',
       contrastText: '#000000de',
     },
+    ageBadge: {
+      ALL: '#07964B',
+      '12세': '#EABD01',
+      15: '#DC7317',
+      18: '#D61D29',
+    },
     text: {
       primary: '#000000b3',
       secondary: '#ffffff80',

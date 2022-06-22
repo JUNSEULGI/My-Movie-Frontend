@@ -6,6 +6,7 @@ import { CardContainer } from './CardContainer';
 import { Box } from '@mui/system';
 import SeeMoreButton from './SeeMoreButton';
 import MovieRating from './MovieRating';
+import AgeBadge from './AgeBadge';
 
 function MovieInfo({ data }) {
   let age = data;
@@ -36,6 +37,18 @@ function MovieInfo({ data }) {
 
   let agee = age.age == 0 ? 'ALL' : age.age + '세';
 
+  let ageColor = '';
+
+  if (agee == 'ALL') {
+    ageColor = '#07964B';
+  } else if (agee == '12세') {
+    ageColor = '#EABD01';
+  } else if (agee == '15세') {
+    ageColor = '#DC7317';
+  } else {
+    ageColor = '#D61D29';
+  }
+
   return (
     <CardContainer>
       <MovieImg component="img" height="100%" image={thumbnail_image_url} />
@@ -61,7 +74,7 @@ function MovieInfo({ data }) {
             </span>
           ))}
           <br />
-          {running_time}분 · {agee}
+          {running_time}분 · <AgeBadge age={agee} ageColor={ageColor} />
         </SubInfo>
         {/* 러닝 타임은 00:00:00 형태로 */}
 

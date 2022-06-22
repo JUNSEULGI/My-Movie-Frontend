@@ -139,9 +139,6 @@ const SignUp = styled(Typography)`
 `;
 
 const NavSearch = styled(Autocomplete)`
-  & .MuiAutocomplete-clearIndicator {
-    color: aqua;
-  }
   margin-right: 40px;
   padding: 0;
   width: 200px;
