@@ -82,9 +82,6 @@ function MovieInfo({ data }) {
         <SummaryContainer>
           <div dangerouslySetInnerHTML={replaceBrTag(description)} />
         </SummaryContainer>
-        <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-          {<SeeMoreButton />}
-        </Box>
       </Box>
     </CardContainer>
   );
@@ -105,10 +102,15 @@ const SubInfo = styled(Typography)`
 `;
 
 const SummaryContainer = styled.div`
+  -ms-overflow-style: none; /* Explorer */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome */
+  }
   display: -webkit-box;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 7;
   -webkit-box-orient: vertical;
-  overflow: hidden;
+  overflow-y: scroll;
 
   p {
     /* width: 600px; */
@@ -119,7 +121,7 @@ const SummaryContainer = styled.div`
 
 const Summary = styled(Typography)`
   font-weight: bold;
-  margin-top: 70px;
+  margin-top: 30px;
 `;
 
 const Content = styled.p``;

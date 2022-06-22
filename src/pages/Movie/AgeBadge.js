@@ -14,6 +14,7 @@ export default AgeBadge;
 const MovieBadge = styled(Chip)`
   color: white;
   font-weight: bold;
+  width: 4em;
   height: 1.57em;
   background-color: ${props => props.ageColor};
 `;
