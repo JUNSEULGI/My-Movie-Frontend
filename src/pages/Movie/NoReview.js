@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { CardContainer } from './CardContainer';
 import { Link, Typography } from '@mui/material';
-import MyViewModal from '../../components/MyViewModal/MyViewModal';
+import { CardContainer } from './CardContainer';
+import AddReview from '../List/AddReview';
 
 function NoReview({ title }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -18,7 +18,7 @@ function NoReview({ title }) {
         <MyLink onClick={handleOpen}>{title}</MyLink>를 나의 영화 목록에
         추가해보세요!
       </NoReviewMent>
-      {/* <MyViewModal open={open} /> */}
+      <AddReview open={open} setOpen={setOpen} />
     </CardContainer>
   );
 }

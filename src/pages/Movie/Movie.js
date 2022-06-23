@@ -61,13 +61,16 @@ function Movie() {
           <MovieInfo data={DATA} />
           {/* // */}
           {DATA.actor?.length != 0 ? (
-            //  <MovieInfo data={movieData} />
-            //  {movieData.actor?.length != 0 ? (
+            // <MovieInfo data={movieData} />
+            //{' '}
+            // {movieData.actor?.length != 0 ? (
             <>
               <ContainerTitle>출연/제작</ContainerTitle>
               <ActorContainer>
                 {/* {actor?.map(actor => ( */}
                 {DATA.actor?.map(actor => (
+                  //{' '}
+
                   <Actor actor={actor} />
                 ))}
               </ActorContainer>
@@ -82,6 +85,7 @@ function Movie() {
           {/* // */}
           <ContainerTitle>예고편</ContainerTitle>
           <TrailerContainer>
+            {/* {movieData.video_url?.map((video, index) => ( */}
             {DATA.video_url?.map((video, index) => (
               <Trailer key={index} video={video} />
             ))}
@@ -90,6 +94,7 @@ function Movie() {
           {/* // */}
           <ContainerTitle>갤러리</ContainerTitle>
           <MovieGallery movie_image={DATA.image_url} />
+          {/* <MovieGallery movie_image={movieData.image_url} /> */}
         </MovieBackGround>
       </>
     );

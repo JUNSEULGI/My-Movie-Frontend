@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import MyViewModal from '../../../components/MyViewModal/MyViewModal';
+import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import MyStep from './MyStep';
 
 function AddReview({ open, setOpen }) {

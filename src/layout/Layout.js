@@ -36,17 +36,11 @@ const MovieScene = styled.div`
   height: 300px;
   background: ${({ img }) => `url(${img}) no-repeat`};
   background-size: cover;
-
-  @media screen and (min-width: 1440px) {
+  background-position: left -50px;
+  /* @media screen and (min-width: 1440px) {
     width: 992px;
-  }
+  } */
 `;
-
-// const Left = styled.aside`
-//   flex-shrink: 0;
-//   width: 280px;
-//   background-color: yellow;
-// `;
 
 const LeftMenu = styled.aside`
   display: ${({ leftMenu }) => (leftMenu ? 'flex' : 'none')};
@@ -66,7 +60,8 @@ const Center = styled.main`
   z-index: 1;
   flex-grow: 1;
   max-width: 1152px;
-  margin: 32px 60px 0;
+
+  margin: 60px 60px 0;
 
   @media screen and (max-width: 1300px) {
     width: 640px;

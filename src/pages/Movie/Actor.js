@@ -9,12 +9,12 @@ function Actor({ actor }) {
 
   const navigate = useNavigate();
 
-  const moveActor = id => {
-    navigate(`/actor/${id}`);
-  };
+  // const moveActor = id => {
+  //   navigate(`/actor/${id}`);
+  // };
 
   return (
-    <ActorCard id={id}>
+    <ActorCard key={id}>
       <ActorImg src={image} />
       <Links href={`/people/${id}`}>
         <ActorName>{name}</ActorName>

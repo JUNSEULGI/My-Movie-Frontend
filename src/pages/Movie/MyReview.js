@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import { CardContainer } from './CardContainer';
 import { Box, Button, Typography, Fab } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -30,13 +30,6 @@ function MyReview({ review }) {
   );
 }
 
-const FabContainer = styled.div`
-  display: grid;
-  position: absolute;
-  top: 0;
-  right: -60px;
-`;
-
 const MyReviewContainer = styled(CardContainer)`
   display: block;
   border: 2px solid ${({ theme }) => theme.palette.test.second};
@@ -53,8 +46,6 @@ const MyReviewContainer = styled(CardContainer)`
     border-width: 1em;
     border-style: solid;
     border-color: #ff9201 transparent transparent transparent;
-  }
-  &:hover + FabContainer {
   }
 `;
 
@@ -82,8 +73,14 @@ const MyReviewContent = styled(Typography)`
 
 const Reviewer = styled.div``;
 
+const FabContainer = styled.div`
+  display: grid;
+  position: absolute;
+  top: 0;
+  right: -60px;
+`;
+
 const ReviewIcon = styled(Fab)`
-  display: none;
   color: #ff9201;
   background: none;
   margin-bottom: 8px;
@@ -91,6 +88,7 @@ const ReviewIcon = styled(Fab)`
     color: white;
   }
 `;
+
 const DeleteButton = styled(ReviewIcon)`
   :hover {
     background-color: #ff9201;

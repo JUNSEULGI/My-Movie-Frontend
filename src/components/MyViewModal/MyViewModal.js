@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Box, Button, ButtonGroup, Modal } from '@mui/material';
-import SearchBox from './SearchBox/SearchBox';
+import SearchBox from './SearchBox';
 import Poster from '../Poster/Poster';
-import ReviewBox from './ReviewBox/ReviewBox';
+import ReviewBox from './ReviewBox';
 
 function MyViewModal({
   open,

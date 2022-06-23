@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import MyViewLayout from '../../layout/Layout';
 import Aside from '../../components/Aside';
-import MovieCard from './MovieCard/MovieCard';
-import AddReview from './AddReview/AddReview';
+import MovieCard from './MovieCard';
+import AddReview from './AddReview';
 
 function List() {
   function ListLayout() {

@@ -1,23 +1,18 @@
-import React, { useLayoutEffect } from 'react';
-import { useState, useEffect } from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { createTheme } from '@mui/material/styles';
 import styled from '@emotion/styled';
 import {
   Typography,
   AppBar,
   Toolbar,
   Avatar,
-  InputBase,
   Box,
   Popper,
   Autocomplete,
   TextField,
   Paper,
 } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-import { hover } from '@testing-library/user-event/dist/hover';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 function Nav() {
   const navigate = useNavigate();
@@ -34,22 +29,6 @@ function Nav() {
   const moveMoviePage = id => {
     navigate(`/movie/${id}`);
   };
-
-  const finalTheme = createTheme({
-    root: {
-      backgroundColor: 'yellow',
-    },
-    clearIndicator: {
-      backgroundColor: 'gray',
-      '& span': {
-        '& svg': {
-          '& path': {
-            d: "path('M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z')", // your svg icon path here
-          },
-        },
-      },
-    },
-  });
 
   return (
     <NavBar scrollPosition={scrollPosition}>
