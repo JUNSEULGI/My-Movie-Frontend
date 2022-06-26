@@ -25,7 +25,7 @@ function SearchBox({ titles, nowRunning, setSelected }) {
         <NowRunning>지금 상영중인 영화</NowRunning>
         {nowRunning.map(movie => (
           <RankedMovie key={movie.id}>
-            {movie.ranking}. {movie.title}
+            {movie.rank}. {movie.title}
           </RankedMovie>
         ))}
       </Box>

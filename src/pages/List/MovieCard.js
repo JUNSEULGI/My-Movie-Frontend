@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Box, Card, CardMedia, Typography, Rating, Chip } from '@mui/material';
 
-function MovieCard({ addCard, setOpen }) {
+function MovieCard({ data, setOpen }) {
   const navigation = useNavigate();
 
   const showMovie = id => {
@@ -14,7 +14,7 @@ function MovieCard({ addCard, setOpen }) {
     setOpen(true);
   };
 
-  return addCard ? (
+  return !data ? (
     <AddCardBox onClick={addMovie}>
       <AddBtn />
     </AddCardBox>

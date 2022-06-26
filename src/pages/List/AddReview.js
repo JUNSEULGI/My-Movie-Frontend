@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import MyViewModal from '../../../components/MyViewModal/MyViewModal';
+import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import MyStep from './MyStep';
 
 function AddReview({ open, setOpen }) {
@@ -10,7 +10,9 @@ function AddReview({ open, setOpen }) {
   const [movieDetail, setMovieDetail] = useState({});
 
   useEffect(() => {
-    fetch('http://172.30.1.39:8000/movies/simple')
+    if (!open) return;
+
+    fetch('http://192.168.228.159:8000/movies/simple')
       .then(res => res.json())
       .then(result => {
         if (result.message === 'SUCCESS') {
@@ -24,7 +26,7 @@ function AddReview({ open, setOpen }) {
 
   useEffect(() => {
     if (selected.title) {
-      fetch(`http://172.30.1.56:8000/movies/detail/${selected.id}`)
+      fetch(`http://ecd6-110-70-47-58.ngrok.io/movies/detail/${selected.id}`)
         .then(res => res.json())
         .then(data => {
           console.log(data);
