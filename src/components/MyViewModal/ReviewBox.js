@@ -8,14 +8,15 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 function ReviewBox({ isSaving, movieDetail }) {
   // const token = localStorage.getItem('token');
   const token =
-    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAsImV4cCI6MTY1NTM5NzczOH0.CvG5oNklqcKavT7xMl0pVFEfP9eg5MkM9SyCHroi0NY';
+    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiZXhwIjoxNjU2MDA0MDYzfQ.ky7WKj9qMEf13BgA5Uaq0keu9ZkXeaHOUsOzGQ1eyIY';
   const [user, setUser] = useState({});
   const [rating, setRating] = useState(0);
   const [data, setData] = useState({
+    title: '한줄평',
     content: '',
-    date: new Date(),
-    place: '',
-    people: '',
+    watched_date: new Date(),
+    place: { name: '', mapx: 0, mapy: 0 },
+    with_user: '',
   });
 
   const handleReview = e => {
@@ -24,7 +25,7 @@ function ReviewBox({ isSaving, movieDetail }) {
     });
   };
   useEffect(() => {
-    fetch('http://172.30.1.39:8000/users/info', {
+    fetch('http://192.168.228.159:8000/users/info', {
       headers: {
         Authorization: token,
       },
@@ -41,17 +42,16 @@ function ReviewBox({ isSaving, movieDetail }) {
 
     const saveData = {
       ...data,
-      date: timestamp(data.date),
+      watched_date: timestamp(data.watched_date),
       rating,
-      // with_user: data.people,
-      tag: [],
-      movie_id: movieDetail.id,
+      // tag: [],
     };
     console.log(saveData);
     const formData = new FormData();
     formData.append('data', JSON.stringify(saveData));
+    console.log(formData);
 
-    fetch('http://172.30.1.39:8000/reviews', {
+    fetch(`http://192.168.228.159:8000/reviews/movie/${movieDetail.id}`, {
       method: 'POST',
       headers: {
         Authorization: token,
@@ -67,6 +67,7 @@ function ReviewBox({ isSaving, movieDetail }) {
   };
 
   console.log(movieDetail);
+  console.log(timestamp(data.watched_date));
 
   return (
     <Container>
@@ -93,7 +94,7 @@ function ReviewBox({ isSaving, movieDetail }) {
           size="large"
         />
       </RowBox>
-      <RowLabel variant="h4">{user.nickname}님의 솔직후기</RowLabel>
+      <RowLabel variant="h4">{user?.nickname}님의 솔직후기</RowLabel>
       <ReviewField
         label="리뷰를 남겨보세요."
         multiline
@@ -113,11 +114,11 @@ function ReviewBox({ isSaving, movieDetail }) {
               mask="____.__.__ __:__"
               disableFuture={true}
               renderInput={params => <WhiteTextField {...params} />}
-              value={data.date}
+              value={data.watched_date}
               onChange={newValue => {
                 console.log(newValue);
                 setData(prev => {
-                  return { ...prev, date: newValue };
+                  return { ...prev, watched_date: newValue };
                 });
               }}
             />
@@ -127,10 +128,13 @@ function ReviewBox({ isSaving, movieDetail }) {
           <WatchInfoLabel variant="subtitle1">where</WatchInfoLabel>
           <WatchInfoField
             label="어디서 보셨나요?"
-            value={data.place}
+            value={data.place.name}
             onChange={e => {
               setData(prev => {
-                return { ...prev, place: e.target.value };
+                return {
+                  ...prev,
+                  place: { ...data.place, name: e.target.value },
+                };
               });
             }}
           />
@@ -139,10 +143,10 @@ function ReviewBox({ isSaving, movieDetail }) {
           <WatchInfoLabel variant="subtitle1">with</WatchInfoLabel>
           <WatchInfoField
             label="누구랑 보셨나요?"
-            value={data.people}
+            value={data.with_user}
             onChange={e => {
               setData(prev => {
-                return { ...prev, people: e.target.value };
+                return { ...prev, with_user: e.target.value };
               });
             }}
           />

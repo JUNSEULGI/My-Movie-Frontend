@@ -8,38 +8,47 @@ import AddReview from './AddReview';
 
 function List() {
   function ListLayout() {
+    const token =
+      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiZXhwIjoxNjU2MDA0MDYzfQ.ky7WKj9qMEf13BgA5Uaq0keu9ZkXeaHOUsOzGQ1eyIY';
     const [reviews, setReviews] = useState([]);
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-      fetch('/reviews/id', {
+      fetch('http://192.168.228.159:8000/reviews', {
         headers: {
-          Authorization: 'token',
+          Authorization: token,
         },
       })
         .then(res => res.json())
-        .then(result => {
-          setReviews(result);
+        .then(data => {
+          console.log(data.result);
+          setReviews(data.result);
         });
     }, []);
+
+    // 작성한 리뷰 받아오기 테스트
+    // useEffect(() => {
+    //   fetch('http://192.168.228.159:8000/reviews/7', {
+    //     headers: {
+    //       Authorization: token,
+    //     },
+    //   })
+    //     .then(res => res.json())
+    //     .then(result => console.log(result));
+    // }, []);
 
     return (
       <>
         <Section>
-          <SectionTitle>수인님의 인생 영화</SectionTitle>
+          <SectionTitle variant="h3">수인님의 인생 영화</SectionTitle>
         </Section>
         <Section>
-          <SectionTitle>수인님이 저장한 영화 목록</SectionTitle>
+          <SectionTitle variant="h3">수인님이 저장한 영화 목록</SectionTitle>
           <CardContainer>
             {reviews.slice(0, 7).map(review => (
-              <MovieCard key={review.id} data={review.data} />
+              <MovieCard key={review.review_id} data={review} />
             ))}
-            <MovieCard />
-            <MovieCard />
-            <MovieCard />
-            <MovieCard />
-            <MovieCard />
-            <MovieCard addCard={true} setOpen={setOpen} />
+            <MovieCard setOpen={setOpen} />
           </CardContainer>
         </Section>
         <AddReview open={open} setOpen={setOpen} />
@@ -59,9 +68,11 @@ const CardContainer = styled(Box)`
   gap: 24px;
 `;
 
-const SectionTitle = styled.h3`
-  margin: 12px 0;
+const SectionTitle = styled(Typography)`
+  margin: 15px 0;
   color: ${({ theme }) => theme.palette.common.white};
+  font-size: 24px;
+  font-weight: bold;
 `;
 
 export default List;
