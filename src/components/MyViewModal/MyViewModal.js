@@ -1,21 +1,9 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Box, Button, ButtonGroup, Modal } from '@mui/material';
-import SearchBox from './SearchBox';
-import Poster from '../Poster/Poster';
-import ReviewBox from './ReviewBox';
 
-function MyViewModal({
-  open,
-  closeModal,
-  breadcrumbs,
-  titles,
-  nowRunning,
-  setSelected,
-  selected,
-  movieDetail,
-}) {
-  const [isSaving, setIsSaving] = useState(false);
+function MyViewModal({ open, closeModal, breadcrumbs, children }) {
+  // const [isSaving, setIsSaving] = useState(false);
 
   return (
     <MyModal
@@ -27,6 +15,7 @@ function MyViewModal({
       <Container>
         <Step breadcrumbs={breadcrumbs}>{breadcrumbs}</Step>
         <Buttons variant="text">
+          {/* // 저장, 편집 등 버튼
           {selected.title && (
             <ModalButton
               onClick={() => {
@@ -35,21 +24,10 @@ function MyViewModal({
             >
               Save
             </ModalButton>
-          )}
+          )} */}
           <ModalButton onClick={closeModal}>Close</ModalButton>
         </Buttons>
-        <Content>
-          <Poster url={movieDetail.thumbnail_image_url} />
-          {selected.title ? (
-            <ReviewBox isSaving={isSaving} movieDetail={movieDetail} />
-          ) : (
-            <SearchBox
-              titles={titles}
-              nowRunning={nowRunning}
-              setSelected={setSelected}
-            />
-          )}
-        </Content>
+        {children}
       </Container>
     </MyModal>
   );
@@ -75,13 +53,6 @@ const Container = styled(Box)`
   margin-bottom: 100px;
   background-color: ${({ theme }) => theme.palette.background.card};
   border-radius: 8px;
-`;
-
-const Content = styled(Box)`
-  display: grid;
-  grid-template-columns: 273px 1fr;
-  // 컨테이너가 늘어나면서 높이를 100%로 고정할 수 없게 됨.
-  // height: 100%;
 `;
 
 const Step = styled(Box)`
