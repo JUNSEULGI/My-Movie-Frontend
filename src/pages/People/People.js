@@ -6,6 +6,7 @@ import { CardContainer } from '../Movie/CardContainer';
 import { ActorImg } from '../Movie/ActorImage';
 import MyViewLayout from '../../layout/Layout';
 import PeopleProfile from './PeopleProfile';
+import MovieTable from './MovieTable';
 
 function People() {
   const params = useParams();
@@ -14,9 +15,16 @@ function People() {
     actor_info: {
       id: 1,
       name: '마동석',
+      country: '한국',
+      birth: '2022년도 10월 23일',
+      body: '183cm, 74kg',
+      debut: '2004년, 바람의 전설',
+      agency: '키이스트',
+      role: '배우',
+      best_image_url:
+        'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/gallery/Z8jafJT0TOkoU1C0Z5xo_Q.jpeg',
       image_url:
         'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/actor/%E1%84%86%E1%85%A1%E1%84%83%E1%85%A9%E1%86%BC%E1%84%89%E1%85%A5%E1%86%A8.jpeg',
-      country: '한국',
       starring_list: [
         {
           title: '범죄도시2',
@@ -33,19 +41,21 @@ function People() {
           thumbnail_image_url:
             'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/thumbnail/%E1%84%8B%E1%85%A1%E1%86%A8%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%8C%E1%85%A5%E1%86%AB.jpeg',
           role_name: '주연',
-          ratings: '0',
+          ratings: '',
           platform: '넷플릭스',
         },
       ],
     },
   };
 
+  const PeopleData = people.actor_info;
+
   function PeopleLayout() {
     return (
       <>
         <DDD>
           <PeopleCard>
-            <PeopleImg src="https://search.pstatic.net/common/?src=http%3A%2F%2Fimgnews.naver.net%2Fimage%2F609%2F2022%2F05%2F11%2F202205111644321510_1_20220511164504190.jpg&type=sc960_832" />
+            <PeopleImg src={PeopleData.image_url} />
             <Info>
               <Box
                 sx={{
@@ -53,13 +63,15 @@ function People() {
                   alignItems: 'baseline',
                 }}
               >
-                <PeopleName>마동석</PeopleName>
-                <Job>배우</Job>
+                <PeopleName>{PeopleData.name}</PeopleName>
+                <Job>{PeopleData.role}</Job>
               </Box>
-              <PeopleProfile />
+              <PeopleProfile profile={PeopleData} />
             </Info>
           </PeopleCard>
-          <Right></Right>
+          <Right>
+            <MovieTable movie={PeopleData} />
+          </Right>
         </DDD>
       </>
     );
@@ -67,20 +79,23 @@ function People() {
   return (
     <MyViewLayout
       // leftMenu={<Aside />}
+      background={PeopleData.best_image_url}
       center={<PeopleLayout />}
     />
   );
 }
 
 const DDD = styled.div`
-  display: flex;
-  justify-content: space-between;
+  padding-top: 40px;
+  /* display: flex; */
+  /* justify-content: space-between; */
 `;
 
 const PeopleImg = styled(ActorImg)``;
 
 const PeopleCard = styled(CardContainer)`
   width: 440px;
+  height: 210px;
 `;
 
 const Info = styled.div`
@@ -96,8 +111,8 @@ const Job = styled.p`
   margin: 0 0 0 8px;
 `;
 
-const Right = styled(CardContainer)`
-  width: 680px;
+const Right = styled.div`
+  /* width: 680px; */
 `;
 
 export default People;
