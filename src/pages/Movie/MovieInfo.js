@@ -35,15 +35,15 @@ function MovieInfo({ data }) {
     return { __html: str };
   }
 
-  let agee = age.age == 0 ? 'ALL' : age.age + '세';
+  let ageToString = age.age == 0 ? 'ALL' : age.age + '세';
 
   let ageColor = '';
 
-  if (agee == 'ALL') {
+  if (ageToString == 'ALL') {
     ageColor = '#07964B';
-  } else if (agee == '12세') {
+  } else if (ageToString == '12세') {
     ageColor = '#EABD01';
-  } else if (agee == '15세') {
+  } else if (ageToString == '15세') {
     ageColor = '#DC7317';
   } else {
     ageColor = '#D61D29';
@@ -74,7 +74,7 @@ function MovieInfo({ data }) {
             </span>
           ))}
           <br />
-          {running_time}분 · <AgeBadge age={agee} ageColor={ageColor} />
+          {running_time}분 · <AgeBadge age={ageToString} ageColor={ageColor} />
         </SubInfo>
         {/* 러닝 타임은 00:00:00 형태로 */}
 

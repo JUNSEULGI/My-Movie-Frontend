@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Box } from '@mui/material';
@@ -7,24 +7,38 @@ import { ActorImg } from '../Movie/ActorImage';
 import MyViewLayout from '../../layout/Layout';
 import PeopleProfile from './PeopleProfile';
 import MovieTable from './MovieTable';
+import { PEOPLE_URL } from '../../Modules/API';
 
 function People() {
   const params = useParams();
+  console.log(params.id);
 
+  // Real DATA
+  const [peopleData, setPeopleData] = useState({});
+  useEffect(() => {
+    fetch(`${PEOPLE_URL}${params.id}`)
+      .then(res => res.json())
+      .then(res => {
+        setPeopleData(res.actor_info);
+      });
+  }, []);
+
+  console.log('asd', peopleData);
+
+  // Mock DATA
   const people = {
     actor_info: {
       id: 1,
       name: '마동석',
-      country: '한국',
-      birth: '2022년도 10월 23일',
-      body: '183cm, 74kg',
-      debut: '2004년, 바람의 전설',
-      agency: '키이스트',
-      role: '배우',
-      best_image_url:
-        'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/gallery/Z8jafJT0TOkoU1C0Z5xo_Q.jpeg',
       image_url:
         'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/actor/%E1%84%86%E1%85%A1%E1%84%83%E1%85%A9%E1%86%BC%E1%84%89%E1%85%A5%E1%86%A8.jpeg',
+      country: '한국',
+      birth: '1971-03-01',
+      debut: '바람의 전설',
+      debut_year: 2004,
+      height: 178,
+      weight: 100,
+      job: ['영화배우', '감독'],
       starring_list: [
         {
           title: '범죄도시2',
@@ -34,6 +48,8 @@ function People() {
           role_name: '주연',
           ratings: '5.0',
           platform: '넷플릭스',
+          platform_logo_image:
+            'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/platform/Netfilx.png',
         },
         {
           title: '악인전',
@@ -41,21 +57,22 @@ function People() {
           thumbnail_image_url:
             'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/thumbnail/%E1%84%8B%E1%85%A1%E1%86%A8%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%8C%E1%85%A5%E1%86%AB.jpeg',
           role_name: '주연',
-          ratings: '',
+          ratings: '0',
           platform: '넷플릭스',
+          platform_logo_image:
+            'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/platform/Netfilx.png',
         },
       ],
     },
   };
-
-  const PeopleData = people.actor_info;
+  // const peopleData = people.actor_info;
 
   function PeopleLayout() {
     return (
       <>
         <DDD>
           <PeopleCard>
-            <PeopleImg src={PeopleData.image_url} />
+            <PeopleImg src={peopleData.image_url} />
             <Info>
               <Box
                 sx={{
@@ -63,14 +80,16 @@ function People() {
                   alignItems: 'baseline',
                 }}
               >
-                <PeopleName>{PeopleData.name}</PeopleName>
-                <Job>{PeopleData.role}</Job>
+                <PeopleName>{peopleData.name}</PeopleName>
+                {peopleData.job?.map(job => {
+                  return <Job>{job}</Job>;
+                })}
               </Box>
-              <PeopleProfile profile={PeopleData} />
+              <PeopleProfile profile={peopleData} />
             </Info>
           </PeopleCard>
           <Right>
-            <MovieTable movie={PeopleData} />
+            <MovieTable movie={peopleData} />
           </Right>
         </DDD>
       </>
@@ -79,7 +98,7 @@ function People() {
   return (
     <MyViewLayout
       // leftMenu={<Aside />}
-      background={PeopleData.best_image_url}
+      background={peopleData.background_image}
       center={<PeopleLayout />}
     />
   );

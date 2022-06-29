@@ -3,11 +3,11 @@ import styled from '@emotion/styled';
 import { Link, Typography } from '@mui/material';
 import { CardContainer } from './CardContainer';
 import AddReview from '../List/AddReview';
+import MyViewModal from '../../components/MyViewModal/MyViewModal';
 
 function NoReview({ title }) {
+  const [reviews, setReviews] = useState([]);
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   return (
     <CardContainer style={{ justifyContent: 'center' }}>
@@ -15,10 +15,8 @@ function NoReview({ title }) {
         남긴 후기가 없어요!
         <br />
         후기를 쓰고 &nbsp;
-        <MyLink onClick={handleOpen}>{title}</MyLink>를 나의 영화 목록에
-        추가해보세요!
+        <MyLink>{title}</MyLink>를 나의 영화 목록에 추가해보세요!
       </NoReviewMent>
-      <AddReview open={open} setOpen={setOpen} />
     </CardContainer>
   );
 }

@@ -32,7 +32,7 @@ function MovieTable({ movie }) {
         <Platform>감상 서비스</Platform>
       </RowTitle>
       <Table>
-        {starring_list.map(movie => {
+        {starring_list?.map(movie => {
           const {
             title,
             release,
@@ -40,6 +40,7 @@ function MovieTable({ movie }) {
             role_name,
             ratings,
             platform,
+            platform_logo_image,
           } = movie;
 
           return (
@@ -54,9 +55,16 @@ function MovieTable({ movie }) {
               </MoviePoster>
               <MoiveTitle>{title}</MoiveTitle>
               <InRole>{role_name}</InRole>
-              <Rating>{ratings ? ratings : '평가 하시겠어요?'}</Rating>
+              <Rating>
+                {ratings ? (
+                  <ReviewRating>{ratings}</ReviewRating>
+                ) : (
+                  '평가 하시겠어요?'
+                )}
+              </Rating>
               <Platform>
-                {platform} <OTTLogo alt="" src={Netflix} />
+                {/* {platform}  */}
+                <MovieTableOTT alt={platform} src={platform_logo_image} />
               </Platform>
             </Row>
           );
@@ -141,8 +149,20 @@ const InRole = styled.div``;
 
 const Rating = styled.div``;
 
-const Platform = styled.div``;
+const ReviewRating = styled.p`
+  font-weight: bold;
+  color: ${({ theme }) => theme.palette.test.main}; ;
+`;
+
+const Platform = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 
 const MovieImg = styled(CardMedia)`
   border-radius: 8px;
+`;
+
+const MovieTableOTT = styled(OTTLogo)`
+  margin: 0 6px 0 0;
 `;

@@ -58,7 +58,7 @@ function Movie() {
     return (
       <>
         <MovieBackGround>
-          <MovieInfo data={DATA} />
+          <MovieInfo data={movieData} />
           {/* // */}
           {DATA.actor?.length != 0 ? (
             // <MovieInfo data={movieData} />

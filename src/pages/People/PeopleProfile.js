@@ -3,7 +3,18 @@ import styled from '@emotion/styled';
 import { Box } from '@mui/material';
 
 function PeopleProfile({ profile }) {
-  const { country, birth, body, debut, agency, role } = profile;
+  const {
+    country,
+    height,
+    weight,
+    birth,
+    body,
+    debut,
+    debut_year,
+    agency,
+    role,
+  } = profile;
+
   return (
     <Box
       sx={{
@@ -19,16 +30,34 @@ function PeopleProfile({ profile }) {
         <p>{birth}</p>
       </Profile>
       <Profile>
-        <Title>데뷔</Title>
-        <p>{debut}</p>
+        {debut_year == 0 ? (
+          ''
+        ) : (
+          <>
+            <Title>데뷔</Title>
+            <p>
+              {debut_year} {debut}
+            </p>
+          </>
+        )}
       </Profile>
       <Profile>
         <Title>소속사</Title>
         <p>{agency}</p>
       </Profile>
       <Profile>
-        <Title>신체</Title>
-        <p>{body}</p>
+        {/* {height},{weight} */}
+        {height === '' && weight === '' ? (
+          ''
+        ) : (
+          <>
+            <Title>신체</Title>
+            <p>
+              {height}
+              {weight}
+            </p>
+          </>
+        )}
       </Profile>
     </Box>
   );
