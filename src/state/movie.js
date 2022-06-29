@@ -1,9 +1,9 @@
 import { atom } from 'recoil';
 
 export default atom({
-  key: 'moview',
+  key: 'movie',
   default: {
-    id: '1',
+    id: '',
     title: '',
   },
 });

@@ -2,7 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { movieState } from '../../state';
 import styled from '@emotion/styled';
-import { Autocomplete, Box, Typography, TextField } from '@mui/material';
+import {
+  Autocomplete,
+  Popper,
+  Paper,
+  Box,
+  Typography,
+  TextField,
+} from '@mui/material';
 import Poster from '../Poster/Poster';
 
 function SearchBox() {
@@ -11,7 +18,7 @@ function SearchBox() {
   const [ranks, setRanks] = useState([]);
 
   useEffect(() => {
-    fetch('http://192.168.228.159:8000/movies/simple')
+    fetch('http://172.30.1.25:8000/movies/simple')
       .then(res => res.json())
       .then(result => {
         if (result.message === 'SUCCESS') {
@@ -29,6 +36,8 @@ function SearchBox() {
         <SearchBar
           options={titles}
           getOptionLabel={option => option.title}
+          PaperComponent={StyledPaper}
+          PopperComponent={StyledPopper}
           renderInput={params => (
             <SearchInput
               {...params}
@@ -70,13 +79,19 @@ const SearchBar = styled(Autocomplete)`
   width: 478px;
   margin: 30px 0;
 
-  // autocomplete 안의 option들의 색깔을 바꾸고 싶음.
-  // & .MuiAutocomplete-listbox .MuiAutocomplete-option {
-  //   color: ${({ theme }) => theme.palette.common.white};
-  // }
-
   & .MuiInputBase-input {
     color: ${({ theme }) => theme.palette.common.white};
+  }
+`;
+
+const StyledPopper = styled(Popper)``;
+
+const StyledPaper = styled(Paper)`
+  color: white;
+  font-weight: bold;
+  background-color: darkgray;
+  :focus {
+    background-color: yellow;
   }
 `;
 

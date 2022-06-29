@@ -15,7 +15,7 @@ function List() {
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-      fetch('http://192.168.228.159:8000/reviews', {
+      fetch('http://172.30.1.26:8000/reviews/list', {
         headers: {
           Authorization: token,
         },

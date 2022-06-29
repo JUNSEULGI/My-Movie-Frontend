@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { tokenState, movieState, reviewState } from '../../state';
+import { tokenState, movieState, reviewState, savingState } from '../../state';
 import styled from '@emotion/styled';
 import { Box, Typography, TextField, Rating } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -11,6 +11,8 @@ import Poster from '../Poster/Poster';
 function ReviewBox() {
   const [token, setToken] = useRecoilState(tokenState);
   const [movie, setMovie] = useRecoilState(movieState);
+  const [saving, setSaving] = useRecoilState(savingState);
+
   const [review, setReview] = useRecoilState(reviewState);
   const [user, setUser] = useState({});
   const [rating, setRating] = useState(0);
@@ -23,7 +25,7 @@ function ReviewBox() {
 
   useEffect(() => {
     if (movie.title) {
-      fetch(`http://ecd6-110-70-47-58.ngrok.io/movies/detail/${movie.id}`)
+      fetch(`http://172.30.1.25:8000/movies/detail/${movie.id}`)
         .then(res => res.json())
         .then(data => {
           console.log(data);
@@ -33,7 +35,7 @@ function ReviewBox() {
   }, []);
 
   useEffect(() => {
-    fetch('http://192.168.228.159:8000/users/info', {
+    fetch('http://172.30.1.26:8000/users/info', {
       headers: {
         Authorization: token,
       },
@@ -46,36 +48,39 @@ function ReviewBox() {
   }, []);
 
   useEffect(() => {
+    if (!saving) return;
+
     const saveData = {
       ...review,
       watched_date: timestamp(review.watched_date),
       rating,
+      movie_id: movie.id,
       // tag: [],
     };
     console.log(saveData);
-
-    if (!review.isSaving) return;
 
     const formData = new FormData();
     formData.append('data', JSON.stringify(saveData));
     // console.log(formData);
 
-    fetch(`http://192.168.228.159:8000/reviews/movie/${movie.id}`, {
+    fetch(`http://172.30.1.26:8000/reviews`, {
       method: 'POST',
       headers: {
         Authorization: token,
       },
       body: formData,
     });
-  }, [review]);
+
+    setSaving(false);
+  }, [saving]);
 
   const timestamp = date => {
     const koDate = new Date(date.setHours(date.getHours() + 9));
-    console.log(date, koDate);
+    // console.log(date, koDate);
     return koDate.toISOString().replace('T', ' ').substring(0, 19);
   };
 
-  console.log(review);
+  console.log(saving, review);
 
   return (
     <Column>

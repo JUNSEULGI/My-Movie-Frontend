@@ -1,18 +1,21 @@
 import React from 'react';
-import { useRecoilState } from 'recoil';
-import { movieState } from '../../state';
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import { movieState, reviewState, savingState } from '../../state';
 import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import MyStep from './MyStep';
 import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import SearchBox from '../../components/MyViewModal/SearchBox';
 
 function NewReview({ open, setOpen }) {
+  const [saving, setSaving] = useRecoilState(savingState);
   const [movie, setMovie] = useRecoilState(movieState);
+  const resetMovie = useResetRecoilState(movieState);
+  const resetReview = useResetRecoilState(reviewState);
 
   const closeModal = (_, reason) => {
     if (reason === 'backdropClick') return;
-    // setSelected({});
-    // setMovieDetail({});
+    resetMovie();
+    resetReview();
     setOpen(false);
   };
 
@@ -31,6 +34,17 @@ function NewReview({ open, setOpen }) {
       open={open}
       closeModal={closeModal}
       breadcrumbs={<MyStep />}
+      buttons={
+        movie.id && [
+          {
+            key: 1,
+            name: 'Save',
+            function: () => {
+              setSaving(true);
+            },
+          },
+        ]
+      }
       children={movie.id ? <ReviewBox /> : <SearchBox />}
     />
   );

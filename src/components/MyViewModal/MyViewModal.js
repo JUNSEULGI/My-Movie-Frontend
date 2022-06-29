@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Box, Button, ButtonGroup, Modal } from '@mui/material';
 
-function MyViewModal({ open, closeModal, breadcrumbs, children }) {
-  // const [isSaving, setIsSaving] = useState(false);
-
+function MyViewModal({ open, closeModal, breadcrumbs, children, buttons }) {
   return (
     <MyModal
       open={open}
@@ -15,16 +13,12 @@ function MyViewModal({ open, closeModal, breadcrumbs, children }) {
       <Container>
         <Step breadcrumbs={breadcrumbs}>{breadcrumbs}</Step>
         <Buttons variant="text">
-          {/* // 저장, 편집 등 버튼
-          {selected.title && (
-            <ModalButton
-              onClick={() => {
-                setIsSaving(true);
-              }}
-            >
-              Save
-            </ModalButton>
-          )} */}
+          {buttons &&
+            buttons.map(item => (
+              <ModalButton key={item.key} onClick={item.function}>
+                {item.name}
+              </ModalButton>
+            ))}
           <ModalButton onClick={closeModal}>Close</ModalButton>
         </Buttons>
         {children}
