@@ -11,7 +11,6 @@ import { PEOPLE_URL } from '../../Modules/API';
 
 function People() {
   const params = useParams();
-  console.log(params.id);
 
   // Real DATA
   const [peopleData, setPeopleData] = useState({});
