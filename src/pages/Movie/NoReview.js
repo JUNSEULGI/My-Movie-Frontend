@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { Link, Typography } from '@mui/material';
 import { CardContainer } from './CardContainer';
-import { Typography } from '@mui/material';
+import AddReview from '../List/AddReview';
+import MyViewModal from '../../components/MyViewModal/MyViewModal';
 
-function NoReview() {
+function NoReview({ title }) {
+  const [reviews, setReviews] = useState([]);
+  const [open, setOpen] = useState(false);
+
   return (
     <CardContainer style={{ justifyContent: 'center' }}>
       <NoReviewMent variant="h6">
         남긴 후기가 없어요!
         <br />
         후기를 쓰고 &nbsp;
-        <a href="#">닥터스트레인지</a>를 나의 영화 목록에 추가해보세요!
+        <MyLink>{title}</MyLink>를 나의 영화 목록에 추가해보세요!
       </NoReviewMent>
     </CardContainer>
   );
@@ -21,13 +26,13 @@ export default NoReview;
 const NoReviewMent = styled(Typography)`
   font-weight: bold;
   text-align: center;
+`;
 
-  a {
-    color: ${({ theme }) => theme.palette.test.main};
-    text-decoration: none;
-
-    :hover {
-      color: orange;
-    }
+const MyLink = styled(Link)`
+  color: ${({ theme }) => theme.palette.test.main};
+  text-decoration: none;
+  cursor: pointer;
+  :hover {
+    color: orange;
   }
 `;

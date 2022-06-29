@@ -8,23 +8,30 @@ import KakaoLogin from './Kakao/KakaoLogin';
 function Login() {
   function LoginContainer() {
     return (
-      <LoginPage>
-        <LoginBox>
-          <MyView>My View</MyView>
-          <Produce>소셜 로그인으로 더 간단하게 로그인하세요.</Produce>
-          <SocialContainer>
-            <LoginText>네이버로 로그인하기</LoginText>
-            <NaverLogin />
-            <LoginText>카카오로 로그인하기</LoginText>
-            <KakaoLogin />
-          </SocialContainer>
-        </LoginBox>
-      </LoginPage>
+      <>
+        <LoginPage>
+          <LoginBox>
+            <MyView>My View</MyView>
+            <Produce>소셜 로그인으로 더 간단하게 로그인하세요.</Produce>
+            <SocialContainer>
+              {/* Naver 로그인 버튼 */}
+              <LoginText>네이버로 로그인하기</LoginText>
+              <NaverLogin />
+              {/* Kakao 로그인 버튼 */}
+              <LoginText>카카오로 로그인하기</LoginText>
+              <KakaoLogin />
+            </SocialContainer>
+          </LoginBox>
+        </LoginPage>
+        <NaverLogin />
+      </>
     );
   }
 
   return <MyViewLayout center={<LoginContainer />} />;
 }
+
+export default Login;
 
 const LoginPage = styled(Container)`
   margin: 0 auto;
@@ -62,5 +69,3 @@ const LoginText = styled.div`
   margin: 20px 0;
   color: white;
 `;
-
-export default Login;
