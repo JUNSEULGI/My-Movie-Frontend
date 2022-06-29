@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Avatar } from '@mui/material';
+import { OTTLogo } from './PlatformAvatar';
 import Netflix from '../assets/images/Netflix_Symbol_RGB.png';
 
 function Aside() {
@@ -12,12 +12,6 @@ function Aside() {
     </AsideContainer>
   );
 }
-
-const OTTLogo = styled(Avatar)`
-  padding: 4px;
-  margin-bottom: 16px;
-  background-color: gray;
-`;
 
 const AsideContainer = styled.div``;
 

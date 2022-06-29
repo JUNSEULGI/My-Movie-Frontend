@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { CardContainer } from './CardContainer';
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography, Fab } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import MovieRating from './MovieRating';
 
 function MyReview({ review }) {
@@ -16,6 +18,14 @@ function MyReview({ review }) {
         <MyReviewTitle variant="h5">{oneline}</MyReviewTitle>
       </MyBox>
       <MyReviewContent>{my_review} </MyReviewContent>
+      <FabContainer>
+        <EditButton size="small">
+          <EditIcon />
+        </EditButton>
+        <DeleteButton size="small">
+          <DeleteIcon />
+        </DeleteButton>
+      </FabContainer>
     </MyReviewContainer>
   );
 }
@@ -62,5 +72,32 @@ const MyReviewContent = styled(Typography)`
 `;
 
 const Reviewer = styled.div``;
+
+const FabContainer = styled.div`
+  display: grid;
+  position: absolute;
+  top: 0;
+  right: -60px;
+`;
+
+const ReviewIcon = styled(Fab)`
+  color: #ff9201;
+  background: none;
+  margin-bottom: 8px;
+  :hover {
+    color: white;
+  }
+`;
+
+const DeleteButton = styled(ReviewIcon)`
+  :hover {
+    background-color: #ff9201;
+  }
+`;
+const EditButton = styled(ReviewIcon)`
+  :hover {
+    background-color: #ff9201;
+  }
+`;
 
 export default MyReview;

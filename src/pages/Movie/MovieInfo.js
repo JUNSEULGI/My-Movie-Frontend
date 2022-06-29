@@ -6,12 +6,53 @@ import { CardContainer } from './CardContainer';
 import { Box } from '@mui/system';
 import SeeMoreButton from './SeeMoreButton';
 import MovieRating from './MovieRating';
+import AgeBadge from './AgeBadge';
 
-function MovieInfo({ data, rating }) {
-  const { title, description, release_date, country, category, genre } = data;
+function MovieInfo({ data }) {
+  let age = data;
+  const {
+    title,
+    en_title,
+    description,
+    release_date,
+    country,
+    category,
+    ratings,
+    running_time,
+    genre,
+    thumbnail_image_url,
+  } = data;
+
+  // \n을 <br/>로 바꿔주는
+  function replaceBrTag(str) {
+    if (str == undefined || str == null) {
+      return { __html: '내용이 없습니다' };
+    }
+
+    str = str.replace(/\r\n/gi, '<br>');
+    str = str.replace(/\\n/gi, '<br>');
+    str = str.replace(/\n/gi, '<br>');
+    return { __html: str };
+  }
+
+  let ageToString = age.age == 0 ? 'ALL' : age.age + '세';
+
+  let ageColor = '';
+
+  if (ageToString == 'ALL') {
+    ageColor = '#07964B';
+  } else if (ageToString == '12세') {
+    ageColor = '#EABD01';
+  } else if (ageToString == '15세') {
+    ageColor = '#DC7317';
+  } else {
+    ageColor = '#D61D29';
+  }
+
   return (
     <CardContainer>
-      <MovieImg component="img" height="100%" image={MovieImage} />
+      <MovieImg component="img" height="100%" image={thumbnail_image_url} />
+      {/* <MovieImg component="img" height="100%" image={MovieImage} /> */}
       <Box sx={{ paddingLeft: '22px' }}>
         <Box
           sx={{
@@ -21,26 +62,26 @@ function MovieInfo({ data, rating }) {
           }}
         >
           <MovieTitle variant="h4">{title}</MovieTitle>
-          <MovieRating rating={rating} />
+          <MovieRating rating={ratings} />
         </Box>
         <SubInfo variant="subtitle2">
-          Doctor Strange in the Multiverse of Madness//영문(원) 제목
+          {en_title}
           <br />
-          {release_date.substr(0, 4)} · {country} ·{' '}
-          {genre?.map(genreItems => (
-            <span style={{ marginRight: '10px' }}>{genreItems}</span>
+          {release_date?.substr(0, 4)} · {country}
+          {genre?.map((genreItems, index) => (
+            <span id={index} style={{ marginRight: '10px' }}>
+              {genreItems}
+            </span>
           ))}
-          <br /> 2시간 6분 · 12세 별점 //러닝 타임
+          <br />
+          {running_time}분 · <AgeBadge age={ageToString} ageColor={ageColor} />
         </SubInfo>
+        {/* 러닝 타임은 00:00:00 형태로 */}
 
-        <Summary variant="subtitle1">줄거리 //필요</Summary>
-
+        <Summary variant="subtitle1">줄거리</Summary>
         <SummaryContainer>
-          <p>{description}</p>
+          <div dangerouslySetInnerHTML={replaceBrTag(description)} />
         </SummaryContainer>
-        <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-          {<SeeMoreButton />}
-        </Box>
       </Box>
     </CardContainer>
   );
@@ -61,10 +102,15 @@ const SubInfo = styled(Typography)`
 `;
 
 const SummaryContainer = styled.div`
+  -ms-overflow-style: none; /* Explorer */
+  scrollbar-width: none; /* Firefox */
+  ::-webkit-scrollbar {
+    display: none; /* Chrome */
+  }
   display: -webkit-box;
-  -webkit-line-clamp: 5;
+  -webkit-line-clamp: 7;
   -webkit-box-orient: vertical;
-  overflow: hidden;
+  overflow-y: scroll;
 
   p {
     /* width: 600px; */
@@ -75,5 +121,7 @@ const SummaryContainer = styled.div`
 
 const Summary = styled(Typography)`
   font-weight: bold;
-  margin-top: 70px;
+  margin-top: 30px;
 `;
+
+const Content = styled.p``;

@@ -55,7 +55,12 @@ function List() {
       </>
     );
   }
-  return <MyViewLayout leftMenu={<Aside />} center={<ListLayout />} />;
+  return (
+    <MyViewLayout
+      // leftMenu={<Aside />}
+      center={<ListLayout />}
+    />
+  );
 }
 
 const Section = styled(Box)`

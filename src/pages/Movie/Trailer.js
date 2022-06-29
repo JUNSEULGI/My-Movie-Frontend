@@ -8,19 +8,11 @@ import { ReactComponent as PlayIcon } from '../../assets/images/Play.svg';
 function Trailer({ video }) {
   return (
     <MovieTrailer>
-      {/* <PlayButton /> */}
       <DarkPaperContainer>
-        {/* <DarkPaper /> */}
-        <MovieVideo
-          style={{ border: 'none' }}
-          width="560"
-          height="315"
-          src="https://www.youtube.com/embed/OEZc_c7A7Ko"
-          allow="accelerometer;
-        autoplay; clipboard-write; encrypted-media; gyroscope;
-        picture-in-picture"
-          allowfullscreen
-        />
+        <video controls preload="none" width="560" height="315">
+          <source src={video} type="video/webm" />
+          <source src={video} type="video/mp4" />
+        </video>
       </DarkPaperContainer>
     </MovieTrailer>
   );
@@ -51,7 +43,7 @@ const DarkPaper = styled.div`
   opacity: 0.4;
 `;
 
-const MovieVideo = styled.iframe``;
+const MovieVideo = styled.video``;
 
 const PlayButton = styled(PlayIcon)`
   position: absolute;

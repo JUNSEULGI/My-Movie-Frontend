@@ -1,13 +1,24 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import ActorImage from '../../assets/images/actor.jpeg';
+import { Links } from '../../components/Link';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function Actor({ actor }) {
-  const { id, name, role_name, role } = actor;
+  const { id, name, role_name, image, role } = actor;
+
+  const navigate = useNavigate();
+
+  // const moveActor = id => {
+  //   navigate(`/actor/${id}`);
+  // };
+
   return (
-    <ActorCard id={id}>
-      <ActorImg src={ActorImage} />
-      <ActorName>{name}</ActorName>
+    <ActorCard key={id}>
+      <ActorImg src={image} />
+      <Links href={`/people/${id}`}>
+        <ActorName>{name}</ActorName>
+      </Links>
       <Role>
         {role} | {role_name}
       </Role>
