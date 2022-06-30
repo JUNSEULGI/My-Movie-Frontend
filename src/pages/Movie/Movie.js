@@ -14,15 +14,18 @@ import { Data } from './Mock/MovieData';
 
 function Movie() {
   const params = useParams();
-  const [movieData, setMovieData] = useState({});
+  // const [movieData, setMovieData] = useState({});
 
-  useEffect(() => {
-    fetch(`${DETAIL_URL}${params.id}`)
-      .then(res => res.json())
-      .then(res => {
-        setMovieData(res.movie_info);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(`${DETAIL_URL}${params.id}`)
+  //     .then(res => res.json())
+  //     .then(res => {
+  //       setMovieData(res.movie_info);
+  //     });
+  // }, []);
+
+  //Mock Data
+  const movieData = Data.movie_info;
 
   //데이터 구조분해
   const {
@@ -36,9 +39,6 @@ function Movie() {
     video_url,
     image_url,
   } = movieData;
-
-  //Mock Data
-  const DATA = Data.movie_info;
 
   // Review Mock Data
   const ReviewData = {
@@ -60,17 +60,11 @@ function Movie() {
         <MovieBackGround>
           <MovieInfo data={movieData} />
           {/* // */}
-          {DATA.actor?.length != 0 ? (
-            // <MovieInfo data={movieData} />
-            //{' '}
-            // {movieData.actor?.length != 0 ? (
+          {movieData.actor?.length != 0 ? (
             <>
               <ContainerTitle>출연/제작</ContainerTitle>
               <ActorContainer>
-                {/* {actor?.map(actor => ( */}
-                {DATA.actor?.map(actor => (
-                  //{' '}
-
+                {actor?.map(actor => (
                   <Actor actor={actor} />
                 ))}
               </ActorContainer>
@@ -78,23 +72,17 @@ function Movie() {
           ) : (
             ''
           )}
-          {/* // */}
           <ContainerTitle>리뷰</ContainerTitle>
           <MyReview review={ReviewData.data} />
-          <NoReview title={DATA.title} />
-          {/* // */}
+          <NoReview title={movieData.title} />
           <ContainerTitle>예고편</ContainerTitle>
           <TrailerContainer>
-            {/* {movieData.video_url?.map((video, index) => ( */}
-            {DATA.video_url?.map((video, index) => (
+            {movieData.video_url?.map((video, index) => (
               <Trailer key={index} video={video} />
             ))}
-            {/* // */}
           </TrailerContainer>
-          {/* // */}
           <ContainerTitle>갤러리</ContainerTitle>
-          <MovieGallery movie_image={DATA.image_url} />
-          {/* <MovieGallery movie_image={movieData.image_url} /> */}
+          <MovieGallery movie_image={movieData.image_url} />
         </MovieBackGround>
       </>
     );
@@ -106,8 +94,7 @@ function Movie() {
     movieData && (
       <MyViewLayout
         movie
-        background={DATA.image_url[0]}
-        // background={image_url[0]}
+        background={image_url[0]}
         center={<MovieContainer />}
       />
     )
