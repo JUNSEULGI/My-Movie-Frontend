@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { CardContainer } from './CardContainer';
-import { Box, Button, Typography, Fab } from '@mui/material';
+import { Box, Typography, Fab } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MovieRating from './MovieRating';

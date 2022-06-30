@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { CardMedia, Card, CardHeader, Typography } from '@mui/material';
-import MovieImage from '../../assets/images/movie_image.jpeg';
+import { CardMedia, Typography } from '@mui/material';
 import { CardContainer } from './CardContainer';
 import { Box } from '@mui/system';
-import SeeMoreButton from './SeeMoreButton';
 import MovieRating from './MovieRating';
 import AgeBadge from './AgeBadge';
 
@@ -52,7 +50,6 @@ function MovieInfo({ data }) {
   return (
     <CardContainer>
       <MovieImg component="img" height="100%" image={thumbnail_image_url} />
-      {/* <MovieImg component="img" height="100%" image={MovieImage} /> */}
       <Box sx={{ paddingLeft: '22px' }}>
         <Box
           sx={{
@@ -76,8 +73,6 @@ function MovieInfo({ data }) {
           <br />
           {running_time}분 · <AgeBadge age={ageToString} ageColor={ageColor} />
         </SubInfo>
-        {/* 러닝 타임은 00:00:00 형태로 */}
-
         <Summary variant="subtitle1">줄거리</Summary>
         <SummaryContainer>
           <div dangerouslySetInnerHTML={replaceBrTag(description)} />
@@ -123,5 +118,3 @@ const Summary = styled(Typography)`
   font-weight: bold;
   margin-top: 30px;
 `;
-
-const Content = styled.p``;

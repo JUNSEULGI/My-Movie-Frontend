@@ -43,17 +43,15 @@ const DarkPaper = styled.div`
   opacity: 0.4;
 `;
 
-const MovieVideo = styled.video``;
+// const PlayButton = styled(PlayIcon)`
+//   position: absolute;
+//   z-index: 99;
+//   left: 44%;
+//   top: 40%;
+//   fill: ${({ theme }) => theme.palette.test.main};
 
-const PlayButton = styled(PlayIcon)`
-  position: absolute;
-  z-index: 99;
-  left: 44%;
-  top: 40%;
-  fill: ${({ theme }) => theme.palette.test.main};
-
-  :hover {
-    fill: ${({ theme }) => theme.palette.test.second};
-    cursor: pointer;
-  }
-`;
+//   :hover {
+//     fill: ${({ theme }) => theme.palette.test.second};
+//     cursor: pointer;
+//   }
+// `;
