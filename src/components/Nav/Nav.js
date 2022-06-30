@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createTheme } from '@mui/material/styles';
 import styled from '@emotion/styled';
+import { MK_URL } from '../../Modules/API';
 import {
   Typography,
   AppBar,
@@ -16,7 +17,24 @@ import {
 
 function Nav() {
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
+
+  useEffect(() => {
+    fetch(`${MK_URL}users/info`)
+      .then(res => res.json())
+      .then(res => {
+        setUserInfo(res.result);
+      });
+  }, []);
+  console.log('tat');
+
+  //Mock DATA
+  const DATA = {
+    nickname: 'jung suin',
+    email: 'manager1234@gmail.com',
+    Profile_image: 'https://avatars.githubusercontent.com/u/87012967?v=4',
+  };
 
   const updateScroll = () => {
     setScrollPosition(window.scrollY);
@@ -29,6 +47,35 @@ function Nav() {
   const moveMoviePage = id => {
     navigate(`/movie/${id}`);
   };
+
+  function stringToColor(string) {
+    let hash = 0;
+    let i;
+
+    /* eslint-disable no-bitwise */
+    for (i = 0; i < string.length; i += 1) {
+      hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    let color = '#';
+
+    for (i = 0; i < 3; i += 1) {
+      const value = (hash >> (i * 8)) & 0xff;
+      color += `00${value.toString(16)}`.slice(-2);
+    }
+    /* eslint-enable no-bitwise */
+
+    return color;
+  }
+
+  function stringAvatar(name) {
+    return {
+      sx: {
+        bgcolor: stringToColor(name),
+      },
+      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+    };
+  }
 
   return (
     <NavBar scrollPosition={scrollPosition}>
@@ -69,7 +116,11 @@ function Nav() {
               />
             )}
           />
-          {localStorage.access_token ? <Avatar /> : <SignUp />}
+          {DATA.Profile_image == '' ? (
+            <Avatar src={DATA.Profile_image} />
+          ) : (
+            <Avatar {...stringAvatar(DATA.nickname)} />
+          )}
         </Box>
       </MyToolbar>
     </NavBar>

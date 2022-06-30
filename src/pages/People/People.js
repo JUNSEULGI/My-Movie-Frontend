@@ -23,6 +23,7 @@ function People() {
   }, []);
 
   console.log('asd', peopleData);
+  console.log('back', peopleData.background_image);
 
   // Mock DATA
   const people = {
