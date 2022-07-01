@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Container, Typography } from '@mui/material';
+import { CardContainer } from '../Movie/CardContainer';
+import { Logo } from '../Movie/ContentLogo';
 import MyViewLayout from '../../layout/Layout';
 import NaverLogin from './Naver/NaverLogin';
 import KakaoLogin from './Kakao/KakaoLogin';
@@ -8,52 +10,53 @@ import KakaoLogin from './Kakao/KakaoLogin';
 function Login() {
   function LoginContainer() {
     return (
-      <>
-        <LoginPage>
-          <LoginBox>
-            <MyView>My View</MyView>
-            <Produce>소셜 로그인으로 더 간단하게 로그인하세요.</Produce>
-            <SocialContainer>
-              {/* Naver 로그인 버튼 */}
-              <LoginText>네이버로 로그인하기</LoginText>
-              <NaverLogin />
-              {/* Kakao 로그인 버튼 */}
-              <LoginText>카카오로 로그인하기</LoginText>
-              <KakaoLogin />
-            </SocialContainer>
-          </LoginBox>
-        </LoginPage>
-        <NaverLogin />
-      </>
+      <LoginPage>
+        <LoginBox>
+          <LoginLogo>My View</LoginLogo>
+          <Produce>
+            <strong>소셜 로그인</strong>으로 <strong>더 간단하게 로그인</strong>
+            하세요.
+          </Produce>
+          <SocialContainer>
+            {/* Naver 로그인 버튼 */}
+            <LoginText>네이버로 로그인하기</LoginText>
+            <NaverLogin />
+            {/* Kakao 로그인 버튼 */}
+            <LoginText>카카오로 로그인하기</LoginText>
+            <KakaoLogin />
+          </SocialContainer>
+        </LoginBox>
+      </LoginPage>
     );
   }
 
-  return <MyViewLayout center={<LoginContainer />} />;
+  return <MyViewLayout login center={<LoginContainer />} />;
 }
 
 export default Login;
 
 const LoginPage = styled(Container)`
+  position: relative;
   margin: 0 auto;
   height: 100vh;
-  /* background-color: antiquewhite; */
 `;
 
-const LoginBox = styled.div`
+const LoginBox = styled(CardContainer)`
+  display: block;
   box-sizing: border-box;
-  margin: 0 auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -380px 0 0 -380px;
   padding: 40px 20px;
-  text-align: center;
   width: 760px;
   height: 580px;
-  background-color: rgba(21, 21, 21, 0.97);
-  border-radius: 8px;
+  text-align: center;
+  border-radius: 16px;
 `;
 
-const MyView = styled(Typography)`
-  color: ${({ theme }) => theme.palette?.common.white};
+const LoginLogo = styled(Logo)`
   font-size: 32px;
-  font-weight: bold;
 `;
 
 const Produce = styled(Typography)`
@@ -67,5 +70,5 @@ const SocialContainer = styled(Container)`
 
 const LoginText = styled.div`
   margin: 20px 0;
-  color: white;
+  color: ${({ theme }) => theme.palette?.common.white};
 `;
