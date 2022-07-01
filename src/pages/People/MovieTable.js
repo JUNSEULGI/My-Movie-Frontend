@@ -7,6 +7,7 @@ import { OTTLogo } from '../../components/PlatformAvatar';
 
 function MovieTable({ movie }) {
   const navigate = useNavigate();
+  const { starring_list } = movie;
 
   const moveMoviePage = id => {
     navigate(`/movie/${id}`);
