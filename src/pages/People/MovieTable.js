@@ -9,7 +9,11 @@ function MovieTable({ movie }) {
   const navigate = useNavigate();
   const { starring_list } = movie;
 
-  console.log(movie);
+  const moveMoviePage = id => {
+    navigate(`/movie/${id}`);
+  };
+
+  const { starring_list } = movie;
 
   return (
     <>
@@ -24,6 +28,7 @@ function MovieTable({ movie }) {
       <Table>
         {starring_list?.map(movie => {
           const {
+            id,
             title,
             release,
             thumbnail_image_url,
@@ -34,45 +39,35 @@ function MovieTable({ movie }) {
           } = movie;
 
           return (
-            <Row>
-              <Year>{release}</Year>
-              <MoviePoster>
-                <MovieImg
-                  component="img"
-                  height="100%"
-                  image={thumbnail_image_url}
-                />
-              </MoviePoster>
-              <MoiveTitle>{title}</MoiveTitle>
-              <InRole>{role_name}</InRole>
-              <Rating>
-                {ratings ? (
-                  <ReviewRating>{ratings}</ReviewRating>
-                ) : (
-                  '평가 하시겠어요?'
-                )}
-              </Rating>
-              <Platform>
-                {/* {platform}  */}
-                <MovieTableOTT alt={platform} src={platform_logo_image} />
-              </Platform>
-            </Row>
+            <BackCover>
+              <Row>
+                <Year>{release}</Year>
+                <MoviePoster>
+                  <MovieImg
+                    component="img"
+                    height="100%"
+                    image={thumbnail_image_url}
+                  />
+                </MoviePoster>
+                <MoiveTitle onClick={() => moveMoviePage(id)} id>
+                  {title}
+                </MoiveTitle>
+                <InRole>{role_name}</InRole>
+                <Rating>
+                  {ratings ? (
+                    <ReviewRating>{ratings}</ReviewRating>
+                  ) : (
+                    '평가 하시겠어요?'
+                  )}
+                </Rating>
+                <Platform>
+                  {/* {platform}  */}
+                  <MovieTableOTT alt={platform} src={platform_logo_image} />
+                </Platform>
+              </Row>
+            </BackCover>
           );
         })}
-        {/* <Row>
-          <Year>{release}</Year>
-          <MoviePoster>
-            <MovieImg
-              component="img"
-              height="100%"
-              image={thumbnail_image_url}
-            />
-          </MoviePoster>
-          <MoiveTitle>{title}</MoiveTitle>
-          <InRole>{role_name}</InRole>
-          <Rating>{ratings}</Rating>
-          <Platform>{platform}</Platform>
-        </Row> */}
         <Row>
           <Year>2023</Year>
           <MoviePoster>사진</MoviePoster>
@@ -94,10 +89,32 @@ const Table = styled(CardContainer)`
 
   padding: 0;
 `;
+const BackCover = styled.div`
+  position: relative;
+  transition: all 0.5s;
 
+  &:hover {
+    opacity: 1;
+    transition: all 0.5s;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      opacity: 0.5;
+      background-image: url('https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/gallery/Z8jafJT0TOkoU1C0Z5xo_Q.jpeg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      transition: all 0.5s;
+    }
+  }
+`;
 const Row = styled.div`
   display: grid;
-  /* background-color: beige; */
   height: 138px;
   align-items: center;
   text-align: center;
@@ -113,12 +130,12 @@ const RowTitle = styled(Row)`
   height: 40px;
   color: white;
   font-weight: bold;
-  /* background-color: #626262; */
-  /* border-radius: 10px; */
+  background-color: #424262;
+  border: none;
+  border-radius: 10px;
   -webkit-box-align: center;
 
-  border-top: 1px solid #818181;
-
+  /* border-top: 1px solid #818181; */
   /* background-color: antiquewhite; */
 `;
 
@@ -133,6 +150,11 @@ const MoviePoster = styled.div`
 
 const MoiveTitle = styled.div`
   font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    color: ${({ theme }) => theme.palette.test.second};
+  }
 `;
 
 const InRole = styled.div``;
