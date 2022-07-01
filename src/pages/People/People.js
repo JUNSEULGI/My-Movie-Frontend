@@ -13,17 +13,17 @@ function People() {
   const params = useParams();
 
   // Real DATA
-  const [peopleData, setPeopleData] = useState({});
-  useEffect(() => {
-    fetch(`${PEOPLE_URL}${params.id}`)
-      .then(res => res.json())
-      .then(res => {
-        setPeopleData(res.actor_info);
-      });
-  }, []);
+  // const [peopleData, setPeopleData] = useState({});
+  // useEffect(() => {
+  //   fetch(`${PEOPLE_URL}${params.id}`)
+  //     .then(res => res.json())
+  //     .then(res => {
+  //       setPeopleData(res.actor_info);
+  //     });
+  // }, []);
 
-  console.log('asd', peopleData);
-  console.log('back', peopleData.background_image);
+  // console.log('asd', peopleData);
+  // console.log('back', peopleData.background_image);
 
   // Mock DATA
   const people = {
@@ -39,6 +39,8 @@ function People() {
       height: 178,
       weight: 100,
       job: ['영화배우', '감독'],
+      background_image:
+        'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/gallery/Z8jafJT0TOkoU1C0Z5xo_Q.jpeg',
       starring_list: [
         {
           title: '범죄도시2',
@@ -65,7 +67,7 @@ function People() {
       ],
     },
   };
-  // const peopleData = people.actor_info;
+  const peopleData = people.actor_info;
 
   function PeopleLayout() {
     return (
