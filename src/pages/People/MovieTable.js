@@ -1,13 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { CardContainer } from '../Movie/CardContainer';
 import { CardMedia } from '@mui/material';
 import { OTTLogo } from '../../components/PlatformAvatar';
-import Netflix from '../../assets/images/Netfilx.png';
-import Disney from '../../assets/images/Disney.png';
-import Tving from '../../assets/images/Tving.png';
-import Whatcha from '../../assets/images/Whatcha.png';
+
 function MovieTable({ movie }) {
+  const navigate = useNavigate();
   const { starring_list } = movie;
 
   console.log(movie);
