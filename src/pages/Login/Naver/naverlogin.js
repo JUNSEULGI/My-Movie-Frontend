@@ -1,17 +1,15 @@
 import React from 'react';
-import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { BASE_URL, NAVER_CALLBACK_URL, NAVER_ID } from '../../../Modules/API';
-import { Box, Button, Container, Typography, Link } from '@mui/material';
-import { atom } from 'recoil';
+import { NAVER_CALLBACK_URL, NAVER_ID } from '../../../Modules/API';
+import { Link } from '@mui/material';
 import naver from '../../../assets/images/naverLogin.png';
 
 function NaverLogin() {
   const navigate = useNavigate();
-  const location = useLocation();
+  const { search } = useLocation();
 
-  const access_code = location.search?.split('=')[1]?.split('&')[0];
+  const access_code = search?.split('=')[1]?.split('&')[0];
   console.log('네이버 인증 코드', access_code);
 
   //백으로 인증 코드 주는 함수
