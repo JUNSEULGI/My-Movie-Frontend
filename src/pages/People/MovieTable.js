@@ -8,15 +8,6 @@ import Disney from '../../assets/images/Disney.png';
 import Tving from '../../assets/images/Tving.png';
 import Whatcha from '../../assets/images/Whatcha.png';
 function MovieTable({ movie }) {
-  // const movie = {
-  //   title: '악인전',
-  //   release: '2019',
-  //   thumbnail_image_url:
-  //     'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/thumbnail/%E1%84%8B%E1%85%A1%E1%86%A8%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%8C%E1%85%A5%E1%86%AB.jpeg',
-  //   role_name: '주연',
-  //   ratings: '0',
-  //   platform: '넷플릭스',
-  // };
   const { starring_list } = movie;
 
   console.log(movie);
