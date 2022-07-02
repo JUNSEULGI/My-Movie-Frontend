@@ -13,8 +13,6 @@ function MovieTable({ movie }) {
     navigate(`/movie/${id}`);
   };
 
-  const { starring_list } = movie;
-
   return (
     <>
       <RowTitle>
