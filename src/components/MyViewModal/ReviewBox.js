@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { tokenState, movieState, reviewState, savingState } from '../../state';
 import styled from '@emotion/styled';
@@ -7,22 +8,26 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Poster from '../Poster/Poster';
+import { timestamp } from '../../util/timestamp';
 
 function ReviewBox() {
   const [token, setToken] = useRecoilState(tokenState);
   const [movie, setMovie] = useRecoilState(movieState);
   const [saving, setSaving] = useRecoilState(savingState);
-
   const [review, setReview] = useRecoilState(reviewState);
+
+  const navigate = useNavigate();
   const [user, setUser] = useState({});
   const [rating, setRating] = useState(0);
 
+  // 리뷰 관련 input의 값이 바뀌면 "review" 리코일에 반영
   const handleReview = e => {
     setReview(prev => {
       return { ...prev, content: e.target.value };
     });
   };
 
+  // 컴포넌트 최초 렌더링 시 리뷰를 작성할 영화에 대한 정보를 받아옴
   useEffect(() => {
     if (movie.title) {
       fetch(`http://172.30.1.25:8000/movies/detail/${movie.id}`)
@@ -34,6 +39,7 @@ function ReviewBox() {
     }
   }, []);
 
+  // 사용자 이름을 알아내기 위해 유저 정보 요청(로그인 시 리코일로 저장하는 것으로 수정 필요)
   useEffect(() => {
     fetch('http://172.30.1.26:8000/users/info', {
       headers: {
@@ -47,6 +53,7 @@ function ReviewBox() {
       });
   }, []);
 
+  // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송
   useEffect(() => {
     if (!saving) return;
 
@@ -69,16 +76,15 @@ function ReviewBox() {
         Authorization: token,
       },
       body: formData,
-    });
-
-    setSaving(false);
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (result.message === 'SUCCESS') {
+          setSaving(false);
+          navigate('/');
+        }
+      });
   }, [saving]);
-
-  const timestamp = date => {
-    const koDate = new Date(date.setHours(date.getHours() + 9));
-    // console.log(date, koDate);
-    return koDate.toISOString().replace('T', ' ').substring(0, 19);
-  };
 
   console.log(saving, review);
 
