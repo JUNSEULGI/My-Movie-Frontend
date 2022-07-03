@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createTheme } from '@mui/material/styles';
 import styled from '@emotion/styled';
 import {
   Typography,
@@ -16,7 +15,24 @@ import {
 
 function Nav() {
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
+
+  //토큰 가져오기
+  const access_token = localStorage.getItem('access_token');
+  useEffect(() => {
+    fetch(`http://6b44-110-11-194-32.ngrok.io/users/info`, {
+      headers: {
+        Authorization: access_token,
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        setUserInfo(res.result);
+      });
+  }, []);
+
+  const { nickname, email, Profile_image } = userInfo;
 
   const updateScroll = () => {
     setScrollPosition(window.scrollY);
@@ -69,7 +85,12 @@ function Nav() {
               />
             )}
           />
-          {localStorage.access_token ? <Avatar /> : <SignUp />}
+          {localStorage.access_token ? (
+            <Avatar src={Profile_image} />
+          ) : (
+            ''
+            // <SignUp>회원가입하러 가기</SignUp>
+          )}
         </Box>
       </MyToolbar>
     </NavBar>
@@ -114,7 +135,7 @@ const Logo = styled(Typography)`
 const SignUp = styled(Typography)`
   color: ${({ theme }) => theme.palette.common.white};
   font-weight: bold;
-  font-size: 32px;
+  font-size: 16px;
 `;
 
 const NavSearch = styled(Autocomplete)`
