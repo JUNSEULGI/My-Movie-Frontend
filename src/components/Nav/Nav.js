@@ -19,9 +19,13 @@ function Nav() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
-
+  const access_token = localStorage.getItem('access_token');
   useEffect(() => {
-    fetch(`${MK_URL}users/info`)
+    fetch(`http://6b44-110-11-194-32.ngrok.io/users/info`, {
+      headers: {
+        Authorization: access_token,
+      },
+    })
       .then(res => res.json())
       .then(res => {
         setUserInfo(res.result);
@@ -30,11 +34,7 @@ function Nav() {
   console.log('tat');
 
   //Mock DATA
-  const DATA = {
-    nickname: 'jung suin',
-    email: 'manager1234@gmail.com',
-    Profile_image: 'https://avatars.githubusercontent.com/u/87012967?v=4',
-  };
+  const { nickname, email, Profile_image } = userInfo;
 
   const updateScroll = () => {
     setScrollPosition(window.scrollY);
@@ -53,7 +53,7 @@ function Nav() {
     let i;
 
     /* eslint-disable no-bitwise */
-    for (i = 0; i < string.length; i += 1) {
+    for (i = 0; i < string?.length; i += 1) {
       hash = string.charCodeAt(i) + ((hash << 5) - hash);
     }
 
@@ -66,15 +66,6 @@ function Nav() {
     /* eslint-enable no-bitwise */
 
     return color;
-  }
-
-  function stringAvatar(name) {
-    return {
-      sx: {
-        bgcolor: stringToColor(name),
-      },
-      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
-    };
   }
 
   return (
@@ -116,11 +107,7 @@ function Nav() {
               />
             )}
           />
-          {DATA.Profile_image == '' ? (
-            <Avatar src={DATA.Profile_image} />
-          ) : (
-            <Avatar {...stringAvatar(DATA.nickname)} />
-          )}
+          <Avatar src={Profile_image} />
         </Box>
       </MyToolbar>
     </NavBar>
