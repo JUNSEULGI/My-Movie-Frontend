@@ -86,11 +86,10 @@ function MovieTable({ movie }) {
 export default MovieTable;
 
 const Table = styled(CardContainer)`
-  /* background-color: #626262; */
   display: block;
-
   padding: 0;
 `;
+
 const BackCover = styled.div`
   position: relative;
   transition: all 0.5s;
@@ -111,19 +110,18 @@ const BackCover = styled.div`
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center;
-      transition: all 0.5s;
     }
   }
 `;
 const Row = styled.div`
   display: grid;
+  padding: 0 20px;
   height: 138px;
   align-items: center;
   text-align: center;
   -webkit-box-align: center;
   grid-template-columns: 60px 82px 1fr 149px 140px 125px;
   border-bottom: 1px solid #818181;
-  padding: 0 20px;
 `;
 
 const RowTitle = styled(Row)`
@@ -169,9 +167,9 @@ const InRole = styled.div``;
 const Rating = styled.div``;
 
 const ReviewRating = styled.p`
+  margin: 0;
   font-weight: bold;
   color: ${({ theme }) => theme.palette.test.main};
-  margin: 0;
 `;
 
 const Platform = styled.div`
