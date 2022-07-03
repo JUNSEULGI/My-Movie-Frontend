@@ -36,7 +36,7 @@ function Login() {
 export default Login;
 
 const LoginPage = styled(Container)`
-  position: relative;
+  position: fixed;
   margin: 0 auto;
   height: 100vh;
 `;
