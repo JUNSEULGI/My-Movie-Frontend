@@ -131,8 +131,6 @@ const Job = styled.p`
   margin: 0 0 0 8px;
 `;
 
-const Right = styled.div`
-  /* width: 680px; */
-`;
+const Right = styled.div``;
 
 export default People;
