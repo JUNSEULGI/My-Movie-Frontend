@@ -35,6 +35,7 @@ function People() {
       debut_year: 2004,
       height: 178,
       weight: 100,
+      agency: '키이스트',
       job: ['영화배우', '감독'],
       background_image:
         'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/gallery/Z8jafJT0TOkoU1C0Z5xo_Q.jpeg',

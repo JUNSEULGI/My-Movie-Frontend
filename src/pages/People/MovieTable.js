@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { CardContainer } from '../Movie/CardContainer';
 import { CardMedia } from '@mui/material';
 import { OTTLogo } from '../../components/PlatformAvatar';
+import { Logo } from '../Movie/ContentLogo';
 
 function MovieTable({ movie }) {
   const navigate = useNavigate();
@@ -53,7 +54,10 @@ function MovieTable({ movie }) {
                 <InRole>{role_name}</InRole>
                 <Rating>
                   {ratings ? (
-                    <ReviewRating>{ratings}</ReviewRating>
+                    <>
+                      <Logo>My View</Logo>
+                      <ReviewRating>{ratings}</ReviewRating>
+                    </>
                   ) : (
                     '평가 하시겠어요?'
                   )}
@@ -128,13 +132,18 @@ const RowTitle = styled(Row)`
   height: 40px;
   color: white;
   font-weight: bold;
-  background-color: #424262;
+  color: ${({ theme }) => theme.palette.test.second};
   border: none;
-  border-radius: 10px;
+  border-bottom: 1px solid ${({ theme }) => theme.palette.test.second};
   -webkit-box-align: center;
+  cursor: inherit;
 
-  /* border-top: 1px solid #818181; */
-  /* background-color: antiquewhite; */
+  &:hover {
+    div {
+      cursor: inherit;
+      color: ${({ theme }) => theme.palette.test.second};
+    }
+  }
 `;
 
 const Year = styled.div`
@@ -161,7 +170,8 @@ const Rating = styled.div``;
 
 const ReviewRating = styled.p`
   font-weight: bold;
-  color: ${({ theme }) => theme.palette.test.main}; ;
+  color: ${({ theme }) => theme.palette.test.main};
+  margin: 0;
 `;
 
 const Platform = styled.div`
