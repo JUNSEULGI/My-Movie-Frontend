@@ -27,7 +27,7 @@ function List() {
         });
     }, []);
 
-    // 작성한 리뷰 받아오기 테스트
+    // 특정 리뷰 받아오기 테스트
     // useEffect(() => {
     //   fetch('http://192.168.228.159:8000/reviews/7', {
     //     headers: {
