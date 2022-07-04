@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { tokenState } from '../../state';
 import { Box, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import MyViewLayout from '../../layout/Layout';
 import Aside from '../../components/Aside';
 import MovieCard from './MovieCard';
-import AddReview from './AddReview';
+import NewReview from './NewReview';
 
 function List() {
   function ListLayout() {
-    const token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiZXhwIjoxNjU2MDA0MDYzfQ.ky7WKj9qMEf13BgA5Uaq0keu9ZkXeaHOUsOzGQ1eyIY';
+    const [token, setToken] = useRecoilState(tokenState);
     const [reviews, setReviews] = useState([]);
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-      fetch('http://192.168.228.159:8000/reviews', {
+      fetch('http://172.30.1.26:8000/reviews/list', {
         headers: {
           Authorization: token,
         },
@@ -26,7 +27,7 @@ function List() {
         });
     }, []);
 
-    // 작성한 리뷰 받아오기 테스트
+    // 특정 리뷰 받아오기 테스트
     // useEffect(() => {
     //   fetch('http://192.168.228.159:8000/reviews/7', {
     //     headers: {
@@ -51,7 +52,7 @@ function List() {
             <MovieCard setOpen={setOpen} />
           </CardContainer>
         </Section>
-        <AddReview open={open} setOpen={setOpen} />
+        <NewReview open={open} setOpen={setOpen} />
       </>
     );
   }
