@@ -14,6 +14,23 @@ import { Data } from './Mock/MovieData';
 
 function Movie() {
   const params = useParams();
+
+  // Review Mock Data
+  const ReviewData = {
+    data: {
+      oneline: '여기는 30글자까지 들어갑니다.',
+      rating: '3.5',
+      my_review:
+        '자바스크립트에서 문자열을 자르기 위해서는 substr(), substring(), slice() 함수를 사용하면 된다. 문자열을 뒤에서부터 자르기 위해서는 slice() 함수를 사용하면 효율적이며 타 언어의 Right 함수와 비슷하다고 생각하면 된다. 세 가지의 함수 중 상황에 맞는 적절한 함수를 사용하면 된다.',
+      reviewer: {
+        profile_img: 'url',
+        user_name: '리뷰쓴사람',
+      },
+    },
+  };
+  const hasreview = ReviewData.data.rating == '' ? false : true;
+  const [hasReview, setHasReview] = useState(hasreview);
+
   // const [movieData, setMovieData] = useState({});
 
   // useEffect(() => {
@@ -23,6 +40,10 @@ function Movie() {
   //       setMovieData(res.movie_info);
   //     });
   // }, []);
+
+  const DeleteReview = () => {
+    alert('정말 삭제하시겠습니까?');
+  };
 
   //Mock Data
   const movieData = Data.movie_info;
@@ -39,20 +60,6 @@ function Movie() {
     video_url,
     image_url,
   } = movieData;
-
-  // Review Mock Data
-  const ReviewData = {
-    data: {
-      oneline: '여기는 30글자까지 들어갑니다.',
-      rating: '3.5',
-      my_review:
-        '자바스크립트에서 문자열을 자르기 위해서는 substr(), substring(), slice() 함수를 사용하면 된다. 문자열을 뒤에서부터 자르기 위해서는 slice() 함수를 사용하면 효율적이며 타 언어의 Right 함수와 비슷하다고 생각하면 된다. 세 가지의 함수 중 상황에 맞는 적절한 함수를 사용하면 된다.',
-      reviewer: {
-        profile_img: 'url',
-        user_name: '리뷰쓴사람',
-      },
-    },
-  };
 
   function MovieContainer() {
     return (
@@ -73,8 +80,16 @@ function Movie() {
             ''
           )}
           <ContainerTitle>리뷰</ContainerTitle>
-          <MyReview review={ReviewData.data} />
-          <NoReview title={movieData.title} />
+          {hasReview !== true ? (
+            <NoReview title={movieData.title} />
+          ) : (
+            <MyReview
+              hasReview={hasReview}
+              setHasReview={setHasReview}
+              review={ReviewData.data}
+            />
+          )}
+
           <ContainerTitle>예고편</ContainerTitle>
           <TrailerContainer>
             {movieData.video_url?.map((video, index) => (
