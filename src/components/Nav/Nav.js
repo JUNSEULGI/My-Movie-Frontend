@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createTheme } from '@mui/material/styles';
 import styled from '@emotion/styled';
 import { MK_URL } from '../../Modules/API';
 import {
@@ -20,6 +19,7 @@ function Nav() {
   const [userInfo, setUserInfo] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
   const access_token = localStorage.getItem('access_token');
+
   useEffect(() => {
     fetch(`http://6b44-110-11-194-32.ngrok.io/users/info`, {
       headers: {
@@ -107,7 +107,12 @@ function Nav() {
               />
             )}
           />
-          <Avatar src={Profile_image} />
+          {localStorage.access_token ? (
+            <Avatar src={Profile_image} />
+          ) : (
+            ''
+            // <SignUp>회원가입하러 가기</SignUp>
+          )}
         </Box>
       </MyToolbar>
     </NavBar>
@@ -152,7 +157,7 @@ const Logo = styled(Typography)`
 const SignUp = styled(Typography)`
   color: ${({ theme }) => theme.palette.common.white};
   font-weight: bold;
-  font-size: 32px;
+  font-size: 16px;
 `;
 
 const NavSearch = styled(Autocomplete)`

@@ -2,24 +2,46 @@ import React from 'react';
 import styled from '@emotion/styled';
 import Nav from '../components/Nav/Nav';
 
-const MyViewLayout = ({ leftMenu, movie, background, center, rightMenu }) => {
+const MyViewLayout = ({
+  leftMenu,
+  movie,
+  login,
+  background,
+  center,
+  rightMenu,
+}) => {
   return (
     <>
-      <Nav />
-      <Main>
-        <MovieScene movie img={background} />
-        <LeftMenu leftMenu={leftMenu}>{leftMenu}</LeftMenu>
-        <Center>{center}</Center>
-        <Right>
-          <RightMenu>{rightMenu}</RightMenu>
-        </Right>
-      </Main>
+      <Layout img={login}>
+        <Nav />
+        <Main>
+          <MovieScene movie img={background} />
+          <LeftMenu leftMenu={leftMenu}>{leftMenu}</LeftMenu>
+          <Center>{center}</Center>
+          <Right>
+            <RightMenu>{rightMenu}</RightMenu>
+          </Right>
+        </Main>
+      </Layout>
     </>
   );
 };
 
 const Layout = styled.div`
   /* background-color: gray; */
+  &:before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4;
+    display: ${({ img }) => (img ? '' : 'none')};
+    background: url('https://an2-img.amz.wtchn.net/image/v2/TT6mOWycO2N8w4PTcUoB_g.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1KbklsMHNJbkFpT2lJdmRqSXZjM1J2Y21VdmFXMWhaMlV2TVRZMU5qUTVNVFEyTmpNek5qVTNOREkyTWlKOS40OF9TeURKU0VFM3hhYkY2Q2xjejQ3Z1JpVC1iRTZCamJReHctazJON1Fn')
+      center center / cover no-repeat;
+  }
 `;
 
 const Main = styled.div`

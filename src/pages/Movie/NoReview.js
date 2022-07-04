@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Link, Typography } from '@mui/material';
 import { CardContainer } from './CardContainer';
+import MyViewModal from '../../components/MyViewModal/MyViewModal';
 
 function NoReview({ title }) {
   const [reviews, setReviews] = useState([]);

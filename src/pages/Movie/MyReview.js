@@ -5,6 +5,7 @@ import { Box, Typography, Fab } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MovieRating from './MovieRating';
+import { Logo } from './ContentLogo';
 
 function MyReview({ review }) {
   const { oneline, rating, my_review, reviewer } = review;
@@ -54,15 +55,6 @@ const MyBox = styled.div``;
 const MyReviewTitle = styled(Typography)`
   margin-bottom: 8px;
   font-weight: bold;
-`;
-
-const Logo = styled(Typography)`
-  /* color: #fe7d01; */
-  color: ${({ theme }) => theme.palette.test.main};
-  font-family: 'Galada', cursive;
-  font-weight: bold;
-  font-size: 20px;
-  margin-bottom: 8px;
 `;
 
 const MyReviewContent = styled(Typography)`
