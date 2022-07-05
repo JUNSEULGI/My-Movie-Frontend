@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import { CardMedia } from '@mui/material';
 

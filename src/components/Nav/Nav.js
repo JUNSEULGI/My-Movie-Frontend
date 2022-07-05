@@ -3,6 +3,7 @@ import { useRecoilState } from 'recoil';
 import { userState } from '../../state';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { MK_URL } from '../../Modules/API';
 import {
   Typography,
   AppBar,
@@ -19,9 +20,8 @@ function Nav() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const [scrollPosition, setScrollPosition] = useState(0);
-
-  //토큰 가져오기
   const access_token = localStorage.getItem('access_token');
+
   useEffect(() => {
     fetch(`http://6b44-110-11-194-32.ngrok.io/users/info`, {
       headers: {
@@ -33,7 +33,9 @@ function Nav() {
         setUserInfo(res.result);
       });
   }, []);
+  console.log('tat');
 
+  //Mock DATA
   const { nickname, email, Profile_image } = userInfo;
 
   console.log('유저 정보', userInfo);
@@ -49,6 +51,26 @@ function Nav() {
   const moveMoviePage = id => {
     navigate(`/movie/${id}`);
   };
+
+  function stringToColor(string) {
+    let hash = 0;
+    let i;
+
+    /* eslint-disable no-bitwise */
+    for (i = 0; i < string?.length; i += 1) {
+      hash = string.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    let color = '#';
+
+    for (i = 0; i < 3; i += 1) {
+      const value = (hash >> (i * 8)) & 0xff;
+      color += `00${value.toString(16)}`.slice(-2);
+    }
+    /* eslint-enable no-bitwise */
+
+    return color;
+  }
 
   return (
     <NavBar scrollPosition={scrollPosition}>

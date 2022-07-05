@@ -8,7 +8,7 @@ function KakaoLogin() {
   const { search } = useLocation();
   const navigate = useNavigate();
 
-  const REDIRECT_URI = 'http://localhost:3000';
+  const REDIRECT_URI = 'http://localhost:3000/';
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${process.env.REACT_APP_KAKAO_KEY}&redirect_uri=${REDIRECT_URI}`;
 
   useEffect(() => {
