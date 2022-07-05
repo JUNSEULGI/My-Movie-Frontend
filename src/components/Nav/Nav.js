@@ -33,7 +33,6 @@ function Nav() {
         setUserInfo(res.result);
       });
   }, []);
-  console.log('tat');
 
   //Mock DATA
   const { nickname, email, Profile_image } = userInfo;
