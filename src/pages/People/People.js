@@ -8,9 +8,13 @@ import MyViewLayout from '../../layout/Layout';
 import PeopleProfile from './PeopleProfile';
 import MovieTable from './MovieTable';
 import { PEOPLE_URL } from '../../Modules/API';
+import CountReview from './CountReview';
+import { useRecoilState } from 'recoil';
+import { userState } from '../../state';
 
 function People() {
   const params = useParams();
+  const [userInfo, setUserInfo] = useRecoilState(userState);
 
   // Real DATA
   // const [peopleData, setPeopleData] = useState({});
@@ -21,9 +25,6 @@ function People() {
   //       setPeopleData(res.actor_info);
   //     });
   // }, []);
-
-  // console.log('asd', peopleData);
-  // console.log('back', peopleData.background_image);
 
   // Mock DATA
   const people = {
@@ -38,11 +39,15 @@ function People() {
       debut_year: 2004,
       height: 178,
       weight: 100,
+      agency: '키이스트',
       job: ['영화배우', '감독'],
+      watched_movie: 20,
+      total_movie: 80,
       background_image:
         'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/gallery/Z8jafJT0TOkoU1C0Z5xo_Q.jpeg',
       starring_list: [
         {
+          id: 1,
           title: '범죄도시2',
           release: '2022',
           thumbnail_image_url:
@@ -90,6 +95,7 @@ function People() {
               <PeopleProfile profile={peopleData} />
             </Info>
           </PeopleCard>
+          <CountReview userInfo={userInfo} peopleData={peopleData} />
           <Right>
             <MovieTable movie={peopleData} />
           </Right>
@@ -132,8 +138,6 @@ const Job = styled.p`
   margin: 0 0 0 8px;
 `;
 
-const Right = styled.div`
-  /* width: 680px; */
-`;
+const Right = styled.div``;
 
 export default People;

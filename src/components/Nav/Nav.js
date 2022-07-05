@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { userState } from '../../state';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { MK_URL } from '../../Modules/API';
@@ -16,7 +18,7 @@ import {
 
 function Nav() {
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useRecoilState(userState);
   const [scrollPosition, setScrollPosition] = useState(0);
   const access_token = localStorage.getItem('access_token');
 
@@ -35,6 +37,8 @@ function Nav() {
 
   //Mock DATA
   const { nickname, email, Profile_image } = userInfo;
+
+  console.log('유저 정보', userInfo);
 
   const updateScroll = () => {
     setScrollPosition(window.scrollY);
@@ -107,8 +111,11 @@ function Nav() {
               />
             )}
           />
+          {/* 임시 코드 */}
+          <Avatar sx={{ width: 50, height: 50 }} src={Profile_image} />
+
           {localStorage.access_token ? (
-            <Avatar src={Profile_image} />
+            <Avatar sx={{ width: 50, height: 50 }} src={Profile_image} />
           ) : (
             ''
             // <SignUp>회원가입하러 가기</SignUp>

@@ -1,25 +1,18 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { CardContainer } from '../Movie/CardContainer';
 import { CardMedia } from '@mui/material';
 import { OTTLogo } from '../../components/PlatformAvatar';
-import Netflix from '../../assets/images/Netfilx.png';
-import Disney from '../../assets/images/Disney.png';
-import Tving from '../../assets/images/Tving.png';
-import Whatcha from '../../assets/images/Whatcha.png';
+import { Logo } from '../Movie/ContentLogo';
+
 function MovieTable({ movie }) {
-  // const movie = {
-  //   title: '악인전',
-  //   release: '2019',
-  //   thumbnail_image_url:
-  //     'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/thumbnail/%E1%84%8B%E1%85%A1%E1%86%A8%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%8C%E1%85%A5%E1%86%AB.jpeg',
-  //   role_name: '주연',
-  //   ratings: '0',
-  //   platform: '넷플릭스',
-  // };
+  const navigate = useNavigate();
   const { starring_list } = movie;
 
-  console.log(movie);
+  const moveMoviePage = id => {
+    navigate(`/movie/${id}`);
+  };
 
   return (
     <>
@@ -34,6 +27,7 @@ function MovieTable({ movie }) {
       <Table>
         {starring_list?.map(movie => {
           const {
+            id,
             title,
             release,
             thumbnail_image_url,
@@ -44,53 +38,38 @@ function MovieTable({ movie }) {
           } = movie;
 
           return (
-            <Row>
-              <Year>{release}</Year>
-              <MoviePoster>
-                <MovieImg
-                  component="img"
-                  height="100%"
-                  image={thumbnail_image_url}
-                />
-              </MoviePoster>
-              <MoiveTitle>{title}</MoiveTitle>
-              <InRole>{role_name}</InRole>
-              <Rating>
-                {ratings ? (
-                  <ReviewRating>{ratings}</ReviewRating>
-                ) : (
-                  '평가 하시겠어요?'
-                )}
-              </Rating>
-              <Platform>
-                {/* {platform}  */}
-                <MovieTableOTT alt={platform} src={platform_logo_image} />
-              </Platform>
-            </Row>
+            <BackCover key={id}>
+              <Row>
+                <Year>{release}</Year>
+                <MoviePoster>
+                  <MovieImg
+                    component="img"
+                    height="100%"
+                    image={thumbnail_image_url}
+                  />
+                </MoviePoster>
+                <MoiveTitle onClick={() => moveMoviePage(id)} id>
+                  {title}
+                </MoiveTitle>
+                <InRole>{role_name}</InRole>
+                <Rating>
+                  {ratings ? (
+                    <>
+                      <Logo>My View</Logo>
+                      <ReviewRating>{ratings}</ReviewRating>
+                    </>
+                  ) : (
+                    '평가 하시겠어요?'
+                  )}
+                </Rating>
+                <Platform>
+                  {/* {platform}  */}
+                  <MovieTableOTT alt={platform} src={platform_logo_image} />
+                </Platform>
+              </Row>
+            </BackCover>
           );
         })}
-        {/* <Row>
-          <Year>{release}</Year>
-          <MoviePoster>
-            <MovieImg
-              component="img"
-              height="100%"
-              image={thumbnail_image_url}
-            />
-          </MoviePoster>
-          <MoiveTitle>{title}</MoiveTitle>
-          <InRole>{role_name}</InRole>
-          <Rating>{ratings}</Rating>
-          <Platform>{platform}</Platform>
-        </Row> */}
-        <Row>
-          <Year>2023</Year>
-          <MoviePoster>사진</MoviePoster>
-          <MoiveTitle>제목</MoiveTitle>
-          <InRole>역할</InRole>
-          <Rating>평가</Rating>
-          <Platform>감상 서비스</Platform>
-        </Row>
       </Table>
     </>
   );
@@ -99,22 +78,44 @@ function MovieTable({ movie }) {
 export default MovieTable;
 
 const Table = styled(CardContainer)`
-  /* background-color: #626262; */
   display: block;
-
   padding: 0;
 `;
 
+const BackCover = styled.div`
+  position: relative;
+  transition: all 0.5s;
+  border-bottom: 1px solid #818181;
+  :last-child {
+    border-bottom: none;
+  }
+  &:hover {
+    opacity: 1;
+    transition: all 0.5s;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      opacity: 0.5;
+      background-image: url('https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/gallery/Z8jafJT0TOkoU1C0Z5xo_Q.jpeg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
+  }
+`;
 const Row = styled.div`
   display: grid;
-  /* background-color: beige; */
+  padding: 0 20px;
   height: 138px;
   align-items: center;
   text-align: center;
   -webkit-box-align: center;
   grid-template-columns: 60px 82px 1fr 149px 140px 125px;
-  border-bottom: 1px solid #818181;
-  padding: 0 20px;
 `;
 
 const RowTitle = styled(Row)`
@@ -123,13 +124,18 @@ const RowTitle = styled(Row)`
   height: 40px;
   color: white;
   font-weight: bold;
-  /* background-color: #626262; */
-  /* border-radius: 10px; */
+  color: ${({ theme }) => theme.palette.test.second};
+  border: none;
+  border-bottom: 1px solid ${({ theme }) => theme.palette.test.second};
   -webkit-box-align: center;
+  cursor: inherit;
 
-  border-top: 1px solid #818181;
-
-  /* background-color: antiquewhite; */
+  &:hover {
+    div {
+      cursor: inherit;
+      color: ${({ theme }) => theme.palette.test.second};
+    }
+  }
 `;
 
 const Year = styled.div`
@@ -143,6 +149,11 @@ const MoviePoster = styled.div`
 
 const MoiveTitle = styled.div`
   font-weight: bold;
+  cursor: pointer;
+
+  &:hover {
+    color: ${({ theme }) => theme.palette.test.second};
+  }
 `;
 
 const InRole = styled.div``;
@@ -150,8 +161,9 @@ const InRole = styled.div``;
 const Rating = styled.div``;
 
 const ReviewRating = styled.p`
+  margin: 0;
   font-weight: bold;
-  color: ${({ theme }) => theme.palette.test.main}; ;
+  color: ${({ theme }) => theme.palette.test.main};
 `;
 
 const Platform = styled.div`
