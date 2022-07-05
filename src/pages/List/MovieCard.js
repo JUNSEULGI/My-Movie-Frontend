@@ -7,7 +7,7 @@ function MovieCard({ data, setOpen }) {
   const navigation = useNavigate();
 
   const showMovie = id => {
-    navigation(`/movie/${id}`);
+    navigation(`/movie/${data.movie.id}`);
   };
 
   const addMovie = () => {
@@ -19,12 +19,12 @@ function MovieCard({ data, setOpen }) {
       <AddBtn />
     </AddCardBox>
   ) : (
-    <CardBox onClick={showMovie}>
+    <CardBox>
       <Poster
         component="img"
         image="https://file2.nocutnews.co.kr/newsroom/image/2022/04/08/202204081311322351_0.jpg"
       />
-      <Title>닥터 스트레인지: 대혼돈의 멀티버스</Title>
+      <Title onClick={showMovie}>닥터 스트레인지: 대혼돈의 멀티버스</Title>
       <InfoContainer>
         <MovieInfo>2022 · 미국</MovieInfo>
         <InfoContainer>
@@ -82,6 +82,7 @@ const Title = styled(Typography)`
   font-size: 14px;
   font-weight: 700;
   color: ${({ theme }) => theme.palette.common.white};
+  cursor: pointer;
 `;
 
 const MovieInfo = styled(Typography)`
