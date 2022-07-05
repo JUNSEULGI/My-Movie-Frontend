@@ -20,7 +20,7 @@ function Movie() {
   const ReviewData = {
     data: {
       oneline: '여기는 30글자까지 들어갑니다.',
-      rating: '3.5',
+      rating: '',
       my_review:
         '자바스크립트에서 문자열을 자르기 위해서는 substr(), substring(), slice() 함수를 사용하면 된다. 문자열을 뒤에서부터 자르기 위해서는 slice() 함수를 사용하면 효율적이며 타 언어의 Right 함수와 비슷하다고 생각하면 된다. 세 가지의 함수 중 상황에 맞는 적절한 함수를 사용하면 된다.',
       reviewer: {
@@ -40,7 +40,8 @@ function Movie() {
 
   const hasreview = ReviewData.data.rating == '' ? false : true;
   const [hasReview, setHasReview] = useState(hasreview);
-
+  console.log(hasreview);
+  console.log(ReviewData.data.rating);
   // const [movieData, setMovieData] = useState({});
 
   // useEffect(() => {
