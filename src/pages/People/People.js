@@ -8,9 +8,13 @@ import MyViewLayout from '../../layout/Layout';
 import PeopleProfile from './PeopleProfile';
 import MovieTable from './MovieTable';
 import { PEOPLE_URL } from '../../Modules/API';
+import CountReview from './CountReview';
+import { useRecoilState } from 'recoil';
+import { userState } from '../../state';
 
 function People() {
   const params = useParams();
+  const [userInfo, setUserInfo] = useRecoilState(userState);
 
   // Real DATA
   // const [peopleData, setPeopleData] = useState({});
@@ -37,6 +41,8 @@ function People() {
       weight: 100,
       agency: '키이스트',
       job: ['영화배우', '감독'],
+      watched_movie: 20,
+      total_movie: 80,
       background_image:
         'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/gallery/Z8jafJT0TOkoU1C0Z5xo_Q.jpeg',
       starring_list: [
@@ -89,6 +95,7 @@ function People() {
               <PeopleProfile profile={peopleData} />
             </Info>
           </PeopleCard>
+          <CountReview userInfo={userInfo} peopleData={peopleData} />
           <Right>
             <MovieTable movie={peopleData} />
           </Right>

@@ -38,7 +38,7 @@ function MovieTable({ movie }) {
           } = movie;
 
           return (
-            <BackCover>
+            <BackCover key={id}>
               <Row>
                 <Year>{release}</Year>
                 <MoviePoster>
@@ -70,14 +70,6 @@ function MovieTable({ movie }) {
             </BackCover>
           );
         })}
-        <Row>
-          <Year>2023</Year>
-          <MoviePoster>사진</MoviePoster>
-          <MoiveTitle>제목</MoiveTitle>
-          <InRole>역할</InRole>
-          <Rating>평가</Rating>
-          <Platform>감상 서비스</Platform>
-        </Row>
       </Table>
     </>
   );
@@ -93,7 +85,10 @@ const Table = styled(CardContainer)`
 const BackCover = styled.div`
   position: relative;
   transition: all 0.5s;
-
+  border-bottom: 1px solid #818181;
+  :last-child {
+    border-bottom: none;
+  }
   &:hover {
     opacity: 1;
     transition: all 0.5s;
@@ -121,7 +116,6 @@ const Row = styled.div`
   text-align: center;
   -webkit-box-align: center;
   grid-template-columns: 60px 82px 1fr 149px 140px 125px;
-  border-bottom: 1px solid #818181;
 `;
 
 const RowTitle = styled(Row)`

@@ -1,31 +1,47 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { tokenState, movieState, reviewState, savingState } from '../../state';
 import styled from '@emotion/styled';
 import { Box, Typography, TextField, Rating } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import Poster from '../Poster/Poster';
+import { timestamp } from '../../util/timestamp';
 
-function ReviewBox({ isSaving, movieDetail }) {
-  // const token = localStorage.getItem('token');
-  const token =
-    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiZXhwIjoxNjU2MDA0MDYzfQ.ky7WKj9qMEf13BgA5Uaq0keu9ZkXeaHOUsOzGQ1eyIY';
+function ReviewBox() {
+  const [token, setToken] = useRecoilState(tokenState);
+  const [movie, setMovie] = useRecoilState(movieState);
+  const [saving, setSaving] = useRecoilState(savingState);
+  const [review, setReview] = useRecoilState(reviewState);
+
+  const navigate = useNavigate();
   const [user, setUser] = useState({});
   const [rating, setRating] = useState(0);
-  const [data, setData] = useState({
-    title: '한줄평',
-    content: '',
-    watched_date: new Date(),
-    place: { name: '', mapx: 0, mapy: 0 },
-    with_user: '',
-  });
 
+  // 리뷰 관련 input의 값이 바뀌면 "review" 리코일에 반영
   const handleReview = e => {
-    setData(prev => {
+    setReview(prev => {
       return { ...prev, content: e.target.value };
     });
   };
+
+  // 컴포넌트 최초 렌더링 시 리뷰를 작성할 영화에 대한 정보를 받아옴
   useEffect(() => {
-    fetch('http://192.168.228.159:8000/users/info', {
+    if (movie.title) {
+      fetch(`http://172.30.1.25:8000/movies/detail/${movie.id}`)
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          setMovie({ ...movie, ...data.movie_info });
+        });
+    }
+  }, []);
+
+  // 사용자 이름을 알아내기 위해 유저 정보 요청(로그인 시 리코일로 저장하는 것으로 수정 필요)
+  useEffect(() => {
+    fetch('http://172.30.1.26:8000/users/info', {
       headers: {
         Authorization: token,
       },
@@ -37,126 +53,139 @@ function ReviewBox({ isSaving, movieDetail }) {
       });
   }, []);
 
+  // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송
   useEffect(() => {
-    if (!isSaving) return;
+    if (!saving) return;
 
     const saveData = {
-      ...data,
-      watched_date: timestamp(data.watched_date),
+      ...review,
+      watched_date: timestamp(review.watched_date),
       rating,
+      movie_id: movie.id,
       // tag: [],
     };
     console.log(saveData);
+
     const formData = new FormData();
     formData.append('data', JSON.stringify(saveData));
-    console.log(formData);
+    // console.log(formData);
 
-    fetch(`http://192.168.228.159:8000/reviews/movie/${movieDetail.id}`, {
+    fetch(`http://172.30.1.26:8000/reviews`, {
       method: 'POST',
       headers: {
         Authorization: token,
       },
       body: formData,
-    });
-  }, [isSaving]);
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (result.message === 'SUCCESS') {
+          setSaving(false);
+          navigate('/');
+        }
+      });
+  }, [saving]);
 
-  const timestamp = date => {
-    const koDate = new Date(date.setHours(date.getHours() + 9));
-    console.log(date, koDate);
-    return koDate.toISOString().replace('T', ' ').substring(0, 19);
-  };
-
-  console.log(movieDetail);
-  console.log(timestamp(data.watched_date));
+  console.log(saving, review);
 
   return (
-    <Container>
-      <RowBox>
-        <Box>
-          <MovieTitle variant="h3">{movieDetail.title}</MovieTitle>
-          <BoldText variant="subtitle2">
-            {movieDetail.en_title} <br />
-            2022 · {movieDetail.country} ·{' '}
-            {movieDetail.genre?.map((genreItems, index) => (
-              <span key={index} style={{ marginRight: '10px' }}>
-                {genreItems}
-              </span>
-            ))}{' '}
-            / {movieDetail.running_time}분 · {movieDetail.age}세
-          </BoldText>
-        </Box>
-        <Rating
-          value={rating}
-          onChange={(e, newValue) => {
-            setRating(newValue);
-          }}
-          precision={0.5}
-          size="large"
+    <Column>
+      <Poster url={movie.thumbnail_image_url} />
+      <ReviewContainer>
+        <RowBox>
+          <Box>
+            <MovieTitle variant="h3">{movie.title}</MovieTitle>
+            <BoldText variant="subtitle2">
+              {movie.en_title} <br />
+              2022 · {movie.country} ·{' '}
+              {movie.genre?.map((genreItems, index) => (
+                <span key={index} style={{ marginRight: '10px' }}>
+                  {genreItems}
+                </span>
+              ))}{' '}
+              / {movie.running_time}분 · {movie.age}세
+            </BoldText>
+          </Box>
+          <Rating
+            value={rating}
+            onChange={(e, newValue) => {
+              setRating(newValue);
+            }}
+            precision={0.5}
+            size="large"
+          />
+        </RowBox>
+        <RowLabel variant="h4">{user?.nickname}님의 솔직후기</RowLabel>
+        <ReviewField
+          label="리뷰를 남겨보세요."
+          multiline
+          minRows={3}
+          maxRows={20}
+          value={review.content}
+          onChange={e => handleReview(e)}
         />
-      </RowBox>
-      <RowLabel variant="h4">{user?.nickname}님의 솔직후기</RowLabel>
-      <ReviewField
-        label="리뷰를 남겨보세요."
-        multiline
-        minRows={3}
-        maxRows={20}
-        value={data.content}
-        onChange={e => handleReview(e)}
-      />
-      <RowLabel variant="h4">관람정보</RowLabel>
-      <GridBox>
-        <Box>
-          <WatchInfoLabel variant="subtitle1">when</WatchInfoLabel>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <WatchDate
-              label="언제 보셨나요?"
-              inputFormat="yyyy.MM.dd HH:mm"
-              mask="____.__.__ __:__"
-              disableFuture={true}
-              renderInput={params => <WhiteTextField {...params} />}
-              value={data.watched_date}
-              onChange={newValue => {
-                console.log(newValue);
-                setData(prev => {
-                  return { ...prev, watched_date: newValue };
+        <RowLabel variant="h4">관람정보</RowLabel>
+        <GridBox>
+          <Box>
+            <WatchInfoLabel variant="subtitle1">when</WatchInfoLabel>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <WatchDate
+                label="언제 보셨나요?"
+                inputFormat="yyyy.MM.dd HH:mm"
+                mask="____.__.__ __:__"
+                disableFuture={true}
+                renderInput={params => <WhiteTextField {...params} />}
+                value={review.watched_date}
+                onChange={newValue => {
+                  console.log(newValue);
+                  setReview(prev => {
+                    return { ...prev, watched_date: newValue };
+                  });
+                }}
+              />
+            </LocalizationProvider>
+          </Box>
+          <Box>
+            <WatchInfoLabel variant="subtitle1">where</WatchInfoLabel>
+            <WatchInfoField
+              label="어디서 보셨나요?"
+              value={review.place.name}
+              onChange={e => {
+                setReview(prev => {
+                  return {
+                    ...prev,
+                    place: { ...review.place, name: e.target.value },
+                  };
                 });
               }}
             />
-          </LocalizationProvider>
-        </Box>
-        <Box>
-          <WatchInfoLabel variant="subtitle1">where</WatchInfoLabel>
-          <WatchInfoField
-            label="어디서 보셨나요?"
-            value={data.place.name}
-            onChange={e => {
-              setData(prev => {
-                return {
-                  ...prev,
-                  place: { ...data.place, name: e.target.value },
-                };
-              });
-            }}
-          />
-        </Box>
-        <Box>
-          <WatchInfoLabel variant="subtitle1">with</WatchInfoLabel>
-          <WatchInfoField
-            label="누구랑 보셨나요?"
-            value={data.with_user}
-            onChange={e => {
-              setData(prev => {
-                return { ...prev, with_user: e.target.value };
-              });
-            }}
-          />
-        </Box>
-      </GridBox>
-    </Container>
+          </Box>
+          <Box>
+            <WatchInfoLabel variant="subtitle1">with</WatchInfoLabel>
+            <WatchInfoField
+              label="누구랑 보셨나요?"
+              value={review.with_user}
+              onChange={e => {
+                setReview(prev => {
+                  return { ...prev, with_user: e.target.value };
+                });
+              }}
+            />
+          </Box>
+        </GridBox>
+      </ReviewContainer>
+    </Column>
   );
 }
 
-const Container = styled(Box)`
+const Column = styled(Box)`
+  display: grid;
+  grid-template-columns: 273px 1fr;
+  // 컨테이너가 늘어나면서 높이를 100%로 고정할 수 없게 됨.
+  // height: 100%;
+`;
+
+const ReviewContainer = styled(Box)`
   margin-left: 28px;
 `;
 
