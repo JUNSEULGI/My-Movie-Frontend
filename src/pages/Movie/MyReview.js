@@ -6,9 +6,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MovieRating from './MovieRating';
 import { Logo } from './ContentLogo';
+import { ReviewIcon, FabContainer } from './MyIconButton';
 
 function MyReview({ review, setHasReview, hasReview }) {
-  const { oneline, rating, my_review, reviewer } = review;
+  const { content, rating, title, id } = review;
   const [status, setStatus] = useState({});
 
   // MyReview 컴포넌트 삭제
@@ -24,7 +25,7 @@ function MyReview({ review, setHasReview, hasReview }) {
 
   //삭제 했을 때, Back과 통신해야함.
   // useEffect(() => {
-  //   fetch(`http://6b44-110-11-194-32.ngrok.io/reviews/1`, {
+  //   fetch(`http://c95d-110-11-194-32.ngrok.io/movies/1/reviews`, {
   //     headers: {
   //       // Authorization: token,
   //     },
@@ -40,9 +41,9 @@ function MyReview({ review, setHasReview, hasReview }) {
         <MovieRating rating={rating} />
       </Box>
       <MyBox>
-        <MyReviewTitle variant="h5">{oneline}</MyReviewTitle>
+        <MyReviewTitle variant="h5">{title}</MyReviewTitle>
       </MyBox>
-      <MyReviewContent>{my_review}</MyReviewContent>
+      <MyReviewContent>{content}</MyReviewContent>
       <FabContainer>
         <EditButton onClick={() => console.log('edit')}>
           <EditIcon />
@@ -89,22 +90,6 @@ const MyReviewContent = styled(Typography)`
 
 const Reviewer = styled.div``;
 
-const FabContainer = styled.div`
-  display: grid;
-  position: absolute;
-  top: 0;
-  right: -60px;
-`;
-
-const ReviewIcon = styled(IconButton)`
-  color: #ff9201;
-  background: none;
-  margin-bottom: 8px;
-  :hover {
-    background-color: black;
-  }
-`;
-
 const DeleteButton = styled(ReviewIcon)`
   :hover {
     background-color: red;
@@ -112,6 +97,7 @@ const DeleteButton = styled(ReviewIcon)`
 `;
 const EditButton = styled(ReviewIcon)`
   :hover {
+    color: white;
     background-color: #ff9201;
   }
 `;

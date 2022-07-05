@@ -14,6 +14,7 @@ import { Data } from './Mock/MovieData';
 
 function Movie() {
   const params = useParams();
+  const [reviewData, setReviewData] = useState({});
 
   // Review Mock Data
   const ReviewData = {
@@ -28,6 +29,15 @@ function Movie() {
       },
     },
   };
+
+  useEffect(() => {
+    fetch(`http://c95d-110-11-194-32.ngrok.io/movies/1/reviews`)
+      .then(res => res.json())
+      .then(res => {
+        setReviewData(res.result);
+      });
+  }, []);
+
   const hasreview = ReviewData.data.rating == '' ? false : true;
   const [hasReview, setHasReview] = useState(hasreview);
 
@@ -86,7 +96,7 @@ function Movie() {
             <MyReview
               hasReview={hasReview}
               setHasReview={setHasReview}
-              review={ReviewData.data}
+              review={reviewData}
             />
           )}
 
