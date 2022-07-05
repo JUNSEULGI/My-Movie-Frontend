@@ -89,6 +89,9 @@ function Nav() {
               />
             )}
           />
+          {/* 임시 코드 */}
+          <Avatar sx={{ width: 50, height: 50 }} src={Profile_image} />
+
           {localStorage.access_token ? (
             <Avatar sx={{ width: 50, height: 50 }} src={Profile_image} />
           ) : (
