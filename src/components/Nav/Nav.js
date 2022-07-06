@@ -33,12 +33,9 @@ function Nav() {
         setUserInfo(res.result);
       });
   }, []);
-  console.log('tat');
 
   //Mock DATA
   const { nickname, email, Profile_image } = userInfo;
-
-  console.log('유저 정보', userInfo);
 
   const updateScroll = () => {
     setScrollPosition(window.scrollY);
