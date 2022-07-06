@@ -16,7 +16,7 @@ function MovieCard({ data, setOpen }) {
 
   return !data ? (
     <AddCardBox onClick={addMovie}>
-      <AddBtn />
+      <AddBtn>+</AddBtn>
     </AddCardBox>
   ) : (
     <CardBox>
@@ -58,12 +58,18 @@ const AddCardBox = styled(CardBox)`
 `;
 
 const AddBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 121px;
   width: 121px;
-  background-color: ${({ theme }) => theme.palette.secondary.main};
+  background-color: #ff6e01;
   border-radius: 50%;
   box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
     0px 6px 10px rgba(0, 0, 0, 0.14), 0px 1px 18px rgba(0, 0, 0, 0.12);
+  color: #2222248a;
+  font-size: 30px;
+  font-weight: 300;
 `;
 
 const Poster = styled(CardMedia)`
