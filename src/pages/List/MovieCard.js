@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Box, Card, CardMedia, Typography, Rating, Chip } from '@mui/material';
 
-function MovieCard({ data, setOpen }) {
+function MovieCard({ data, setOpen, showReview }) {
   const navigation = useNavigate();
 
   const showMovie = id => {
@@ -19,18 +19,17 @@ function MovieCard({ data, setOpen }) {
       <AddBtn>+</AddBtn>
     </AddCardBox>
   ) : (
-    <CardBox>
-      <Poster
-        component="img"
-        image="https://file2.nocutnews.co.kr/newsroom/image/2022/04/08/202204081311322351_0.jpg"
-      />
-      <Title onClick={showMovie}>닥터 스트레인지: 대혼돈의 멀티버스</Title>
+    <CardBox onClick={showReview}>
+      <Poster component="img" image={data.movie.poster} />
+      <Title onClick={showMovie}>{data.movie.title}</Title>
       <InfoContainer>
-        <MovieInfo>2022 · 미국</MovieInfo>
+        <MovieInfo>
+          {data.movie.released.split('-')[0]} · {data.movie.country}
+        </MovieInfo>
         <InfoContainer>
           <Star size="small" max={1} value={1} readOnly />
           <Number>
-            <ThickNumber>2.5</ThickNumber> / 5
+            <ThickNumber>{data.rating}</ThickNumber> / 5
           </Number>
         </InfoContainer>
       </InfoContainer>

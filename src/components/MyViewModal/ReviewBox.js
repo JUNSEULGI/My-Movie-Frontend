@@ -11,7 +11,8 @@ import Poster from '../Poster/Poster';
 import { timestamp } from '../../util/timestamp';
 
 function ReviewBox() {
-  const [token, setToken] = useRecoilState(tokenState);
+  const token = localStorage.getItem('access_token');
+  // const [token, setToken] = useRecoilState(tokenState);
   const [movie, setMovie] = useRecoilState(movieState);
   const [saving, setSaving] = useRecoilState(savingState);
   const [review, setReview] = useRecoilState(reviewState);
@@ -30,7 +31,7 @@ function ReviewBox() {
   // 컴포넌트 최초 렌더링 시 리뷰를 작성할 영화에 대한 정보를 받아옴
   useEffect(() => {
     if (movie.title) {
-      fetch(`http://172.30.1.25:8000/movies/detail/${movie.id}`)
+      fetch(`http://c340-221-147-33-186.ngrok.io/movies/detail/${movie.id}`)
         .then(res => res.json())
         .then(data => {
           console.log(data);
@@ -39,39 +40,58 @@ function ReviewBox() {
     }
   }, []);
 
+  // 리뷰 아이디로 특정 리뷰 삭제하기
+  // fetch(`http://c340-221-147-33-186.ngrok.io/reviews/38`, {
+  //   method: 'DELETE',
+  //   headers: {
+  //     Authorization: token,
+  //   },
+  // }).then(res => console.log(res.json()));
+
   // 사용자 이름을 알아내기 위해 유저 정보 요청(로그인 시 리코일로 저장하는 것으로 수정 필요)
-  useEffect(() => {
-    fetch('http://172.30.1.26:8000/users/info', {
-      headers: {
-        Authorization: token,
-      },
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data.result);
-        setUser(data.result);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch('http://172.30.1.26:8000/users/info', {
+  //     headers: {
+  //       Authorization: token,
+  //     },
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       console.log(data.result);
+  //       setUser(data.result);
+  //     });
+  // }, []);
 
   // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송
   useEffect(() => {
     if (!saving) return;
 
-    const saveData = {
-      ...review,
-      watched_date: timestamp(review.watched_date),
-      rating,
-      movie_id: movie.id,
-      // tag: [],
-    };
-    console.log(saveData);
+    // const saveData = {
+    //   ...review,
+    //   watched_date: timestamp(review.watched_date),
+    //   rating,
+    //   movie_id: movie.id,
+    //   // tag: [],
+    // };
+    // console.log(saveData);
 
     const formData = new FormData();
-    formData.append('data', JSON.stringify(saveData));
-    // console.log(formData);
+    // formData.append('title', review.title);
+    formData.append('content', review.content);
+    formData.append('watched_date', timestamp(review.watched_date));
+    // formData.append('place', review.place.mapx);
+    // formData.append('place', review.place.mapy);
+    // formData.append('place', review.place.name);
+    // formData.append('place', review.place.link);
+    formData.append('with_user', review.with_user);
+    formData.append('rating', rating);
+    formData.append('movie_id', movie.id);
+    formData.append('review_id', 39);
 
-    fetch(`http://172.30.1.26:8000/reviews`, {
-      method: 'POST',
+    console.log(formData);
+
+    fetch(`http://c340-221-147-33-186.ngrok.io/reviews`, {
+      method: 'PUT',
       headers: {
         Authorization: token,
       },
@@ -81,7 +101,7 @@ function ReviewBox() {
       .then(result => {
         if (result.message === 'SUCCESS') {
           setSaving(false);
-          navigate('/');
+          navigate('/list');
         }
       });
   }, [saving]);

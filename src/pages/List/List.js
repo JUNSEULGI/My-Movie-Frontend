@@ -11,23 +11,27 @@ import NewReview from './NewReview';
 
 function List() {
   function ListLayout() {
-    const [token, setToken] = useRecoilState(tokenState);
+    // const [token, setToken] = useRecoilState(tokenState);
+    const token = localStorage.getItem('access_token');
+
     const [userInfo, setUserInfo] = useRecoilState(userState);
     const [reviews, setReviews] = useState([]);
     const [open, setOpen] = useState(false);
 
-    // useEffect(() => {
-    //   fetch('http://172.30.1.26:8000/reviews/list', {
-    //     headers: {
-    //       Authorization: token,
-    //     },
-    //   })
-    //     .then(res => res.json())
-    //     .then(data => {
-    //       console.log(data.result);
-    //       setReviews(data.result);
-    //     });
-    // }, []);
+    const showReview = review_id => {};
+
+    useEffect(() => {
+      fetch('http://c340-221-147-33-186.ngrok.io/reviews/list', {
+        headers: {
+          Authorization: token,
+        },
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data.result);
+          setReviews(data.result);
+        });
+    }, []);
 
     // 특정 리뷰 받아오기 테스트
     // useEffect(() => {
@@ -72,7 +76,11 @@ function List() {
           </SectionTitle>
           <CardContainer>
             {reviews.slice(0, 7).map(review => (
-              <MovieCard key={review.review_id} data={review} />
+              <MovieCard
+                key={review.review_id}
+                data={review}
+                showReview={showReview}
+              />
             ))}
             <MovieCard setOpen={setOpen} />
           </CardContainer>

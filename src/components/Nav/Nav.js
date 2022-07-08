@@ -23,7 +23,8 @@ function Nav() {
   const access_token = localStorage.getItem('access_token');
 
   useEffect(() => {
-    fetch(`http://6b44-110-11-194-32.ngrok.io/users/info`, {
+    if (!access_token) return;
+    fetch(`http://c340-221-147-33-186.ngrok.io/users/info`, {
       headers: {
         Authorization: access_token,
       },

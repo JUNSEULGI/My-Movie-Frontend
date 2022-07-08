@@ -18,7 +18,7 @@ function SearchBox() {
   const [ranks, setRanks] = useState([]);
 
   useEffect(() => {
-    fetch('http://172.30.1.25:8000/movies/simple')
+    fetch('http://c340-221-147-33-186.ngrok.io/movies/simple')
       .then(res => res.json())
       .then(result => {
         if (result.message === 'SUCCESS') {
