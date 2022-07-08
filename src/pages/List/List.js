@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { tokenState } from '../../state';
 import { Box, Typography } from '@mui/material';
@@ -13,6 +14,9 @@ function List() {
     const [token, setToken] = useRecoilState(tokenState);
     const [reviews, setReviews] = useState([]);
     const [open, setOpen] = useState(false);
+    const location = useLocation();
+
+    // history.replace({}, null, location.pathname);
 
     useEffect(() => {
       fetch('http://172.30.1.26:8000/reviews/list', {
@@ -37,7 +41,6 @@ function List() {
     //     .then(res => res.json())
     //     .then(result => console.log(result));
     // }, []);
-
     return (
       <>
         <Section>

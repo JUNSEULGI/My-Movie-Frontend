@@ -15,7 +15,7 @@ function NaverLogin() {
   //백으로 인증 코드 주는 함수
   useEffect(() => {
     fetch(
-      `http://6b44-110-11-194-32.ngrok.io/users/login/naver/callback?code=${access_code}`,
+      `http://c340-221-147-33-186.ngrok.io/users/login/naver/callback?code=${access_code}`,
       {
         method: 'GET',
       }

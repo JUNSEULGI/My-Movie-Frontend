@@ -8,16 +8,18 @@ import { CardContainer } from '../Movie/CardContainer';
 import { ReviewIcon } from '../Movie/MyIconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-function CountReview({ userInfo, peopleData }) {
+function CountReview({ userInfo, intimacyData }) {
   const { nickname, email, Profile_image } = userInfo;
-  const { total_movie, watched_movie } = peopleData;
+  const { total_count, viewed_count } = intimacyData;
   const [close, setClose] = useState(true);
   const [countReview, setCountReview] = useState(0);
-  const percent = (10 / (total_movie / watched_movie)) * 10;
+  const percent = (10 / (total_count / viewed_count)) * 10;
 
   useEffect(() => {
     setCountReview(percent);
   }, []);
+
+  console.log('asfsd', viewed_count);
 
   return (
     <>
@@ -34,13 +36,13 @@ function CountReview({ userInfo, peopleData }) {
               />
               <CountTextCover>
                 <CountText>
-                  {`${Math.round(watched_movie)}`}
-                  <p>/ {total_movie}</p>
+                  {`${Math.round(viewed_count)}`}
+                  <p>/ {total_count}</p>
                 </CountText>
               </CountTextCover>
             </Box>
             <CountIntro>
-              {nickname}님은 마동석님이 출연한 <strong>{watched_movie}</strong>
+              {nickname}님은 마동석님이 출연한 <strong>{viewed_count}</strong>
               개의 영화를 시청했습니다.
             </CountIntro>
           </Box>
@@ -95,6 +97,10 @@ const CountTextCover = styled.div`
 `;
 
 const CountText = styled(Typography)`
+  position: absolute;
+  top: 50%;
+  left: 48%;
+  margin: -20px 0 0 -20px;
   display: flex;
   align-items: baseline;
   color: orange;

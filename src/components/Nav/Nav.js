@@ -18,21 +18,24 @@ import {
 
 function Nav() {
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useRecoilState(userState);
+  const [userInfo, setUserInfo] = useState({});
   const [scrollPosition, setScrollPosition] = useState(0);
   const access_token = localStorage.getItem('access_token');
 
   useEffect(() => {
-    fetch(`http://6b44-110-11-194-32.ngrok.io/users/info`, {
+    if (!access_token) return;
+    fetch(`http://c340-221-147-33-186.ngrok.io/users/info`, {
       headers: {
         Authorization: access_token,
       },
     })
       .then(res => res.json())
       .then(res => {
-        setUserInfo(res.result);
+        setUserInfo(res);
       });
   }, []);
+  console.log('유저', userInfo);
+  console.log(access_token);
 
   //Mock DATA
   const { nickname, email, Profile_image } = userInfo;
