@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userState } from '../../state';
+import { tokenState } from '../../state';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { MK_URL } from '../../Modules/API';
@@ -21,6 +22,7 @@ function Nav() {
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const [scrollPosition, setScrollPosition] = useState(0);
   const access_token = localStorage.getItem('access_token');
+  const resetUser = useResetRecoilState(userState);
 
   useEffect(() => {
     if (!access_token) return;
@@ -38,8 +40,6 @@ function Nav() {
   //Mock DATA
   const { nickname, email, Profile_image } = userInfo;
 
-  console.log('유저 정보', userInfo);
-
   const updateScroll = () => {
     setScrollPosition(window.scrollY);
   };
@@ -52,25 +52,11 @@ function Nav() {
     navigate(`/movie/${id}`);
   };
 
-  function stringToColor(string) {
-    let hash = 0;
-    let i;
-
-    /* eslint-disable no-bitwise */
-    for (i = 0; i < string?.length; i += 1) {
-      hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-
-    let color = '#';
-
-    for (i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff;
-      color += `00${value.toString(16)}`.slice(-2);
-    }
-    /* eslint-enable no-bitwise */
-
-    return color;
-  }
+  const loginout = () => {
+    localStorage.removeItem('access_token');
+    resetUser();
+    navigate('/');
+  };
 
   return (
     <NavBar scrollPosition={scrollPosition}>
@@ -111,11 +97,12 @@ function Nav() {
               />
             )}
           />
-          {/* 임시 코드 */}
-          <Avatar sx={{ width: 50, height: 50 }} src={Profile_image} />
-
           {localStorage.access_token ? (
-            <Avatar sx={{ width: 50, height: 50 }} src={Profile_image} />
+            <MyAvatar
+              sx={{ width: 50, height: 50 }}
+              src={Profile_image}
+              onClick={() => loginout()}
+            />
           ) : (
             ''
             // <SignUp>회원가입하러 가기</SignUp>
@@ -205,6 +192,10 @@ const StyledPaper = styled(Paper)`
   :focus {
     background-color: yellow;
   }
+`;
+
+const MyAvatar = styled(Avatar)`
+  cursor: pointer;
 `;
 
 export default Nav;

@@ -17,6 +17,7 @@ function NewReview({ open, setOpen }) {
     resetMovie();
     resetReview();
     setOpen(false);
+    console.log(open);
   };
 
   // const movies = [

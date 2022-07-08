@@ -100,6 +100,11 @@ function Movie() {
               review={reviewData}
             />
           )}
+          <MyReview
+            hasReview={hasReview}
+            setHasReview={setHasReview}
+            review={reviewData}
+          />
 
           <ContainerTitle>예고편</ContainerTitle>
           <TrailerContainer>

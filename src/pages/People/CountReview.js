@@ -5,39 +5,56 @@ import styled from '@emotion/styled';
 import { Typography, Box } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { CardContainer } from '../Movie/CardContainer';
+import { ReviewIcon } from '../Movie/MyIconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
-function CountReview({ userInfo, peopleData }) {
+function CountReview({ userInfo, intimacyData }) {
+  const [countReview, setCountReview] = useState(0);
+  const [close, setClose] = useState(true);
   const { nickname, email, Profile_image } = userInfo;
-  const { total_movie, watched_movie } = peopleData;
+  const { total_count, viewed_count } = intimacyData;
+  console.log(intimacyData);
+  const percent = (10 / (total_count / viewed_count)) * 10;
 
-  const percent = (10 / (total_movie / watched_movie)) * 10;
-  console.log('식 구현', percent);
+  useEffect(() => {
+    setCountReview(percent);
+  }, []);
+
+  console.log('asfsd', viewed_count);
 
   return (
     <>
-      <CountCardContainer>
-        <PeopleCardTitle>친밀도</PeopleCardTitle>
-        <Box sx={{ textAlign: 'center' }}>
-          <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-            <BackProgress variant="determinate" size={140} value={100} />
-            <CountReviewCircularProgress
-              variant="determinate"
-              size={140}
-              value={percent}
-            />
-            <CountTextCover>
-              <CountText>
-                {`${Math.round(watched_movie)}`}
-                <p>/ {total_movie}</p>
-              </CountText>
-            </CountTextCover>
+      {close ? (
+        <CountCardContainer>
+          <PeopleCardTitle>친밀도</PeopleCardTitle>
+          <Box sx={{ textAlign: 'center' }}>
+            <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+              <BackProgress variant="determinate" size={140} value={100} />
+              <CountReviewCircularProgress
+                variant="determinate"
+                size={140}
+                value={countReview}
+              />
+              <CountTextCover>
+                <CountText>
+                  {`${Math.round(viewed_count)}`}
+                  <p>/ {total_count}</p>
+                </CountText>
+              </CountTextCover>
+            </Box>
+            <CountIntro>
+              {nickname}님은 마동석님이 출연한 <strong>{viewed_count}</strong>
+              개의 영화를 시청했습니다.
+            </CountIntro>
           </Box>
-          <CountIntro>
-            {nickname}님은 마동석님이 출연한 <strong>{watched_movie}</strong>
-            개의 영화를 시청했습니다.
-          </CountIntro>
-        </Box>
-      </CountCardContainer>
+
+          <CloseButton onClick={() => setClose(false)}>
+            <CloseIcon />
+          </CloseButton>
+        </CountCardContainer>
+      ) : (
+        ''
+      )}
     </>
   );
 }
@@ -45,6 +62,7 @@ function CountReview({ userInfo, peopleData }) {
 export default CountReview;
 
 const CountCardContainer = styled(CardContainer)`
+  position: relative;
   display: block;
   width: 470px;
 `;
@@ -57,6 +75,7 @@ const CountReviewCircularProgress = styled(CircularProgress)`
   &.MuiCircularProgress-colorPrimary {
     color: orange;
   }
+  stroke-linecap: round;
 `;
 
 const BackProgress = styled(CircularProgress)`
@@ -79,6 +98,10 @@ const CountTextCover = styled.div`
 `;
 
 const CountText = styled(Typography)`
+  position: absolute;
+  top: 50%;
+  left: 48%;
+  margin: -20px 0 0 -20px;
   display: flex;
   align-items: baseline;
   color: orange;
@@ -102,4 +125,10 @@ const CountIntro = styled(Typography)`
     font-size: 20px;
     color: orange;
   }
+`;
+
+const CloseButton = styled(ReviewIcon)`
+  position: absolute;
+  top: 10px;
+  right: 10px;
 `;

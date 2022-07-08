@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { tokenState, userState } from '../../state';
 import { Box, Typography } from '@mui/material';
@@ -17,6 +18,9 @@ function List() {
     const [userInfo, setUserInfo] = useRecoilState(userState);
     const [reviews, setReviews] = useState([]);
     const [open, setOpen] = useState(false);
+    const location = useLocation();
+
+    // history.replace({}, null, location.pathname);
 
     const showReview = review_id => {};
 
