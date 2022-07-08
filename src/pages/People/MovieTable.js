@@ -31,14 +31,16 @@ function MovieTable({ movie }) {
             title,
             release,
             thumbnail_image_url,
+            movie_image_url,
             role_name,
             ratings,
             platform,
             platform_logo_image,
           } = movie;
 
+          const floorRatings = ratings.slice(0, 3);
           return (
-            <BackCover key={id}>
+            <BackCover key={id} back={movie_image_url}>
               <Row>
                 <Year>{release}</Year>
                 <MoviePoster>
@@ -56,7 +58,7 @@ function MovieTable({ movie }) {
                   {ratings ? (
                     <>
                       <Logo>My View</Logo>
-                      <ReviewRating>{ratings}</ReviewRating>
+                      <ReviewRating>{floorRatings}</ReviewRating>
                     </>
                   ) : (
                     '평가 하시겠어요?'
@@ -101,10 +103,11 @@ const BackCover = styled.div`
       width: 100%;
       height: 100%;
       opacity: 0.5;
-      background-image: url('https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/gallery/Z8jafJT0TOkoU1C0Z5xo_Q.jpeg');
+      background: ${({ back }) => `url(${back}) no-repeat`};
       background-repeat: no-repeat;
       background-size: cover;
       background-position: center;
+      background-position-y: 800;
     }
   }
 `;
