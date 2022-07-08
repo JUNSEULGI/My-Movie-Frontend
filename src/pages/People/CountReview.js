@@ -9,10 +9,11 @@ import { ReviewIcon } from '../Movie/MyIconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
 function CountReview({ userInfo, intimacyData }) {
+  const [countReview, setCountReview] = useState(0);
+  const [close, setClose] = useState(true);
   const { nickname, email, Profile_image } = userInfo;
   const { total_count, viewed_count } = intimacyData;
-  const [close, setClose] = useState(true);
-  const [countReview, setCountReview] = useState(0);
+  console.log(intimacyData);
   const percent = (10 / (total_count / viewed_count)) * 10;
 
   useEffect(() => {
