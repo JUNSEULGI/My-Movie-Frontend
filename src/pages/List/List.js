@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { userState, movieState, reviewState, savingState } from '../../state';
+import { userState, movieState, reviewState } from '../../state';
 import { Box, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import MyViewLayout from '../../layout/Layout';
-import Aside from '../../components/Aside';
+// import Aside from '../../components/Aside';
 import MovieCard from './MovieCard';
 import FavoriteMovie from './FavoriteMovie';
 import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import MyStep from './MyStep';
 import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import SearchBox from '../../components/MyViewModal/SearchBox';
+import { buttons } from '../../util/buttons';
+import { MK_URL } from '../../Modules/API';
 
 function List() {
   function ListLayout() {
     const token = localStorage.getItem('access_token');
     const [userInfo, setUserInfo] = useRecoilState(userState);
-    const [saving, setSaving] = useRecoilState(savingState);
     const [movie, setMovie] = useRecoilState(movieState);
     const [review, setReview] = useRecoilState(reviewState);
     const resetMovie = useResetRecoilState(movieState);
@@ -29,7 +30,6 @@ function List() {
       resetMovie();
       resetReview();
       setOpen(false);
-      console.log(open);
     };
 
     const showReview = review => {
@@ -39,7 +39,7 @@ function List() {
     };
 
     useEffect(() => {
-      fetch('http://c340-221-147-33-186.ngrok.io/reviews/list', {
+      fetch(`${MK_URL}reviews/list`, {
         headers: {
           Authorization: token,
         },
@@ -69,24 +69,6 @@ function List() {
       },
     ];
 
-    // const movies = [
-    //   { title: '닥터스트레인지', rank: 1, id: 1 },
-    //   { title: '어벤저스', rank: 2, id: 2 },
-    //   { title: '블랙위도우', rank: 3, id: 3 },
-    //   { title: '캡틴아메리카', rank: 4, id: 4 },
-    //   { title: '토르', rank: 5, id: 5 },
-    //   { title: '스파이더맨', rank: 6, id: 6 },
-    //   { title: '아이언맨', rank: 7, id: 7 },
-    // ];
-
-    // 리뷰 아이디로 특정 리뷰 삭제하기
-    // fetch(`http://c340-221-147-33-186.ngrok.io/reviews/38`, {
-    //   method: 'DELETE',
-    //   headers: {
-    //     Authorization: token,
-    //   },
-    // }).then(res => console.log(res.json()));
-
     return (
       <>
         <Section>
@@ -115,16 +97,9 @@ function List() {
           closeModal={closeModal}
           breadcrumbs={<MyStep />}
           buttons={
-            movie.id && [
-              {
-                key: 1,
-                name: 'Save',
-                function: () => {
-                  setSaving(true);
-                },
-              },
-            ]
-            // review.id가 있으면 삭제하기 버튼도 추가
+            movie.id && review.review_id
+              ? [buttons.save, buttons.delete]
+              : [buttons.save]
           }
           children={movie.id ? <ReviewBox /> : <SearchBox />}
         />

@@ -9,6 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Poster from '../Poster/Poster';
 import { timestamp } from '../../util/timestamp';
+import { MK_URL } from '../../Modules/API';
 
 function ReviewBox() {
   const token = localStorage.getItem('access_token');
@@ -29,7 +30,7 @@ function ReviewBox() {
   // 컴포넌트 최초 렌더링 시 리뷰를 작성할 영화에 대한 정보를 받아옴
   useEffect(() => {
     if (movie.title) {
-      fetch(`http://c340-221-147-33-186.ngrok.io/movies/detail/${movie.id}`)
+      fetch(`${MK_URL}movies/detail/${movie.id}`)
         .then(res => res.json())
         .then(data => {
           console.log(data);
@@ -37,7 +38,7 @@ function ReviewBox() {
         });
     }
     if (review.review_id) {
-      fetch(`http://192.168.228.159:8000/reviews/${review.review_id}`, {
+      fetch(`${MK_URL}reviews/${review.review_id}`, {
         headers: {
           Authorization: token,
         },
@@ -68,7 +69,7 @@ function ReviewBox() {
 
     console.log(formData);
 
-    fetch(`http://c340-221-147-33-186.ngrok.io/reviews`, {
+    fetch(`${MK_URL}reviews`, {
       method: 'POST',
       headers: {
         Authorization: token,

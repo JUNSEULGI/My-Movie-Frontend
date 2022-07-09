@@ -40,7 +40,7 @@ function Nav() {
 
   useEffect(() => {
     if (!access_token) return;
-    fetch(`http://c340-221-147-33-186.ngrok.io/users/info`, {
+    fetch(`${MK_URL}users/info`, {
       headers: {
         Authorization: access_token,
       },

@@ -8,7 +8,7 @@ const FavoriteMovie = ({ bestMovies }) => {
       {bestMovies.map(movie => (
         <BestMovie key={movie.id}>
           <BackgroundPoster img={movie.img}>
-            <Title variant="h3">닥터스트레인지</Title>
+            <Title variant="h3">{movie.title}</Title>
           </BackgroundPoster>
         </BestMovie>
       ))}
@@ -42,6 +42,7 @@ const BackgroundPoster = styled.div`
   height: 100%;
   background-image: url(${props => props.img});
   background-size: cover;
+  background-position: center;
   border-radius: 8px;
 `;
 

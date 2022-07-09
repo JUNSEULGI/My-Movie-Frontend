@@ -4,6 +4,6 @@ export default atom({
   key: 'movie',
   default: {
     id: '',
-    title: '',
+    title: 'fake title',
   },
 });

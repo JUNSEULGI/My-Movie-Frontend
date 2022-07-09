@@ -4,8 +4,8 @@ import { Container, Typography } from '@mui/material';
 import { CardContainer } from '../Movie/CardContainer';
 import { Logo } from '../Movie/ContentLogo';
 import MyViewLayout from '../../layout/Layout';
-import NaverLogin from './Naver/NaverLogin';
-import KakaoLogin from './Kakao/KakaoLogin';
+import NaverLogin from './NaverLogin';
+import KakaoLogin from './KakaoLogin';
 
 function Login() {
   function LoginContainer() {

@@ -4,7 +4,7 @@ export const instance = axios.create({
   baseURL: 'https://nid.naver.com/oauth2.0/',
 });
 
-export const MK_URL = 'http://172.30.1.25:8000/';
+export const MK_URL = 'http://1353-175-193-80-187.ngrok.io/';
 
 export const BASE_URL = '172.30.1.20:8000/users/login/naver/callback';
 
@@ -18,3 +18,5 @@ export const INTIMACY_URL = 'http://172.30.1.21:8000/movies/actor/intimacy/';
 export const NAVER_ID = 'fAxuwH_vSTsRSIcvBdvp';
 export const NAVER_CALLBACK_URL = 'http://localhost:3000';
 export const NAVER_STATE_STRING = '288539e2-9a6d-40ed-8a73-85b96ad91786';
+
+export const KAKAO_ID = '095e154f9ca806fa28053d419b7cbbbd';
