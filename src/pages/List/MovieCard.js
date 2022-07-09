@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Box, Card, CardMedia, Typography, Rating, Chip } from '@mui/material';
 
-function MovieCard({ data, setOpen }) {
+function MovieCard({ data, setOpen, showReview }) {
   const navigation = useNavigate();
 
   const showMovie = id => {
@@ -16,21 +16,20 @@ function MovieCard({ data, setOpen }) {
 
   return !data ? (
     <AddCardBox onClick={addMovie}>
-      <AddBtn />
+      <AddBtn>+</AddBtn>
     </AddCardBox>
   ) : (
-    <CardBox>
-      <Poster
-        component="img"
-        image="https://file2.nocutnews.co.kr/newsroom/image/2022/04/08/202204081311322351_0.jpg"
-      />
-      <Title onClick={showMovie}>닥터 스트레인지: 대혼돈의 멀티버스</Title>
+    <CardBox onClick={showReview}>
+      <Poster component="img" image={data.movie.poster} />
+      <Title onClick={showMovie}>{data.movie.title}</Title>
       <InfoContainer>
-        <MovieInfo>2022 · 미국</MovieInfo>
+        <MovieInfo>
+          {data.movie.released.split('-')[0]} · {data.movie.country}
+        </MovieInfo>
         <InfoContainer>
           <Star size="small" max={1} value={1} readOnly />
           <Number>
-            <ThickNumber>2.5</ThickNumber> / 5
+            <ThickNumber>{data.rating}</ThickNumber> / 5
           </Number>
         </InfoContainer>
       </InfoContainer>
@@ -58,12 +57,18 @@ const AddCardBox = styled(CardBox)`
 `;
 
 const AddBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 121px;
   width: 121px;
-  background-color: ${({ theme }) => theme.palette.secondary.main};
+  background-color: #ff6e01;
   border-radius: 50%;
   box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
     0px 6px 10px rgba(0, 0, 0, 0.14), 0px 1px 18px rgba(0, 0, 0, 0.12);
+  color: #2222248a;
+  font-size: 30px;
+  font-weight: 300;
 `;
 
 const Poster = styled(CardMedia)`

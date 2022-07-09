@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { tokenState, movieState, reviewState, savingState } from '../../state';
+import { movieState, reviewState, savingState, userState } from '../../state';
 import styled from '@emotion/styled';
 import { Box, Typography, TextField, Rating } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -11,14 +11,13 @@ import Poster from '../Poster/Poster';
 import { timestamp } from '../../util/timestamp';
 
 function ReviewBox() {
-  const [token, setToken] = useRecoilState(tokenState);
+  const token = localStorage.getItem('access_token');
   const [movie, setMovie] = useRecoilState(movieState);
   const [saving, setSaving] = useRecoilState(savingState);
   const [review, setReview] = useRecoilState(reviewState);
-
-  const navigate = useNavigate();
-  const [user, setUser] = useState({});
+  const [userInfo, setUserInfo] = useRecoilState(userState);
   const [rating, setRating] = useState(0);
+  const navigate = useNavigate();
 
   // 리뷰 관련 input의 값이 바뀌면 "review" 리코일에 반영
   const handleReview = e => {
@@ -30,47 +29,46 @@ function ReviewBox() {
   // 컴포넌트 최초 렌더링 시 리뷰를 작성할 영화에 대한 정보를 받아옴
   useEffect(() => {
     if (movie.title) {
-      fetch(`http://172.30.1.25:8000/movies/detail/${movie.id}`)
+      fetch(`http://c340-221-147-33-186.ngrok.io/movies/detail/${movie.id}`)
         .then(res => res.json())
         .then(data => {
           console.log(data);
           setMovie({ ...movie, ...data.movie_info });
         });
     }
-  }, []);
-
-  // 사용자 이름을 알아내기 위해 유저 정보 요청(로그인 시 리코일로 저장하는 것으로 수정 필요)
-  useEffect(() => {
-    fetch('http://172.30.1.26:8000/users/info', {
-      headers: {
-        Authorization: token,
-      },
-    })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data.result);
-        setUser(data.result);
-      });
+    if (review.review_id) {
+      fetch(`http://192.168.228.159:8000/reviews/${review.review_id}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+        .then(res => res.json())
+        .then(result => {
+          // review에 저장하기
+          console.log(result);
+        });
+    }
   }, []);
 
   // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송
   useEffect(() => {
     if (!saving) return;
 
-    const saveData = {
-      ...review,
-      watched_date: timestamp(review.watched_date),
-      rating,
-      movie_id: movie.id,
-      // tag: [],
-    };
-    console.log(saveData);
-
     const formData = new FormData();
-    formData.append('data', JSON.stringify(saveData));
-    // console.log(formData);
+    formData.append('title', review.title);
+    formData.append('content', review.content);
+    formData.append('watched_date', timestamp(review.watched_date));
+    formData.append('place', review.place.mapx);
+    formData.append('place', review.place.mapy);
+    formData.append('place', review.place.name);
+    formData.append('place', review.place.link);
+    formData.append('with_user', review.with_user);
+    formData.append('rating', rating);
+    formData.append('movie_id', movie.id);
 
-    fetch(`http://172.30.1.26:8000/reviews`, {
+    console.log(formData);
+
+    fetch(`http://c340-221-147-33-186.ngrok.io/reviews`, {
       method: 'POST',
       headers: {
         Authorization: token,
@@ -81,7 +79,7 @@ function ReviewBox() {
       .then(result => {
         if (result.message === 'SUCCESS') {
           setSaving(false);
-          navigate('/');
+          navigate('/list');
         }
       });
   }, [saving]);
@@ -115,7 +113,7 @@ function ReviewBox() {
             size="large"
           />
         </RowBox>
-        <RowLabel variant="h4">{user?.nickname}님의 솔직후기</RowLabel>
+        <RowLabel variant="h4">{userInfo?.nickname}님의 솔직후기</RowLabel>
         <ReviewField
           label="리뷰를 남겨보세요."
           multiline

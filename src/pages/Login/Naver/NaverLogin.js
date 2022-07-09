@@ -12,29 +12,22 @@ function NaverLogin() {
   console.log('네이버 인증 코드', access_code);
 
   //백으로 인증 코드 주는 함수
-
   useEffect(() => {
-    if (search) {
-      fetch(
-        `http://c340-221-147-33-186.ngrok.io/users/login/naver/callback?code=${access_code}`,
-        {
-          method: 'GET',
-        }
-      )
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-
-          localStorage.setItem('access_token', data.token_info.access_token);
-          // localStorage.setItem('user_name', data.user_info.user_name);
-          // localStorage.setItem('profile', data.user_info.user_name.profile);
-          {
-            localStorage.access_token
-              ? navigate('/list')
-              : alert('정보가 바르지 않습니다');
-          }
-        });
-    }
+    if (!search) return;
+    fetch(
+      `http://c340-221-147-33-186.ngrok.io/users/login/naver/callback?code=${access_code}`,
+      {
+        method: 'GET',
+      }
+    )
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        localStorage.setItem('access_token', data.token_info.access_token);
+        localStorage.access_token
+          ? navigate('/list')
+          : alert('정보가 바르지 않습니다');
+      });
   }, []);
 
   return (
