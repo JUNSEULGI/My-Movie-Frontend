@@ -3,6 +3,7 @@ import { atom } from 'recoil';
 export default atom({
   key: 'review',
   default: {
+    review_id: '',
     title: '한줄평',
     content: '',
     watched_date: new Date(),

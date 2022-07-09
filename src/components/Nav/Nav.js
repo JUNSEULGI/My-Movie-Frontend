@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userState } from '../../state';
-import { tokenState } from '../../state';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { MK_URL } from '../../Modules/API';
@@ -20,9 +19,24 @@ import {
 function Nav() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useRecoilState(userState);
+  const { Profile_image } = userInfo;
   const [scrollPosition, setScrollPosition] = useState(0);
   const access_token = localStorage.getItem('access_token');
   const resetUser = useResetRecoilState(userState);
+
+  const updateScroll = () => {
+    setScrollPosition(window.scrollY);
+  };
+
+  const moveMoviePage = id => {
+    navigate(`/movie/${id}`);
+  };
+
+  const logout = () => {
+    localStorage.removeItem('access_token');
+    resetUser();
+    navigate('/');
+  };
 
   useEffect(() => {
     if (!access_token) return;
@@ -37,26 +51,9 @@ function Nav() {
       });
   }, []);
 
-  //Mock DATA
-  const { nickname, email, Profile_image } = userInfo;
-
-  const updateScroll = () => {
-    setScrollPosition(window.scrollY);
-  };
-
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
   });
-
-  const moveMoviePage = id => {
-    navigate(`/movie/${id}`);
-  };
-
-  const loginout = () => {
-    localStorage.removeItem('access_token');
-    resetUser();
-    navigate('/');
-  };
 
   return (
     <NavBar scrollPosition={scrollPosition}>
@@ -101,7 +98,7 @@ function Nav() {
             <MyAvatar
               sx={{ width: 50, height: 50 }}
               src={Profile_image}
-              onClick={() => loginout()}
+              onClick={() => logout()}
             />
           ) : (
             ''

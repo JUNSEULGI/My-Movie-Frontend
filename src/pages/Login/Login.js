@@ -18,10 +18,8 @@ function Login() {
             하세요.
           </Produce>
           <SocialContainer>
-            {/* Naver 로그인 버튼 */}
             <LoginText>네이버로 로그인하기</LoginText>
             <NaverLogin />
-            {/* Kakao 로그인 버튼 */}
             <LoginText>카카오로 로그인하기</LoginText>
             <KakaoLogin />
           </SocialContainer>

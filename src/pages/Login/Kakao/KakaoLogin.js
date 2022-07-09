@@ -19,8 +19,6 @@ function KakaoLogin() {
         .then(data => {
           console.log(data);
           localStorage.setItem('access_token', data.access_token);
-          // localStorage.setItem('username', data.username);
-          // localStorage.setItem('profile', data.profile);
           navigate('/list');
         });
     }
