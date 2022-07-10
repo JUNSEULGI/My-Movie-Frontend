@@ -19,7 +19,7 @@ function MyViewModal({ open, closeModal, breadcrumbs, children, buttons }) {
                 key={item.key}
                 onClick={e => {
                   console.log();
-                  // item.function();
+                  item.function();
                 }}
               >
                 {item.name}

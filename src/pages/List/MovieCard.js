@@ -47,6 +47,7 @@ const CardBox = styled(Card)`
   height: 460px;
   border-radius: 8px;
   background-color: ${({ theme }) => theme.palette.background.card};
+  cursor: pointer;
 `;
 
 const AddCardBox = styled(CardBox)`

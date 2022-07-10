@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { movieState, reviewState, buttonState, userState } from '../../state';
 import styled from '@emotion/styled';
 import { Box, Typography, TextField, Rating } from '@mui/material';
@@ -18,6 +18,8 @@ function ReviewBox() {
   const [button, setButton] = useRecoilState(buttonState);
   const [review, setReview] = useRecoilState(reviewState);
   const [userInfo] = useRecoilState(userState);
+  const resetMovie = useResetRecoilState(movieState);
+  const resetReview = useResetRecoilState(reviewState);
   const [rating, setRating] = useState(0);
   const navigate = useNavigate();
 
@@ -30,7 +32,7 @@ function ReviewBox() {
 
   // 컴포넌트 최초 렌더링 시 리뷰를 작성할 영화에 대한 정보를 받아옴
   useEffect(() => {
-    if (movie.title) {
+    if (movie.id) {
       fetch(`${MK_URL}movies/detail/${movie.id}`)
         .then(res => res.json())
         .then(data => {
@@ -38,18 +40,19 @@ function ReviewBox() {
           setMovie({ ...movie, ...data.movie_info });
         });
     }
-    if (review.review_id) {
-      fetch(`${MK_URL}reviews/${review.review_id}`, {
-        headers: {
-          Authorization: token,
-        },
-      })
-        .then(res => res.json())
-        .then(result => {
-          // review에 저장하기
-          console.log(result);
-        });
-    }
+    // 이미 작성한 리뷰의 내용 가져오기(api 확인 필요)
+    // if (review.review_id) {
+    //   fetch(`${MK_URL}reviews/${review.review_id}`, {
+    //     headers: {
+    //       Authorization: token,
+    //     },
+    //   })
+    //     .then(res => res.json())
+    //     .then(result => {
+    //       // review에 저장하기
+    //       console.log(result);
+    //     });
+    // }
   }, []);
 
   // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송
@@ -70,25 +73,51 @@ function ReviewBox() {
 
     console.log(formData);
 
-    fetch(`${MK_URL}reviews`, {
-      method: 'POST',
-      headers: {
-        Authorization: token,
-      },
-      body: formData,
-    })
-      .then(res => res.json())
-      .then(result => {
-        if (result.message === 'SUCCESS') {
-          setButton({ ...button, isSaving: false });
-          navigate('/list');
-        }
-      });
+    if (review.review_id) {
+      // 리뷰 아이디가 있으므로 이미 작성된 리뷰를 수정하는 중
+      formData.append('review_id', review.review_id);
+
+      fetch(`${MK_URL}reviews`, {
+        method: 'PUT',
+        headers: {
+          Authorization: token,
+        },
+        body: formData,
+      })
+        .then(res => res.json())
+        .then(result => {
+          if (result.message === 'SUCCESS') {
+            setButton({ ...button, isSaving: false });
+            resetMovie();
+            resetReview();
+            navigate('/list');
+          }
+        });
+    } else {
+      // 리뷰 아이디가 없으므로 새로운 리뷰 저장하는 중
+      fetch(`${MK_URL}reviews`, {
+        method: 'POST',
+        headers: {
+          Authorization: token,
+        },
+        body: formData,
+      })
+        .then(res => res.json())
+        .then(result => {
+          if (result.message === 'SUCCESS') {
+            setButton({ ...button, isSaving: false });
+            resetMovie();
+            resetReview();
+            // navigate 했는데 아예 새로고침은 안 됨
+            navigate('/list');
+          }
+        });
+    }
   }, [button.isSaving]);
 
   useDelete();
 
-  console.log(button, review);
+  console.log(button);
 
   return (
     <Column>

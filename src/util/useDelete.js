@@ -20,14 +20,14 @@ export default function useDelete() {
         Authorization: token,
       },
     })
-      .then(res => res.json())
+      // .then(res => res.json())
       .then(result => {
-        if (result.message === 'SUCCESS') {
-          setButton({ ...button, isDeleting: false });
-          resetMovie();
-          resetReview();
-          navigate('/list');
-        }
+        // if (result.message === 'SUCCESS') {
+        setButton({ ...button, isDeleting: false });
+        resetMovie();
+        resetReview();
+        navigate('/list');
+        // }
       });
   }, [button.isDeleting]);
 }

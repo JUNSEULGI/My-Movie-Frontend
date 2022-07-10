@@ -30,6 +30,7 @@ function List() {
     };
 
     const handleDelete = () => {
+      console.log('delete 누름');
       setButton({ ...button, isDeleting: true });
     };
 
@@ -40,9 +41,9 @@ function List() {
       setOpen(false);
     };
 
-    const showReview = review => {
-      setMovie({ ...movie, id: review.movie.id, title: review.movie.title });
-      setReview({ ...review, review_id: review.review_id });
+    const showReview = item => {
+      setMovie({ id: item.movie.id, title: item.movie.title });
+      setReview({ ...review, review_id: item.review_id });
       setOpen(true);
     };
 
@@ -54,7 +55,7 @@ function List() {
       })
         .then(res => res.json())
         .then(data => {
-          console.log(data.result);
+          console.log('set할 거임', data.result);
           setReviewList(data.result);
         });
     }, []);
@@ -90,13 +91,16 @@ function List() {
             {userInfo.nickname}님이 저장한 영화 목록
           </SectionTitle>
           <CardContainer>
-            {reviewList.slice(0, 7).map(review => (
-              <MovieCard
-                key={review.review_id}
-                data={review}
-                showReview={showReview(review)}
-              />
-            ))}
+            {reviewList.length > 0 &&
+              reviewList.slice(0, 7).map(review => (
+                <MovieCard
+                  key={review.review_id}
+                  data={review}
+                  showReview={() => {
+                    showReview(review);
+                  }}
+                />
+              ))}
             <MovieCard setOpen={setOpen} />
           </CardContainer>
         </Section>
