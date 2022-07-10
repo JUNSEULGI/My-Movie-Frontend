@@ -4,7 +4,7 @@ import { userState } from '../../state';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import MyAvatar from './Logout';
-import { MK_URL } from '../../Modules/API';
+import { API } from '../../Modules/API';
 import {
   Typography,
   AppBar,
@@ -34,7 +34,7 @@ function Nav() {
 
   useEffect(() => {
     if (!access_token) return;
-    fetch(`${MK_URL}users/info`, {
+    fetch(`${API.users_info}`, {
       headers: {
         Authorization: access_token,
       },
@@ -44,6 +44,7 @@ function Nav() {
         setUserInfo(res.result);
       });
   }, []);
+  console.log(userInfo);
 
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
