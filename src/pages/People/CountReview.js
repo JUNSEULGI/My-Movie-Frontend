@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
-import { Typography, Box } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
-import { CardContainer } from '../Movie/CardContainer';
+import { Typography, Box, CircularProgress } from '@mui/material';
+import { CardContainer } from '../Movie';
 import { ReviewIcon } from '../Movie/MyIconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -19,8 +16,6 @@ function CountReview({ userInfo, intimacyData }) {
   useEffect(() => {
     setCountReview(percent);
   }, []);
-
-  console.log('asfsd', viewed_count);
 
   return (
     <>

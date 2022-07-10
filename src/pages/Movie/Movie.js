@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import MyViewLayout from '../../layout/Layout';
-import { CardContainer } from './CardContainer';
-import MovieInfo from './MovieInfo';
-import Actor from './Actor';
-import Trailer from './Trailer';
-import NoReview from './NoReview';
-import MyReview from './MyReview';
-import MovieGallery from './MovieGallery';
-import { DETAIL_URL } from '../../Modules/API';
 import { Data } from './Mock/MovieData';
+import {
+  CardContainer,
+  MovieInfo,
+  Actor,
+  Trailer,
+  NoReview,
+  MyReview,
+  MovieGallery,
+} from '../Movie';
 
 function Movie() {
   const params = useParams();
@@ -30,22 +31,21 @@ function Movie() {
     },
   };
 
-  useEffect(() => {
-    fetch(`http://c95d-110-11-194-32.ngrok.io/movies/1/reviews`)
-      .then(res => res.json())
-      .then(res => {
-        setReviewData(res.result);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(`http://1353-175-193-80-187.ngrok.io/movies/1/reviews`)
+  //     .then(res => res.json())
+  //     .then(res => {
+  //       setReviewData(res.result);
+  //     });
+  // }, []);
 
   const hasreview = ReviewData.data.rating == '' ? false : true;
   const [hasReview, setHasReview] = useState(hasreview);
-  console.log(hasreview);
-  console.log(ReviewData.data.rating);
-  // const [movieData, setMovieData] = useState({});
 
+  // const [movieData, setMovieData] = useState({});
+  // console.log('영화 데이더', movieData);
   // useEffect(() => {
-  //   fetch(`${DETAIL_URL}${params.id}`)
+  //   fetch(`http://1353-175-193-80-187.ngrok.io/movies/detail/${params.id}`)
   //     .then(res => res.json())
   //     .then(res => {
   //       setMovieData(res.movie_info);

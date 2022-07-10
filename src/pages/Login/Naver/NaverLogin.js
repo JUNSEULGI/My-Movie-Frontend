@@ -15,7 +15,7 @@ function NaverLogin() {
   useEffect(() => {
     if (!search) return;
     fetch(
-      `http://c340-221-147-33-186.ngrok.io/users/login/naver/callback?code=${access_code}`,
+      `http://1353-175-193-80-187.ngrok.io/users/login/naver/callback?code=${access_code}`,
       {
         method: 'GET',
       }

@@ -1,89 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import styled from '@emotion/styled';
-import { Box } from '@mui/material';
-import { CardContainer } from '../Movie/CardContainer';
-import { ActorImg } from '../Movie/ActorImage';
-import MyViewLayout from '../../layout/Layout';
-import PeopleProfile from './PeopleProfile';
-import MovieTable from './MovieTable';
-import { PEOPLE_URL, INTIMACY_URL } from '../../Modules/API';
-import CountReview from './CountReview';
 import { useRecoilState } from 'recoil';
 import { userState } from '../../state';
+import styled from '@emotion/styled';
+import MyViewLayout from '../../layout/Layout';
+import { Box } from '@mui/material';
+import { API } from '../../Modules/API';
+import { CardContainer, ActorImg } from '../Movie';
+import { PeopleProfile, MovieTable, CountReview } from '../People';
+import { people } from './MockData';
 
 function People() {
   const params = useParams();
   const [userInfo, setUserInfo] = useRecoilState(userState);
 
   // Real DATA
-  const [peopleData, setPeopleData] = useState({});
+  // const [peopleData, setPeopleData] = useState({});
   const [intimacyData, setIntimacyData] = useState({});
+
   // 친밀도 DATA
-  useEffect(() => {
-    fetch(`${INTIMACY_URL}1`)
-      .then(res => res.json())
-      .then(res => {
-        setIntimacyData(res.intimacy_info);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(`${INTIMACY_URL}1`)
+  //     .then(res => res.json())
+  //     .then(res => {
+  //       setIntimacyData(res.intimacy_info);
+  //     });
+  // }, []);
 
   //전체 데이터
-  useEffect(() => {
-    fetch(`${PEOPLE_URL}1`)
-      .then(res => res.json())
-      .then(res => {
-        setPeopleData(res.actor_info);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(`${PEOPLE_URL}1`)
+  //     .then(res => res.json())
+  //     .then(res => {
+  //       setPeopleData(res.actor_info);
+  //     });
+  // }, []);
 
   // Mock DATA
-  // const people = {
-  //   actor_info: {
-  //     id: 1,
-  //     name: '마동석',
-  //     image_url:
-  //       'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/actor/%E1%84%86%E1%85%A1%E1%84%83%E1%85%A9%E1%86%BC%E1%84%89%E1%85%A5%E1%86%A8.jpeg',
-  //     country: '한국',
-  //     birth: '1971-03-01',
-  //     debut: '바람의 전설',
-  //     debut_year: 2004,
-  //     height: 178,
-  //     weight: 100,
-  //     agency: '키이스트',
-  //     job: ['영화배우', '감독'],
-  //     watched_movie: 20,
-  //     total_movie: 32,
-  //     background_image:
-  //       'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/gallery/Z8jafJT0TOkoU1C0Z5xo_Q.jpeg',
-  //     starring_list: [
-  //       {
-  //         id: 1,
-  //         title: '범죄도시2',
-  //         release: '2022',
-  //         thumbnail_image_url:
-  //           'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/thumbnail/%E1%84%87%E1%85%A5%E1%86%B7%E1%84%8C%E1%85%AC%E1%84%83%E1%85%A9%E1%84%89%E1%85%B52_thumbnail.jpeg',
-  //         role_name: '주연',
-  //         ratings: '5.0',
-  //         platform: '넷플릭스',
-  //         platform_logo_image:
-  //           'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/platform/Netfilx.png',
-  //       },
-  //       {
-  //         title: '악인전',
-  //         release: '2019',
-  //         thumbnail_image_url:
-  //           'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/thumbnail/%E1%84%8B%E1%85%A1%E1%86%A8%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%8C%E1%85%A5%E1%86%AB.jpeg',
-  //         role_name: '주연',
-  //         ratings: '0',
-  //         platform: '넷플릭스',
-  //         platform_logo_image:
-  //           'https://myviewjjky.s3.ap-northeast-2.amazonaws.com/image/platform/Netfilx.png',
-  //       },
-  //     ],
-  //   },
-  // };
-  // const peopleData = people.actor_info;
+  const peopleData = people.actor_info;
 
   function PeopleLayout() {
     return (
@@ -116,7 +70,6 @@ function People() {
   }
   return (
     <MyViewLayout
-      // leftMenu={<Aside />}
       background={peopleData.background_image}
       center={<PeopleLayout />}
     />
@@ -125,8 +78,6 @@ function People() {
 
 const DDD = styled.div`
   padding-top: 40px;
-  /* display: flex; */
-  /* justify-content: space-between; */
 `;
 
 const PeopleImg = styled(ActorImg)``;
