@@ -1,9 +1,9 @@
 import { atom } from 'recoil';
 
 export default atom({
-  key: 'movie',
+  key: 'button',
   default: {
-    id: '',
-    title: 'fake title',
+    isSaving: false,
+    isDeleting: false,
   },
 });

@@ -1,9 +1,10 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { NAVER_CALLBACK_URL, NAVER_ID } from '../../../Modules/API';
+import { NAVER_CALLBACK_URL, NAVER_ID } from '../../Modules/API';
 import { Link } from '@mui/material';
-import naver from '../../../assets/images/naverLogin.png';
+import naver from '../../assets/images/naverLogin.png';
+import { MK_URL } from '../../Modules/API';
 
 function NaverLogin() {
   const navigate = useNavigate();
@@ -14,14 +15,15 @@ function NaverLogin() {
   //백으로 인증 코드 주는 함수
   useEffect(() => {
     if (!search) return;
-    fetch(
-      `http://1353-175-193-80-187.ngrok.io/users/login/naver/callback?code=${access_code}`,
-      {
-        method: 'GET',
-      }
-    )
+    fetch(`${MK_URL}users/login/naver/callback?code=${access_code}`, {
+      method: 'GET',
+    })
       .then(res => res.json())
       .then(data => {
+        if (!data) {
+          alert('정보가 바르지 않습니다');
+          return;
+        }
         console.log(data);
         localStorage.setItem('access_token', data.token_info.access_token);
         localStorage.access_token

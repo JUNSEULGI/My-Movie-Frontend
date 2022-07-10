@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { movieState, reviewState, savingState, userState } from '../../state';
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import { movieState, reviewState, buttonState, userState } from '../../state';
 import styled from '@emotion/styled';
 import { Box, Typography, TextField, Rating } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -9,13 +9,17 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Poster from '../Poster/Poster';
 import { timestamp } from '../../util/timestamp';
+import { MK_URL } from '../../Modules/API';
+import useDelete from '../../util/useDelete';
 
 function ReviewBox() {
   const token = localStorage.getItem('access_token');
   const [movie, setMovie] = useRecoilState(movieState);
-  const [saving, setSaving] = useRecoilState(savingState);
+  const [button, setButton] = useRecoilState(buttonState);
   const [review, setReview] = useRecoilState(reviewState);
-  const [userInfo, setUserInfo] = useRecoilState(userState);
+  const [userInfo] = useRecoilState(userState);
+  const resetMovie = useResetRecoilState(movieState);
+  const resetReview = useResetRecoilState(reviewState);
   const [rating, setRating] = useState(0);
   const navigate = useNavigate();
 
@@ -28,31 +32,32 @@ function ReviewBox() {
 
   // 컴포넌트 최초 렌더링 시 리뷰를 작성할 영화에 대한 정보를 받아옴
   useEffect(() => {
-    if (movie.title) {
-      fetch(`http://c340-221-147-33-186.ngrok.io/movies/detail/${movie.id}`)
+    if (movie.id) {
+      fetch(`${MK_URL}movies/detail/${movie.id}`)
         .then(res => res.json())
         .then(data => {
           console.log(data);
           setMovie({ ...movie, ...data.movie_info });
         });
     }
-    if (review.review_id) {
-      fetch(`http://192.168.228.159:8000/reviews/${review.review_id}`, {
-        headers: {
-          Authorization: token,
-        },
-      })
-        .then(res => res.json())
-        .then(result => {
-          // review에 저장하기
-          console.log(result);
-        });
-    }
+    // 이미 작성한 리뷰의 내용 가져오기(api 확인 필요)
+    // if (review.review_id) {
+    //   fetch(`${MK_URL}reviews/${review.review_id}`, {
+    //     headers: {
+    //       Authorization: token,
+    //     },
+    //   })
+    //     .then(res => res.json())
+    //     .then(result => {
+    //       // review에 저장하기
+    //       console.log(result);
+    //     });
+    // }
   }, []);
 
   // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송
   useEffect(() => {
-    if (!saving) return;
+    if (!button.isSaving) return;
 
     const formData = new FormData();
     formData.append('title', review.title);
@@ -68,23 +73,51 @@ function ReviewBox() {
 
     console.log(formData);
 
-    fetch(`http://c340-221-147-33-186.ngrok.io/reviews`, {
-      method: 'POST',
-      headers: {
-        Authorization: token,
-      },
-      body: formData,
-    })
-      .then(res => res.json())
-      .then(result => {
-        if (result.message === 'SUCCESS') {
-          setSaving(false);
-          navigate('/list');
-        }
-      });
-  }, [saving]);
+    if (review.review_id) {
+      // 리뷰 아이디가 있으므로 이미 작성된 리뷰를 수정하는 중
+      formData.append('review_id', review.review_id);
 
-  console.log(saving, review);
+      fetch(`${MK_URL}reviews`, {
+        method: 'PUT',
+        headers: {
+          Authorization: token,
+        },
+        body: formData,
+      })
+        .then(res => res.json())
+        .then(result => {
+          if (result.message === 'SUCCESS') {
+            setButton({ ...button, isSaving: false });
+            resetMovie();
+            resetReview();
+            navigate('/list');
+          }
+        });
+    } else {
+      // 리뷰 아이디가 없으므로 새로운 리뷰 저장하는 중
+      fetch(`${MK_URL}reviews`, {
+        method: 'POST',
+        headers: {
+          Authorization: token,
+        },
+        body: formData,
+      })
+        .then(res => res.json())
+        .then(result => {
+          if (result.message === 'SUCCESS') {
+            setButton({ ...button, isSaving: false });
+            resetMovie();
+            resetReview();
+            // navigate 했는데 아예 새로고침은 안 됨
+            navigate('/list');
+          }
+        });
+    }
+  }, [button.isSaving]);
+
+  useDelete();
+
+  console.log(button);
 
   return (
     <Column>
