@@ -1,15 +1,13 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { CardMedia, Typography } from '@mui/material';
-import { CardContainer } from './CardContainer';
+import { CardContainer, MovieRating, AgeBadge } from '../Movie';
 import { Box } from '@mui/system';
-import MovieRating from './MovieRating';
-import AgeBadge from './AgeBadge';
 
 function MovieInfo({ data }) {
-  let age = data;
   const {
     title,
+    age,
     en_title,
     description,
     release_date,
@@ -31,20 +29,6 @@ function MovieInfo({ data }) {
     str = str.replace(/\\n/gi, '<br>');
     str = str.replace(/\n/gi, '<br>');
     return { __html: str };
-  }
-
-  let ageToString = age.age == 0 ? 'ALL' : age.age + '세';
-
-  let ageColor = '';
-
-  if (ageToString == 'ALL') {
-    ageColor = '#07964B';
-  } else if (ageToString == '12세') {
-    ageColor = '#EABD01';
-  } else if (ageToString == '15세') {
-    ageColor = '#DC7317';
-  } else {
-    ageColor = '#D61D29';
   }
 
   return (
@@ -71,7 +55,7 @@ function MovieInfo({ data }) {
             </span>
           ))}
           <br />
-          {running_time}분 · <AgeBadge age={ageToString} ageColor={ageColor} />
+          {running_time}분 · <AgeBadge age={age} />
         </SubInfo>
         <Summary variant="subtitle1">줄거리</Summary>
         <SummaryContainer>

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { movieState, reviewState, savingState } from '../../state';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { Box, Link, Typography } from '@mui/material';
 import { CardContainer } from './CardContainer';
 import { ReviewIcon, FabContainer } from './MyIconButton';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import AddIcon from '@mui/icons-material/Add';
 import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import { movieState, reviewState } from '../../state';
 import { useRecoilState, useResetRecoilState } from 'recoil';
@@ -26,6 +26,7 @@ function NoReview({ title }) {
     console.log(open);
   };
   return (
+<<<<<<< HEAD
     <Box sx={{ position: 'relative' }}>
       <CardContainer style={{ justifyContent: 'center' }}>
         <NoReviewMent variant="h6">
@@ -48,6 +49,31 @@ function NoReview({ title }) {
         />
       </NoReviewFabContainer>
     </Box>
+=======
+    <>
+      <Box sx={{ position: 'relative' }}>
+        <CardContainer style={{ justifyContent: 'center' }}>
+          <NoReviewMent variant="h6">
+            남긴 후기가 없어요!
+            <br />
+            후기를 쓰고 &nbsp;
+            <MyLink onClick={() => setOpen(true)}>{title}</MyLink>를 나의 영화
+            목록에 추가해보세요!
+          </NoReviewMent>
+        </CardContainer>
+        <NoReviewFabContainer>
+          <AddReviewButton onClick={() => setOpen(true)}>
+            <AddCircleOutlineIcon fontSize="large" />
+          </AddReviewButton>
+          <MyViewModal
+            open={open}
+            closeModal={closeModal}
+            children={<ReviewBox />}
+          />
+        </NoReviewFabContainer>
+      </Box>
+    </>
+>>>>>>> develop
   );
 }
 
