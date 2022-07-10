@@ -15,7 +15,13 @@ function MyViewModal({ open, closeModal, breadcrumbs, children, buttons }) {
         <Buttons variant="text">
           {buttons &&
             buttons.map(item => (
-              <ModalButton key={item.key} onClick={item.function}>
+              <ModalButton
+                key={item.key}
+                onClick={e => {
+                  console.log();
+                  // item.function();
+                }}
+              >
                 {item.name}
               </ModalButton>
             ))}

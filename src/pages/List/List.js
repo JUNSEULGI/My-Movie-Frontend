@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { userState, movieState, reviewState } from '../../state';
+import { userState, buttonState, movieState, reviewState } from '../../state';
 import { Box, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import MyViewLayout from '../../layout/Layout';
@@ -11,19 +11,27 @@ import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import MyStep from './MyStep';
 import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import SearchBox from '../../components/MyViewModal/SearchBox';
-import { buttons } from '../../util/buttons';
 import { MK_URL } from '../../Modules/API';
 
 function List() {
   function ListLayout() {
     const token = localStorage.getItem('access_token');
-    const [userInfo, setUserInfo] = useRecoilState(userState);
+    const [userInfo] = useRecoilState(userState);
     const [movie, setMovie] = useRecoilState(movieState);
     const [review, setReview] = useRecoilState(reviewState);
+    const [button, setButton] = useRecoilState(buttonState);
     const resetMovie = useResetRecoilState(movieState);
     const resetReview = useResetRecoilState(reviewState);
-    const [reviews, setReviews] = useState([]);
+    const [reviewList, setReviewList] = useState([]);
     const [open, setOpen] = useState(false);
+
+    const handleSave = () => {
+      setButton({ ...button, isSaving: true });
+    };
+
+    const handleDelete = () => {
+      setButton({ ...button, isDeleting: true });
+    };
 
     const closeModal = (_, reason) => {
       if (reason === 'backdropClick') return;
@@ -47,7 +55,7 @@ function List() {
         .then(res => res.json())
         .then(data => {
           console.log(data.result);
-          setReviews(data.result);
+          setReviewList(data.result);
         });
     }, []);
 
@@ -82,7 +90,7 @@ function List() {
             {userInfo.nickname}님이 저장한 영화 목록
           </SectionTitle>
           <CardContainer>
-            {reviews.slice(0, 7).map(review => (
+            {reviewList.slice(0, 7).map(review => (
               <MovieCard
                 key={review.review_id}
                 data={review}
@@ -98,8 +106,25 @@ function List() {
           breadcrumbs={<MyStep />}
           buttons={
             movie.id && review.review_id
-              ? [buttons.save, buttons.delete]
-              : [buttons.save]
+              ? [
+                  {
+                    key: 1,
+                    name: 'Save',
+                    function: handleSave,
+                  },
+                  {
+                    key: 2,
+                    name: 'Delete',
+                    function: handleDelete,
+                  },
+                ]
+              : [
+                  {
+                    key: 1,
+                    name: 'Save',
+                    function: handleSave,
+                  },
+                ]
           }
           children={movie.id ? <ReviewBox /> : <SearchBox />}
         />

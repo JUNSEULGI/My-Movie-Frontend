@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { movieState, reviewState, savingState, userState } from '../../state';
+import { movieState, reviewState, buttonState, userState } from '../../state';
 import styled from '@emotion/styled';
 import { Box, Typography, TextField, Rating } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -10,13 +10,14 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Poster from '../Poster/Poster';
 import { timestamp } from '../../util/timestamp';
 import { MK_URL } from '../../Modules/API';
+import useDelete from '../../util/useDelete';
 
 function ReviewBox() {
   const token = localStorage.getItem('access_token');
   const [movie, setMovie] = useRecoilState(movieState);
-  const [saving, setSaving] = useRecoilState(savingState);
+  const [button, setButton] = useRecoilState(buttonState);
   const [review, setReview] = useRecoilState(reviewState);
-  const [userInfo, setUserInfo] = useRecoilState(userState);
+  const [userInfo] = useRecoilState(userState);
   const [rating, setRating] = useState(0);
   const navigate = useNavigate();
 
@@ -53,7 +54,7 @@ function ReviewBox() {
 
   // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송
   useEffect(() => {
-    if (!saving) return;
+    if (!button.isSaving) return;
 
     const formData = new FormData();
     formData.append('title', review.title);
@@ -79,13 +80,15 @@ function ReviewBox() {
       .then(res => res.json())
       .then(result => {
         if (result.message === 'SUCCESS') {
-          setSaving(false);
+          setButton({ ...button, isSaving: false });
           navigate('/list');
         }
       });
-  }, [saving]);
+  }, [button.isSaving]);
 
-  console.log(saving, review);
+  useDelete();
+
+  console.log(button, review);
 
   return (
     <Column>

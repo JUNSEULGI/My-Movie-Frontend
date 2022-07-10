@@ -26,9 +26,9 @@ function NaverLogin() {
         }
         console.log(data);
         localStorage.setItem('access_token', data.token_info.access_token);
-        // localStorage.access_token
-        //   ? navigate('/list')
-        //   : alert('정보가 바르지 않습니다');
+        localStorage.access_token
+          ? navigate('/list')
+          : alert('정보가 바르지 않습니다');
       });
   }, []);
 
