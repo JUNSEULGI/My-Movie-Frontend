@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userState } from '../../state';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import MyAvatar from './Logout';
 import { MK_URL } from '../../Modules/API';
 import {
   Typography,
@@ -19,10 +20,9 @@ import {
 function Nav() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useRecoilState(userState);
-  const { Profile_image } = userInfo;
   const [scrollPosition, setScrollPosition] = useState(0);
+
   const access_token = localStorage.getItem('access_token');
-  const resetUser = useResetRecoilState(userState);
 
   const updateScroll = () => {
     setScrollPosition(window.scrollY);
@@ -32,15 +32,9 @@ function Nav() {
     navigate(`/movie/${id}`);
   };
 
-  const logout = () => {
-    localStorage.removeItem('access_token');
-    resetUser();
-    navigate('/');
-  };
-
   useEffect(() => {
     if (!access_token) return;
-    fetch(`http://c340-221-147-33-186.ngrok.io/users/info`, {
+    fetch(`http://1353-175-193-80-187.ngrok.io/users/info`, {
       headers: {
         Authorization: access_token,
       },
@@ -53,27 +47,27 @@ function Nav() {
 
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
-  });
+  }, []);
 
   return (
-    <NavBar scrollPosition={scrollPosition}>
+    <NavBar onScroll={updateScroll} scrollPosition={scrollPosition}>
       <MyToolbar sx={{ display: 'flex', alignContent: 'center' }}>
-        <a href="/list">
-          <Logo scrollPosition={scrollPosition} component="h1">
+        <Link to="/list">
+          <Logo
+            onScroll={updateScroll}
+            scrollPosition={scrollPosition}
+            component="h1"
+          >
             My View!
           </Logo>
-          {/* <a href="/">로그인으로</a> */}
-        </a>
+        </Link>
         <Box sx={{ display: 'flex', alignContent: 'baseline' }}>
           <NavSearch
             sx={{ marginTop: '-6px' }}
             PaperComponent={StyledPaper}
             PopperComponent={StyledPopper}
-            // componentsProps={{
-            //   clearIndicatorDirty: .clearIndicator,
-            // }}
             freeSolo
-            autoHighlight="true"
+            autoHighlight={true}
             autoComplete
             color="orange"
             id="free-solo-2-demo"
@@ -94,16 +88,7 @@ function Nav() {
               />
             )}
           />
-          {localStorage.access_token ? (
-            <MyAvatar
-              sx={{ width: 50, height: 50 }}
-              src={Profile_image}
-              onClick={() => logout()}
-            />
-          ) : (
-            ''
-            // <SignUp>회원가입하러 가기</SignUp>
-          )}
+          {localStorage.access_token ? <MyAvatar userInfo={userInfo} /> : ''}
         </Box>
       </MyToolbar>
     </NavBar>
@@ -113,7 +98,6 @@ function Nav() {
 const NavBar = styled(AppBar)`
   padding: 10px 40px;
   display: flex;
-  align-content: center;
   background: white;
   &.MuiPaper-root {
     background: none;
@@ -128,6 +112,7 @@ const NavBar = styled(AppBar)`
 `;
 
 const MyToolbar = styled(Toolbar)`
+  align-items: flex-start;
   display: flex;
   padding-top: 10px;
   justify-content: space-between;
@@ -145,14 +130,7 @@ const Logo = styled(Typography)`
   font-size: 32px;
 `;
 
-const SignUp = styled(Typography)`
-  color: ${({ theme }) => theme.palette.common.white};
-  font-weight: bold;
-  font-size: 16px;
-`;
-
 const NavSearch = styled(Autocomplete)`
-  margin-right: 40px;
   padding: 0;
   width: 200px;
   height: 10px;
@@ -189,10 +167,6 @@ const StyledPaper = styled(Paper)`
   :focus {
     background-color: yellow;
   }
-`;
-
-const MyAvatar = styled(Avatar)`
-  cursor: pointer;
 `;
 
 export default Nav;

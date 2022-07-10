@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import { movieState, reviewState, savingState } from '../../state';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { Box, Link, Typography } from '@mui/material';
 import { CardContainer } from './CardContainer';
 import { ReviewIcon, FabContainer } from './MyIconButton';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import AddIcon from '@mui/icons-material/Add';
 import MyViewModal from '../../components/MyViewModal/MyViewModal';
-import NewReview from '../List/NewReview';
-import { movieState, reviewState, savingState } from '../../state';
-import { useRecoilState, useResetRecoilState } from 'recoil';
 import ReviewBox from '../../components/MyViewModal/ReviewBox';
 
 function NoReview({ title }) {
@@ -41,7 +38,6 @@ function NoReview({ title }) {
         </CardContainer>
         <NoReviewFabContainer>
           <AddReviewButton onClick={() => setOpen(true)}>
-            {/* <NewReview open={open} setOpen={setOpen} /> */}
             <AddCircleOutlineIcon fontSize="large" />
           </AddReviewButton>
           <MyViewModal

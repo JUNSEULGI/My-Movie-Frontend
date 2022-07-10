@@ -46,7 +46,6 @@ function PeopleProfile({ profile }) {
         <p>{agency}</p>
       </Profile>
       <Profile>
-        {/* {height},{weight} */}
         {height === '' && weight === '' ? (
           ''
         ) : (
