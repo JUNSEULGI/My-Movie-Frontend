@@ -31,33 +31,33 @@ function Movie() {
     },
   };
 
-  // useEffect(() => {
-  //   fetch(`http://1353-175-193-80-187.ngrok.io/movies/1/reviews`)
-  //     .then(res => res.json())
-  //     .then(res => {
-  //       setReviewData(res.result);
-  //     });
-  // }, []);
+  useEffect(() => {
+    fetch(`http://1353-175-193-80-187.ngrok.io/reviews/movie/${params.id}`)
+      .then(res => res.json())
+      .then(res => {
+        setReviewData(res.result);
+      });
+  }, []);
 
   const hasreview = ReviewData.data.rating == '' ? false : true;
   const [hasReview, setHasReview] = useState(hasreview);
 
-  // const [movieData, setMovieData] = useState({});
-  // console.log('영화 데이더', movieData);
-  // useEffect(() => {
-  //   fetch(`http://1353-175-193-80-187.ngrok.io/movies/detail/${params.id}`)
-  //     .then(res => res.json())
-  //     .then(res => {
-  //       setMovieData(res.movie_info);
-  //     });
-  // }, []);
+  const [movieData, setMovieData] = useState({});
+  console.log('영화 데이더', movieData);
+  useEffect(() => {
+    fetch(`http://1353-175-193-80-187.ngrok.io/movies/detail/${params.id}`)
+      .then(res => res.json())
+      .then(res => {
+        setMovieData(res.movie_info);
+      });
+  }, []);
 
   const DeleteReview = () => {
     alert('정말 삭제하시겠습니까?');
   };
 
   //Mock Data
-  const movieData = Data.movie_info;
+  // const movieData = Data.movie_info;
 
   //데이터 구조분해
   const {
@@ -120,7 +120,7 @@ function Movie() {
   }
 
   //이거 추가해
-  // if (!movieData.image_url) return null;
+  if (!movieData.image_url) return null;
   return (
     movieData && (
       <MyViewLayout

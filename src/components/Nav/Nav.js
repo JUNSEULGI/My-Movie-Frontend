@@ -4,7 +4,7 @@ import { userState } from '../../state';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import MyAvatar from './Logout';
-import { API } from '../../Modules/API';
+import { API, MK_URL } from '../../Modules/API';
 import {
   Typography,
   AppBar,
@@ -21,6 +21,7 @@ function Nav() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [titles, setTitles] = useState([]);
 
   const access_token = localStorage.getItem('access_token');
 
@@ -47,9 +48,19 @@ function Nav() {
   console.log(userInfo);
 
   useEffect(() => {
+    fetch(`${MK_URL}movies/simple`)
+      .then(res => res.json())
+      .then(result => {
+        // console.log(result);
+        setTitles(result.titles);
+      });
+  }, []);
+
+  useEffect(() => {
     window.addEventListener('scroll', updateScroll);
   }, []);
 
+  console.log('영화 제목', titles);
   return (
     <NavBar onScroll={updateScroll} scrollPosition={scrollPosition}>
       <MyToolbar sx={{ display: 'flex', alignContent: 'center' }}>
@@ -77,7 +88,7 @@ function Nav() {
             }}
             disableClearable
             getOptionLabel={option => option.title}
-            options={top100Films}
+            options={titles}
             renderInput={params => (
               <TextField
                 {...params}
