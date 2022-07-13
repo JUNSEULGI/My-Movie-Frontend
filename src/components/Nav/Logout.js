@@ -17,7 +17,25 @@ function MyAvatar({ userInfo }) {
   const resetUser = useResetRecoilState(userState);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
-  const settings = ['Logout'];
+  const logout = () => {
+    localStorage.removeItem('access_token');
+    resetUser();
+    alert('로그아웃 성공');
+    navigate('/');
+  };
+
+  const goMypage = () => {
+    navigate('/mypage');
+  };
+
+  const settings = [
+    {
+      id: 1,
+      name: 'Logout',
+      function: logout,
+    },
+    { id: 2, name: 'My Page', function: goMypage },
+  ];
 
   const handleOpenUserMenu = event => {
     setAnchorElUser(event.currentTarget);
@@ -25,13 +43,6 @@ function MyAvatar({ userInfo }) {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
-  };
-
-  const logout = () => {
-    localStorage.removeItem('access_token');
-    resetUser();
-    alert('로그아웃 성공');
-    navigate('/');
   };
 
   if (!userInfo?.Profile_image) return null;
@@ -59,13 +70,13 @@ function MyAvatar({ userInfo }) {
         onClose={handleCloseUserMenu}
       >
         {settings.map(setting => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
+          <MenuItem key={setting.id} onClick={handleCloseUserMenu}>
             <Typography
               sx={{ color: 'white' }}
               textAlign="center"
-              onClick={() => logout()}
+              onClick={() => setting.function()}
             >
-              {setting}
+              {setting.name}
             </Typography>
           </MenuItem>
         ))}
