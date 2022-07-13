@@ -27,6 +27,7 @@ function List() {
 
     const handleSave = () => {
       setButton({ ...button, isSaving: true });
+      window.location.replace(`/list`); //이거 추가하세용
     };
 
     const handleDelete = () => {

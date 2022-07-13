@@ -39,6 +39,7 @@ function SearchBox() {
   //   { title: '스파이더맨', rank: 6, id: 6 },
   //   { title: '아이언맨', rank: 7, id: 7 },
   // ];
+  console.log('영화 제목', titles);
 
   return (
     <Column>

@@ -49,10 +49,11 @@ function Nav() {
     window.addEventListener('scroll', updateScroll);
   }, []);
 
+  const isUser = localStorage.access_token ? '/list' : '/';
   return (
     <NavBar onScroll={updateScroll} scrollPosition={scrollPosition}>
       <MyToolbar sx={{ display: 'flex', alignContent: 'center' }}>
-        <Link to="/list">
+        <Link to={isUser}>
           <Logo
             onScroll={updateScroll}
             scrollPosition={scrollPosition}
@@ -88,7 +89,11 @@ function Nav() {
               />
             )}
           />
-          {localStorage.access_token ? <MyAvatar userInfo={userInfo} /> : ''}
+          {localStorage.access_token ? (
+            <MyAvatar userInfo={userInfo} />
+          ) : (
+            <GoLogin to={'/'}>로그인</GoLogin>
+          )}
         </Box>
       </MyToolbar>
     </NavBar>
@@ -128,6 +133,11 @@ const Logo = styled(Typography)`
   font-family: 'Galada', cursive;
   font-weight: bold;
   font-size: 32px;
+`;
+
+const GoLogin = styled(Link)`
+  margin: 10px 0 0 10px;
+  color: white;
 `;
 
 const NavSearch = styled(Autocomplete)`

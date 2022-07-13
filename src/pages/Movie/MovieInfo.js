@@ -31,6 +31,7 @@ function MovieInfo({ data }) {
     return { __html: str };
   }
 
+  const floorRating = ratings.substr(0, 3);
   return (
     <CardContainer>
       <MovieImg component="img" height="100%" image={thumbnail_image_url} />
@@ -43,7 +44,7 @@ function MovieInfo({ data }) {
           }}
         >
           <MovieTitle variant="h4">{title}</MovieTitle>
-          <MovieRating rating={ratings} />
+          <MovieRating rating={floorRating} />
         </Box>
         <SubInfo variant="subtitle2">
           {en_title}

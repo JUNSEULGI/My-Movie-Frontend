@@ -27,7 +27,7 @@ function MovieTable({ movie }) {
       <Table>
         {starring_list?.map(movie => {
           const {
-            id,
+            movie_id,
             title,
             release,
             thumbnail_image_url,
@@ -40,7 +40,7 @@ function MovieTable({ movie }) {
 
           const floorRatings = ratings.slice(0, 3);
           return (
-            <BackCover key={id} back={movie_image_url}>
+            <BackCover key={movie_id} back={movie_image_url}>
               <Row>
                 <Year>{release}</Year>
                 <MoviePoster>
@@ -50,7 +50,7 @@ function MovieTable({ movie }) {
                     image={thumbnail_image_url}
                   />
                 </MoviePoster>
-                <MoiveTitle onClick={() => moveMoviePage(id)} id>
+                <MoiveTitle onClick={() => moveMoviePage(movie_id)} movie_id>
                   {title}
                 </MoiveTitle>
                 <InRole>{role_name}</InRole>
