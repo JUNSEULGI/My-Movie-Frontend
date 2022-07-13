@@ -9,6 +9,8 @@ function CountReview({ userInfo, intimacyData }) {
   const [countReview, setCountReview] = useState(0);
   const [close, setClose] = useState(true);
   const { nickname, email, Profile_image } = userInfo;
+  const access_token = localStorage.getItem('access_token');
+
   // const { total_count, viewed_count } = intimacyData;
   console.log(intimacyData);
   const percent =
@@ -18,6 +20,7 @@ function CountReview({ userInfo, intimacyData }) {
     setCountReview(percent);
   }, []);
 
+  if (!access_token) return null;
   return (
     <>
       {close ? (
