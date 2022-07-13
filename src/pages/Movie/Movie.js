@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import {
+  userState,
+  buttonState,
+  movieState,
+  reviewState,
+  hasReviewState,
+} from '../../state';
+
 import MyViewLayout from '../../layout/Layout';
+import { MK_URL } from '../../Modules/API';
 import { Data } from './Mock/MovieData';
 import {
   CardContainer,
@@ -12,49 +22,45 @@ import {
   MyReview,
   MovieGallery,
 } from '../Movie';
+import { Message } from '@mui/icons-material';
 
 function Movie() {
   const params = useParams();
+  const access_token = localStorage.getItem('access_token');
   const [reviewData, setReviewData] = useState({});
+  const [myReview, setMyReview] = useRecoilState(reviewState);
 
-  // Review Mock Data
-  const ReviewData = {
-    data: {
-      oneline: '여기는 30글자까지 들어갑니다.',
-      rating: '',
-      my_review:
-        '자바스크립트에서 문자열을 자르기 위해서는 substr(), substring(), slice() 함수를 사용하면 된다. 문자열을 뒤에서부터 자르기 위해서는 slice() 함수를 사용하면 효율적이며 타 언어의 Right 함수와 비슷하다고 생각하면 된다. 세 가지의 함수 중 상황에 맞는 적절한 함수를 사용하면 된다.',
-      reviewer: {
-        profile_img: 'url',
-        user_name: '리뷰쓴사람',
-      },
-    },
-  };
+  const [hasReview, setHasReview] = useRecoilState(hasReviewState);
+  const [movieData, setMovieData] = useState({});
 
   useEffect(() => {
-    fetch(`http://1353-175-193-80-187.ngrok.io/reviews/movie/${params.id}`)
+    fetch(`${MK_URL}reviews/movie/${params.id}`, {
+      headers: {
+        Authorization: access_token,
+      },
+    })
       .then(res => res.json())
       .then(res => {
         setReviewData(res.result);
       });
   }, []);
 
-  const hasreview = ReviewData.data.rating == '' ? false : true;
-  const [hasReview, setHasReview] = useState(hasreview);
+  console.log(hasReview);
+  console.log(reviewData);
 
-  const [movieData, setMovieData] = useState({});
-  console.log('영화 데이더', movieData);
+  reviewData?.review_id ? setHasReview(true) : setHasReview(false);
+
   useEffect(() => {
-    fetch(`http://1353-175-193-80-187.ngrok.io/movies/detail/${params.id}`)
+    fetch(`${MK_URL}movies/detail/${params.id}`, {
+      headers: {
+        Authorization: access_token,
+      },
+    })
       .then(res => res.json())
       .then(res => {
         setMovieData(res.movie_info);
       });
   }, []);
-
-  const DeleteReview = () => {
-    alert('정말 삭제하시겠습니까?');
-  };
 
   //Mock Data
   // const movieData = Data.movie_info;
@@ -91,20 +97,16 @@ function Movie() {
             ''
           )}
           <ContainerTitle>리뷰</ContainerTitle>
-          {hasReview !== true ? (
-            <NoReview title={movieData.title} />
+          {hasReview == true ? (
+            <MyReview review={reviewData} />
           ) : (
-            <MyReview
-              hasReview={hasReview}
-              setHasReview={setHasReview}
-              review={reviewData}
-            />
+            <NoReview title={movieData.title} />
           )}
-          <MyReview
+          {/* <MyReview
             hasReview={hasReview}
             setHasReview={setHasReview}
             review={reviewData}
-          />
+          /> */}
 
           <ContainerTitle>예고편</ContainerTitle>
           <TrailerContainer>

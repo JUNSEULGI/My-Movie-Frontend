@@ -14,7 +14,6 @@ import {
 
 function MyAvatar({ userInfo }) {
   const navigate = useNavigate();
-  const { Profile_image, nickname } = userInfo;
   const resetUser = useResetRecoilState(userState);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -35,11 +34,12 @@ function MyAvatar({ userInfo }) {
     navigate('/');
   };
 
+  if (!userInfo?.Profile_image) return null;
   return (
     <Box sx={{ flexGrow: 0, marginLeft: '40px' }}>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar alt={nickname} src={Profile_image} />
+          <Avatar alt={userInfo.nickname} src={userInfo.Profile_image} />
         </IconButton>
       </Tooltip>
       <Menu

@@ -4,7 +4,7 @@ import { userState } from '../../state';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import MyAvatar from './Logout';
-import { API, MK_URL } from '../../Modules/API';
+import { MK_URL } from '../../Modules/API';
 import {
   Typography,
   AppBar,
@@ -21,7 +21,6 @@ function Nav() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [titles, setTitles] = useState([]);
 
   const access_token = localStorage.getItem('access_token');
 
@@ -35,7 +34,7 @@ function Nav() {
 
   useEffect(() => {
     if (!access_token) return;
-    fetch(`${API.users_info}`, {
+    fetch(`${MK_URL}users/info`, {
       headers: {
         Authorization: access_token,
       },
@@ -45,26 +44,16 @@ function Nav() {
         setUserInfo(res.result);
       });
   }, []);
-  console.log(userInfo);
-
-  useEffect(() => {
-    fetch(`${MK_URL}movies/simple`)
-      .then(res => res.json())
-      .then(result => {
-        // console.log(result);
-        setTitles(result.titles);
-      });
-  }, []);
 
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
   }, []);
 
-  console.log('영화 제목', titles);
+  const isUser = localStorage.access_token ? '/list' : '/';
   return (
     <NavBar onScroll={updateScroll} scrollPosition={scrollPosition}>
       <MyToolbar sx={{ display: 'flex', alignContent: 'center' }}>
-        <Link to="/list">
+        <Link to={isUser}>
           <Logo
             onScroll={updateScroll}
             scrollPosition={scrollPosition}
@@ -88,7 +77,7 @@ function Nav() {
             }}
             disableClearable
             getOptionLabel={option => option.title}
-            options={titles}
+            options={top100Films}
             renderInput={params => (
               <TextField
                 {...params}
@@ -100,7 +89,11 @@ function Nav() {
               />
             )}
           />
-          {localStorage.access_token ? <MyAvatar userInfo={userInfo} /> : ''}
+          {localStorage.access_token ? (
+            <MyAvatar userInfo={userInfo} />
+          ) : (
+            <GoLogin to={'/'}>로그인</GoLogin>
+          )}
         </Box>
       </MyToolbar>
     </NavBar>
@@ -140,6 +133,11 @@ const Logo = styled(Typography)`
   font-family: 'Galada', cursive;
   font-weight: bold;
   font-size: 32px;
+`;
+
+const GoLogin = styled(Link)`
+  margin: 10px 0 0 10px;
+  color: white;
 `;
 
 const NavSearch = styled(Autocomplete)`

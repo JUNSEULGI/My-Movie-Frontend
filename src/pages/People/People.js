@@ -5,39 +5,46 @@ import { userState } from '../../state';
 import styled from '@emotion/styled';
 import MyViewLayout from '../../layout/Layout';
 import { Box } from '@mui/material';
-import { API } from '../../Modules/API';
+import { MK_URL } from '../../Modules/API';
 import { CardContainer, ActorImg } from '../Movie';
 import { PeopleProfile, MovieTable, CountReview } from '../People';
 import { people } from './MockData';
 
 function People() {
   const params = useParams();
+  const access_token = localStorage.getItem('access_token');
+
   const [userInfo, setUserInfo] = useRecoilState(userState);
 
   // Real DATA
-  // const [peopleData, setPeopleData] = useState({});
+  const [peopleData, setPeopleData] = useState({});
   const [intimacyData, setIntimacyData] = useState({});
 
   // 친밀도 DATA
-  // useEffect(() => {
-  //   fetch(`${INTIMACY_URL}1`)
-  //     .then(res => res.json())
-  //     .then(res => {
-  //       setIntimacyData(res.intimacy_info);
-  //     });
-  // }, []);
-
+  useEffect(() => {
+    fetch(`${MK_URL}movies/actor/intimacy/${params.id}`, {
+      headers: {
+        Authorization: access_token,
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        setIntimacyData(res.intimacy_info);
+      });
+  }, []);
   //전체 데이터
-  // useEffect(() => {
-  //   fetch(`${PEOPLE_URL}1`)
-  //     .then(res => res.json())
-  //     .then(res => {
-  //       setPeopleData(res.actor_info);
-  //     });
-  // }, []);
+  useEffect(() => {
+    fetch(`${MK_URL}movies/actor/${params.id}`)
+      .then(res => res.json())
+      .then(res => {
+        setPeopleData(res.actor_info);
+      });
+  }, []);
+
+  console.log(peopleData);
 
   // Mock DATA
-  const peopleData = people.actor_info;
+  // const peopleData = people.actor_info;
 
   function PeopleLayout() {
     return (

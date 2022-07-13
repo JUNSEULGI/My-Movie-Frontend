@@ -5,6 +5,7 @@ import { Box, Card, CardMedia, Typography, Rating, Chip } from '@mui/material';
 
 function MovieCard({ data, setOpen, showReview }) {
   const navigation = useNavigate();
+  console.log('data', data);
 
   const showMovie = id => {
     navigation(`/movie/${data.movie.id}`);
