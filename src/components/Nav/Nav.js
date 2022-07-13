@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { userState } from '../../state';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import MyAvatar from './Logout';
-import { MK_URL } from '../../Modules/API';
+import { BASE_URL } from '../../Modules/API';
 import {
   Typography,
   AppBar,
   Toolbar,
-  Avatar,
   Box,
   Popper,
   Autocomplete,
@@ -34,7 +33,7 @@ function Nav() {
 
   useEffect(() => {
     if (!access_token) return;
-    fetch(`${MK_URL}users/info`, {
+    fetch(`${BASE_URL}users/info`, {
       headers: {
         Authorization: access_token,
       },
@@ -92,7 +91,7 @@ function Nav() {
           {localStorage.access_token ? (
             <MyAvatar userInfo={userInfo} />
           ) : (
-            <GoLogin to={'/'}>로그인</GoLogin>
+            <GoLogin to="/">로그인</GoLogin>
           )}
         </Box>
       </MyToolbar>

@@ -9,7 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Poster from '../Poster/Poster';
 import { timestamp } from '../../util/timestamp';
-import { MK_URL } from '../../Modules/API';
+import { BASE_URL } from '../../Modules/API';
 import useDelete from '../../util/useDelete';
 
 function ReviewBox() {
@@ -33,7 +33,7 @@ function ReviewBox() {
   // 컴포넌트 최초 렌더링 시 리뷰를 작성할 영화에 대한 정보를 받아옴
   useEffect(() => {
     if (movie.id) {
-      fetch(`${MK_URL}movies/detail/${movie.id}`)
+      fetch(`${BASE_URL}movies/detail/${movie.id}`)
         .then(res => res.json())
         .then(data => {
           console.log(data);
@@ -42,7 +42,7 @@ function ReviewBox() {
     }
     // 이미 작성한 리뷰의 내용 가져오기(api 확인 필요)
     // if (review.review_id) {
-    //   fetch(`${MK_URL}reviews/${review.review_id}`, {
+    //   fetch(`${BASE_URL}reviews/${review.review_id}`, {
     //     headers: {
     //       Authorization: token,
     //     },
@@ -77,7 +77,7 @@ function ReviewBox() {
       // 리뷰 아이디가 있으므로 이미 작성된 리뷰를 수정하는 중
       formData.append('review_id', review.review_id);
 
-      fetch(`${MK_URL}reviews`, {
+      fetch(`${BASE_URL}reviews`, {
         method: 'PUT',
         headers: {
           Authorization: token,
@@ -95,7 +95,7 @@ function ReviewBox() {
         });
     } else {
       // 리뷰 아이디가 없으므로 새로운 리뷰 저장하는 중
-      fetch(`${MK_URL}reviews`, {
+      fetch(`${BASE_URL}reviews`, {
         method: 'POST',
         headers: {
           Authorization: token,

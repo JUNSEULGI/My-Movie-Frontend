@@ -11,7 +11,7 @@ import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import MyStep from './MyStep';
 import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import SearchBox from '../../components/MyViewModal/SearchBox';
-import { MK_URL } from '../../Modules/API';
+import { BASE_URL } from '../../Modules/API';
 
 function List() {
   function ListLayout() {
@@ -49,7 +49,7 @@ function List() {
     };
 
     useEffect(() => {
-      fetch(`${MK_URL}reviews/list`, {
+      fetch(`${BASE_URL}reviews/list`, {
         headers: {
           Authorization: token,
         },

@@ -11,7 +11,7 @@ import {
   TextField,
 } from '@mui/material';
 import Poster from '../Poster/Poster';
-import { MK_URL } from '../../Modules/API';
+import { BASE_URL } from '../../Modules/API';
 
 function SearchBox() {
   const [movie, setMovie] = useRecoilState(movieState);
@@ -19,7 +19,7 @@ function SearchBox() {
   const [ranks, setRanks] = useState([]);
 
   useEffect(() => {
-    fetch(`${MK_URL}movies/simple`)
+    fetch(`${BASE_URL}movies/simple`)
       .then(res => res.json())
       .then(result => {
         if (result.message === 'SUCCESS') {
