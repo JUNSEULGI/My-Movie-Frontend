@@ -67,7 +67,11 @@ function People() {
               <PeopleProfile profile={peopleData} />
             </Info>
           </PeopleCard>
-          <CountReview userInfo={userInfo} intimacyData={intimacyData} />
+          <CountReview
+            userInfo={userInfo}
+            actor={peopleData.name}
+            intimacyData={intimacyData}
+          />
           <Right>
             <MovieTable movie={peopleData} />
           </Right>
