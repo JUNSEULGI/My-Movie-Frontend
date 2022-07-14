@@ -22,6 +22,7 @@ function ReviewBox() {
   const resetReview = useResetRecoilState(reviewState);
   const [rating, setRating] = useState(0);
 
+  console.log(movie.id);
   // 리뷰 관련 input의 값이 바뀌면 "review" 리코일에 반영
   const handleReview = e => {
     setReview(prev => {
