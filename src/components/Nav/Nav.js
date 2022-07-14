@@ -20,7 +20,7 @@ function Nav() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const [scrollPosition, setScrollPosition] = useState(0);
-
+  const [titles, setTitles] = useState([]);
   const access_token = localStorage.getItem('access_token');
 
   const updateScroll = () => {
@@ -28,7 +28,8 @@ function Nav() {
   };
 
   const moveMoviePage = id => {
-    navigate(`/movie/${id}`);
+    window.location.replace(`/movie/${id}`); //이거 추가하세용
+    // navigate(`/movie/${id}`);
   };
 
   useEffect(() => {
@@ -43,6 +44,17 @@ function Nav() {
         setUserInfo(res.result);
       });
   }, []);
+
+  useEffect(() => {
+    fetch(`${BASE_URL}movies/simple`)
+      .then(res => res.json())
+      .then(result => {
+        if (result.message === 'SUCCESS') {
+          setTitles(result.titles);
+        }
+      });
+  }, []);
+  console.log(titles);
 
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
@@ -76,7 +88,7 @@ function Nav() {
             }}
             disableClearable
             getOptionLabel={option => option.title}
-            options={top100Films}
+            options={titles}
             renderInput={params => (
               <TextField
                 {...params}

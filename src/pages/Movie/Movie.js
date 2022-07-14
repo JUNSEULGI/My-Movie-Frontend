@@ -1,18 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { useRecoilState, useResetRecoilState } from 'recoil';
-import {
-  userState,
-  buttonState,
-  movieState,
-  reviewState,
-  hasReviewState,
-} from '../../state';
-
+import { useRecoilState } from 'recoil';
+import { reviewState, hasReviewState } from '../../state';
 import MyViewLayout from '../../layout/Layout';
 import { BASE_URL } from '../../Modules/API';
-import { Data } from './Mock/MovieData';
 import {
   CardContainer,
   MovieInfo,
@@ -22,7 +14,6 @@ import {
   MyReview,
   MovieGallery,
 } from '../Movie';
-import { Message } from '@mui/icons-material';
 
 function Movie() {
   const params = useParams();
