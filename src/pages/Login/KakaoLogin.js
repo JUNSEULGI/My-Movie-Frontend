@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Link } from '@mui/material';
 import Kakao from '../../assets/images/kakaoLogin.png';
-import { MK_URL, KAKAO_ID } from '../../Modules/API';
+import { BASE_URL, KAKAO_ID } from '../../Modules/API';
 
 function KakaoLogin() {
   const { search } = useLocation();
@@ -15,7 +15,7 @@ function KakaoLogin() {
   useEffect(() => {
     if (!search) return;
     const code = search.split('=')[1];
-    fetch(`${MK_URL}users/login/kakao/callback?code=${code}`)
+    fetch(`${BASE_URL}users/login/kakao/callback?code=${code}`)
       .then(res => res.json())
       .then(data => {
         if (!data) {

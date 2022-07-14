@@ -5,7 +5,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Box } from '@mui/material';
-import { MK_URL } from '../../Modules/API';
+import { BASE_URL } from '../../Modules/API';
 import { useResetRecoilState } from 'recoil';
 import { userState } from '../../state';
 
@@ -38,7 +38,7 @@ export default function LongMenu() {
   const DeleteAccount = () => {
     if (window.confirm('정말 삭제시겠습니까?')) {
       alert('삭제되었습니다.'); //true
-      fetch(`${MK_URL}users/delete`, {
+      fetch(`${BASE_URL}users/delete`, {
         method: 'DELETE',
         headers: {
           Authorization: access_token,

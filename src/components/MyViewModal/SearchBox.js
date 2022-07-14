@@ -11,7 +11,7 @@ import {
   TextField,
 } from '@mui/material';
 import Poster from '../Poster/Poster';
-import { MK_URL } from '../../Modules/API';
+import { BASE_URL } from '../../Modules/API';
 
 function SearchBox() {
   const [movie, setMovie] = useRecoilState(movieState);
@@ -19,7 +19,7 @@ function SearchBox() {
   const [ranks, setRanks] = useState([]);
 
   useEffect(() => {
-    fetch(`${MK_URL}movies/simple`)
+    fetch(`${BASE_URL}movies/simple`)
       .then(res => res.json())
       .then(result => {
         if (result.message === 'SUCCESS') {
@@ -30,15 +30,6 @@ function SearchBox() {
       });
   }, []);
 
-  // const movies = [
-  //   { title: '닥터스트레인지', rank: 1, id: 1 },
-  //   { title: '어벤저스', rank: 2, id: 2 },
-  //   { title: '블랙위도우', rank: 3, id: 3 },
-  //   { title: '캡틴아메리카', rank: 4, id: 4 },
-  //   { title: '토르', rank: 5, id: 5 },
-  //   { title: '스파이더맨', rank: 6, id: 6 },
-  //   { title: '아이언맨', rank: 7, id: 7 },
-  // ];
   console.log('영화 제목', titles);
 
   return (
@@ -65,9 +56,14 @@ function SearchBox() {
         />
         <Box>
           <NowRunning>지금 상영중인 영화</NowRunning>
-          {ranks.map(movie => (
-            <RankedMovie key={movie.id}>
-              {movie.rank}. {movie.title}
+          {ranks.map((movie, index) => (
+            <RankedMovie
+              key={movie.id}
+              onClick={() => {
+                setMovie(movie);
+              }}
+            >
+              {index + 1}. {movie.title}
             </RankedMovie>
           ))}
         </Box>
@@ -114,6 +110,11 @@ const SearchInput = styled(TextField)`
 const RankedMovie = styled(Typography)`
   font-size: 14px;
   color: ${({ theme }) => theme.palette.common.white};
+  cursor: pointer;
+
+  :hover {
+    color: ${({ theme }) => theme.palette.test.main};
+  }
 `;
 
 const NowRunning = styled(RankedMovie)`

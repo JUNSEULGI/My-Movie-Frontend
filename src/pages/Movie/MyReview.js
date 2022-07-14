@@ -16,7 +16,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import MovieRating from './MovieRating';
 import { Logo } from './ContentLogo';
 import { ReviewIcon, FabContainer } from './MyIconButton';
-import { MK_URL } from '../../Modules/API';
+import { BASE_URL } from '../../Modules/API';
 
 function MyReview({ review }) {
   // const { content, rating, title, review_id } = review; // 여기서 오류남 데이터가 없어서..
@@ -38,7 +38,7 @@ function MyReview({ review }) {
   const DeleteReview = () => {
     if (window.confirm('정말 삭제시겠습니까?')) {
       alert('삭제되었습니다.'); //true
-      fetch(`${MK_URL}reviews/${review.review_id}`, {
+      fetch(`${BASE_URL}reviews/${review.review_id}`, {
         method: 'DELETE',
         headers: {
           Authorization: access_token,

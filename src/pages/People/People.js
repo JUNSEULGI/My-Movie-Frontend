@@ -5,7 +5,7 @@ import { userState } from '../../state';
 import styled from '@emotion/styled';
 import MyViewLayout from '../../layout/Layout';
 import { Box } from '@mui/material';
-import { MK_URL } from '../../Modules/API';
+import { BASE_URL } from '../../Modules/API';
 import { CardContainer, ActorImg } from '../Movie';
 import { PeopleProfile, MovieTable, CountReview } from '../People';
 import { people } from './MockData';
@@ -22,7 +22,7 @@ function People() {
 
   // 친밀도 DATA
   useEffect(() => {
-    fetch(`${MK_URL}movies/actor/intimacy/${params.id}`, {
+    fetch(`${BASE_URL}movies/actor/intimacy/${params.id}`, {
       headers: {
         Authorization: access_token,
       },
@@ -34,7 +34,7 @@ function People() {
   }, []);
   //전체 데이터
   useEffect(() => {
-    fetch(`${MK_URL}movies/actor/${params.id}`)
+    fetch(`${BASE_URL}movies/actor/${params.id}`)
       .then(res => res.json())
       .then(res => {
         setPeopleData(res.actor_info);
@@ -48,35 +48,33 @@ function People() {
 
   function PeopleLayout() {
     return (
-      <>
-        <DDD>
-          <PeopleCard>
-            <PeopleImg src={peopleData.image_url} />
-            <Info>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'baseline',
-                }}
-              >
-                <PeopleName>{peopleData.name}</PeopleName>
-                {peopleData.job?.map(job => {
-                  return <Job>{job}</Job>;
-                })}
-              </Box>
-              <PeopleProfile profile={peopleData} />
-            </Info>
-          </PeopleCard>
-          <CountReview
-            userInfo={userInfo}
-            actor={peopleData.name}
-            intimacyData={intimacyData}
-          />
-          <Right>
-            <MovieTable movie={peopleData} />
-          </Right>
-        </DDD>
-      </>
+      <DDD>
+        <PeopleCard>
+          <PeopleImg src={peopleData.image_url} />
+          <Info>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'baseline',
+              }}
+            >
+              <PeopleName>{peopleData.name}</PeopleName>
+              {peopleData.job?.map(job => {
+                return <Job>{job}</Job>;
+              })}
+            </Box>
+            <PeopleProfile profile={peopleData} />
+          </Info>
+        </PeopleCard>
+        <CountReview
+          userInfo={userInfo}
+          actor={peopleData.name}
+          intimacyData={intimacyData}
+        />
+        <Right>
+          <MovieTable movie={peopleData} />
+        </Right>
+      </DDD>
     );
   }
   return (

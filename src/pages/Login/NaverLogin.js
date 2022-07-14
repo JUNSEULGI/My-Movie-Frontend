@@ -4,18 +4,18 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { NAVER_CALLBACK_URL, NAVER_ID } from '../../Modules/API';
 import { Link } from '@mui/material';
 import naver from '../../assets/images/naverLogin.png';
-import { MK_URL } from '../../Modules/API';
+import { BASE_URL } from '../../Modules/API';
 
 function NaverLogin() {
   const navigate = useNavigate();
   const { search } = useLocation();
   const access_code = search?.split('=')[1]?.split('&')[0];
-  console.log('네이버 인증 코드', access_code);
+  console.log('인증 코드', access_code);
 
   //백으로 인증 코드 주는 함수
   useEffect(() => {
     if (!search) return;
-    fetch(`${MK_URL}users/login/naver/callback?code=${access_code}`, {
+    fetch(`${BASE_URL}users/login/naver/callback?code=${access_code}`, {
       method: 'GET',
     })
       .then(res => res.json())
