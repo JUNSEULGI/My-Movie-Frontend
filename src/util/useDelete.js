@@ -1,12 +1,10 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { movieState, reviewState, buttonState } from '../state';
 import { BASE_URL } from '../Modules/API';
 
 export default function useDelete() {
   const token = localStorage.getItem('access_token');
-  const navigate = useNavigate();
   const [button, setButton] = useRecoilState(buttonState);
   const [review] = useRecoilState(reviewState);
   const resetMovie = useResetRecoilState(movieState);
@@ -22,11 +20,12 @@ export default function useDelete() {
     })
       // .then(res => res.json())
       .then(result => {
+        console.log(result);
         // if (result.message === 'SUCCESS') {
         setButton({ ...button, isDeleting: false });
         resetMovie();
         resetReview();
-        navigate('/list');
+        // window.location.replace(`/list`);
         // }
       });
   }, [button.isDeleting]);

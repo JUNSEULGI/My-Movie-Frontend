@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { movieState, reviewState, buttonState, userState } from '../../state';
 import styled from '@emotion/styled';
@@ -21,7 +20,6 @@ function ReviewBox() {
   const resetMovie = useResetRecoilState(movieState);
   const resetReview = useResetRecoilState(reviewState);
   const [rating, setRating] = useState(0);
-  const navigate = useNavigate();
 
   // 리뷰 관련 input의 값이 바뀌면 "review" 리코일에 반영
   const handleReview = e => {
@@ -36,23 +34,33 @@ function ReviewBox() {
       fetch(`${BASE_URL}movies/detail/${movie.id}`)
         .then(res => res.json())
         .then(data => {
-          console.log(data);
+          // console.log(data);
           setMovie({ ...movie, ...data.movie_info });
         });
     }
-    // 이미 작성한 리뷰의 내용 가져오기(api 확인 필요)
-    // if (review.review_id) {
-    //   fetch(`${BASE_URL}reviews/${review.review_id}`, {
-    //     headers: {
-    //       Authorization: token,
-    //     },
-    //   })
-    //     .then(res => res.json())
-    //     .then(result => {
-    //       // review에 저장하기
-    //       console.log(result);
-    //     });
-    // }
+    // 이미 작성한 리뷰의 내용 가져오기
+    if (review.review_id) {
+      fetch(`${BASE_URL}reviews/movie/${movie.id}`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+        .then(res => res.json())
+        .then(data => {
+          // review에 저장하기
+          const { result } = data;
+          console.log(result);
+          setReview({
+            ...review,
+            title: result.title,
+            content: result.content,
+            watched_date: new Date(result.watched_date),
+            place: { ...result.place },
+            with_user: result.with_user,
+          });
+          setRating(Number(result.rating));
+        });
+    }
   }, []);
 
   // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송
@@ -86,11 +94,12 @@ function ReviewBox() {
       })
         .then(res => res.json())
         .then(result => {
+          console.log(result);
           if (result.message === 'SUCCESS') {
             setButton({ ...button, isSaving: false });
             resetMovie();
             resetReview();
-            navigate('/list');
+            window.location.replace(`/list`);
           }
         });
     } else {
@@ -108,8 +117,7 @@ function ReviewBox() {
             setButton({ ...button, isSaving: false });
             resetMovie();
             resetReview();
-            // navigate 했는데 아예 새로고침은 안 됨
-            navigate('/list');
+            window.location.replace(`/list`);
           }
         });
     }

@@ -24,29 +24,27 @@ function NoReview({ title }) {
     console.log(open);
   };
   return (
-    <>
-      <Box sx={{ position: 'relative' }}>
-        <CardContainer style={{ justifyContent: 'center' }}>
-          <NoReviewMent variant="h6">
-            남긴 후기가 없어요!
-            <br />
-            후기를 쓰고 &nbsp;
-            <MyLink onClick={() => setOpen(true)}>{title}</MyLink>를 나의 영화
-            목록에 추가해보세요!
-          </NoReviewMent>
-        </CardContainer>
-        <NoReviewFabContainer>
-          <AddReviewButton onClick={() => setOpen(true)}>
-            <AddCircleOutlineIcon fontSize="large" />
-          </AddReviewButton>
-          <MyViewModal
-            open={open}
-            closeModal={closeModal}
-            children={<ReviewBox />}
-          />
-        </NoReviewFabContainer>
-      </Box>
-    </>
+    <Box sx={{ position: 'relative' }}>
+      <CardContainer style={{ justifyContent: 'center' }}>
+        <NoReviewMent variant="h6">
+          남긴 후기가 없어요!
+          <br />
+          후기를 쓰고 &nbsp;
+          <MyLink onClick={() => setOpen(true)}>{title}</MyLink>를 나의 영화
+          목록에 추가해보세요!
+        </NoReviewMent>
+      </CardContainer>
+      <NoReviewFabContainer>
+        <AddReviewButton onClick={() => setOpen(true)}>
+          <AddCircleOutlineIcon fontSize="large" />
+        </AddReviewButton>
+        <MyViewModal
+          open={open}
+          closeModal={closeModal}
+          children={<ReviewBox />}
+        />
+      </NoReviewFabContainer>
+    </Box>
   );
 }
 

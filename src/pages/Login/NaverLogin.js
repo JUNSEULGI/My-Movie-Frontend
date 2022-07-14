@@ -10,7 +10,7 @@ function NaverLogin() {
   const navigate = useNavigate();
   const { search } = useLocation();
   const access_code = search?.split('=')[1]?.split('&')[0];
-  console.log('네이버 인증 코드', access_code);
+  console.log('인증 코드', access_code);
 
   //백으로 인증 코드 주는 함수
   useEffect(() => {

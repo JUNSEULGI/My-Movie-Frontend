@@ -27,11 +27,9 @@ function List() {
 
     const handleSave = () => {
       setButton({ ...button, isSaving: true });
-      window.location.replace(`/list`); //이거 추가하세용
     };
 
     const handleDelete = () => {
-      console.log('delete 누름');
       setButton({ ...button, isDeleting: true });
     };
 
@@ -56,7 +54,6 @@ function List() {
       })
         .then(res => res.json())
         .then(data => {
-          console.log('set할 거임', data.result);
           setReviewList(data.result);
         });
     }, []);
