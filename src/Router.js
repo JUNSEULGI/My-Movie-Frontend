@@ -6,6 +6,7 @@ import Movie from './pages/Movie/Movie';
 import People from './pages/People/People';
 import Mypage from './pages/Mypage/Mypage';
 import Components from './components/Components';
+import Callback from './pages/Login/Callback';
 
 function Router() {
   return (
@@ -17,6 +18,7 @@ function Router() {
         <Route path="/people/:id" element={<People />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/components" element={<Components />} />
+        <Route path="/login-callback/:id" element={<Callback />} />
       </Routes>
     </BrowserRouter>
   );

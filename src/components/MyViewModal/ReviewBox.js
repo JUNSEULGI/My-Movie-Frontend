@@ -7,6 +7,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Poster from '../Poster/Poster';
+import { AgeBadge } from '../../pages/Movie';
 import { timestamp } from '../../util/timestamp';
 import { BASE_URL } from '../../Modules/API';
 import useDelete from '../../util/useDelete';
@@ -78,7 +79,6 @@ function ReviewBox() {
     formData.append('with_user', review.with_user);
     formData.append('rating', rating);
     formData.append('movie_id', movie.id);
-
     console.log(formData);
 
     if (review.review_id) {
@@ -134,16 +134,19 @@ function ReviewBox() {
         <RowBox>
           <Box>
             <MovieTitle variant="h3">{movie.title}</MovieTitle>
-            <BoldText variant="subtitle2">
-              {movie.en_title} <br />
-              2022 · {movie.country} ·{' '}
-              {movie.genre?.map((genreItems, index) => (
-                <span key={index} style={{ marginRight: '10px' }}>
-                  {genreItems}
-                </span>
-              ))}{' '}
-              / {movie.running_time}분 · {movie.age}세
-            </BoldText>
+            <Box sx={{ flexDirection: 'row' }}>
+              <BoldText variant="subtitle2">
+                {movie.en_title} <br />
+                2022 · {movie.country} ·{' '}
+                {movie.genre?.map((genreItems, index) => (
+                  <span key={index} style={{ marginRight: '10px' }}>
+                    {genreItems}
+                  </span>
+                ))}{' '}
+                / {movie.running_time}분
+              </BoldText>
+              <AgeBadge age={movie.age} />
+            </Box>
           </Box>
           <Rating
             value={rating}
