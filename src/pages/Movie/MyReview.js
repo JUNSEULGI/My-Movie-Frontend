@@ -31,24 +31,7 @@ function MyReview({ review }) {
   console.log(',영화', review);
 
   const handleDelete = () => {
-    console.log('delete 누름');
     setButton({ ...button, isDeleting: true });
-  };
-  // MyReview 컴포넌트 삭제
-  const DeleteReview = () => {
-    if (window.confirm('정말 삭제시겠습니까?')) {
-      alert('삭제되었습니다.'); //true
-      fetch(`${BASE_URL}reviews/${review.review_id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: access_token,
-        },
-      });
-      resetReview();
-      window.location.replace(`/movie/${params.id}`); //자동새로고침
-    } else {
-      alert('취소합니다.'); //false
-    }
   };
 
   if (!review?.content) return null;
@@ -66,7 +49,7 @@ function MyReview({ review }) {
         <EditButton onClick={() => console.log('edit')}>
           <EditIcon />
         </EditButton>
-        <DeleteButton onClick={() => DeleteReview()}>
+        <DeleteButton onClick={handleDelete}>
           <DeleteIcon />
         </DeleteButton>
       </FabContainer>
