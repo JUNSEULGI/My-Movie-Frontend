@@ -12,21 +12,26 @@ export default function useDelete() {
 
   useEffect(() => {
     if (!button.isDeleting) return;
-    fetch(`${BASE_URL}reviews/${review.review_id}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: token,
-      },
-    })
-      // .then(res => res.json())
-      .then(result => {
-        console.log(result);
-        // if (result.message === 'SUCCESS') {
-        setButton({ ...button, isDeleting: false });
-        resetMovie();
-        resetReview();
-        // window.location.replace(`/list`);
-        // }
-      });
+    if (window.confirm('정말 삭제시겠습니까?')) {
+      fetch(`${BASE_URL}reviews/${review.review_id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: token,
+        },
+      })
+        // .then(res => res.json())
+        .then(result => {
+          console.log(result);
+          // if (result.message === 'SUCCESS') {
+          setButton({ ...button, isDeleting: false });
+          resetMovie();
+          resetReview();
+          alert('삭제되었습니다.'); //true
+          window.location.replace(`/list`);
+          // }
+        });
+    } else {
+      alert('취소합니다.'); //false
+    }
   }, [button.isDeleting]);
 }
