@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { CardContainer } from '../Movie';
-import { MK_URL } from '../../Modules/API';
+import { BASE_URL } from '../../Modules/API';
 import { MovieRating } from '../Movie';
 
 import { Typography, Box } from '@mui/material';
@@ -14,7 +14,7 @@ function WatchedMovie() {
   const [watched, setWatched] = useState([]);
 
   useEffect(() => {
-    fetch(`${MK_URL}reviews/list`, {
+    fetch(`${BASE_URL}reviews/list`, {
       headers: {
         Authorization: access_token,
       },

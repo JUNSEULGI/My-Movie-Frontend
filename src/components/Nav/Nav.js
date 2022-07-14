@@ -46,7 +46,7 @@ function Nav() {
   }, []);
 
   useEffect(() => {
-    fetch(`${MK_URL}movies/simple`)
+    fetch(`${BASE_URL}movies/simple`)
       .then(res => res.json())
       .then(result => {
         if (result.message === 'SUCCESS') {
