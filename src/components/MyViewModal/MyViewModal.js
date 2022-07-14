@@ -18,7 +18,6 @@ function MyViewModal({ open, closeModal, breadcrumbs, children, buttons }) {
               <ModalButton
                 key={item.key}
                 onClick={e => {
-                  console.log();
                   item.function();
                 }}
               >

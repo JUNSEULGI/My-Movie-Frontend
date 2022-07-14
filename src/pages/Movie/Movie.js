@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
-import { reviewState, hasReviewState } from '../../state';
+import { reviewState, movieState } from '../../state';
 import MyViewLayout from '../../layout/Layout';
 import { BASE_URL } from '../../Modules/API';
 import {
@@ -18,11 +18,8 @@ import {
 function Movie() {
   const params = useParams();
   const access_token = localStorage.getItem('access_token');
-  const [reviewData, setReviewData] = useState({});
-  const [myReview, setMyReview] = useRecoilState(reviewState);
-
-  const [hasReview, setHasReview] = useRecoilState(hasReviewState);
-  const [movieData, setMovieData] = useState({});
+  const [review, setReview] = useRecoilState(reviewState);
+  const [movie, setMovie] = useRecoilState(movieState);
 
   useEffect(() => {
     fetch(`${BASE_URL}reviews/movie/${params.id}`, {
@@ -32,14 +29,12 @@ function Movie() {
     })
       .then(res => res.json())
       .then(res => {
-        setReviewData(res.result);
+        console.log(res.result);
+        setReview(res.result);
       });
   }, []);
 
-  console.log(hasReview);
-  console.log(reviewData);
-
-  reviewData?.review_id ? setHasReview(true) : setHasReview(false);
+  console.log(review);
 
   useEffect(() => {
     fetch(`${BASE_URL}movies/detail/${params.id}`, {
@@ -49,12 +44,12 @@ function Movie() {
     })
       .then(res => res.json())
       .then(res => {
-        setMovieData(res.movie_info);
+        setMovie(res.movie_info);
       });
   }, []);
 
   //Mock Data
-  // const movieData = Data.movie_info;
+  // const movie = Data.movie_info;
 
   //데이터 구조분해
   const {
@@ -67,19 +62,18 @@ function Movie() {
     actor,
     video_url,
     image_url,
-  } = movieData;
+  } = movie;
 
   function MovieContainer() {
     return (
       <MovieBackGround>
-        <MovieInfo data={movieData} />
-        {/* // */}
-        {movieData.actor?.length != 0 ? (
+        <MovieInfo data={movie} />
+        {movie.actor?.length > 0 ? (
           <>
             <ContainerTitle>출연/제작</ContainerTitle>
             <ActorContainer>
-              {actor?.map(actor => (
-                <Actor actor={actor} />
+              {actor?.map((actor, index) => (
+                <Actor key={index} actor={actor} />
               ))}
             </ActorContainer>
           </>
@@ -87,33 +81,29 @@ function Movie() {
           ''
         )}
         <ContainerTitle>리뷰</ContainerTitle>
-        {hasReview == true ? (
-          <MyReview review={reviewData} />
-        ) : (
-          <NoReview title={movieData.title} />
-        )}
+        {review.review_id ? <MyReview /> : <NoReview title={movie.title} />}
         {/* <MyReview
             hasReview={hasReview}
             setHasReview={setHasReview}
-            review={reviewData}
+            review={review}
           /> */}
 
         <ContainerTitle>예고편</ContainerTitle>
         <TrailerContainer>
-          {movieData.video_url?.map((video, index) => (
+          {movie.video_url?.map((video, index) => (
             <Trailer key={index} video={video} />
           ))}
         </TrailerContainer>
         <ContainerTitle>갤러리</ContainerTitle>
-        <MovieGallery movie_image={movieData.image_url} />
+        <MovieGallery movie_image={movie.image_url} />
       </MovieBackGround>
     );
   }
 
   //이거 추가해
-  if (!movieData.image_url) return null;
+  if (!movie.image_url) return null;
   return (
-    movieData && (
+    movie && (
       <MyViewLayout
         movie
         background={image_url[0]}

@@ -25,13 +25,8 @@ function List() {
     const [reviewList, setReviewList] = useState([]);
     const [open, setOpen] = useState(false);
 
-    const handleSave = () => {
-      setButton({ ...button, isSaving: true });
-    };
-
-    const handleDelete = () => {
-      setButton({ ...button, isDeleting: true });
-    };
+    const handleSave = () => setButton({ ...button, isSaving: true });
+    const handleDelete = () => setButton({ ...button, isDeleting: true });
 
     const closeModal = (_, reason) => {
       if (reason === 'backdropClick') return;

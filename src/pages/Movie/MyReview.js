@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
-import { buttonState } from '../../state';
+import { buttonState, reviewState } from '../../state';
 import { CardContainer } from './CardContainer';
 import { Box, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -11,8 +11,9 @@ import { Logo } from './ContentLogo';
 import { ReviewIcon, FabContainer } from './MyIconButton';
 import useDelete from '../../util/useDelete';
 
-function MyReview({ review }) {
+function MyReview() {
   const [button, setButton] = useRecoilState(buttonState);
+  const [review, setReview] = useRecoilState(reviewState);
 
   const handleDelete = () => {
     setButton({ ...button, isDeleting: true });
@@ -20,7 +21,7 @@ function MyReview({ review }) {
 
   useDelete();
 
-  if (!review?.content) return null;
+  if (!review?.review_id) return null;
   return (
     <MyReviewContainer>
       <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>

@@ -51,7 +51,7 @@ function MovieInfo({ data }) {
           <br />
           {release_date?.substr(0, 4)} · {country}
           {genre?.map((genreItems, index) => (
-            <span id={index} style={{ marginRight: '10px' }}>
+            <span key={index} style={{ marginRight: '10px' }}>
               {genreItems}
             </span>
           ))}

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useSave, useDelete } from '../../util/handler';
 import { useParams } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import styled from '@emotion/styled';
-import { movieState, reviewState } from '../../state';
+import { movieState, buttonState, reviewState } from '../../state';
 import { Box, Link, Typography } from '@mui/material';
 import { CardContainer } from './CardContainer';
 import { ReviewIcon, FabContainer } from './MyIconButton';
@@ -14,18 +13,20 @@ import ReviewBox from '../../components/MyViewModal/ReviewBox';
 function NoReview({ title }) {
   const { id } = useParams();
   const [movie, setMovie] = useRecoilState(movieState);
+  const [button, setButton] = useRecoilState(buttonState);
   const resetMovie = useResetRecoilState(movieState);
   const resetReview = useResetRecoilState(reviewState);
   const [review, setReview] = useState([]);
   const [open, setOpen] = useState(false);
 
-  console.log(id);
+  const handleSave = () => setButton({ ...button, isSaving: true });
+  const handleDelete = () => setButton({ ...button, isDeleting: true });
+
   const closeModal = (_, reason) => {
     if (reason === 'backdropClick') return;
     resetMovie();
     resetReview();
     setOpen(false);
-    console.log(open);
   };
 
   return (
@@ -49,7 +50,6 @@ function NoReview({ title }) {
         <AddReviewButton
           onClick={() => {
             setMovie({ ...movie, id: id });
-            console.log('reviewing');
             setOpen(true);
           }}
         >
@@ -65,19 +65,19 @@ function NoReview({ title }) {
                   {
                     key: 1,
                     name: 'Save',
-                    function: useSave,
+                    function: handleSave,
                   },
                   {
                     key: 2,
                     name: 'Delete',
-                    function: useDelete,
+                    function: handleDelete,
                   },
                 ]
               : [
                   {
                     key: 1,
                     name: 'Save',
-                    function: useSave,
+                    function: handleSave,
                   },
                 ]
           }
