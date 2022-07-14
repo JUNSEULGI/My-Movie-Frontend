@@ -11,7 +11,7 @@ import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import MyStep from './MyStep';
 import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import SearchBox from '../../components/MyViewModal/SearchBox';
-import { MK_URL } from '../../Modules/API';
+import { BASE_URL } from '../../Modules/API';
 
 function List() {
   function ListLayout() {
@@ -27,11 +27,9 @@ function List() {
 
     const handleSave = () => {
       setButton({ ...button, isSaving: true });
-      window.location.replace(`/list`); //이거 추가하세용
     };
 
     const handleDelete = () => {
-      console.log('delete 누름');
       setButton({ ...button, isDeleting: true });
     };
 
@@ -49,14 +47,13 @@ function List() {
     };
 
     useEffect(() => {
-      fetch(`${MK_URL}reviews/list`, {
+      fetch(`${BASE_URL}reviews/list`, {
         headers: {
           Authorization: token,
         },
       })
         .then(res => res.json())
         .then(data => {
-          console.log('set할 거임', data.result);
           setReviewList(data.result);
         });
     }, []);

@@ -11,7 +11,7 @@ import {
 } from '../../state';
 
 import MyViewLayout from '../../layout/Layout';
-import { MK_URL } from '../../Modules/API';
+import { BASE_URL } from '../../Modules/API';
 import { Data } from './Mock/MovieData';
 import {
   CardContainer,
@@ -34,7 +34,7 @@ function Movie() {
   const [movieData, setMovieData] = useState({});
 
   useEffect(() => {
-    fetch(`${MK_URL}reviews/movie/${params.id}`, {
+    fetch(`${BASE_URL}reviews/movie/${params.id}`, {
       headers: {
         Authorization: access_token,
       },
@@ -51,7 +51,7 @@ function Movie() {
   reviewData?.review_id ? setHasReview(true) : setHasReview(false);
 
   useEffect(() => {
-    fetch(`${MK_URL}movies/detail/${params.id}`, {
+    fetch(`${BASE_URL}movies/detail/${params.id}`, {
       headers: {
         Authorization: access_token,
       },
@@ -80,44 +80,42 @@ function Movie() {
 
   function MovieContainer() {
     return (
-      <>
-        <MovieBackGround>
-          <MovieInfo data={movieData} />
-          {/* // */}
-          {movieData.actor?.length != 0 ? (
-            <>
-              <ContainerTitle>출연/제작</ContainerTitle>
-              <ActorContainer>
-                {actor?.map(actor => (
-                  <Actor actor={actor} />
-                ))}
-              </ActorContainer>
-            </>
-          ) : (
-            ''
-          )}
-          <ContainerTitle>리뷰</ContainerTitle>
-          {hasReview == true ? (
-            <MyReview review={reviewData} />
-          ) : (
-            <NoReview title={movieData.title} />
-          )}
-          {/* <MyReview
+      <MovieBackGround>
+        <MovieInfo data={movieData} />
+        {/* // */}
+        {movieData.actor?.length != 0 ? (
+          <>
+            <ContainerTitle>출연/제작</ContainerTitle>
+            <ActorContainer>
+              {actor?.map(actor => (
+                <Actor actor={actor} />
+              ))}
+            </ActorContainer>
+          </>
+        ) : (
+          ''
+        )}
+        <ContainerTitle>리뷰</ContainerTitle>
+        {hasReview == true ? (
+          <MyReview review={reviewData} />
+        ) : (
+          <NoReview title={movieData.title} />
+        )}
+        {/* <MyReview
             hasReview={hasReview}
             setHasReview={setHasReview}
             review={reviewData}
           /> */}
 
-          <ContainerTitle>예고편</ContainerTitle>
-          <TrailerContainer>
-            {movieData.video_url?.map((video, index) => (
-              <Trailer key={index} video={video} />
-            ))}
-          </TrailerContainer>
-          <ContainerTitle>갤러리</ContainerTitle>
-          <MovieGallery movie_image={movieData.image_url} />
-        </MovieBackGround>
-      </>
+        <ContainerTitle>예고편</ContainerTitle>
+        <TrailerContainer>
+          {movieData.video_url?.map((video, index) => (
+            <Trailer key={index} video={video} />
+          ))}
+        </TrailerContainer>
+        <ContainerTitle>갤러리</ContainerTitle>
+        <MovieGallery movie_image={movieData.image_url} />
+      </MovieBackGround>
     );
   }
 

@@ -4,6 +4,12 @@ export default atom({
   key: 'movie',
   default: {
     id: '',
-    title: 'fake title',
+    title: '',
+    thumbnail_image_url: '',
+    country: '',
+    genre: [],
+    running_time: 0,
+    age: 0,
+    release_date: '',
   },
 });
