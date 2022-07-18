@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { CardContainer } from '../Movie/CardContainer';
-import { CardMedia } from '@mui/material';
+import { CardMedia, Typography } from '@mui/material';
 import { OTTLogo } from '../../components/PlatformAvatar';
 import { Logo } from '../Movie/ContentLogo';
 
@@ -13,16 +13,16 @@ function MovieTable({ movie }) {
   const moveMoviePage = id => {
     navigate(`/movie/${id}`);
   };
-
+  //
   return (
     <>
       <RowTitle>
-        <Year>연혁</Year>
-        <MoviePoster></MoviePoster>
-        <MoiveTitle>제목</MoiveTitle>
-        <InRole>역할</InRole>
-        <Rating>평가</Rating>
-        <Platform>감상 서비스</Platform>
+        <Year variant="subtitle1">연혁</Year>
+        <MoviePoster variant="subtitle1"></MoviePoster>
+        <MoiveTitle variant="subtitle1">제목</MoiveTitle>
+        <InRole variant="subtitle1">역할</InRole>
+        <Rating variant="subtitle1">평가</Rating>
+        <Platform variant="subtitle1">감상 서비스</Platform>
       </RowTitle>
       <Table>
         {starring_list?.map(movie => {
@@ -50,7 +50,11 @@ function MovieTable({ movie }) {
                     image={thumbnail_image_url}
                   />
                 </MoviePoster>
-                <MoiveTitle onClick={() => moveMoviePage(movie_id)} movie_id>
+                <MoiveTitle
+                  variant="subtitle1"
+                  onClick={() => moveMoviePage(movie_id)}
+                  movie_id
+                >
                   {title}
                 </MoiveTitle>
                 <InRole>{role_name}</InRole>
@@ -141,17 +145,16 @@ const RowTitle = styled(Row)`
   }
 `;
 
-const Year = styled.div`
+const Year = styled(Typography)`
   grid-column: span 1 / auto;
   margin-right: 8px;
 `;
 
-const MoviePoster = styled.div`
+const MoviePoster = styled(Typography)`
   grid-column: span 1 / auto;
 `;
 
-const MoiveTitle = styled.div`
-  font-weight: bold;
+const MoiveTitle = styled(Typography)`
   cursor: pointer;
 
   &:hover {
@@ -159,9 +162,9 @@ const MoiveTitle = styled.div`
   }
 `;
 
-const InRole = styled.div``;
+const InRole = styled(Typography)``;
 
-const Rating = styled.div``;
+const Rating = styled(Typography)``;
 
 const ReviewRating = styled.p`
   margin: 0;
@@ -169,7 +172,7 @@ const ReviewRating = styled.p`
   color: ${({ theme }) => theme.palette.test.main};
 `;
 
-const Platform = styled.div`
+const Platform = styled(Typography)`
   display: flex;
   justify-content: center;
 `;

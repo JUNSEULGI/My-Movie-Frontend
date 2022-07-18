@@ -32,7 +32,7 @@ function NoReview({ title }) {
   return (
     <Box sx={{ position: 'relative' }}>
       <CardContainer style={{ justifyContent: 'center' }}>
-        <NoReviewMent variant="h6">
+        <NoReviewMent variant="h2">
           남긴 후기가 없어요!
           <br />
           후기를 쓰고 &nbsp;

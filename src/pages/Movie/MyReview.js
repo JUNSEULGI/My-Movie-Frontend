@@ -29,9 +29,9 @@ function MyReview() {
         <MovieRating rating={review.rating} />
       </Box>
       <MyBox>
-        <MyReviewTitle variant="h5">{review.title}</MyReviewTitle>
+        <MyReviewTitle variant="h1">{review.title}</MyReviewTitle>
       </MyBox>
-      <MyReviewContent>{review.content}</MyReviewContent>
+      <MyReviewContent variant="body1">{review.content}</MyReviewContent>
       <FabContainer>
         <EditButton onClick={() => console.log('edit')}>
           <EditIcon />
@@ -67,7 +67,6 @@ const MyBox = styled.div``;
 
 const MyReviewTitle = styled(Typography)`
   margin-bottom: 8px;
-  font-weight: bold;
 `;
 
 const MyReviewContent = styled(Typography)`

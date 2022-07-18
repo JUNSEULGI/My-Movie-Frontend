@@ -1,4 +1,5 @@
 import { createTheme } from '@mui/material/styles';
+import { addTypography } from './Typo';
 
 const darkTheme = createTheme({
   palette: {
@@ -71,5 +72,7 @@ const darkTheme = createTheme({
     },
   },
 });
+
+addTypography(darkTheme);
 
 export default darkTheme;

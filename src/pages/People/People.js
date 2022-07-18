@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import { userState } from '../../state';
 import styled from '@emotion/styled';
 import MyViewLayout from '../../layout/Layout';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { BASE_URL } from '../../Modules/API';
 import { CardContainer, ActorImg } from '../Movie';
 import { PeopleProfile, MovieTable, CountReview } from '../People';
@@ -58,9 +58,9 @@ function People() {
                 alignItems: 'baseline',
               }}
             >
-              <PeopleName>{peopleData.name}</PeopleName>
+              <PeopleName variant="h3">{peopleData.name}</PeopleName>
               {peopleData.job?.map(job => {
-                return <Job>{job}</Job>;
+                return <Job variant="body1">{job}</Job>;
               })}
             </Box>
             <PeopleProfile profile={peopleData} />
@@ -102,10 +102,10 @@ const Info = styled.div`
   justify-content: space-between;
 `;
 
-const PeopleName = styled.h3`
+const PeopleName = styled(Typography)`
   margin: 0 0 0 20px;
 `;
-const Job = styled.p`
+const Job = styled(Typography)`
   margin: 0 0 0 8px;
 `;
 

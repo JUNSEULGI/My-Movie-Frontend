@@ -43,7 +43,7 @@ function MovieInfo({ data }) {
             alignItems: 'center',
           }}
         >
-          <MovieTitle variant="h4">{title}</MovieTitle>
+          <MovieTitle variant="h2">{title}</MovieTitle>
           <MovieRating rating={floorRating} />
         </Box>
         <SubInfo variant="subtitle2">
@@ -60,7 +60,10 @@ function MovieInfo({ data }) {
         </SubInfo>
         <Summary variant="subtitle1">줄거리</Summary>
         <SummaryContainer>
-          <div dangerouslySetInnerHTML={replaceBrTag(description)} />
+          <Content
+            variant="body1"
+            dangerouslySetInnerHTML={replaceBrTag(description)}
+          />
         </SummaryContainer>
       </Box>
     </CardContainer>
@@ -103,3 +106,5 @@ const Summary = styled(Typography)`
   font-weight: bold;
   margin-top: 30px;
 `;
+
+const Content = styled(Typography)``;
