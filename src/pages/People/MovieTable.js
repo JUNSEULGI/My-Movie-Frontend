@@ -13,7 +13,7 @@ function MovieTable({ movie }) {
   const moveMoviePage = id => {
     navigate(`/movie/${id}`);
   };
-
+  //
   return (
     <>
       <RowTitle>
