@@ -25,7 +25,7 @@ function CountReview({ userInfo, intimacyData }) {
     <>
       {close ? (
         <CountCardContainer>
-          <PeopleCardTitle>친밀도</PeopleCardTitle>
+          <PeopleCardTitle variant="h3">친밀도</PeopleCardTitle>
           <Box sx={{ textAlign: 'center' }}>
             <Box sx={{ position: 'relative', display: 'inline-flex' }}>
               <BackProgress variant="determinate" size={140} value={100} />
@@ -41,7 +41,7 @@ function CountReview({ userInfo, intimacyData }) {
                 </CountText>
               </CountTextCover>
             </Box>
-            <CountIntro>
+            <CountIntro variant="h3">
               {nickname}님은 마동석님이 출연한{' '}
               <strong>{intimacyData?.viewed_count}</strong>
               개의 영화를 시청했습니다.
@@ -67,7 +67,7 @@ const CountCardContainer = styled(CardContainer)`
   width: 470px;
 `;
 
-const PeopleCardTitle = styled.h3`
+const PeopleCardTitle = styled(Typography)`
   margin: 0 0 6px 0;
 `;
 
@@ -106,20 +106,18 @@ const CountText = styled(Typography)`
   align-items: baseline;
   color: orange;
   width: 100px;
-  font-size: 26px;
+  font-size: 1.625rem;
   font-weight: bold;
 
   p {
     margin: 0 0 0 6px;
-    font-size: 14px;
+    font-size: 0.875rem;
     color: darkgray;
   }
 `;
 
 const CountIntro = styled(Typography)`
   margin-top: 14px;
-  font-weight: bold;
-  font-size: 18px;
   letter-spacing: 0.4px;
   strong {
     font-size: 20px;
