@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Links } from '../../components/Link';
 import { useNavigate } from 'react-router-dom';
+import { Typography } from '@mui/material';
 
 function Actor({ actor }) {
   const { id, name, role_name, image, role } = actor;
@@ -12,9 +13,9 @@ function Actor({ actor }) {
     <ActorCard key={id}>
       <ActorImg src={image} />
       <Links href={`/people/${id}`}>
-        <ActorName>{name}</ActorName>
+        <ActorName variant="h3">{name}</ActorName>
       </Links>
-      <Role>
+      <Role variant="body1">
         {role} | {role_name}
       </Role>
     </ActorCard>
@@ -33,11 +34,11 @@ const ActorImg = styled.img`
   border-radius: 8px;
 `;
 
-const ActorName = styled.h3`
+const ActorName = styled(Typography)`
   margin: 12px 0 0;
   font-weight: bold;
 `;
 
-const Role = styled.span`
+const Role = styled(Typography)`
   color: ${({ theme }) => theme.palette.text.disabled};
 `;
