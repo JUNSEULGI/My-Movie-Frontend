@@ -20,7 +20,6 @@ export const API = {
   movies_detail: BASE_URL + 'movies/detail',
   actor_intimacy: BASE_URL + 'movies/actor/intimacy',
 };
-console.log(API.actor_intimacy);
 
 // 네이버
 export const NAVER_ID = 'fAxuwH_vSTsRSIcvBdvp';

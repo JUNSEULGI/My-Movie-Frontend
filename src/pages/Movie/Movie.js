@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { reviewState, movieState } from '../../state';
 import MyViewLayout from '../../layout/Layout';
 import { BASE_URL } from '../../Modules/API';
@@ -14,7 +14,8 @@ import {
   MyReview,
   MovieGallery,
 } from '../Movie';
-import { Message } from '@mui/icons-material';
+import MyViewModal from '../../components/MyViewModal/MyViewModal';
+import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import { Typography } from '@mui/material';
 
 function Movie() {
@@ -22,6 +23,17 @@ function Movie() {
   const access_token = localStorage.getItem('access_token');
   const [review, setReview] = useRecoilState(reviewState);
   const [movie, setMovie] = useRecoilState(movieState);
+  const resetMovie = useResetRecoilState(movieState);
+  const resetReview = useResetRecoilState(reviewState);
+  const [open, setOpen] = useState(false);
+
+  const openModal = () => setOpen(true);
+  const closeModal = (_, reason) => {
+    if (reason === 'backdropClick') return;
+    resetMovie();
+    resetReview();
+    setOpen(false);
+  };
 
   useEffect(() => {
     fetch(`${BASE_URL}reviews/movie/${params.id}`, {
@@ -31,12 +43,10 @@ function Movie() {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res.result);
+        if (res.message === 'REVIEW_DOSE_NOT_EXISTS') return;
         setReview(res.result);
       });
-  }, []);
-
-  console.log(review);
+  }, [params.id]);
 
   useEffect(() => {
     fetch(`${BASE_URL}movies/detail/${params.id}`, {
@@ -46,31 +56,18 @@ function Movie() {
     })
       .then(res => res.json())
       .then(res => {
+        console.log(res);
         setMovie(res.movie_info);
       });
   }, []);
 
-  //Mock Data
-  // const movie = Data.movie_info;
-
-  //데이터 구조분해
-  const {
-    title,
-    description,
-    release_date,
-    country,
-    category,
-    genre,
-    actor,
-    video_url,
-    image_url,
-  } = movie;
+  const { title, actor, video_url, image_url } = movie;
 
   function MovieContainer() {
     return (
       <MovieBackGround>
-        <MovieInfo data={movie} />
-        {movie.actor?.length > 0 ? (
+        {movie.id && <MovieInfo />}
+        {actor?.length > 0 ? (
           <>
             <ContainerTitle>출연/제작</ContainerTitle>
             <ActorContainer>
@@ -83,27 +80,31 @@ function Movie() {
           ''
         )}
         <ContainerTitle>리뷰</ContainerTitle>
-        {review.review_id ? <MyReview /> : <NoReview title={movie.title} />}
-        {/* <MyReview
-            hasReview={hasReview}
-            setHasReview={setHasReview}
-            review={review}
-          /> */}
-
+        {review?.review_id ? (
+          <MyReview openModal={openModal} />
+        ) : (
+          <NoReview title={title} openModal={openModal} />
+        )}
+        <MyViewModal
+          open={open}
+          closeModal={closeModal}
+          content={<ReviewBox />}
+        />
         <ContainerTitle>예고편</ContainerTitle>
         <TrailerContainer>
-          {movie.video_url?.map((video, index) => (
+          {video_url?.map((video, index) => (
             <Trailer key={index} video={video} />
           ))}
         </TrailerContainer>
         <ContainerTitle>갤러리</ContainerTitle>
-        <MovieGallery movie_image={movie.image_url} />
+        <MovieGallery movie_image={image_url} />
       </MovieBackGround>
     );
   }
+  console.log('나는 무비');
 
   //이거 추가해
-  if (!movie.image_url) return null;
+  if (!image_url) return null;
   return (
     movie && (
       <MyViewLayout

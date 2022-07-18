@@ -1,8 +1,14 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { useRecoilState } from 'recoil';
+import { buttonState, movieState, reviewState } from '../../state';
 import { Box, Button, ButtonGroup, Modal } from '@mui/material';
 
-function MyViewModal({ open, closeModal, breadcrumbs, children, buttons }) {
+function MyViewModal({ open, closeModal, breadcrumbs, content }) {
+  const [movie, setMovie] = useRecoilState(movieState);
+  const [review, setReview] = useRecoilState(reviewState);
+  const [button, setButton] = useRecoilState(buttonState);
+
   return (
     <MyModal
       open={open}
@@ -13,20 +19,23 @@ function MyViewModal({ open, closeModal, breadcrumbs, children, buttons }) {
       <Container>
         <Step breadcrumbs={breadcrumbs}>{breadcrumbs}</Step>
         <Buttons variant="text">
-          {buttons &&
-            buttons.map(item => (
-              <ModalButton
-                key={item.key}
-                onClick={e => {
-                  item.function();
-                }}
-              >
-                {item.name}
-              </ModalButton>
-            ))}
+          {review.review_id && (
+            <ModalButton
+              onClick={() => setButton({ ...button, isDeleting: true })}
+            >
+              Delete
+            </ModalButton>
+          )}
+          {movie.id && (
+            <ModalButton
+              onClick={() => setButton({ ...button, isSaving: true })}
+            >
+              Save
+            </ModalButton>
+          )}
           <ModalButton onClick={closeModal}>Close</ModalButton>
         </Buttons>
-        {children}
+        {content}
       </Container>
     </MyModal>
   );

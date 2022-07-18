@@ -27,7 +27,7 @@ function Nav() {
   };
 
   const moveMoviePage = id => {
-    window.location.replace(`/movie/${id}`); //이거 추가하세용
+    window.location.replace(`/movie/${id}`);
   };
 
   useEffect(() => {
@@ -39,21 +39,24 @@ function Nav() {
     })
       .then(res => res.json())
       .then(res => {
+        if (res.message === 'EXPIRED_TOKEN') {
+          localStorage.removeItem('access_token');
+          return;
+        }
         setUserInfo(res.result);
       });
-  }, []);
+  }, [access_token]);
 
   // 검색창이 활성화되었을 때 요청하는 게 좋지 않을까?
-  // useEffect(() => {
-  //   fetch(`${BASE_URL}movies/simple`)
-  //     .then(res => res.json())
-  //     .then(result => {
-  //       if (result.message === 'SUCCESS') {
-  //         setTitles(result.titles);
-  //       }
-  //     });
-  // }, []);
-  // console.log(titles);
+  useEffect(() => {
+    fetch(`${BASE_URL}movies/simple`)
+      .then(res => res.json())
+      .then(result => {
+        if (result.message === 'SUCCESS') {
+          setTitles(result.titles);
+        }
+      });
+  }, []);
 
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);

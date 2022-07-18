@@ -16,7 +16,7 @@ function AgeBadge({ age }) {
   } else {
     ageColor = '#D61D29';
   }
-  return <MovieBadge label={ageToString} ageColor={ageColor} />;
+  return <MovieBadge label={ageToString} agecolor={ageColor} />;
 }
 
 export default AgeBadge;
@@ -26,5 +26,5 @@ const MovieBadge = styled(Chip)`
   font-weight: bold;
   width: 4em;
   height: 1.57em;
-  background-color: ${props => props.ageColor};
+  background-color: ${props => props.agecolor};
 `;

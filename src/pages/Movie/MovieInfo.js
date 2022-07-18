@@ -1,10 +1,14 @@
 import React from 'react';
 import styled from '@emotion/styled';
+import { useRecoilState } from 'recoil';
+import { movieState } from '../../state';
 import { CardMedia, Typography } from '@mui/material';
 import { CardContainer, MovieRating, AgeBadge } from '../Movie';
 import { Box } from '@mui/system';
+import { replaceBrTag } from '../../util/replaceBrTag';
 
-function MovieInfo({ data }) {
+function MovieInfo() {
+  const [movie, setMovie] = useRecoilState(movieState);
   const {
     title,
     age,
@@ -12,24 +16,11 @@ function MovieInfo({ data }) {
     description,
     release_date,
     country,
-    category,
     ratings,
     running_time,
     genre,
     thumbnail_image_url,
-  } = data;
-
-  // \n을 <br/>로 바꿔주는
-  function replaceBrTag(str) {
-    if (str == undefined || str == null) {
-      return { __html: '내용이 없습니다' };
-    }
-
-    str = str.replace(/\r\n/gi, '<br>');
-    str = str.replace(/\\n/gi, '<br>');
-    str = str.replace(/\n/gi, '<br>');
-    return { __html: str };
-  }
+  } = movie;
 
   const floorRating = ratings.substr(0, 3);
   return (

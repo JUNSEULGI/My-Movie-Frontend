@@ -11,15 +11,13 @@ import { Logo } from './ContentLogo';
 import { ReviewIcon, FabContainer } from './MyIconButton';
 import useDelete from '../../util/useDelete';
 
-function MyReview() {
+function MyReview({ openModal }) {
   const [button, setButton] = useRecoilState(buttonState);
   const [review, setReview] = useRecoilState(reviewState);
 
-  const handleDelete = () => {
-    setButton({ ...button, isDeleting: true });
-  };
-
+  const handleDelete = () => setButton({ ...button, isDeleting: true });
   useDelete();
+  console.log('나는 리뷰');
 
   if (!review?.review_id) return null;
   return (
@@ -33,7 +31,7 @@ function MyReview() {
       </MyBox>
       <MyReviewContent variant="body1">{review.content}</MyReviewContent>
       <FabContainer>
-        <EditButton onClick={() => console.log('edit')}>
+        <EditButton onClick={() => openModal()}>
           <EditIcon />
         </EditButton>
         <DeleteButton onClick={handleDelete}>
