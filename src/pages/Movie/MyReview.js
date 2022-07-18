@@ -1,38 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import React from 'react';
 import styled from '@emotion/styled';
-import { useRecoilState, useResetRecoilState } from 'recoil';
-import {
-  userState,
-  buttonState,
-  movieState,
-  reviewState,
-  hasReviewState,
-} from '../../state';
+import { useRecoilState } from 'recoil';
+import { buttonState } from '../../state';
 import { CardContainer } from './CardContainer';
-import { Box, Typography, Fab, IconButton } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MovieRating from './MovieRating';
 import { Logo } from './ContentLogo';
 import { ReviewIcon, FabContainer } from './MyIconButton';
-import { BASE_URL } from '../../Modules/API';
+import useDelete from '../../util/useDelete';
 
 function MyReview({ review }) {
-  // const { content, rating, title, review_id } = review; // 여기서 오류남 데이터가 없어서..
-  // const [myReview, setMyReview] = useRecoilState(reviewState);
-  const location = useLocation();
-  const params = useParams();
-  const [hasReview, setHasReview] = useRecoilState(hasReviewState);
-  const resetReview = useResetRecoilState(hasReviewState);
-  const [status, setStatus] = useState({});
   const [button, setButton] = useRecoilState(buttonState);
-  const access_token = localStorage.getItem('access_token');
-  console.log(',영화', review);
 
   const handleDelete = () => {
     setButton({ ...button, isDeleting: true });
   };
+
+  useDelete();
 
   if (!review?.content) return null;
   return (
@@ -87,8 +73,6 @@ const MyReviewContent = styled(Typography)`
   text-overflow: ellipsis;
   white-space: wrap;
 `;
-
-const Reviewer = styled.div``;
 
 const DeleteButton = styled(ReviewIcon)`
   :hover {

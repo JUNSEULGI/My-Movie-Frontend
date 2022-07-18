@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { movieState, reviewState, buttonState } from '../state';
 import { BASE_URL } from '../Modules/API';
 
 export default function useDelete() {
+  const { pathname } = useLocation();
   const token = localStorage.getItem('access_token');
   const [button, setButton] = useRecoilState(buttonState);
   const [review] = useRecoilState(reviewState);
@@ -27,7 +29,7 @@ export default function useDelete() {
           resetMovie();
           resetReview();
           alert('삭제되었습니다.'); //true
-          window.location.replace(`/list`);
+          window.location.replace(pathname);
           // }
         });
     } else {

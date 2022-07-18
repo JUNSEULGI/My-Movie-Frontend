@@ -5,7 +5,7 @@ import { CardContainer } from '../Movie';
 import { ReviewIcon } from '../Movie/MyIconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-function CountReview({ userInfo, intimacyData }) {
+function CountReview({ userInfo, intimacyData, actor }) {
   const [countReview, setCountReview] = useState(0);
   const [close, setClose] = useState(true);
   const { nickname, email, Profile_image } = userInfo;
@@ -41,8 +41,8 @@ function CountReview({ userInfo, intimacyData }) {
                 </CountText>
               </CountTextCover>
             </Box>
-            <CountIntro variant="h3">
-              {nickname}님은 마동석님이 출연한{' '}
+            <CountIntro>
+              {nickname}님은 {actor}님이 출연한{' '}
               <strong>{intimacyData?.viewed_count}</strong>
               개의 영화를 시청했습니다.
             </CountIntro>
