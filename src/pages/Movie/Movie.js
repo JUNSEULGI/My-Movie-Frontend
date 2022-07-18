@@ -14,6 +14,8 @@ import {
   MyReview,
   MovieGallery,
 } from '../Movie';
+import { Message } from '@mui/icons-material';
+import { Typography } from '@mui/material';
 
 function Movie() {
   const params = useParams();
@@ -129,7 +131,9 @@ const MovieBackGround = styled.div`
   padding: 80px;
 `;
 
-const ContainerTitle = styled.h4`
+const ContainerTitle = styled(Typography)`
+  font-weight: bold;
+  font-size: 1rem;
   margin: 20px 0 6px;
   color: ${({ theme }) => theme.palette.common.white};
 `;
