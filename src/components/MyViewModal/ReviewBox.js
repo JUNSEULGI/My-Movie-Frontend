@@ -31,16 +31,17 @@ function ReviewBox() {
     });
   };
 
-  // 컴포넌트 최초 렌더링 시 리뷰를 작성할 영화에 대한 정보를 받아옴
   useEffect(() => {
-    if (movie.id) {
-      fetch(`${BASE_URL}movies/detail/${movie.id}`)
-        .then(res => res.json())
-        .then(data => {
-          // console.log(data);
-          setMovie({ ...movie, ...data.movie_info });
-        });
-    }
+    if (!movie.id) return;
+
+    // 컴포넌트 최초 렌더링 시 리뷰를 작성할 영화에 대한 정보를 받아옴
+    fetch(`${BASE_URL}movies/detail/${movie.id}`)
+      .then(res => res.json())
+      .then(data => {
+        // console.log(data);
+        setMovie({ ...movie, ...data.movie_info });
+      });
+
     // 이미 작성한 리뷰의 내용 가져오기
     fetch(`${BASE_URL}reviews/movie/${movie.id}`, {
       headers: {
