@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { useRecoilState } from 'recoil';
-import { reviewState, hasReviewState } from '../../state';
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import { reviewState, movieState } from '../../state';
 import MyViewLayout from '../../layout/Layout';
 import { BASE_URL } from '../../Modules/API';
 import {
@@ -14,17 +14,26 @@ import {
   MyReview,
   MovieGallery,
 } from '../Movie';
-import { Message } from '@mui/icons-material';
+import MyViewModal from '../../components/MyViewModal/MyViewModal';
+import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import { Typography } from '@mui/material';
 
 function Movie() {
   const params = useParams();
   const access_token = localStorage.getItem('access_token');
-  const [reviewData, setReviewData] = useState({});
-  const [myReview, setMyReview] = useRecoilState(reviewState);
+  const [review, setReview] = useRecoilState(reviewState);
+  const [movie, setMovie] = useRecoilState(movieState);
+  const resetMovie = useResetRecoilState(movieState);
+  const resetReview = useResetRecoilState(reviewState);
+  const [open, setOpen] = useState(false);
 
-  const [hasReview, setHasReview] = useRecoilState(hasReviewState);
-  const [movieData, setMovieData] = useState({});
+  const openModal = () => setOpen(true);
+  const closeModal = (_, reason) => {
+    if (reason === 'backdropClick') return;
+    resetMovie();
+    resetReview();
+    setOpen(false);
+  };
 
   useEffect(() => {
     fetch(`${BASE_URL}reviews/movie/${params.id}`, {
@@ -34,14 +43,10 @@ function Movie() {
     })
       .then(res => res.json())
       .then(res => {
-        setReviewData(res.result);
+        if (res.message === 'REVIEW_DOSE_NOT_EXISTS') return;
+        setReview(res.result);
       });
-  }, []);
-
-  console.log(hasReview);
-  console.log(reviewData);
-
-  reviewData?.review_id ? setHasReview(true) : setHasReview(false);
+  }, [params.id]);
 
   useEffect(() => {
     fetch(`${BASE_URL}movies/detail/${params.id}`, {
@@ -51,37 +56,23 @@ function Movie() {
     })
       .then(res => res.json())
       .then(res => {
-        setMovieData(res.movie_info);
+        console.log(res);
+        setMovie(res.movie_info);
       });
   }, []);
 
-  //Mock Data
-  // const movieData = Data.movie_info;
-
-  //데이터 구조분해
-  const {
-    title,
-    description,
-    release_date,
-    country,
-    category,
-    genre,
-    actor,
-    video_url,
-    image_url,
-  } = movieData;
+  const { title, actor, video_url, image_url } = movie;
 
   function MovieContainer() {
     return (
       <MovieBackGround>
-        <MovieInfo data={movieData} />
-        {/* // */}
-        {movieData.actor?.length != 0 ? (
+        {movie.id && <MovieInfo />}
+        {actor?.length > 0 ? (
           <>
             <ContainerTitle>출연/제작</ContainerTitle>
             <ActorContainer>
-              {actor?.map(actor => (
-                <Actor actor={actor} />
+              {actor?.map((actor, index) => (
+                <Actor key={index} actor={actor} />
               ))}
             </ActorContainer>
           </>
@@ -89,33 +80,33 @@ function Movie() {
           ''
         )}
         <ContainerTitle>리뷰</ContainerTitle>
-        {hasReview == true ? (
-          <MyReview review={reviewData} />
+        {review?.review_id ? (
+          <MyReview openModal={openModal} />
         ) : (
-          <NoReview title={movieData.title} />
+          <NoReview title={title} openModal={openModal} />
         )}
-        {/* <MyReview
-            hasReview={hasReview}
-            setHasReview={setHasReview}
-            review={reviewData}
-          /> */}
-
+        <MyViewModal
+          open={open}
+          closeModal={closeModal}
+          content={<ReviewBox />}
+        />
         <ContainerTitle>예고편</ContainerTitle>
         <TrailerContainer>
-          {movieData.video_url?.map((video, index) => (
+          {video_url?.map((video, index) => (
             <Trailer key={index} video={video} />
           ))}
         </TrailerContainer>
         <ContainerTitle>갤러리</ContainerTitle>
-        <MovieGallery movie_image={movieData.image_url} />
+        <MovieGallery movie_image={image_url} />
       </MovieBackGround>
     );
   }
+  console.log('나는 무비');
 
   //이거 추가해
-  if (!movieData.image_url) return null;
+  if (!image_url) return null;
   return (
-    movieData && (
+    movie && (
       <MyViewLayout
         movie
         background={image_url[0]}

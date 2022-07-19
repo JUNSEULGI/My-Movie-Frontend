@@ -26,7 +26,7 @@ export default function useDelete() {
           console.log(result);
           // if (result.message === 'SUCCESS') {
           setButton({ ...button, isDeleting: false });
-          resetMovie();
+          if (/\/movie\/*/.test(pathname)) resetMovie();
           resetReview();
           alert('삭제되었습니다.'); //true
           window.location.replace(pathname);

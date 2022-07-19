@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { movieState, reviewState, buttonState, userState } from '../../state';
 import styled from '@emotion/styled';
@@ -21,8 +22,8 @@ function ReviewBox() {
   const resetMovie = useResetRecoilState(movieState);
   const resetReview = useResetRecoilState(reviewState);
   const [rating, setRating] = useState(0);
+  const { pathname } = useLocation();
 
-  console.log(movie.id);
   // 리뷰 관련 input의 값이 바뀌면 "review" 리코일에 반영
   const handleReview = e => {
     setReview(prev => {
@@ -41,28 +42,27 @@ function ReviewBox() {
         });
     }
     // 이미 작성한 리뷰의 내용 가져오기
-    if (review.review_id) {
-      fetch(`${BASE_URL}reviews/movie/${movie.id}`, {
-        headers: {
-          Authorization: token,
-        },
-      })
-        .then(res => res.json())
-        .then(data => {
-          // review에 저장하기
-          const { result } = data;
-          console.log(result);
-          setReview({
-            ...review,
-            title: result.title,
-            content: result.content,
-            watched_date: new Date(result.watched_date),
-            place: { ...result.place },
-            with_user: result.with_user,
-          });
-          setRating(Number(result.rating));
+    fetch(`${BASE_URL}reviews/movie/${movie.id}`, {
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.message === 'REVIEW_DOSE_NOT_EXISTS') return;
+        // 리뷰 있으면 review에 저장하기
+        const { result } = data;
+        setReview({
+          ...review,
+          review_id: result.review_id,
+          title: result.title,
+          content: result.content,
+          watched_date: new Date(result.watched_date),
+          place: { ...result.place },
+          with_user: result.with_user,
         });
-    }
+        setRating(Number(result.rating));
+      });
   }, []);
 
   // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송
@@ -97,10 +97,10 @@ function ReviewBox() {
         .then(result => {
           console.log(result);
           if (result.message === 'SUCCESS') {
+            window.location.replace(`/list`);
             setButton({ ...button, isSaving: false });
             resetMovie();
             resetReview();
-            window.location.replace(`/list`);
           }
         });
     } else {
@@ -118,7 +118,7 @@ function ReviewBox() {
             setButton({ ...button, isSaving: false });
             resetMovie();
             resetReview();
-            window.location.replace(`/list`);
+            window.location.replace(pathname);
           }
         });
     }
@@ -126,7 +126,7 @@ function ReviewBox() {
 
   useDelete();
 
-  console.log(button);
+  console.log(review, movie);
 
   return (
     <Column>

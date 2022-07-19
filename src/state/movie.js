@@ -11,5 +11,9 @@ export default atom({
     running_time: 0,
     age: 0,
     release_date: '',
+    description: '',
+    actor: [],
+    video_url: [],
+    image_url: [],
   },
 });

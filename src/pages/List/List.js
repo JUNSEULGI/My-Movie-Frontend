@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { userState, buttonState, movieState, reviewState } from '../../state';
+import { userState, movieState, reviewState } from '../../state';
 import { Box, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import MyViewLayout from '../../layout/Layout';
@@ -19,19 +19,10 @@ function List() {
     const [userInfo] = useRecoilState(userState);
     const [movie, setMovie] = useRecoilState(movieState);
     const [review, setReview] = useRecoilState(reviewState);
-    const [button, setButton] = useRecoilState(buttonState);
     const resetMovie = useResetRecoilState(movieState);
     const resetReview = useResetRecoilState(reviewState);
     const [reviewList, setReviewList] = useState([]);
     const [open, setOpen] = useState(false);
-
-    const handleSave = () => {
-      setButton({ ...button, isSaving: true });
-    };
-
-    const handleDelete = () => {
-      setButton({ ...button, isDeleting: true });
-    };
 
     const closeModal = (_, reason) => {
       if (reason === 'backdropClick') return;
@@ -106,29 +97,7 @@ function List() {
           open={open}
           closeModal={closeModal}
           breadcrumbs={<MyStep />}
-          buttons={
-            movie.id && review.review_id
-              ? [
-                  {
-                    key: 1,
-                    name: 'Save',
-                    function: handleSave,
-                  },
-                  {
-                    key: 2,
-                    name: 'Delete',
-                    function: handleDelete,
-                  },
-                ]
-              : [
-                  {
-                    key: 1,
-                    name: 'Save',
-                    function: handleSave,
-                  },
-                ]
-          }
-          children={movie.id ? <ReviewBox /> : <SearchBox />}
+          content={movie.id ? <ReviewBox /> : <SearchBox />}
         />
       </>
     );
