@@ -37,16 +37,20 @@ function ReviewBox() {
       fetch(`${BASE_URL}movies/detail/${movie.id}`)
         .then(res => res.json())
         .then(data => {
-          // console.log(data);
+          console.log(data);
           setMovie({ ...movie, ...data.movie_info });
         });
     }
     // 이미 작성한 리뷰의 내용 가져오기
-    fetch(`${BASE_URL}reviews/movie/${movie.id}`, {
-      headers: {
-        Authorization: token,
+    fetch(
+      `${BASE_URL}reviews/movie/${movie.id}`,
+      {
+        headers: {
+          Authorization: token,
+        },
       },
-    })
+      []
+    )
       .then(res => res.json())
       .then(data => {
         if (data.message === 'REVIEW_DOSE_NOT_EXISTS') return;
@@ -180,7 +184,8 @@ function ReviewBox() {
                 renderInput={params => <WhiteTextField {...params} />}
                 value={review.watched_date}
                 onChange={newValue => {
-                  console.log(newValue);
+                  console.log(review.watched_date);
+                  console.log(typeof review.watched_date);
                   setReview(prev => {
                     return { ...prev, watched_date: newValue };
                   });
