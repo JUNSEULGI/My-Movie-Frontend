@@ -29,10 +29,9 @@ function Movie() {
   const [open, setOpen] = useState(false);
 
   const openModal = () => setOpen(true);
+
   const closeModal = (_, reason) => {
     if (reason === 'backdropClick') return;
-    resetMovie();
-    resetReview();
     setOpen(false);
   };
 
