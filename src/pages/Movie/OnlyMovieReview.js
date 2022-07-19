@@ -1,0 +1,224 @@
+import React, { useEffect, useState } from 'react';
+import moment from 'moment';
+import { useLocation, useParams } from 'react-router-dom';
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import { movieState, reviewState, buttonState, userState } from '../../state';
+import styled from '@emotion/styled';
+import { Box, Typography, TextField, Rating } from '@mui/material';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import Poster from '../../components/Poster/Poster';
+import { AgeBadge } from '../../pages/Movie';
+import { BASE_URL } from '../../Modules/API';
+import { Button } from '@mui/material';
+
+function OnlyMovieReview({ data }) {
+  const token = localStorage.getItem('access_token');
+  const [movie, setMovie] = useRecoilState(movieState);
+  const [button, setButton] = useRecoilState(buttonState);
+  const [review, setReview] = useRecoilState(reviewState);
+  const [userInfo] = useRecoilState(userState);
+  const { pathname } = useLocation();
+
+  const [content, setContent] = useState('');
+  const [watched_date, setWatched_date] = useState('');
+  const [mapx, setMapx] = useState(0);
+  const [mapy, setMapy] = useState(0);
+  const [name, setName] = useState('');
+  const [link, setLink] = useState('');
+  const [withUser, setWithUser] = useState('');
+  const [rating, setRating] = useState(0);
+  const params = useParams();
+
+  console.log(params);
+  console.log(moment(watched_date).format('YYYY-MM-DD hh:mm:ss'));
+
+  const formData = new FormData();
+  formData.append('title', review.title);
+  formData.append('content', content);
+  formData.append(
+    'watched_date',
+    moment(watched_date).format('YYYY-MM-DD hh:mm:ss')
+  );
+  formData.append('place', mapx);
+  formData.append('place', mapy);
+  formData.append('place', name);
+  formData.append('place', link);
+  formData.append('with_user', withUser);
+  formData.append('rating', rating);
+  formData.append('movie_id', movie.id);
+  console.log(formData);
+
+  const reviewSave = () => {
+    fetch(`${BASE_URL}reviews`, {
+      method: 'POST',
+      headers: {
+        Authorization: token,
+      },
+      body: formData,
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (result.message === 'SUCCESS') {
+          // setButton({ ...button, isSaving: false });
+          setMovie({ ...movie, id: params.id });
+          window.location.replace(pathname);
+        }
+      });
+  };
+  console.log('asdads', pathname);
+
+  return (
+    <>
+      {' '}
+      <Column>
+        <Poster url={movie.thumbnail_image_url} />
+        <ReviewContainer>
+          <RowBox>
+            <Box>
+              <MovieTitle variant="h3">{movie.title}</MovieTitle>
+              <Box sx={{ flexDirection: 'row' }}>
+                <BoldText variant="subtitle2">
+                  {movie.en_title} <br />
+                  2022 · {movie.country} ·{' '}
+                  {movie.genre?.map((genreItems, index) => (
+                    <span key={index} style={{ marginRight: '10px' }}>
+                      {genreItems}
+                    </span>
+                  ))}{' '}
+                  / {movie.running_time}분
+                </BoldText>
+                <AgeBadge age={movie.age} />
+              </Box>
+            </Box>
+            <Rating
+              value={rating}
+              onChange={(e, newValue) => {
+                setRating(newValue);
+              }}
+              precision={0.5}
+              size="large"
+            />
+          </RowBox>
+          <RowLabel variant="h4">{userInfo?.nickname}님의 솔직후기</RowLabel>
+          <ReviewField
+            label="리뷰를 남겨보세요."
+            multiline
+            minRows={3}
+            maxRows={20}
+            value={content}
+            onChange={e => {
+              e.preventDefault();
+              setContent(e.target.value);
+            }}
+          />
+          <RowLabel variant="h4">관람정보</RowLabel>
+          <GridBox>
+            <Box>
+              <WatchInfoLabel variant="subtitle1">when</WatchInfoLabel>
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <WatchDate
+                  label="언제 보셨나요?"
+                  inputFormat="yyyy.MM.dd HH:mm"
+                  mask="____.__.__ __:__"
+                  disableFuture={true}
+                  renderInput={params => <WhiteTextField {...params} />}
+                  value={watched_date}
+                  onChange={e => {
+                    console.log(typeof watched_date);
+                    setWatched_date(e);
+                    console.dir(watched_date);
+                  }}
+                />
+              </LocalizationProvider>
+            </Box>
+            <Box>
+              <WatchInfoLabel variant="subtitle1">where</WatchInfoLabel>
+              <WatchInfoField
+                label="어디서 보셨나요?"
+                value={name}
+                onChange={e => {
+                  setName(e.target.value);
+                }}
+              />
+            </Box>
+            <Box>
+              <WatchInfoLabel variant="subtitle1">with</WatchInfoLabel>
+              <WatchInfoField
+                label="누구랑 보셨나요?"
+                value={withUser}
+                onChange={e => {
+                  e.preventDefault();
+                  setWithUser(e.target.value);
+                }}
+              />
+            </Box>
+          </GridBox>
+        </ReviewContainer>
+      </Column>
+      <Button onClick={() => reviewSave()}>저장</Button>
+    </>
+  );
+}
+
+export default OnlyMovieReview;
+
+const Column = styled(Box)`
+  display: grid;
+  grid-template-columns: 273px 1fr;
+  // 컨테이너가 늘어나면서 높이를 100%로 고정할 수 없게 됨.
+  // height: 100%;
+`;
+
+const ReviewContainer = styled(Box)`
+  margin-left: 28px;
+`;
+
+const RowBox = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const BoldText = styled(Typography)`
+  color: ${({ theme }) => theme.palette.common.white};
+  font-weight: bold;
+`;
+
+const MovieTitle = styled(BoldText)`
+  margin-bottom: 6px;
+  font-size: 24px;
+`;
+
+const RowLabel = styled(BoldText)`
+  margin: 15px 0;
+  font-size: 20px;
+`;
+
+const ReviewField = styled(TextField)`
+  width: 100%;
+
+  & .MuiInputBase-input {
+    color: ${({ theme }) => theme.palette.common.white};
+  }
+`;
+
+const GridBox = styled(Box)`
+  display: grid;
+  grid-template-columns: 3fr 3fr 2fr;
+  column-gap: 12px;
+`;
+
+const WatchInfoLabel = styled(BoldText)`
+  margin-bottom: 15px;
+`;
+
+const WatchDate = styled(DateTimePicker)``;
+
+const WhiteTextField = styled(TextField)`
+  & .MuiOutlinedInput-root {
+    color: ${({ theme }) => theme.palette.common.white};
+  }
+`;
+
+const WatchInfoField = styled(ReviewField)``;

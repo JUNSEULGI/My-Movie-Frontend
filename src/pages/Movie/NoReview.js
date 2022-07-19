@@ -23,10 +23,10 @@ function NoReview({ title, openModal }) {
           목록에 추가해보세요!
         </NoReviewMent>
       </CardContainer>
+
       <NoReviewFabContainer>
         <AddReviewButton
           onClick={() => {
-            setMovie({ ...movie, id: id });
             openModal();
           }}
         >

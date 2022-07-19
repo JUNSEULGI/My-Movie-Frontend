@@ -17,6 +17,7 @@ import {
 import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import { Typography } from '@mui/material';
+import OnlyMovieReview from './OnlyMovieReview';
 
 function Movie() {
   const params = useParams();
@@ -60,6 +61,7 @@ function Movie() {
         setMovie(res.movie_info);
       });
   }, []);
+  console.log(movie.id);
 
   const { title, actor, video_url, image_url } = movie;
 
@@ -88,8 +90,9 @@ function Movie() {
         <MyViewModal
           open={open}
           closeModal={closeModal}
-          content={<ReviewBox />}
+          content={<OnlyMovieReview />}
         />
+
         <ContainerTitle>예고편</ContainerTitle>
         <TrailerContainer>
           {video_url?.map((video, index) => (
