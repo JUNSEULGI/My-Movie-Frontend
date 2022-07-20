@@ -41,30 +41,30 @@ function OnlyMovieReview({ data }) {
     moment(watched_date).format('YYYY-MM-DD hh:mm:ss')
   );
 
-  const reviewSave = () => {
-    formData.append('place', mapx);
-    formData.append('place', mapy);
-    formData.append('place', name);
-    formData.append('place', link);
-    formData.append('with_user', withUser);
-    formData.append('rating', rating);
-    formData.append('movie_id', movie.id);
-    fetch(`${BASE_URL}reviews`, {
-      method: 'POST',
-      headers: {
-        Authorization: token,
-      },
-      body: formData,
-    })
-      .then(res => res.json())
-      .then(result => {
-        if (result.message === 'SUCCESS') {
-          setButton({ ...button, isSaving: false });
-          setMovie({ ...movie, id: params.id });
-          window.location.replace(pathname);
-        }
-      });
-  };
+  // const reviewSave = () => {
+  //   formData.append('place', mapx);
+  //   formData.append('place', mapy);
+  //   formData.append('place', name);
+  //   formData.append('place', link);
+  //   formData.append('with_user', withUser);
+  //   formData.append('rating', rating);
+  //   formData.append('movie_id', movie.id);
+  //   fetch(`${BASE_URL}reviews`, {
+  //     method: 'POST',
+  //     headers: {
+  //       Authorization: token,
+  //     },
+  //     body: formData,
+  //   })
+  //     .then(res => res.json())
+  //     .then(result => {
+  //       if (result.message === 'SUCCESS') {
+  //         setButton({ ...button, isSaving: false });
+  //         setMovie({ ...movie, id: params.id });
+  //         window.location.replace(pathname);
+  //       }
+  //     });
+  // };
 
   // 이미 작성한 리뷰의 내용 가져오기
   useEffect(() => {
