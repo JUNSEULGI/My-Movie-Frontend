@@ -18,12 +18,12 @@ import {
 
 function Nav() {
   const [userInfo, setUserInfo] = useRecoilState(userState);
-  const [scrollPosition, setScrollPosition] = useState(0);
+  const [scroll, setScroll] = useState(0);
   const [titles, setTitles] = useState([]);
   const access_token = localStorage.getItem('access_token');
 
   const updateScroll = () => {
-    setScrollPosition(window.scrollY);
+    setScroll(window.scrollY);
   };
 
   const moveMoviePage = id => {
@@ -64,14 +64,10 @@ function Nav() {
 
   const isUser = localStorage.access_token ? '/list' : '/';
   return (
-    <NavBar onScroll={updateScroll} scrollPosition={scrollPosition}>
+    <NavBar onScroll={updateScroll} scroll={scroll}>
       <MyToolbar sx={{ display: 'flex', alignContent: 'center' }}>
         <Link to={isUser}>
-          <Logo
-            onScroll={updateScroll}
-            scrollPosition={scrollPosition}
-            component="h1"
-          >
+          <Logo onScroll={updateScroll} scroll={scroll} component="h1">
             My View!
           </Logo>
         </Link>
@@ -123,7 +119,7 @@ const NavBar = styled(AppBar)`
     &.MuiAppBar-root {
       box-shadow: none;
       background-color: ${props =>
-        props.scrollPosition < 60 ? 'transparent' : 'black'};
+        props.scroll < 60 ? 'transparent' : 'black'};
       transition: all 0.3s;
     }
   }
@@ -141,7 +137,7 @@ const MyToolbar = styled(Toolbar)`
 `;
 
 const Logo = styled(Typography)`
-  color: ${props => (props.scrollPosition < 60 ? '#FF6E01' : 'white')};
+  color: ${props => (props.scroll < 60 ? '#FF6E01' : 'white')};
   transition: all 0.3s;
   font-family: 'Galada', cursive;
   font-weight: bold;

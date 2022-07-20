@@ -17,7 +17,6 @@ function OnlyMovieReview({ data }) {
   const token = localStorage.getItem('access_token');
   const [movie, setMovie] = useRecoilState(movieState);
   const [button, setButton] = useRecoilState(buttonState);
-  const [review, setReview] = useRecoilState(reviewState);
   const [userInfo] = useRecoilState(userState);
   const { pathname } = useLocation();
 
@@ -32,39 +31,6 @@ function OnlyMovieReview({ data }) {
   const [withUser, setWithUser] = useState('');
   const [rating, setRating] = useState(0);
   const params = useParams();
-
-  const formData = new FormData();
-  formData.append('title', review.title);
-  formData.append('content', content);
-  formData.append(
-    'watched_date',
-    moment(watched_date).format('YYYY-MM-DD hh:mm:ss')
-  );
-
-  // const reviewSave = () => {
-  //   formData.append('place', mapx);
-  //   formData.append('place', mapy);
-  //   formData.append('place', name);
-  //   formData.append('place', link);
-  //   formData.append('with_user', withUser);
-  //   formData.append('rating', rating);
-  //   formData.append('movie_id', movie.id);
-  //   fetch(`${BASE_URL}reviews`, {
-  //     method: 'POST',
-  //     headers: {
-  //       Authorization: token,
-  //     },
-  //     body: formData,
-  //   })
-  //     .then(res => res.json())
-  //     .then(result => {
-  //       if (result.message === 'SUCCESS') {
-  //         setButton({ ...button, isSaving: false });
-  //         setMovie({ ...movie, id: params.id });
-  //         window.location.replace(pathname);
-  //       }
-  //     });
-  // };
 
   // 이미 작성한 리뷰의 내용 가져오기
   useEffect(() => {
@@ -102,6 +68,13 @@ function OnlyMovieReview({ data }) {
     if (!button.isSaving) return;
 
     //여기 폼 데이터 넣어
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append(
+      'watched_date',
+      moment(watched_date).format('YYYY-MM-DD hh:mm:ss')
+    );
     formData.append('place', mapx);
     formData.append('place', mapy);
     formData.append('place', name);
