@@ -21,8 +21,10 @@ function OnlyMovieReview({ data }) {
   const [userInfo] = useRecoilState(userState);
   const { pathname } = useLocation();
 
+  const [reviewId, setReviewId] = useState('');
+  const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [watched_date, setWatched_date] = useState('');
+  const [watched_date, setWatched_date] = useState(new Date());
   const [mapx, setMapx] = useState(0);
   const [mapy, setMapy] = useState(0);
   const [name, setName] = useState('');
@@ -31,9 +33,6 @@ function OnlyMovieReview({ data }) {
   const [rating, setRating] = useState(0);
   const params = useParams();
 
-  console.log(params);
-  console.log(moment(watched_date).format('YYYY-MM-DD hh:mm:ss'));
-
   const formData = new FormData();
   formData.append('title', review.title);
   formData.append('content', content);
@@ -41,33 +40,115 @@ function OnlyMovieReview({ data }) {
     'watched_date',
     moment(watched_date).format('YYYY-MM-DD hh:mm:ss')
   );
-  formData.append('place', mapx);
-  formData.append('place', mapy);
-  formData.append('place', name);
-  formData.append('place', link);
-  formData.append('with_user', withUser);
-  formData.append('rating', rating);
-  formData.append('movie_id', movie.id);
-  console.log(formData);
 
-  const reviewSave = () => {
-    fetch(`${BASE_URL}reviews`, {
-      method: 'POST',
+  // const reviewSave = () => {
+  //   formData.append('place', mapx);
+  //   formData.append('place', mapy);
+  //   formData.append('place', name);
+  //   formData.append('place', link);
+  //   formData.append('with_user', withUser);
+  //   formData.append('rating', rating);
+  //   formData.append('movie_id', movie.id);
+  //   fetch(`${BASE_URL}reviews`, {
+  //     method: 'POST',
+  //     headers: {
+  //       Authorization: token,
+  //     },
+  //     body: formData,
+  //   })
+  //     .then(res => res.json())
+  //     .then(result => {
+  //       if (result.message === 'SUCCESS') {
+  //         setButton({ ...button, isSaving: false });
+  //         setMovie({ ...movie, id: params.id });
+  //         window.location.replace(pathname);
+  //       }
+  //     });
+  // };
+
+  // 이미 작성한 리뷰의 내용 가져오기
+  useEffect(() => {
+    fetch(`${BASE_URL}reviews/movie/${movie.id}`, {
       headers: {
         Authorization: token,
       },
-      body: formData,
     })
       .then(res => res.json())
-      .then(result => {
-        if (result.message === 'SUCCESS') {
-          // setButton({ ...button, isSaving: false });
-          setMovie({ ...movie, id: params.id });
-          window.location.replace(pathname);
-        }
+      .then(data => {
+        if (data.message === 'REVIEW_DOSE_NOT_EXISTS') return;
+        // 리뷰 있으면 review에 저장하기
+        const {
+          content,
+          title,
+          review_id,
+          watched_date,
+          place,
+          with_user,
+          rating,
+        } = data.result;
+
+        setReviewId(review_id);
+        setTitle(title);
+        setContent(content);
+        setWatched_date(watched_date);
+        setName(place.name);
+        setWithUser(with_user);
+        setRating(Number(rating));
       });
-  };
-  console.log('asdads', pathname);
+  }, []);
+
+  // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송
+  useEffect(() => {
+    if (!button.isSaving) return;
+
+    //여기 폼 데이터 넣어
+    formData.append('place', mapx);
+    formData.append('place', mapy);
+    formData.append('place', name);
+    formData.append('place', link);
+    formData.append('with_user', withUser);
+    formData.append('rating', rating);
+    formData.append('movie_id', movie.id);
+
+    if (reviewId) {
+      // 리뷰 아이디가 있으므로 이미 작성된 리뷰를 수정하는 중
+      formData.append('review_id', reviewId);
+
+      fetch(`${BASE_URL}reviews`, {
+        method: 'PUT',
+        headers: {
+          Authorization: token,
+        },
+        body: formData,
+      })
+        .then(res => res.json())
+        .then(result => {
+          console.log(result);
+          if (result.message === 'SUCCESS') {
+            setButton({ ...button, isSaving: false });
+            setMovie({ ...movie, id: params.id });
+            window.location.replace(pathname);
+          }
+        });
+    } else {
+      // 리뷰 아이디가 없으므로 새로운 리뷰 저장하는 중
+      fetch(`${BASE_URL}reviews`, {
+        method: 'POST',
+        headers: {
+          Authorization: token,
+        },
+        body: formData,
+      })
+        .then(res => res.json())
+        .then(result => {
+          if (result.message === 'SUCCESS') {
+            setButton({ ...button, isSaving: false });
+            setMovie({ ...movie, id: params.id });
+            window.location.replace(pathname);
+          }
+        });
+    }
+  }, [button.isSaving]);
 
   return (
     <>
@@ -157,7 +238,6 @@ function OnlyMovieReview({ data }) {
           </GridBox>
         </ReviewContainer>
       </Column>
-      <Button onClick={() => reviewSave()}>저장</Button>
     </>
   );
 }
