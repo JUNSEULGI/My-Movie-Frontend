@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { userState } from '../../state';
 import { Link } from 'react-router-dom';
@@ -17,6 +18,7 @@ import {
 } from '@mui/material';
 
 function Nav() {
+  const { pathname } = useLocation();
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const [scroll, setScroll] = useState(0);
   const [titles, setTitles] = useState([]);
@@ -63,6 +65,11 @@ function Nav() {
   }, []);
 
   const isUser = localStorage.access_token ? '/list' : '/';
+
+  console.log(pathname);
+  const seeLoginButton =
+    pathname === '/' ? '' : <GoLogin to="/">로그인</GoLogin>;
+
   return (
     <NavBar onScroll={updateScroll} scroll={scroll}>
       <MyToolbar sx={{ display: 'flex', alignContent: 'center' }}>
@@ -101,7 +108,7 @@ function Nav() {
           {localStorage.access_token ? (
             <MyAvatar userInfo={userInfo} />
           ) : (
-            <GoLogin to="/">로그인</GoLogin>
+            seeLoginButton
           )}
         </Box>
       </MyToolbar>

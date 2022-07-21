@@ -56,13 +56,12 @@ function Movie() {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         setMovie(res.movie_info);
       });
   }, []);
 
   const { title, actor, video_url, image_url } = movie;
-  console.log(video_url);
+
   function MovieContainer() {
     return (
       <MovieBackGround>
