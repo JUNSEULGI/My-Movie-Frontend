@@ -6,7 +6,8 @@ import { CardMedia, Typography } from '@mui/material';
 import { OTTLogo } from '../../components/PlatformAvatar';
 import { Logo } from '../Movie/ContentLogo';
 
-function MovieTable({ movie }) {
+function MovieTable({ movie, reviewdata }) {
+  const access_token = localStorage.getItem('access_token');
   const navigate = useNavigate();
   const { starring_list } = movie;
 
@@ -14,6 +15,10 @@ function MovieTable({ movie }) {
     navigate(`/movie/${id}`);
   };
 
+  console.log(reviewdata);
+  console.log(starring_list);
+
+  // for(let i = 0; i < starring_list.length)
   //
   return (
     <>
@@ -39,6 +44,7 @@ function MovieTable({ movie }) {
             platform_logo_image,
           } = movie;
 
+          // console.log(movie_id);
           const floorRatings = ratings.slice(0, 3);
           return (
             <BackCover key={movie_id} back={movie_image_url}>
@@ -54,19 +60,22 @@ function MovieTable({ movie }) {
                 <MoiveTitle
                   variant="subtitle1"
                   onClick={() => moveMoviePage(movie_id)}
-                  movie_id
                 >
                   {title}
                 </MoiveTitle>
                 <InRole>{role_name}</InRole>
                 <Rating>
-                  {ratings ? (
-                    <>
-                      <Logo>My View</Logo>
-                      <ReviewRating>{floorRatings}</ReviewRating>
-                    </>
+                  {access_token ? (
+                    ratings ? (
+                      <>
+                        <Logo>My View</Logo>
+                        <ReviewRating>{floorRatings}</ReviewRating>
+                      </>
+                    ) : (
+                      '평가 하시겠어요?'
+                    )
                   ) : (
-                    '평가 하시겠어요?'
+                    <AverageRating>{floorRatings}</AverageRating>
                   )}
                 </Rating>
                 <Platform>
@@ -171,6 +180,10 @@ const ReviewRating = styled.p`
   margin: 0;
   font-weight: bold;
   color: ${({ theme }) => theme.palette.test.main};
+`;
+
+const AverageRating = styled(ReviewRating)`
+  color: white;
 `;
 
 const Platform = styled(Typography)`

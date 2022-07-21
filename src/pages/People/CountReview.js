@@ -11,10 +11,10 @@ function CountReview({ userInfo, intimacyData, actor }) {
   const { nickname, email, Profile_image } = userInfo;
   const access_token = localStorage.getItem('access_token');
 
-  // const { total_count, viewed_count } = intimacyData;
-  console.log(intimacyData);
+  const { total_count, watched_count } = intimacyData;
+  // console.log(intimacyData);
   const percent =
-    (10 / (intimacyData?.total_count / intimacyData?.viewed_count)) * 10;
+    (10 / (intimacyData?.total_count / intimacyData?.watched_count)) * 10;
 
   useEffect(() => {
     setCountReview(percent);
@@ -36,14 +36,14 @@ function CountReview({ userInfo, intimacyData, actor }) {
               />
               <CountTextCover>
                 <CountText>
-                  {`${Math.round(intimacyData?.viewed_count)}`}
+                  {`${Math.round(intimacyData?.watched_count)}`}
                   <p>/ {intimacyData?.total_count}</p>
                 </CountText>
               </CountTextCover>
             </Box>
             <CountIntro>
               {nickname}님은 {actor}님이 출연한{' '}
-              <strong>{intimacyData?.viewed_count}</strong>
+              <strong>{intimacyData?.watched_count}</strong>
               개의 영화를 시청했습니다.
             </CountIntro>
           </Box>

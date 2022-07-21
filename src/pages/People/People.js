@@ -29,7 +29,8 @@ function People() {
     })
       .then(res => res.json())
       .then(res => {
-        setIntimacyData(res.intimacy_info);
+        console.log(res);
+        setIntimacyData(res.data);
       });
   }, []);
   //전체 데이터
@@ -41,8 +42,7 @@ function People() {
       });
   }, []);
 
-  console.log(peopleData);
-
+  console.log(intimacyData);
   // Mock DATA
   // const peopleData = people.actor_info;
 
@@ -72,7 +72,7 @@ function People() {
           intimacyData={intimacyData}
         />
         <Right>
-          <MovieTable movie={peopleData} />
+          <MovieTable reviewdata={intimacyData} movie={peopleData} />
         </Right>
       </DDD>
     );

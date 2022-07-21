@@ -66,7 +66,6 @@ function Nav() {
 
   const isUser = localStorage.access_token ? '/list' : '/';
 
-  console.log(pathname);
   const seeLoginButton =
     pathname === '/' ? '' : <GoLogin to="/">로그인</GoLogin>;
 
