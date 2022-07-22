@@ -5,16 +5,16 @@ import { CardContainer } from '../Movie';
 import { ReviewIcon } from '../Movie/MyIconButton';
 import CloseIcon from '@mui/icons-material/Close';
 
-function CountReview({ userInfo, intimacyData, actor }) {
+function CountReview({ userInfo, starring_list, actor, watched_count }) {
   const [countReview, setCountReview] = useState(0);
   const [close, setClose] = useState(true);
   const { nickname, email, Profile_image } = userInfo;
   const access_token = localStorage.getItem('access_token');
 
-  const { total_count, watched_count } = intimacyData;
+  // const { total_count, watched_count } = intimacyData;
+  const total_count = starring_list?.length;
   // console.log(intimacyData);
-  const percent =
-    (10 / (intimacyData?.total_count / intimacyData?.watched_count)) * 10;
+  const percent = (10 / (total_count / watched_count)) * 10;
 
   useEffect(() => {
     setCountReview(percent);
@@ -36,14 +36,13 @@ function CountReview({ userInfo, intimacyData, actor }) {
               />
               <CountTextCover>
                 <CountText>
-                  {`${Math.round(intimacyData?.watched_count)}`}
-                  <p>/ {intimacyData?.total_count}</p>
+                  {`${Math.round(watched_count)}`}
+                  <p>/ {total_count}</p>
                 </CountText>
               </CountTextCover>
             </Box>
             <CountIntro>
-              {nickname}님은 {actor}님이 출연한{' '}
-              <strong>{intimacyData?.watched_count}</strong>
+              {nickname}님은 {actor}님이 출연한 <strong>{watched_count}</strong>
               개의 영화를 시청했습니다.
             </CountIntro>
           </Box>

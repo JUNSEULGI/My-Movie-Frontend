@@ -42,9 +42,29 @@ function People() {
       });
   }, []);
 
-  console.log(intimacyData);
+  // console.log(intimacyData);
+  // console.log(peopleData.starring_list);
   // Mock DATA
   // const peopleData = people.actor_info;
+  const { starring_list } = peopleData;
+
+  let watched_count = 0;
+
+  const checkAddMyReview = (intimacyData, starring_list) => {
+    for (let i = 0; i < starring_list?.length; i++) {
+      for (let z = 0; z < intimacyData?.length; z++) {
+        if (starring_list[i].movie_id === intimacyData[z].movie_id) {
+          starring_list[i].myrating = intimacyData[z].rating;
+          watched_count += 1;
+        }
+      }
+    }
+    return starring_list;
+  };
+
+  checkAddMyReview(intimacyData, starring_list);
+
+  console.log('바뀐ㅁ', starring_list);
 
   function PeopleLayout() {
     return (
@@ -69,10 +89,11 @@ function People() {
         <CountReview
           userInfo={userInfo}
           actor={peopleData.name}
-          intimacyData={intimacyData}
+          starring_list={starring_list}
+          watched_count={watched_count}
         />
         <Right>
-          <MovieTable reviewdata={intimacyData} movie={peopleData} />
+          <MovieTable reviewdata={intimacyData} movie={starring_list} />
         </Right>
       </DDD>
     );

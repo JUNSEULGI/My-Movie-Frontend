@@ -9,14 +9,12 @@ import { Logo } from '../Movie/ContentLogo';
 function MovieTable({ movie, reviewdata }) {
   const access_token = localStorage.getItem('access_token');
   const navigate = useNavigate();
-  const { starring_list } = movie;
 
   const moveMoviePage = id => {
     navigate(`/movie/${id}`);
   };
 
   console.log(reviewdata);
-  console.log(starring_list);
 
   // for(let i = 0; i < starring_list.length)
   //
@@ -31,7 +29,7 @@ function MovieTable({ movie, reviewdata }) {
         <Platform variant="subtitle1">감상 서비스</Platform>
       </RowTitle>
       <Table>
-        {starring_list?.map(movie => {
+        {movie?.map(movie => {
           const {
             movie_id,
             title,
@@ -41,6 +39,7 @@ function MovieTable({ movie, reviewdata }) {
             role_name,
             ratings,
             platform,
+            myrating,
             platform_logo_image,
           } = movie;
 
@@ -66,13 +65,13 @@ function MovieTable({ movie, reviewdata }) {
                 <InRole>{role_name}</InRole>
                 <Rating>
                   {access_token ? (
-                    ratings ? (
+                    myrating ? (
                       <>
                         <Logo>My View</Logo>
-                        <ReviewRating>{floorRatings}</ReviewRating>
+                        <ReviewRating>{myrating}</ReviewRating>
                       </>
                     ) : (
-                      '평가 하시겠어요?'
+                      <AverageRating>{floorRatings}</AverageRating>
                     )
                   ) : (
                     <AverageRating>{floorRatings}</AverageRating>

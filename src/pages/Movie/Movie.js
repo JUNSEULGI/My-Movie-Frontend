@@ -62,6 +62,8 @@ function Movie() {
 
   const { title, actor, video_url, image_url } = movie;
 
+  console.log(image_url);
+
   function MovieContainer() {
     return (
       <MovieBackGround>
