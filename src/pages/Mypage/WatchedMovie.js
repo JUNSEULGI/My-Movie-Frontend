@@ -56,10 +56,6 @@ function WatchedMovie() {
           <strong> {total_watched}</strong>
           분을 시청하셨어요!{' '}
         </Typography>
-        <BorderLinearProgress
-          variant="determinate"
-          value={50}
-        ></BorderLinearProgress>
       </WatchedTime>
       <SubTitle variant="subtitle1">시청한 영화</SubTitle>
       <Box sx={{ display: 'flex' }}>

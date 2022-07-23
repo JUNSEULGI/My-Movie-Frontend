@@ -72,6 +72,8 @@ const MovieTitle = styled(Typography)`
 `;
 
 const SubInfo = styled(Typography)`
+  margin-top: 10px;
+  line-height: 1.2rem;
   font-weight: bold;
 `;
 
@@ -85,17 +87,11 @@ const SummaryContainer = styled.div`
   -webkit-line-clamp: 7;
   -webkit-box-orient: vertical;
   overflow-y: scroll;
-
-  p {
-    /* width: 600px; */
-    margin: 0;
-    padding: 0;
-  }
 `;
 
 const Summary = styled(Typography)`
   font-weight: bold;
-  margin-top: 30px;
+  margin-top: 100px;
 `;
 
 const Content = styled(Typography)``;

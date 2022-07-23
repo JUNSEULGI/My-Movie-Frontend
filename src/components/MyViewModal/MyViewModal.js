@@ -19,7 +19,7 @@ function MyViewModal({ open, closeModal, breadcrumbs, content }) {
       <Container>
         <Step breadcrumbs={breadcrumbs}>{breadcrumbs}</Step>
         <Buttons variant="text">
-          {review.review_id && (
+          {review?.review_id && (
             <ModalButton
               onClick={() => setButton({ ...button, isDeleting: true })}
             >

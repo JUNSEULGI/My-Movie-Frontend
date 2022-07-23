@@ -8,7 +8,6 @@ import { Box, Typography } from '@mui/material';
 import { BASE_URL } from '../../Modules/API';
 import { CardContainer, ActorImg } from '../Movie';
 import { PeopleProfile, MovieTable, CountReview } from '../People';
-import { people } from './MockData';
 
 function People() {
   const params = useParams();
@@ -29,7 +28,8 @@ function People() {
     })
       .then(res => res.json())
       .then(res => {
-        setIntimacyData(res.intimacy_info);
+        console.log(res);
+        setIntimacyData(res.data);
       });
   }, []);
   //전체 데이터
@@ -41,14 +41,27 @@ function People() {
       });
   }, []);
 
-  console.log(peopleData);
+  const { starring_list } = peopleData;
 
-  // Mock DATA
-  // const peopleData = people.actor_info;
+  let watched_count = 0;
+
+  const checkAddMyReview = (intimacyData, starring_list) => {
+    for (let i = 0; i < starring_list?.length; i++) {
+      for (let z = 0; z < intimacyData?.length; z++) {
+        if (starring_list[i].movie_id === intimacyData[z].movie_id) {
+          starring_list[i].myrating = intimacyData[z].rating;
+          watched_count += 1;
+        }
+      }
+    }
+    return starring_list;
+  };
+
+  checkAddMyReview(intimacyData, starring_list);
 
   function PeopleLayout() {
     return (
-      <DDD>
+      <PeopleLayoutContainer>
         <PeopleCard>
           <PeopleImg src={peopleData.image_url} />
           <Info>
@@ -69,12 +82,13 @@ function People() {
         <CountReview
           userInfo={userInfo}
           actor={peopleData.name}
-          intimacyData={intimacyData}
+          starring_list={starring_list}
+          watched_count={watched_count}
         />
         <Right>
-          <MovieTable movie={peopleData} />
+          <MovieTable reviewdata={intimacyData} movie={starring_list} />
         </Right>
-      </DDD>
+      </PeopleLayoutContainer>
     );
   }
   return (
@@ -85,7 +99,7 @@ function People() {
   );
 }
 
-const DDD = styled.div`
+const PeopleLayoutContainer = styled.div`
   padding-top: 40px;
 `;
 

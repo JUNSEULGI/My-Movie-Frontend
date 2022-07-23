@@ -1,103 +1,118 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Masonry } from '@mui/lab';
-import { Paper, Box } from '@mui/material';
+import { Box, Modal, IconButton } from '@mui/material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function MovieGallery({ movie_image }) {
+  const [open, setOpen] = useState(false);
+  const [imgIndex, setImgIndex] = useState(0);
+
+  const handleOpen = index => {
+    setImgIndex(index.target.id);
+    setOpen(true);
+  };
+
+  const handleClose = () => setOpen(false);
+
+  const backImg = () => {
+    setImgIndex(Number(imgIndex) - 1);
+    if (imgIndex === 0) {
+      setImgIndex(movie_image.length - 1);
+    }
+  };
+
+  const forwardImg = () => {
+    setImgIndex(Number(imgIndex) + 1);
+    if (imgIndex === movie_image.length - 1) {
+      setImgIndex(0);
+    }
+  };
+
   return (
-    <Box sx={{ width: '100%', minHeight: 429 }}>
-      <Masonry columns={4} spacing={2}>
-        {movie_image?.map((item, index) => (
-          <div key={index}>
-            <img
-              src={`${item}?w=162&auto=format`}
-              srcSet={`${item}?w=162&auto=format&dpr=2 2x`}
-              // alt={item.title}
-              loading="lazy"
-              style={{
-                borderRadius: 8,
-                borderBottomLeftRadius: 8,
-                borderBottomRightRadius: 8,
-                display: 'block',
-                width: '100%',
-                boxShadow: '5px 7px 20px -4px rgba(0, 0, 0, 0.6)',
-              }}
+    <>
+      <Box sx={{ width: '100%', minHeight: 429 }}>
+        <Masonry columns={4} spacing={2}>
+          {movie_image?.map((item, index) => (
+            <div key={index}>
+              <MasonryImg
+                id={index}
+                src={`${item}?w=162&auto=format`}
+                srcSet={`${item}?w=162&auto=format&dpr=2 2x`}
+                alt={item.title}
+                loading="lazy"
+                onClick={handleOpen}
+                style={{
+                  borderRadius: 8,
+                  borderBottomLeftRadius: 8,
+                  borderBottomRightRadius: 8,
+                  display: 'block',
+                  width: '100%',
+                  boxShadow: '5px 7px 20px -4px rgba(0, 0, 0, 0.6)',
+                }}
+              />
+            </div>
+          ))}
+        </Masonry>
+      </Box>
+      <div>
+        <GalleryModal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          img={movie_image}
+          imgIndex={imgIndex}
+        >
+          <ImgContainer>
+            <GalleryButton sx={{ marginLeft: '-80px' }} onClick={backImg}>
+              <ArrowBackIosIcon />
+            </GalleryButton>
+
+            <Img
+              src={movie_image[imgIndex]}
+              img={movie_image}
+              imgIndex={imgIndex}
             />
-          </div>
-        ))}
-      </Masonry>
-    </Box>
+            <GalleryButton sx={{ marginLeft: '50px' }} onClick={forwardImg}>
+              <ArrowForwardIosIcon />
+            </GalleryButton>
+          </ImgContainer>
+        </GalleryModal>
+      </div>
+    </>
   );
 }
 export default MovieGallery;
 
-const itemData = [
-  {
-    img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-    title: 'Fern',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1627308595229-7830a5c91f9f',
-    title: 'Snacks',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-    title: 'Mushrooms',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1529655683826-aba9b3e77383',
-    title: 'Tower',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-    title: 'Sea star',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-    title: 'Honey',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-    title: 'Basketball',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    title: 'Breakfast',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1627328715728-7bcc1b5db87d',
-    title: 'Tree',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    title: 'Burger',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-    title: 'Coffee',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1627000086207-76eabf23aa2e',
-    title: 'Camping Car',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-    title: 'Hats',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-    title: 'Tomato basil',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1627328561499-a3584d4ee4f7',
-    title: 'Mountain',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-    title: 'Bike',
-  },
-];
+const ImgContainer = styled(Box)`
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  box-shadow: 24px;
+  padding: 40px;
+  outline: none;
+`;
+
+const MasonryImg = styled.img`
+  cursor: pointer;
+  transition: all ease 0.5s;
+  :hover {
+    transform: scale(1.04, 1.04);
+  }
+`;
+
+const Img = styled.img`
+  border-radius: 16px;
+  width: 100%;
+`;
+
+const GalleryButton = styled(IconButton)`
+  position: absolute;
+  top: 50%;
+`;
+
+const GalleryModal = styled(Modal)``;

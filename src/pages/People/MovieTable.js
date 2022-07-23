@@ -6,14 +6,16 @@ import { CardMedia, Typography } from '@mui/material';
 import { OTTLogo } from '../../components/PlatformAvatar';
 import { Logo } from '../Movie/ContentLogo';
 
-function MovieTable({ movie }) {
+function MovieTable({ movie, reviewdata }) {
+  const access_token = localStorage.getItem('access_token');
   const navigate = useNavigate();
-  const { starring_list } = movie;
 
   const moveMoviePage = id => {
     navigate(`/movie/${id}`);
   };
-  //
+
+  console.log(reviewdata);
+
   return (
     <>
       <RowTitle>
@@ -25,7 +27,7 @@ function MovieTable({ movie }) {
         <Platform variant="subtitle1">감상 서비스</Platform>
       </RowTitle>
       <Table>
-        {starring_list?.map(movie => {
+        {movie?.map(movie => {
           const {
             movie_id,
             title,
@@ -35,6 +37,7 @@ function MovieTable({ movie }) {
             role_name,
             ratings,
             platform,
+            myrating,
             platform_logo_image,
           } = movie;
 
@@ -53,23 +56,25 @@ function MovieTable({ movie }) {
                 <MoiveTitle
                   variant="subtitle1"
                   onClick={() => moveMoviePage(movie_id)}
-                  movie_id
                 >
                   {title}
                 </MoiveTitle>
                 <InRole>{role_name}</InRole>
                 <Rating>
-                  {ratings ? (
-                    <>
-                      <Logo>My View</Logo>
-                      <ReviewRating>{floorRatings}</ReviewRating>
-                    </>
+                  {access_token ? (
+                    myrating ? (
+                      <>
+                        <Logo>My View</Logo>
+                        <ReviewRating>{myrating}</ReviewRating>
+                      </>
+                    ) : (
+                      <AverageRating>{floorRatings}</AverageRating>
+                    )
                   ) : (
-                    '평가 하시겠어요?'
+                    <AverageRating>{floorRatings}</AverageRating>
                   )}
                 </Rating>
                 <Platform>
-                  {/* {platform}  */}
                   <MovieTableOTT alt={platform} src={platform_logo_image} />
                 </Platform>
               </Row>
@@ -170,6 +175,10 @@ const ReviewRating = styled.p`
   margin: 0;
   font-weight: bold;
   color: ${({ theme }) => theme.palette.test.main};
+`;
+
+const AverageRating = styled(ReviewRating)`
+  color: white;
 `;
 
 const Platform = styled(Typography)`

@@ -1,8 +1,6 @@
 import React from 'react';
 import MyViewLayout from '../../layout/Layout';
-import styled from '@emotion/styled';
-import Profile from './Profile';
-import WatchedMovie from './WatchedMovie';
+import { Profile, WatchedMovie } from './index';
 import { Box } from '@mui/material';
 
 function Mypage() {
