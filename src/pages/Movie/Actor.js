@@ -11,7 +11,7 @@ function Actor({ actor }) {
 
   return (
     <ActorCard key={id}>
-      <ActorImg src={image} />
+      <ActorImg src={image} onClick={() => navigate(`/people/${id}`)} />
       <Links href={`/people/${id}`}>
         <ActorName variant="h3">{name}</ActorName>
       </Links>
@@ -25,6 +25,10 @@ function Actor({ actor }) {
 export default Actor;
 
 const ActorCard = styled.div`
+  transition: all ease 0.5s;
+  :hover {
+    transform: translateY(-20px);
+  }
   margin-right: 22px;
   width: 175px;
 `;
@@ -32,6 +36,7 @@ const ActorCard = styled.div`
 const ActorImg = styled.img`
   height: 175px;
   border-radius: 8px;
+  cursor: pointer;
 `;
 
 const ActorName = styled(Typography)`

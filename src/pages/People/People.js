@@ -8,7 +8,6 @@ import { Box, Typography } from '@mui/material';
 import { BASE_URL } from '../../Modules/API';
 import { CardContainer, ActorImg } from '../Movie';
 import { PeopleProfile, MovieTable, CountReview } from '../People';
-import { people } from './MockData';
 
 function People() {
   const params = useParams();
@@ -42,10 +41,6 @@ function People() {
       });
   }, []);
 
-  // console.log(intimacyData);
-  // console.log(peopleData.starring_list);
-  // Mock DATA
-  // const peopleData = people.actor_info;
   const { starring_list } = peopleData;
 
   let watched_count = 0;
@@ -64,11 +59,9 @@ function People() {
 
   checkAddMyReview(intimacyData, starring_list);
 
-  console.log('바뀐ㅁ', starring_list);
-
   function PeopleLayout() {
     return (
-      <DDD>
+      <PeopleLayoutContainer>
         <PeopleCard>
           <PeopleImg src={peopleData.image_url} />
           <Info>
@@ -95,7 +88,7 @@ function People() {
         <Right>
           <MovieTable reviewdata={intimacyData} movie={starring_list} />
         </Right>
-      </DDD>
+      </PeopleLayoutContainer>
     );
   }
   return (
@@ -106,7 +99,7 @@ function People() {
   );
 }
 
-const DDD = styled.div`
+const PeopleLayoutContainer = styled.div`
   padding-top: 40px;
 `;
 

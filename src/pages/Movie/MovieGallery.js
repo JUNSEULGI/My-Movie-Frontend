@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Masonry } from '@mui/lab';
-import {
-  Paper,
-  Box,
-  Modal,
-  Typography,
-  Butto,
-  IconButton,
-} from '@mui/material';
+import { Box, Modal, IconButton } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
@@ -24,34 +17,26 @@ function MovieGallery({ movie_image }) {
   const handleClose = () => setOpen(false);
 
   const backImg = () => {
-    console.log(imgIndex);
     setImgIndex(Number(imgIndex) - 1);
     if (imgIndex === 0) {
       setImgIndex(movie_image.length - 1);
     }
   };
+
   const forwardImg = () => {
-    console.log(imgIndex);
     setImgIndex(Number(imgIndex) + 1);
     if (imgIndex === movie_image.length - 1) {
       setImgIndex(0);
     }
   };
 
-  console.log('현재 이미지값', imgIndex);
-
-  // if (imgIndex < 0) {
-  //   setImgIndex(movie_image.length - 1);
-  // } else if (imgIndex > movie_image.length - 1) {
-  //   setImgIndex(0);
-  // }
   return (
     <>
       <Box sx={{ width: '100%', minHeight: 429 }}>
         <Masonry columns={4} spacing={2}>
           {movie_image?.map((item, index) => (
             <div key={index}>
-              <img
+              <MasonryImg
                 id={index}
                 src={`${item}?w=162&auto=format`}
                 srcSet={`${item}?w=162&auto=format&dpr=2 2x`}
@@ -75,7 +60,6 @@ function MovieGallery({ movie_image }) {
         <GalleryModal
           open={open}
           onClose={handleClose}
-          // disableEnforceFocus={true}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
           img={movie_image}
@@ -113,7 +97,16 @@ const ImgContainer = styled(Box)`
   outline: none;
 `;
 
+const MasonryImg = styled.img`
+  cursor: pointer;
+  transition: all ease 0.5s;
+  :hover {
+    transform: scale(1.04, 1.04);
+  }
+`;
+
 const Img = styled.img`
+  border-radius: 16px;
   width: 100%;
 `;
 
@@ -122,19 +115,4 @@ const GalleryButton = styled(IconButton)`
   top: 50%;
 `;
 
-const GalleryModal = styled(Modal)`
-  .MuiModal-root {
-    :focus {
-      outline: none;
-    }
-    textarea:focus {
-      outline: none;
-    }
-    button:focus {
-      outline: none;
-    }
-    input:focus {
-      outline: none;
-    }
-  }
-`;
+const GalleryModal = styled(Modal)``;

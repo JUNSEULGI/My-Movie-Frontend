@@ -16,8 +16,6 @@ function MovieTable({ movie, reviewdata }) {
 
   console.log(reviewdata);
 
-  // for(let i = 0; i < starring_list.length)
-  //
   return (
     <>
       <RowTitle>
@@ -43,7 +41,6 @@ function MovieTable({ movie, reviewdata }) {
             platform_logo_image,
           } = movie;
 
-          // console.log(movie_id);
           const floorRatings = ratings.slice(0, 3);
           return (
             <BackCover key={movie_id} back={movie_image_url}>
@@ -78,7 +75,6 @@ function MovieTable({ movie, reviewdata }) {
                   )}
                 </Rating>
                 <Platform>
-                  {/* {platform}  */}
                   <MovieTableOTT alt={platform} src={platform_logo_image} />
                 </Platform>
               </Row>

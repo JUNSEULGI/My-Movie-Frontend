@@ -8,12 +8,11 @@ import CloseIcon from '@mui/icons-material/Close';
 function CountReview({ userInfo, starring_list, actor, watched_count }) {
   const [countReview, setCountReview] = useState(0);
   const [close, setClose] = useState(true);
-  const { nickname, email, Profile_image } = userInfo;
+  const { nickname } = userInfo;
   const access_token = localStorage.getItem('access_token');
 
-  // const { total_count, watched_count } = intimacyData;
   const total_count = starring_list?.length;
-  // console.log(intimacyData);
+
   const percent = (10 / (total_count / watched_count)) * 10;
 
   useEffect(() => {

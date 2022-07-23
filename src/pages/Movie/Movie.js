@@ -15,7 +15,6 @@ import {
   MovieGallery,
 } from '../Movie';
 import MyViewModal from '../../components/MyViewModal/MyViewModal';
-import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import { Typography } from '@mui/material';
 import OnlyMovieReview from './OnlyMovieReview';
 
@@ -61,8 +60,6 @@ function Movie() {
   }, []);
 
   const { title, actor, video_url, image_url } = movie;
-
-  console.log(image_url);
 
   function MovieContainer() {
     return (
@@ -144,6 +141,7 @@ const ContainerTitle = styled(Typography)`
 `;
 
 const ActorContainer = styled(CardContainer)`
+  padding-top: 40px;
   display: flex;
   overflow-x: scroll;
   -ms-overflow-style: none; /* Explorer */
