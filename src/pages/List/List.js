@@ -52,18 +52,18 @@ function List() {
     const mockMovies = [
       {
         id: 1,
-        title: '닥터 스트레인지',
-        img: 'https://file2.nocutnews.co.kr/newsroom/image/2022/04/08/202204081311322351_0.jpg',
+        title: '외계+인 1부',
+        img: 'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000085/85997/85997204141_727.jpg',
       },
       {
         id: 2,
-        title: '블랙 위도우',
-        img: 'https://file2.nocutnews.co.kr/newsroom/image/2022/04/08/202204081311322351_0.jpg',
+        title: '한산-용의 출현',
+        img: 'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000083/83280/83280202413_727.jpg',
       },
       {
         id: 3,
-        title: '아이언맨',
-        img: 'https://file2.nocutnews.co.kr/newsroom/image/2022/04/08/202204081311322351_0.jpg',
+        title: '탑건-메버릭',
+        img: 'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000082/82120/82120202950_727.jpg',
       },
     ];
 
