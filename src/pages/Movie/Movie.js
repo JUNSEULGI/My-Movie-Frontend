@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { useRecoilState, useResetRecoilState } from 'recoil';
-import { reviewState, movieState } from '../../state';
+import { useRecoilState } from 'recoil';
+import { movieState } from '../../state';
 import MyViewLayout from '../../layout/Layout';
 import { BASE_URL } from '../../Modules/API';
 import {
@@ -21,10 +21,8 @@ import OnlyMovieReview from './OnlyMovieReview';
 function Movie() {
   const params = useParams();
   const access_token = localStorage.getItem('access_token');
-  const [review, setReview] = useRecoilState(reviewState);
   const [movie, setMovie] = useRecoilState(movieState);
-  const resetMovie = useResetRecoilState(movieState);
-  const resetReview = useResetRecoilState(reviewState);
+  const [review, setReview] = useState();
   const [open, setOpen] = useState(false);
 
   const openModal = () => setOpen(true);
@@ -79,7 +77,7 @@ function Movie() {
         )}
         <ContainerTitle>리뷰</ContainerTitle>
         {review?.review_id ? (
-          <MyReview openModal={openModal} />
+          <MyReview openModal={openModal} review={review} />
         ) : (
           <NoReview title={title} openModal={openModal} />
         )}
@@ -105,14 +103,13 @@ function Movie() {
           <source
             src="http://h.vod.cgv.co.kr:80/vodCGVa/85997/85997_204843_1200_128_960_540.mp4"
             deletecommandtype="video/mp4"
-          ></source>
+          />
         </video>
         <ContainerTitle>갤러리</ContainerTitle>
         <MovieGallery movie_image={image_url} />
       </MovieBackGround>
     );
   }
-  console.log('나는 무비');
 
   //이거 추가해
   if (!image_url) return null;

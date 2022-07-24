@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { userState, movieState, reviewState } from '../../state';
+import { userState, movieState } from '../../state';
 import { Box, Typography } from '@mui/material';
 import styled from '@emotion/styled';
 import MyViewLayout from '../../layout/Layout';
@@ -18,22 +18,18 @@ function List() {
     const token = localStorage.getItem('access_token');
     const [userInfo] = useRecoilState(userState);
     const [movie, setMovie] = useRecoilState(movieState);
-    const [review, setReview] = useRecoilState(reviewState);
     const resetMovie = useResetRecoilState(movieState);
-    const resetReview = useResetRecoilState(reviewState);
     const [reviewList, setReviewList] = useState([]);
     const [open, setOpen] = useState(false);
 
     const closeModal = (_, reason) => {
       if (reason === 'backdropClick') return;
       resetMovie();
-      resetReview();
       setOpen(false);
     };
 
     const showReview = item => {
       setMovie({ id: item.movie.id, title: item.movie.title });
-      setReview({ ...review, review_id: item.review_id });
       setOpen(true);
     };
 

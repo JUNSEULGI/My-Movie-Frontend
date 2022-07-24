@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { movieState, reviewState, buttonState, userState } from '../../state';
+import { movieState, buttonState, userState } from '../../state';
 import styled from '@emotion/styled';
 import { Box, Typography, TextField, Rating } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -17,10 +17,16 @@ function ReviewBox() {
   const token = localStorage.getItem('access_token');
   const [movie, setMovie] = useRecoilState(movieState);
   const [button, setButton] = useRecoilState(buttonState);
-  const [review, setReview] = useRecoilState(reviewState);
   const [userInfo] = useRecoilState(userState);
   const resetMovie = useResetRecoilState(movieState);
-  const resetReview = useResetRecoilState(reviewState);
+  const [review, setReview] = useState({
+    review_id: '',
+    title: '한줄평',
+    content: '',
+    watched_date: new Date(),
+    place: { name: '', mapx: 0, mapy: 0, link: 'url' },
+    with_user: '',
+  });
   const [rating, setRating] = useState(0);
   const { pathname } = useLocation();
 
@@ -63,6 +69,7 @@ function ReviewBox() {
           with_user: result.with_user,
         });
         setRating(Number(result.rating));
+        setMovie({ ...movie, review_id: result.review_id });
       });
   }, []);
 
@@ -125,7 +132,7 @@ function ReviewBox() {
     }
   }, [button.isSaving]);
 
-  useDelete();
+  useDelete(review.review_id);
 
   console.log(review, movie);
 
