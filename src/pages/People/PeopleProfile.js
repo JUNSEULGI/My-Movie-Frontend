@@ -41,10 +41,12 @@ function PeopleProfile({ profile }) {
           </>
         )}
       </Profile>
-      <Profile>
-        <Title>소속사</Title>
-        <Info>{agency}</Info>
-      </Profile>
+      {agency && (
+        <Profile>
+          <Title>소속사</Title>
+          <Info>{agency}</Info>
+        </Profile>
+      )}
       <Profile>
         {height === '' && weight === '' ? (
           ''

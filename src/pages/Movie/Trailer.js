@@ -6,12 +6,15 @@ import { Container, SvgIcon } from '@mui/material';
 import { ReactComponent as PlayIcon } from '../../assets/images/Play.svg';
 
 function Trailer({ video }) {
+  console.log(video);
   return (
     <MovieTrailer>
       <DarkPaperContainer>
         <video controls preload="none" width="560" height="315">
-          <source src={video} type="video/webm" />
-          <source src={video} type="video/mp4" />
+          <source src={video} deletecommandtype="video/webm" />
+          <source src={video} deletecommandtype="video/mp4" />
+
+          <source src={video} type="video/quicktime" />
         </video>
       </DarkPaperContainer>
     </MovieTrailer>

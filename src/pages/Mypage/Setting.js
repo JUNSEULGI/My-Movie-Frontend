@@ -1,10 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import { Menu, MenuItem, IconButton, Box } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { Box } from '@mui/material';
 import { BASE_URL } from '../../Modules/API';
 import { useResetRecoilState } from 'recoil';
 import { userState } from '../../state';
@@ -14,13 +11,12 @@ const options = ['delete my account'];
 const ITEM_HEIGHT = 48;
 
 export default function LongMenu() {
+  const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
-
   const resetUser = useResetRecoilState(userState);
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
   const access_token = localStorage.getItem('access_token');
+
+  const open = Boolean(anchorEl);
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);

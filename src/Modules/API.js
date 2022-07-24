@@ -4,7 +4,7 @@ export const instance = axios.create({
   baseURL: 'https://nid.naver.com/oauth2.0/',
 });
 
-export const BASE_URL = 'https://be08-175-193-80-187.ngrok.io/';
+export const BASE_URL = 'https://a8a5-175-193-80-187.ngrok.io/';
 
 export const API = {
   // 유저
@@ -26,5 +26,5 @@ export const NAVER_ID = 'fAxuwH_vSTsRSIcvBdvp';
 export const NAVER_CALLBACK_URL = 'http://localhost:3000/login-callback/naver';
 export const NAVER_STATE_STRING = '288539e2-9a6d-40ed-8a73-85b96ad91786';
 
-export const KAKAO_ID = '095e154f9ca806fa28053d419b7cbbbd';
+export const KAKAO_ID = '899480d9080e0218f7afc0f284834b77';
 export const KAKAO_CALLBACK_URL = 'http://localhost:3000/login-callback/kakao';

@@ -15,7 +15,6 @@ import {
   MovieGallery,
 } from '../Movie';
 import MyViewModal from '../../components/MyViewModal/MyViewModal';
-import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import { Typography } from '@mui/material';
 import OnlyMovieReview from './OnlyMovieReview';
 
@@ -56,11 +55,9 @@ function Movie() {
     })
       .then(res => res.json())
       .then(res => {
-        console.log(res);
         setMovie(res.movie_info);
       });
   }, []);
-  console.log(movie.id);
 
   const { title, actor, video_url, image_url } = movie;
 
@@ -94,10 +91,22 @@ function Movie() {
 
         <ContainerTitle>예고편</ContainerTitle>
         <TrailerContainer>
-          {video_url?.map((video, index) => (
+          {video_url.map((video, index) => (
             <Trailer key={index} video={video} />
           ))}
         </TrailerContainer>
+        <video
+          controls
+          preload="none"
+          width="560"
+          height="315"
+          poster="https://img.cgv.co.kr/movie/thumbnail/trailer/85997/85997204843_1024.jpg"
+        >
+          <source
+            src="http://h.vod.cgv.co.kr:80/vodCGVa/85997/85997_204843_1200_128_960_540.mp4"
+            deletecommandtype="video/mp4"
+          ></source>
+        </video>
         <ContainerTitle>갤러리</ContainerTitle>
         <MovieGallery movie_image={image_url} />
       </MovieBackGround>
@@ -132,6 +141,7 @@ const ContainerTitle = styled(Typography)`
 `;
 
 const ActorContainer = styled(CardContainer)`
+  padding-top: 40px;
   display: flex;
   overflow-x: scroll;
   -ms-overflow-style: none; /* Explorer */

@@ -1,17 +1,11 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
 import styled from '@emotion/styled';
-import { movieState } from '../../state';
 import { Box, Link, Typography } from '@mui/material';
 import { CardContainer } from './CardContainer';
 import { ReviewIcon, FabContainer } from './MyIconButton';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 function NoReview({ title, openModal }) {
-  const { id } = useParams();
-  const [movie, setMovie] = useRecoilState(movieState);
-
   return (
     <Box sx={{ position: 'relative' }}>
       <CardContainer style={{ justifyContent: 'center' }}>
