@@ -12,7 +12,7 @@ import Poster from '../../components/Poster/Poster';
 import { AgeBadge } from '../../pages/Movie';
 import { BASE_URL } from '../../Modules/API';
 
-function OnlyMovieReview({ data }) {
+function OnlyMovieReview() {
   const token = localStorage.getItem('access_token');
   const [movie, setMovie] = useRecoilState(movieState);
   const [button, setButton] = useRecoilState(buttonState);

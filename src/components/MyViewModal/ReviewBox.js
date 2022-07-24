@@ -16,9 +16,9 @@ import useDelete from '../../util/useDelete';
 function ReviewBox() {
   const token = localStorage.getItem('access_token');
   const [movie, setMovie] = useRecoilState(movieState);
+  const resetMovie = useResetRecoilState(movieState);
   const [button, setButton] = useRecoilState(buttonState);
   const [userInfo] = useRecoilState(userState);
-  const resetMovie = useResetRecoilState(movieState);
   const [review, setReview] = useState({
     review_id: '',
     title: '한줄평',
@@ -26,8 +26,8 @@ function ReviewBox() {
     watched_date: new Date(),
     place: { name: '', mapx: 0, mapy: 0, link: 'url' },
     with_user: '',
+    rating: 0,
   });
-  const [rating, setRating] = useState(0);
   const { pathname } = useLocation();
 
   // 리뷰 관련 input의 값이 바뀌면 "review" 리코일에 반영
@@ -41,12 +41,15 @@ function ReviewBox() {
     if (!movie.id) return;
 
     // 컴포넌트 최초 렌더링 시 리뷰를 작성할 영화에 대한 정보를 받아옴
-    fetch(`${BASE_URL}movies/detail/${movie.id}`)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        setMovie({ ...movie, ...data.movie_info });
-      });
+    // 그런데 movie 상세 페이지일 땐 필요 없음
+    if (!pathname.includes('movie')) {
+      fetch(`${BASE_URL}movies/detail/${movie.id}`)
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          setMovie({ ...movie, ...data.movie_info });
+        });
+    }
 
     // 이미 작성한 리뷰의 내용 가져오기
     fetch(`${BASE_URL}reviews/movie/${movie.id}`, {
@@ -67,8 +70,9 @@ function ReviewBox() {
           watched_date: new Date(result.watched_date),
           place: { ...result.place },
           with_user: result.with_user,
+          rating: Number(result.rating),
         });
-        setRating(Number(result.rating));
+        // MyViewModal에서 delete 버튼이 적절하게 나타나기 위함
         setMovie({ ...movie, review_id: result.review_id });
       });
   }, []);
@@ -86,7 +90,7 @@ function ReviewBox() {
     formData.append('place', review.place.name);
     formData.append('place', review.place.link);
     formData.append('with_user', review.with_user);
-    formData.append('rating', rating);
+    formData.append('rating', review.rating);
     formData.append('movie_id', movie.id);
     console.log(formData);
 
@@ -105,10 +109,9 @@ function ReviewBox() {
         .then(result => {
           console.log(result);
           if (result.message === 'SUCCESS') {
-            window.location.replace(`/list`);
             setButton({ ...button, isSaving: false });
-            resetMovie();
-            resetReview();
+            if (!pathname.includes('movie')) resetMovie();
+            window.location.replace(pathname);
           }
         });
     } else {
@@ -124,8 +127,7 @@ function ReviewBox() {
         .then(result => {
           if (result.message === 'SUCCESS') {
             setButton({ ...button, isSaving: false });
-            resetMovie();
-            resetReview();
+            if (!pathname.includes('movie')) resetMovie();
             window.location.replace(pathname);
           }
         });
@@ -133,8 +135,6 @@ function ReviewBox() {
   }, [button.isSaving]);
 
   useDelete(review.review_id);
-
-  console.log(review, movie);
 
   return (
     <Column>
@@ -158,9 +158,9 @@ function ReviewBox() {
             </Box>
           </Box>
           <Rating
-            value={rating}
+            value={review.rating}
             onChange={(e, newValue) => {
-              setRating(newValue);
+              setReview({ ...review, rating: newValue });
             }}
             precision={0.5}
             size="large"
