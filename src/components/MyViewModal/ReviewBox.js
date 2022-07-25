@@ -30,7 +30,7 @@ function ReviewBox() {
   });
   const { pathname } = useLocation();
 
-  // 리뷰 관련 input의 값이 바뀌면 "review" 리코일에 반영
+  // 리뷰 관련 input의 값이 바뀌면 review에 반영
   const handleReview = e => {
     setReview(prev => {
       return { ...prev, content: e.target.value };
@@ -136,6 +136,7 @@ function ReviewBox() {
 
   useDelete(review.review_id);
 
+  console.log(review);
   return (
     <Column>
       <Poster url={movie.thumbnail_image_url} />

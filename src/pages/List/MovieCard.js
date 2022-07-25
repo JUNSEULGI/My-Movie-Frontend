@@ -20,7 +20,6 @@ function MovieCard({ data, setOpen }) {
   };
 
   const addMovie = () => {
-    //
     resetMovie();
     setOpen(true);
   };

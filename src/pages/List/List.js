@@ -28,11 +28,6 @@ function List() {
       setOpen(false);
     };
 
-    const showReview = item => {
-      setMovie({ id: item.movie.id, title: item.movie.title });
-      setOpen(true);
-    };
-
     useEffect(() => {
       fetch(`${BASE_URL}reviews/list`, {
         headers: {
@@ -62,7 +57,7 @@ function List() {
         img: 'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000082/82120/82120202950_727.jpg',
       },
     ];
-
+    console.log(reviewList[0]);
     return (
       <>
         <Section>
@@ -77,15 +72,15 @@ function List() {
           </SectionTitle>
           <CardContainer>
             {reviewList.length > 0 &&
-              reviewList.slice(0, 7).map(review => (
-                <MovieCard
-                  key={review.review_id}
-                  data={review}
-                  showReview={() => {
-                    showReview(review);
-                  }}
-                />
-              ))}
+              reviewList
+                .slice(0, 7)
+                .map(review => (
+                  <MovieCard
+                    key={review.review_id}
+                    data={review}
+                    setOpen={setOpen}
+                  />
+                ))}
             <MovieCard setOpen={setOpen} />
           </CardContainer>
         </Section>
