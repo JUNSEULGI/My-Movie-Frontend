@@ -20,6 +20,7 @@ function List() {
     const [movie, setMovie] = useRecoilState(movieState);
     const resetMovie = useResetRecoilState(movieState);
     const [reviewList, setReviewList] = useState([]);
+    const [topMovies, setTopMovies] = useState([]);
     const [open, setOpen] = useState(false);
 
     const closeModal = (_, reason) => {
@@ -38,33 +39,43 @@ function List() {
         .then(data => {
           setReviewList(data.result);
         });
+
+      fetch(`${BASE_URL}reviews/top3`, {
+        headers: {
+          Authorization: token,
+        },
+      })
+        .then(res => res.json())
+        .then(data => {
+          setTopMovies(data.result);
+        });
     }, []);
 
-    const mockMovies = [
-      {
-        id: 1,
-        title: '외계+인 1부',
-        img: 'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000085/85997/85997204141_727.jpg',
-      },
-      {
-        id: 2,
-        title: '한산-용의 출현',
-        img: 'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000083/83280/83280202413_727.jpg',
-      },
-      {
-        id: 3,
-        title: '탑건-메버릭',
-        img: 'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000082/82120/82120202950_727.jpg',
-      },
-    ];
-    console.log(reviewList[0]);
+    // const mockMovies = [
+    //   {
+    //     id: 1,
+    //     title: '외계+인 1부',
+    //     img: 'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000085/85997/85997204141_727.jpg',
+    //   },
+    //   {
+    //     id: 2,
+    //     title: '한산-용의 출현',
+    //     img: 'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000083/83280/83280202413_727.jpg',
+    //   },
+    //   {
+    //     id: 3,
+    //     title: '탑건-메버릭',
+    //     img: 'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000082/82120/82120202950_727.jpg',
+    //   },
+    // ];
+
     return (
       <>
         <Section>
           <SectionTitle variant="h3">
             {userInfo.nickname}님의 인생 영화
           </SectionTitle>
-          <FavoriteMovie bestMovies={mockMovies} />
+          <FavoriteMovie topMovies={topMovies} />
         </Section>
         <Section>
           <SectionTitle variant="h3">

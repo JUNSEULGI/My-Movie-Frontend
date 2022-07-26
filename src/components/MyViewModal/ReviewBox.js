@@ -189,8 +189,8 @@ function ReviewBox() {
                 renderInput={params => <WhiteTextField {...params} />}
                 value={review.watched_date}
                 onChange={newValue => {
-                  console.log(review.watched_date);
-                  console.log(typeof review.watched_date);
+                  // console.log(review.watched_date);
+                  // console.log(typeof review.watched_date);
                   setReview(prev => {
                     return { ...prev, watched_date: newValue };
                   });

@@ -2,13 +2,13 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Box, Card, Typography } from '@mui/material';
 
-const FavoriteMovie = ({ bestMovies }) => {
+const FavoriteMovie = ({ topMovies }) => {
   return (
     <Container>
-      {bestMovies.map(movie => (
-        <BestMovie key={movie.id}>
-          <BackgroundPoster img={movie.img}>
-            <Title variant="h3">{movie.title}</Title>
+      {topMovies.map(item => (
+        <BestMovie key={item.review_id}>
+          <BackgroundPoster img={item.movie.poster}>
+            <Title variant="h3">{item.movie.title}</Title>
           </BackgroundPoster>
         </BestMovie>
       ))}
