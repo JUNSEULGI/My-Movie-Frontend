@@ -67,7 +67,7 @@ const darkTheme = createTheme({
     divider: '#ffffff1f',
     background: {
       paper: '#080D18',
-      card: 'rgba(21, 21, 21, 0.9)',
+      card: 'rgba(21, 21, 21)',
       disabled: '#555555',
     },
   },
