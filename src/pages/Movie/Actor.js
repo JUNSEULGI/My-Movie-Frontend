@@ -27,7 +27,7 @@ export default Actor;
 const ActorCard = styled.div`
   transition: all ease 0.5s;
   :hover {
-    transform: translateY(-20px);
+    transform: translateY(-10px);
   }
   margin-right: 22px;
   width: 175px;
