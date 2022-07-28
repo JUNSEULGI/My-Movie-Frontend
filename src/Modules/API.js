@@ -5,7 +5,6 @@ export const instance = axios.create({
 });
 
 export const BASE_URL = 'http://9bbe-221-147-33-141.ngrok.io/';
-
 export const API = {
   // 유저
   users_list: BASE_URL + 'users/list',
