@@ -5,7 +5,7 @@ import { Box, Card, Typography } from '@mui/material';
 const FavoriteMovie = ({ topMovies }) => {
   return (
     <Container>
-      {topMovies.map(item => (
+      {topMovies?.map(item => (
         <BestMovie key={item.review_id}>
           <BackgroundPoster img={item.movie.poster}>
             <Title variant="h3">{item.movie.title}</Title>
@@ -25,7 +25,7 @@ const Container = styled(Box)`
   & div:first-of-type {
     grid-column: 1 / 3;
     grid-row: 1 / 3;
-    padding: 20px;
+    // padding: 20px;
     // 자기의 첫번째 div만 선택하는 게 아니라, 자식 요소들에도 첫번째 자식 div 죄다 선택되는 문제
   }
 `;

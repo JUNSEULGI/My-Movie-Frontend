@@ -4,7 +4,7 @@ export const instance = axios.create({
   baseURL: 'https://nid.naver.com/oauth2.0/',
 });
 
-export const BASE_URL = 'https://789d-221-148-138-87.ngrok.io/';
+export const BASE_URL = 'http://9bbe-221-147-33-141.ngrok.io/';
 
 export const API = {
   // 유저
