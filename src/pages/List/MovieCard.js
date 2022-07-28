@@ -15,7 +15,7 @@ function MovieCard({ data, setOpen }) {
   };
 
   const showReview = () => {
-    setMovie({ id: data.movie.id, title: data.movie.title });
+    setMovie({ id: data.movie.id, review_id: data.review_id });
     setOpen(true);
   };
 

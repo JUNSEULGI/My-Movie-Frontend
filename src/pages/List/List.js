@@ -71,12 +71,14 @@ function List() {
 
     return (
       <>
-        <Section>
-          <SectionTitle variant="h3">
-            {userInfo.nickname}님의 인생 영화
-          </SectionTitle>
-          <FavoriteMovie topMovies={topMovies} />
-        </Section>
+        {topMovies?.length > 0 && (
+          <Section>
+            <SectionTitle variant="h3">
+              {userInfo.nickname}님의 인생 영화
+            </SectionTitle>
+            <FavoriteMovie topMovies={topMovies} />
+          </Section>
+        )}
         <Section>
           <SectionTitle variant="h3">
             {userInfo.nickname}님이 저장한 영화 목록
@@ -95,12 +97,14 @@ function List() {
             <MovieCard setOpen={setOpen} />
           </CardContainer>
         </Section>
-        <MyViewModal
-          open={open}
-          closeModal={closeModal}
-          breadcrumbs={<MyStep />}
-          content={movie.id ? <ReviewBox /> : <SearchBox />}
-        />
+        {open && (
+          <MyViewModal
+            open={open}
+            closeModal={closeModal}
+            breadcrumbs={<MyStep />}
+            content={movie.id ? <ReviewBox /> : <SearchBox />}
+          />
+        )}
       </>
     );
   }

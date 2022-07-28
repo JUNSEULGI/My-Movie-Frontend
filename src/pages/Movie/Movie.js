@@ -24,7 +24,7 @@ function Movie() {
   const [movie, setMovie] = useRecoilState(movieState);
   const [review, setReview] = useState();
   const [open, setOpen] = useState(false);
-
+  console.log(review);
   const openModal = () => setOpen(true);
 
   const closeModal = (_, reason) => {
@@ -140,7 +140,6 @@ function Movie() {
       });
   }, []);
 
-  console.log(movie);
   const { title, actor, video_url, image_url } = movie;
 
   function MovieContainer() {

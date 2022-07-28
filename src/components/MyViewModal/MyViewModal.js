@@ -7,7 +7,7 @@ import { Box, Button, ButtonGroup, Modal } from '@mui/material';
 function MyViewModal({ open, closeModal, breadcrumbs, content }) {
   const [movie, setMovie] = useRecoilState(movieState);
   const [button, setButton] = useRecoilState(buttonState);
-
+  console.log(movie.review_id);
   return (
     <MyModal
       open={open}
