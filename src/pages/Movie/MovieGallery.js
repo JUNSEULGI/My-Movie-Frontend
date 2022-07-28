@@ -1,34 +1,41 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Masonry } from '@mui/lab';
-import { Box, Modal, IconButton } from '@mui/material';
+import { Box, Modal, IconButton, Typography } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function MovieGallery({ movie_image }) {
   const [open, setOpen] = useState(false);
-  const [imgIndex, setImgIndex] = useState(0);
+  const [imgindex, setImgindex] = useState(Number(0));
 
+  console.log(movie_image);
   const handleOpen = index => {
-    setImgIndex(index.target.id);
+    setImgindex(index.target.id);
     setOpen(true);
   };
 
   const handleClose = () => setOpen(false);
+  console.log(movie_image.length);
 
   const backImg = () => {
-    setImgIndex(Number(imgIndex) - 1);
-    if (imgIndex === 0) {
-      setImgIndex(movie_image.length - 1);
+    Number(imgindex) === 0
+      ? setImgindex(Number(movie_image.length) - 1)
+      : setImgindex(Number(imgindex) - 1);
+  };
+
+  Number(imgindex) === 0
+    ? console.log('뒤에 사진 없어')
+    : console.log('사진 있음');
+
+  const forwardImg = () => {
+    setImgindex(Number(imgindex) + 1);
+    if (imgindex === movie_image.length - 1) {
+      setImgindex(0);
     }
   };
 
-  const forwardImg = () => {
-    setImgIndex(Number(imgIndex) + 1);
-    if (imgIndex === movie_image.length - 1) {
-      setImgIndex(0);
-    }
-  };
+  console.log(imgindex);
 
   return (
     <>
@@ -56,14 +63,14 @@ function MovieGallery({ movie_image }) {
           ))}
         </Masonry>
       </Box>
-      <div>
+      <Box>
         <GalleryModal
           open={open}
           onClose={handleClose}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
           img={movie_image}
-          imgIndex={imgIndex}
+          imgindex={imgindex}
         >
           <ImgContainer>
             <GalleryButton sx={{ marginLeft: '-80px' }} onClick={backImg}>
@@ -71,16 +78,21 @@ function MovieGallery({ movie_image }) {
             </GalleryButton>
 
             <Img
-              src={movie_image[imgIndex]}
+              src={movie_image[imgindex]}
               img={movie_image}
-              imgIndex={imgIndex}
+              imgindex={imgindex}
             />
+
             <GalleryButton sx={{ marginLeft: '50px' }} onClick={forwardImg}>
               <ArrowForwardIosIcon />
             </GalleryButton>
+            <Box sx={{ textAlign: 'center', marginTop: '10px' }}>
+              <NowImg>{Number(imgindex) + 1}</NowImg>
+              <TotalImg> /{movie_image.length}</TotalImg>
+            </Box>
           </ImgContainer>
         </GalleryModal>
-      </div>
+      </Box>
     </>
   );
 }
@@ -116,3 +128,10 @@ const GalleryButton = styled(IconButton)`
 `;
 
 const GalleryModal = styled(Modal)``;
+
+const NowImg = styled(Typography)`
+  display: inline;
+  color: white;
+  font-weight: bold;
+`;
+const TotalImg = styled(NowImg)``;
