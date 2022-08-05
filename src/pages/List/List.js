@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { userState, movieState } from '../../state';
 import { Box, Typography } from '@mui/material';
 import styled from '@emotion/styled';
@@ -17,7 +17,7 @@ function List() {
   function ListLayout() {
     const token = localStorage.getItem('access_token');
     const [userInfo] = useRecoilState(userState);
-    const [movie, setMovie] = useRecoilState(movieState);
+    const movie = useRecoilValue(movieState);
     const resetMovie = useResetRecoilState(movieState);
     const [reviewList, setReviewList] = useState([]);
     const [topMovies, setTopMovies] = useState([]);

@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { buttonState, movieState } from '../../state';
 import { Box, Button, ButtonGroup, Modal } from '@mui/material';
 
 function MyViewModal({ open, closeModal, breadcrumbs, content }) {
-  const [movie, setMovie] = useRecoilState(movieState);
+  const movie = useRecoilValue(movieState);
   const [button, setButton] = useRecoilState(buttonState);
-  console.log(movie.review_id);
+
   return (
     <MyModal
       open={open}

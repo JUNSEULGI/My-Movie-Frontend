@@ -9,7 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import MovieRating from './MovieRating';
 import { Logo } from './ContentLogo';
 import { ReviewIcon, FabContainer } from './MyIconButton';
-import { useDelete } from '../../util/useDelete';
+import { useDelete } from '../../util/hooks';
 
 function MyReview({ openModal, review }) {
   const [button, setButton] = useRecoilState(buttonState);

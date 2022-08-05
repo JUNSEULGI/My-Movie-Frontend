@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { movieState } from '../../state';
 import { CardMedia, Typography } from '@mui/material';
 import { CardContainer, MovieRating, AgeBadge } from '../Movie';
@@ -8,7 +8,7 @@ import { Box } from '@mui/system';
 import { replaceBrTag } from '../../util/replaceBrTag';
 
 function MovieInfo() {
-  const [movie, setMovie] = useRecoilState(movieState);
+  const movie = useRecoilValue(movieState);
   const {
     title,
     age,

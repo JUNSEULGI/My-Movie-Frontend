@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { movieState } from '../../state';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
@@ -7,7 +7,7 @@ import { Box, Card, CardMedia, Typography, Rating, Chip } from '@mui/material';
 
 function MovieCard({ data, setOpen }) {
   const navigation = useNavigate();
-  const [movie, setMovie] = useRecoilState(movieState);
+  const setMovie = useSetRecoilState(movieState);
   const resetMovie = useResetRecoilState(movieState);
 
   const showMovie = () => {

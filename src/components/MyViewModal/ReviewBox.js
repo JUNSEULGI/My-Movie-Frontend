@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useRecoilState, useResetRecoilState } from 'recoil';
-import { movieState, buttonState, userState } from '../../state';
+import { useRecoilState } from 'recoil';
+import { movieState, userState } from '../../state';
 import styled from '@emotion/styled';
 import { Box, Typography, TextField, Rating } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -9,15 +9,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Poster from '../Poster/Poster';
 import { AgeBadge } from '../../pages/Movie';
-import { timestamp } from '../../util/timestamp';
 import { BASE_URL } from '../../Modules/API';
-import { useDelete } from '../../util/useDelete';
+import { useDelete, useSave } from '../../util/hooks';
 
 function ReviewBox() {
   const token = localStorage.getItem('access_token');
   const [movie, setMovie] = useRecoilState(movieState);
-  const resetMovie = useResetRecoilState(movieState);
-  const [button, setButton] = useRecoilState(buttonState);
   const [userInfo] = useRecoilState(userState);
   const [review, setReview] = useState({
     review_id: '',
@@ -39,109 +36,48 @@ function ReviewBox() {
 
   useEffect(() => {
     if (!movie.id) return;
-    const fetchMovie = async () =>
-      await fetch(`${BASE_URL}movies/detail/${movie.id}`)
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          setMovie({ ...movie, ...data.movie_info });
-        });
-
-    const fetchReview = async () =>
-      await fetch(`${BASE_URL}reviews/movie/${movie.id}`, {
-        headers: {
-          Authorization: token,
-        },
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.message === 'REVIEW_DOSE_NOT_EXISTS') return;
-          // 리뷰 있으면 review에 저장하기
-          const { result } = data;
-          console.log(data);
-          setReview({
-            ...review,
-            review_id: result.review_id,
-            title: result.title,
-            content: result.content,
-            watched_date: new Date(result.watched_date),
-            place: { ...result.place },
-            with_user: result.with_user,
-            rating: Number(result.rating),
-          });
-          // MyViewModal에서 delete 버튼이 적절하게 나타나기 위함
-          setMovie({ ...movie, review_id: result.review_id });
-        });
-    // 컴포넌트 최초 렌더링 시 리뷰를 작성할 영화에 대한 정보를 받아옴
-    // 그런데 movie 상세 페이지일 땐 필요 없음
-
+    // 컴포넌트 최초 렌더링 시 리뷰를 작성할 영화에 대한 정보를 받아오는데, movie 상세 페이지일 땐 필요 없음
     if (!pathname.includes('movie')) {
-      fetchMovie();
+      fetch(`${BASE_URL}movies/detail/${movie.id}`)
+        .then(res => res.json())
+        .then(data => {
+          setMovie(prev => {
+            return { ...prev, ...data.movie_info };
+          });
+        });
     }
-    fetchReview();
     // 이미 작성한 리뷰의 내용 가져오기
+    fetch(`${BASE_URL}reviews/movie/${movie.id}`, {
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.message === 'REVIEW_DOSE_NOT_EXISTS') return;
+        // 리뷰 있으면 review에 저장하기
+        const { result } = data;
+        setReview({
+          ...review,
+          review_id: result.review_id,
+          title: result.title,
+          content: result.content,
+          watched_date: new Date(result.watched_date),
+          place: { ...result.place },
+          with_user: result.with_user,
+          rating: Number(result.rating),
+        });
+        // MyViewModal에서 delete 버튼이 적절하게 나타나기 위함
+        setMovie(prev => {
+          return { ...prev, review_id: result.review_id };
+        });
+      });
   }, []);
 
   // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송
-  useEffect(() => {
-    if (!button.isSaving) return;
-
-    const formData = new FormData();
-    formData.append('title', review.title);
-    formData.append('content', review.content);
-    formData.append('watched_date', timestamp(review.watched_date));
-    formData.append('place', review.place.mapx);
-    formData.append('place', review.place.mapy);
-    formData.append('place', review.place.name);
-    formData.append('place', review.place.link);
-    formData.append('with_user', review.with_user);
-    formData.append('rating', review.rating);
-    formData.append('movie_id', movie.id);
-    console.log(formData);
-
-    if (review.review_id) {
-      // 리뷰 아이디가 있으므로 이미 작성된 리뷰를 수정하는 중
-      formData.append('review_id', review.review_id);
-
-      fetch(`${BASE_URL}reviews`, {
-        method: 'PUT',
-        headers: {
-          Authorization: token,
-        },
-        body: formData,
-      })
-        .then(res => res.json())
-        .then(result => {
-          console.log(result);
-          if (result.message === 'SUCCESS') {
-            setButton({ ...button, isSaving: false });
-            if (!pathname.includes('movie')) resetMovie();
-            window.location.replace(pathname);
-          }
-        });
-    } else {
-      // 리뷰 아이디가 없으므로 새로운 리뷰 저장하는 중
-      fetch(`${BASE_URL}reviews`, {
-        method: 'POST',
-        headers: {
-          Authorization: token,
-        },
-        body: formData,
-      })
-        .then(res => res.json())
-        .then(result => {
-          if (result.message === 'SUCCESS') {
-            setButton({ ...button, isSaving: false });
-            if (!pathname.includes('movie')) resetMovie();
-            window.location.replace(pathname);
-          }
-        });
-    }
-  }, [button.isSaving]);
-
+  useSave(review);
   useDelete(review.review_id);
-  console.log(movie);
-  console.log(review);
+
   return (
     <Column>
       <Poster url={movie.thumbnail_image_url} />
@@ -195,8 +131,6 @@ function ReviewBox() {
                 renderInput={params => <WhiteTextField {...params} />}
                 value={review.watched_date}
                 onChange={newValue => {
-                  // console.log(review.watched_date);
-                  // console.log(typeof review.watched_date);
                   setReview(prev => {
                     return { ...prev, watched_date: newValue };
                   });
