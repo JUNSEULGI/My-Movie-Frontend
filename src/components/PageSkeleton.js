@@ -28,6 +28,7 @@ const bounce = keyframes`
   }
 
   90% {
+
     transform: translate3d(0,-4px,0);
   }
 `;
@@ -37,5 +38,5 @@ const LoadLogo = styled(Logo)`
   position: absolute;
   top: 40%;
   left: 40%;
-  animation: ${bounce} 0.8s ease infinite;
+  animation: ${bounce} 1s ease infinite;
 `;

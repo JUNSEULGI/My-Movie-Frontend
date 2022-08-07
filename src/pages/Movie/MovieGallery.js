@@ -7,7 +7,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function MovieGallery({ movie_image }) {
   const [open, setOpen] = useState(false);
-  const [imgindex, setImgindex] = useState(Number(0));
+  const [imgindex, setImgindex] = useState(0);
 
   const handleOpen = index => {
     setImgindex(index.target.id);
@@ -18,8 +18,8 @@ function MovieGallery({ movie_image }) {
 
   const backImg = () => {
     Number(imgindex) === 0
-      ? setImgindex(Number(movie_image.length) - 1)
-      : setImgindex(Number(imgindex) - 1);
+      ? setImgindex(movie_image.length - 1)
+      : setImgindex(imgindex - 1);
   };
 
   const forwardImg = () => {
