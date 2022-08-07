@@ -1,10 +1,12 @@
 import axios from 'axios';
 
-export const instance = axios.create({
-  baseURL: 'https://nid.naver.com/oauth2.0/',
-});
-
+const token = localStorage.getItem('access_token');
 export const BASE_URL = 'http://390b-175-193-80-187.ngrok.io/';
+
+export const instance = axios.create({
+  baseURL: BASE_URL,
+  headers: { Authorization: token },
+});
 
 export const API = {
   // 유저

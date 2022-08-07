@@ -28,7 +28,7 @@ function ReviewBox() {
   const { pathname } = useLocation();
 
   // 리뷰 관련 input의 값이 바뀌면 review에 반영
-  const handleReview = e => {
+  const changeContent = e => {
     setReview(prev => {
       return { ...prev, content: e.target.value };
     });
@@ -54,6 +54,7 @@ function ReviewBox() {
     })
       .then(res => res.json())
       .then(data => {
+        console.log(data);
         if (data.message === 'REVIEW_DOSE_NOT_EXISTS') return;
         // 리뷰 있으면 review에 저장하기
         const { result } = data;
@@ -68,9 +69,11 @@ function ReviewBox() {
           rating: Number(result.rating),
         });
         // MyViewModal에서 delete 버튼이 적절하게 나타나기 위함
-        setMovie(prev => {
-          return { ...prev, review_id: result.review_id };
-        });
+        if (!pathname.includes('movie')) {
+          setMovie(prev => {
+            return { ...prev, review_id: result.review_id };
+          });
+        }
       });
   }, []);
 
@@ -78,6 +81,8 @@ function ReviewBox() {
   useSave(review);
   useDelete(review.review_id);
 
+  console.log(movie);
+  console.log(review);
   return (
     <Column>
       <Poster url={movie.thumbnail_image_url} />
@@ -116,7 +121,7 @@ function ReviewBox() {
           minRows={3}
           maxRows={20}
           value={review.content}
-          onChange={e => handleReview(e)}
+          onChange={e => changeContent(e)}
         />
         <RowLabel variant="h4">관람정보</RowLabel>
         <GridBox>
