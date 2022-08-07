@@ -17,6 +17,9 @@ import {
 import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import { Typography } from '@mui/material';
+import PageSkeleton from '../../components/PageSkeleton';
+import LoadContainer from '../../components/Loading/LoadingContainer';
+import { moviea } from './Mock/MovieData';
 
 function Movie() {
   const params = useParams();
@@ -24,47 +27,58 @@ function Movie() {
   const [movie, setMovie] = useRecoilState(movieState);
   const [review, setReview] = useState();
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const openModal = () => setOpen(true);
-
   const closeModal = (_, reason) => {
     if (reason === 'backdropClick') return;
     setOpen(false);
   };
 
-  useEffect(() => {
-    fetch(`${BASE_URL}reviews/movie/${params.id}`, {
-      headers: {
-        Authorization: access_token,
-      },
-    })
-      .then(res => res.json())
-      .then(res => {
-        console.log(res);
-        if (res.message === 'REVIEW_DOSE_NOT_EXISTS') return;
-        setReview(res.result);
-        setMovie(prev => {
-          return { ...prev, review_id: res.result.review_id };
-        });
+  const reviewDataApi = async () => {
+    setLoading(true);
+    try {
+      const responce = await fetch(`${BASE_URL}reviews/movie/${params.id}`, {
+        headers: {
+          Authorization: access_token,
+        },
       });
-  }, [params.id]);
+      const result = await responce.json();
+      if (result.message === 'REVIEW_DOSE_NOT_EXISTS') return;
+      setReview(result.result);
+      setMovie(prev => {
+        return { ...prev, review_id: res.result.review_id };
+      });
+      setLoading(false);
+    } catch (error) {
+      // alert('error');
+    }
+  };
+
+  const movieDataApi = async () => {
+    setLoading(true);
+    try {
+      const responce = await fetch(`${BASE_URL}movies/detail/${params.id}`, {
+        headers: {
+          Authorization: access_token,
+        },
+      });
+      const result = await responce.json();
+      setMovie(prev => {
+        return { ...prev, ...result.movie_info };
+      });
+      setLoading(false);
+    } catch (error) {
+      // alert('error');
+    }
+  };
 
   useEffect(() => {
-    fetch(`${BASE_URL}movies/detail/${params.id}`, {
-      headers: {
-        Authorization: access_token,
-      },
-    })
-      .then(res => res.json())
-      .then(res => {
-        setMovie(prev => {
-          return { ...prev, ...res.movie_info };
-        });
-      });
+    movieDataApi();
+    reviewDataApi();
   }, [params.id]);
 
   const { title, actor, video_url, image_url } = movie;
-  console.log(movie);
 
   function MovieContainer() {
     return (
@@ -84,7 +98,7 @@ function Movie() {
         )}
         <ContainerTitle>리뷰</ContainerTitle>
         {review?.review_id ? (
-          <MyReview openModal={openModal} review={review} />
+          <MyReview openModal={openModal} />
         ) : (
           <NoReview title={title} openModal={openModal} />
         )}
@@ -113,7 +127,7 @@ function Movie() {
       <MyViewLayout
         movie
         background={image_url[0]}
-        center={<MovieContainer />}
+        center={<LoadContainer loading={loading} ddd={<MovieContainer />} />}
       />
     )
   );
