@@ -17,7 +17,6 @@ import {
 import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import { Typography } from '@mui/material';
-// import OnlyMovieReview from './OnlyMovieReview';
 
 function Movie() {
   const params = useParams();
