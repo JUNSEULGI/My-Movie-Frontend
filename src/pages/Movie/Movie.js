@@ -47,7 +47,7 @@ function Movie() {
       if (result.message === 'REVIEW_DOSE_NOT_EXISTS') return;
       setReview(result.result);
       setMovie(prev => {
-        return { ...prev, review_id: res.result.review_id };
+        return { ...prev, review_id: result.result.review_id };
       });
       setLoading(false);
     } catch (error) {
@@ -98,7 +98,7 @@ function Movie() {
         )}
         <ContainerTitle>리뷰</ContainerTitle>
         {review?.review_id ? (
-          <MyReview openModal={openModal} />
+          <MyReview openModal={openModal} review={review} />
         ) : (
           <NoReview title={title} openModal={openModal} />
         )}
