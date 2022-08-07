@@ -17,6 +17,8 @@ import {
 import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import { Typography } from '@mui/material';
 import OnlyMovieReview from './OnlyMovieReview';
+import PageSkeleton from '../../components/PageSkeleton';
+import LoadContainer from '../../components/Loading/LoadingContainer';
 
 function Movie() {
   const params = useParams();
@@ -26,28 +28,32 @@ function Movie() {
   const resetMovie = useResetRecoilState(movieState);
   const resetReview = useResetRecoilState(reviewState);
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const openModal = () => setOpen(true);
-
   const closeModal = (_, reason) => {
     if (reason === 'backdropClick') return;
     setOpen(false);
   };
 
-  useEffect(() => {
-    fetch(`${BASE_URL}reviews/movie/${params.id}`, {
-      headers: {
-        Authorization: access_token,
-      },
-    })
-      .then(res => res.json())
-      .then(res => {
-        if (res.message === 'REVIEW_DOSE_NOT_EXISTS') return;
-        setReview(res.result);
+  const reviewDataApi = async () => {
+    setLoading(true);
+    try {
+      const responce = await fetch(`${BASE_URL}reviews/movie/${params.id}`, {
+        headers: {
+          Authorization: access_token,
+        },
       });
-  }, [params.id]);
+      const result = await responce.json();
+      if (result.message === 'REVIEW_DOSE_NOT_EXISTS') return;
+      setReview(result.result);
+      setLoading(false);
+    } catch (error) {
+      // alert('error');
+    }
+  };
 
-  const moviea = {
+  const MockData = {
     movie_info: {
       id: 1,
       title: '범죄도시2',
@@ -130,57 +136,69 @@ function Movie() {
     },
   };
 
-  useEffect(() => {
-    fetch(`${BASE_URL}movies/detail/${params.id}`, {
-      headers: {
-        Authorization: access_token,
-      },
-    })
-      .then(res => res.json())
-      .then(res => {
-        setMovie(res.movie_info);
+  const movieDataApi = async () => {
+    setLoading(true);
+    try {
+      const responce = await fetch(`${BASE_URL}movies/detail/${params.id}`, {
+        headers: {
+          Authorization: access_token,
+        },
       });
-  }, []);
+      const result = await responce.json();
+      setMovie(result.movie_info);
+      setLoading(false);
+    } catch (error) {
+      // alert('error');
+    }
+  };
+
+  console.log(movie);
+  useEffect(() => {
+    movieDataApi();
+    reviewDataApi();
+  }, [params.id]);
 
   const { title, actor, video_url, image_url } = movie;
 
   function MovieContainer() {
     return (
-      <MovieBackGround>
-        {movie.id && <MovieInfo />}
-        {actor?.length > 0 ? (
-          <>
-            <ContainerTitle>출연/제작</ContainerTitle>
-            <ActorContainer>
-              {actor?.map((actor, index) => (
-                <Actor key={index} actor={actor} />
-              ))}
-            </ActorContainer>
-          </>
-        ) : (
-          ''
-        )}
-        <ContainerTitle>리뷰</ContainerTitle>
-        {review?.review_id ? (
-          <MyReview openModal={openModal} />
-        ) : (
-          <NoReview title={title} openModal={openModal} />
-        )}
-        <MyViewModal
-          open={open}
-          closeModal={closeModal}
-          content={<OnlyMovieReview />}
-        />
+      <>
+        <MovieBackGround>
+          {movie.id && <MovieInfo />}
+          {actor?.length > 0 ? (
+            <>
+              <ContainerTitle>출연/제작</ContainerTitle>
+              <ActorContainer>
+                {actor?.map((actor, index) => (
+                  <Actor key={index} actor={actor} />
+                ))}
+              </ActorContainer>
+            </>
+          ) : (
+            ''
+          )}
+          <ContainerTitle>리뷰</ContainerTitle>
+          {review?.review_id ? (
+            <MyReview openModal={openModal} />
+          ) : (
+            <NoReview title={title} openModal={openModal} />
+          )}
+          <MyViewModal
+            open={open}
+            closeModal={closeModal}
+            content={<OnlyMovieReview />}
+          />
 
-        <ContainerTitle>예고편</ContainerTitle>
-        <TrailerContainer>
-          {video_url.map((video, index) => (
-            <Trailer key={index} video={video} />
-          ))}
-        </TrailerContainer>
-        <ContainerTitle>갤러리</ContainerTitle>
-        <MovieGallery movie_image={image_url} />
-      </MovieBackGround>
+          <ContainerTitle>예고편</ContainerTitle>
+          <TrailerContainer>
+            {video_url.map((video, index) => (
+              <Trailer key={index} video={video} />
+            ))}
+          </TrailerContainer>
+          <ContainerTitle>갤러리</ContainerTitle>
+          <MovieGallery movie_image={image_url} />
+        </MovieBackGround>
+      </>
     );
   }
 
@@ -191,7 +209,7 @@ function Movie() {
       <MyViewLayout
         movie
         background={image_url[0]}
-        center={<MovieContainer />}
+        center={<LoadContainer loading={loading} ddd={<MovieContainer />} />}
       />
     )
   );
