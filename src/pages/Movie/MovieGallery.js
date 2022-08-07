@@ -7,26 +7,20 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function MovieGallery({ movie_image }) {
   const [open, setOpen] = useState(false);
-  const [imgindex, setImgindex] = useState(Number(0));
+  const [imgindex, setImgindex] = useState(0);
 
-  console.log(movie_image);
   const handleOpen = index => {
     setImgindex(index.target.id);
     setOpen(true);
   };
 
   const handleClose = () => setOpen(false);
-  console.log(movie_image.length);
 
   const backImg = () => {
     Number(imgindex) === 0
-      ? setImgindex(Number(movie_image.length) - 1)
-      : setImgindex(Number(imgindex) - 1);
+      ? setImgindex(movie_image.length - 1)
+      : setImgindex(imgindex - 1);
   };
-
-  Number(imgindex) === 0
-    ? console.log('뒤에 사진 없어')
-    : console.log('사진 있음');
 
   const forwardImg = () => {
     setImgindex(Number(imgindex) + 1);
@@ -34,8 +28,6 @@ function MovieGallery({ movie_image }) {
       setImgindex(0);
     }
   };
-
-  console.log(imgindex);
 
   return (
     <>
