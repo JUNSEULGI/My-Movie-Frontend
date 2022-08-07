@@ -32,6 +32,7 @@ export const useDelete = review_id => {
         });
     } else {
       alert('취소합니다.');
+      setButton({ ...button, isDeleting: false });
     }
   }, [button.isDeleting]);
 };
