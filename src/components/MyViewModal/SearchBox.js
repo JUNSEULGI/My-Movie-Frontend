@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { movieState } from '../../state';
 import styled from '@emotion/styled';
 import {
@@ -14,7 +14,7 @@ import Poster from '../Poster/Poster';
 import { BASE_URL } from '../../Modules/API';
 
 function SearchBox() {
-  const [movie, setMovie] = useRecoilState(movieState);
+  const setMovie = useSetRecoilState(movieState);
   const [titles, setTitles] = useState([]);
   const [ranks, setRanks] = useState([]);
 
@@ -23,14 +23,11 @@ function SearchBox() {
       .then(res => res.json())
       .then(result => {
         if (result.message === 'SUCCESS') {
-          // console.log(result);
           setTitles(result.titles);
           setRanks(result.rank);
         }
       });
   }, []);
-
-  console.log('영화 제목', titles);
 
   return (
     <Column>
@@ -49,16 +46,16 @@ function SearchBox() {
             />
           )}
           autoSelect={true}
-          onChange={(e, value, reason) => {
-            // console.log(value);
+          onChange={(e, value) => {
             value.title && setMovie(value);
           }}
         />
         <Box>
-          <NowRunning>지금 상영중인 영화</NowRunning>
+          <NowRunning variant="subtitle1">지금 상영중인 영화</NowRunning>
           {ranks.map((movie, index) => (
             <RankedMovie
               key={movie.id}
+              variant="subtitle2"
               onClick={() => {
                 setMovie(movie);
               }}
@@ -107,20 +104,19 @@ const SearchInput = styled(TextField)`
   color: ${({ theme }) => theme.palette.common.white};
 `;
 
+const NowRunning = styled(Typography)`
+  margin-bottom: 2px;
+  color: ${({ theme }) => theme.palette.common.white};
+  font-weight: 700;
+`;
+
 const RankedMovie = styled(Typography)`
-  font-size: 14px;
   color: ${({ theme }) => theme.palette.common.white};
   cursor: pointer;
 
   :hover {
     color: ${({ theme }) => theme.palette.test.main};
   }
-`;
-
-const NowRunning = styled(RankedMovie)`
-  margin-bottom: 2px;
-  font-weight: 700;
-  font-size: 16px;
 `;
 
 export default SearchBox;

@@ -73,14 +73,14 @@ function List() {
       <>
         {topMovies?.length > 0 && (
           <Section>
-            <SectionTitle variant="h3">
+            <SectionTitle variant="h1">
               {userInfo.nickname}님의 인생 영화
             </SectionTitle>
             <FavoriteMovie topMovies={topMovies} />
           </Section>
         )}
         <Section>
-          <SectionTitle variant="h3">
+          <SectionTitle variant="h1">
             {userInfo.nickname}님이 저장한 영화 목록
           </SectionTitle>
           <CardContainer>
@@ -130,7 +130,6 @@ const CardContainer = styled(Box)`
 const SectionTitle = styled(Typography)`
   margin: 15px 0;
   color: ${({ theme }) => theme.palette.common.white};
-  font-size: 24px;
   font-weight: bold;
 `;
 

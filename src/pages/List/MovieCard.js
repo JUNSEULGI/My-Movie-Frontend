@@ -6,12 +6,12 @@ import styled from '@emotion/styled';
 import { Box, Card, CardMedia, Typography, Rating, Chip } from '@mui/material';
 
 function MovieCard({ data, setOpen }) {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const setMovie = useSetRecoilState(movieState);
   const resetMovie = useResetRecoilState(movieState);
 
   const showMovie = () => {
-    navigation(`/movie/${data.movie.id}`);
+    navigate(`/movie/${data.movie.id}`);
   };
 
   const showReview = () => {
@@ -33,7 +33,7 @@ function MovieCard({ data, setOpen }) {
       <Poster component="img" image={data.movie.poster} />
       <Title onClick={showMovie}>{data.movie.title}</Title>
       <InfoContainer>
-        <MovieInfo>
+        <MovieInfo variant="menuItem">
           {data.movie.released.split('-')[0]} · {data.movie.country}
         </MovieInfo>
         <InfoContainer>
@@ -44,8 +44,9 @@ function MovieCard({ data, setOpen }) {
         </InfoContainer>
       </InfoContainer>
       <GenreContainer>
-        <Genre label="모험" color="warning" size="small" />
-        <Genre label="판타지" color="success" size="small" />
+        {data.movie.genre.map((item, index) => (
+          <Genre key={index} label={item} color="warning" size="small" />
+        ))}
       </GenreContainer>
     </CardBox>
   );
@@ -56,7 +57,7 @@ const CardBox = styled(Card)`
   width: 270px;
   height: 460px;
   border-radius: 8px;
-  background-color: ${({ theme }) => theme.palette.background.card};
+  background: ${({ theme }) => theme.palette.test.card};
   cursor: pointer;
 `;
 
@@ -94,15 +95,17 @@ const InfoContainer = styled(Box)`
 `;
 
 const Title = styled(Typography)`
-  margin: 4px 0;
-  font-size: 14px;
+  margin: 10px 0 4px;
   font-weight: 700;
   color: ${({ theme }) => theme.palette.common.white};
   cursor: pointer;
+
+  :hover {
+    text-decoration: underline;
+  }
 `;
 
 const MovieInfo = styled(Typography)`
-  font-size: 12px;
   color: ${({ theme }) => theme.palette.common.white};
 `;
 
@@ -111,12 +114,13 @@ const Star = styled(Rating)`
 `;
 
 const Number = styled.span`
-  font-size: 14px;
+  font-size: 15px;
   color: ${({ theme }) => theme.palette.common.white};
 `;
 
 const ThickNumber = styled(Number)`
   font-weight: 700;
+  margin-left: 8px;
 `;
 
 const GenreContainer = styled(Box)`
