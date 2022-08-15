@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Container, Typography } from '@mui/material';
 import { CardContainer } from '../Movie/CardContainer';
-import { Logo } from '../Movie/ContentLogo';
+import { Logo } from '../../components/Logo';
 import MyViewLayout from '../../layout/Layout';
 import NaverLogin from './NaverLogin';
 import KakaoLogin from './KakaoLogin';

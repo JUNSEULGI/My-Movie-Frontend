@@ -68,7 +68,8 @@ const darkTheme = createTheme({
     background: {
       paper: '#080D18',
       card: 'rgba(21, 21, 21, 0.9)',
-      disabled: '#555555',
+      modal: '#151515',
+      disabled: '#535353',
     },
   },
 });

@@ -1,7 +1,7 @@
 import Actor from './Actor';
 import AgeBadge from '../../components/AgeBadge';
 import { CardContainer } from './CardContainer';
-import { Logo } from './ContentLogo';
+import { Logo } from '../../components/Logo';
 import MovieGallery from './MovieGallery';
 import MovieInfo from './MovieInfo';
 import { MoviePoster } from './MoviePoster';

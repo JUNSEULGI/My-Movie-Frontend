@@ -58,7 +58,7 @@ const Container = styled(Box)`
   width: 987px;
   padding: 70px 60px;
   margin-bottom: 100px;
-  background-color: ${({ theme }) => theme.palette.background.card};
+  background-color: ${({ theme }) => theme.palette.background.modal};
   border-radius: 8px;
 `;
 

@@ -81,28 +81,25 @@ function ReviewBox() {
   useSave(review);
   useDelete(review.review_id);
 
-  console.log(movie);
-  console.log(review);
   return (
     <Column>
       <Poster url={movie.thumbnail_image_url} />
       <ReviewContainer>
         <RowBox>
           <Box>
-            <MovieTitle variant="h3">{movie.title}</MovieTitle>
+            <MovieTitle variant="h1">{movie.title}</MovieTitle>
             <Box>
+              <BoldText variant="subtitle2">{movie.en_title} </BoldText>
               <BoldText variant="subtitle2">
-                {movie.en_title} <br />
                 2022 · {movie.country} ·{' '}
                 {movie.genre?.map((genreItems, index) => (
                   // chip으로 수정
-                  <span key={index} style={{ marginRight: '10px' }}>
-                    {genreItems}
-                  </span>
+                  <Genre key={index}>{genreItems}</Genre>
                 ))}
-                / {movie.running_time}분
               </BoldText>
-              <AgeBadge age={movie.age} />
+              <BoldText variant="subtitle2">
+                {movie.running_time}분 <AgeBadge age={movie.age} />
+              </BoldText>
             </Box>
           </Box>
           <Rating
@@ -114,7 +111,7 @@ function ReviewBox() {
             size="large"
           />
         </RowBox>
-        <RowLabel variant="h4">{userInfo?.nickname}님의 솔직후기</RowLabel>
+        <RowLabel variant="h2">{userInfo?.nickname}님의 솔직후기</RowLabel>
         <ReviewField
           label="리뷰를 남겨보세요."
           multiline
@@ -123,7 +120,7 @@ function ReviewBox() {
           value={review.content}
           onChange={e => changeContent(e)}
         />
-        <RowLabel variant="h4">관람정보</RowLabel>
+        <RowLabel variant="h2">관람정보</RowLabel>
         <GridBox>
           <Box>
             <WatchInfoLabel variant="subtitle1">when</WatchInfoLabel>
@@ -199,12 +196,14 @@ const BoldText = styled(Typography)`
 
 const MovieTitle = styled(BoldText)`
   margin-bottom: 6px;
-  font-size: 24px;
+`;
+
+const Genre = styled.span`
+  margin-right: 10px;
 `;
 
 const RowLabel = styled(BoldText)`
   margin: 15px 0;
-  font-size: 20px;
 `;
 
 const ReviewField = styled(TextField)`
