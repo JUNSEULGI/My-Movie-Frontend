@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const token = localStorage.getItem('access_token');
-export const BASE_URL = 'http://390b-175-193-80-187.ngrok.io/';
+export const BASE_URL = 'http://localhost:8000/';
 
 export const instance = axios.create({
   baseURL: BASE_URL,
@@ -30,3 +30,4 @@ export const NAVER_STATE_STRING = '288539e2-9a6d-40ed-8a73-85b96ad91786';
 
 export const KAKAO_ID = '899480d9080e0218f7afc0f284834b77';
 export const KAKAO_CALLBACK_URL = 'http://localhost:3000/login-callback/kakao';
+export const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${KAKAO_ID}&redirect_uri=${KAKAO_CALLBACK_URL}`;

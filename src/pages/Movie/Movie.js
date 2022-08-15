@@ -17,9 +17,7 @@ import {
 import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import { Typography } from '@mui/material';
-import PageSkeleton from '../../components/PageSkeleton';
 import LoadContainer from '../../components/Loading/LoadingContainer';
-import { moviea } from './Mock/MovieData';
 
 function Movie() {
   const params = useParams();

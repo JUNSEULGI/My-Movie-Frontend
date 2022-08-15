@@ -1,19 +1,13 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { CardContainer } from './CardContainer';
-import TrailerImg from '../../assets/images/block.jpeg';
-import { Container, SvgIcon } from '@mui/material';
-import { ReactComponent as PlayIcon } from '../../assets/images/Play.svg';
 
 function Trailer({ video }) {
-  console.log(video);
   return (
     <MovieTrailer>
       <DarkPaperContainer>
         <video controls preload="none" width="560" height="315">
           <source src={video} deletecommandtype="video/webm" />
           <source src={video} deletecommandtype="video/mp4" />
-
           <source src={video} type="video/quicktime" />
         </video>
       </DarkPaperContainer>
@@ -37,14 +31,14 @@ const DarkPaperContainer = styled.div`
   position: relative;
 `;
 
-const DarkPaper = styled.div`
-  position: absolute;
-  z-index: 98;
-  width: 100%;
-  height: 100%;
-  background-color: black;
-  opacity: 0.4;
-`;
+// const DarkPaper = styled.div`
+//   position: absolute;
+//   z-index: 98;
+//   width: 100%;
+//   height: 100%;
+//   background-color: black;
+//   opacity: 0.4;
+// `;
 
 // const PlayButton = styled(PlayIcon)`
 //   position: absolute;
