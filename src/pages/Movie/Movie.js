@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
 import { movieState } from '../../state';
 import MyViewLayout from '../../layout/Layout';
-import { BASE_URL } from '../../Modules/API';
+import { BASE_URL, API } from '../../Modules/API';
 import {
   CardContainer,
   MovieInfo,
@@ -18,6 +18,7 @@ import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import { Typography } from '@mui/material';
 import LoadContainer from '../../components/Loading/LoadingContainer';
+import { fetcher } from '../../Modules/fetcher';
 
 function Movie() {
   const params = useParams();
@@ -36,12 +37,8 @@ function Movie() {
   const reviewDataApi = async () => {
     setLoading(true);
     try {
-      const responce = await fetch(`${BASE_URL}reviews/movie/${params.id}`, {
-        headers: {
-          Authorization: access_token,
-        },
-      });
-      const result = await responce.json();
+      const response = await fetcher(`${API.reviews_movie}/${params.id}`);
+      const result = response.data;
       if (result.message === 'REVIEW_DOSE_NOT_EXISTS') return;
       setReview(result.result);
       setMovie(prev => {
@@ -49,25 +46,25 @@ function Movie() {
       });
       setLoading(false);
     } catch (error) {
-      // alert('error');
+      console.log(error);
     }
   };
 
   const movieDataApi = async () => {
     setLoading(true);
     try {
-      const responce = await fetch(`${BASE_URL}movies/detail/${params.id}`, {
+      const response = await fetch(`${BASE_URL}movies/detail/${params.id}`, {
         headers: {
           Authorization: access_token,
         },
       });
-      const result = await responce.json();
+      const result = await response.json();
       setMovie(prev => {
         return { ...prev, ...result.movie_info };
       });
       setLoading(false);
     } catch (error) {
-      // alert('error');
+      console.log(error);
     }
   };
 

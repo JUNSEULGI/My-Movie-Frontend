@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userState } from '../../state';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import MyAvatar from './Logout';
-import { BASE_URL } from '../../Modules/API';
+import { API } from '../../Modules/API';
 import {
   Typography,
   AppBar,
@@ -16,10 +16,12 @@ import {
   TextField,
   Paper,
 } from '@mui/material';
+import { fetcher } from '../../Modules/fetcher';
 
 function Nav() {
   const { pathname } = useLocation();
   const [userInfo, setUserInfo] = useRecoilState(userState);
+  const resetUser = useResetRecoilState(userState);
   const [scroll, setScroll] = useState(0);
   const [titles, setTitles] = useState([]);
   const access_token = localStorage.getItem('access_token');
@@ -34,15 +36,12 @@ function Nav() {
 
   useEffect(() => {
     if (!access_token) return;
-    fetch(`${BASE_URL}users/info`, {
-      headers: {
-        Authorization: access_token,
-      },
-    })
-      .then(res => res.json())
+    fetcher(API.users_info)
+      .then(res => res.data)
       .then(res => {
         if (res.message === 'EXPIRED_TOKEN') {
           localStorage.removeItem('access_token');
+          resetUser();
           return;
         }
         setUserInfo(res.result);
@@ -51,11 +50,11 @@ function Nav() {
 
   // 검색창이 활성화되었을 때 요청하는 게 좋지 않을까?
   useEffect(() => {
-    fetch(`${BASE_URL}movies/simple`)
-      .then(res => res.json())
-      .then(result => {
-        if (result.message === 'SUCCESS') {
-          setTitles(result.titles);
+    fetcher(API.movies_simple)
+      .then(res => res.data)
+      .then(data => {
+        if (data.message === 'SUCCESS') {
+          setTitles(data.titles);
         }
       });
   }, []);
