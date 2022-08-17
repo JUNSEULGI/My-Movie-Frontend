@@ -1,14 +1,20 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Box, Card, Typography } from '@mui/material';
 
 const FavoriteMovie = ({ topMovies }) => {
+  const navigate = useNavigate();
+
   return (
     <Container>
       {topMovies?.map(item => (
-        <BestMovie key={item.review_id}>
+        <BestMovie
+          key={item.review_id}
+          onClick={() => navigate(`/movie/${item.movie.id}`)}
+        >
           <BackgroundPoster img={item.movie.poster}>
-            <Title variant="h3">{item.movie.title}</Title>
+            <Title variant="h1">{item.movie.title}</Title>
           </BackgroundPoster>
         </BestMovie>
       ))}
@@ -31,7 +37,9 @@ const Container = styled(Box)`
 
 const BestMovie = styled(Card)`
   padding: 20px;
+  background: ${({ theme }) => theme.palette.test.card};
   border-radius: 8px;
+  cursor: pointer;
 `;
 
 const BackgroundPoster = styled.div`
@@ -46,9 +54,9 @@ const BackgroundPoster = styled.div`
 `;
 
 const Title = styled(Typography)`
-  color: white;
+  margin: 10px 16px;
+  color: ${({ theme }) => theme.palette.common.white};
   font-weight: bold;
-  font-size: 24px;
 `;
 
 export default FavoriteMovie;

@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { CardContainer } from '../Movie/CardContainer';
 import { CardMedia, Typography } from '@mui/material';
 import { OTTLogo } from '../../components/PlatformAvatar';
-import { Logo } from '../Movie/ContentLogo';
+import { Logo } from '../../components/Logo';
 
 function MovieTable({ movie, reviewdata }) {
   const access_token = localStorage.getItem('access_token');
@@ -20,7 +20,7 @@ function MovieTable({ movie, reviewdata }) {
     <>
       <RowTitle>
         <Year variant="subtitle1">연혁</Year>
-        <MoviePoster variant="subtitle1"></MoviePoster>
+        <MoviePoster variant="subtitle1" />
         <MoiveTitle variant="subtitle1">제목</MoiveTitle>
         <InRole variant="subtitle1">역할</InRole>
         <Rating variant="subtitle1">평가</Rating>

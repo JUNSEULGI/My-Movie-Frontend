@@ -1,13 +1,14 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Card, CardMedia, Typography } from '@mui/material';
+import { Card, CardMedia } from '@mui/material';
+import { Logo } from '../../components/Logo';
 
 function Poster({ url }) {
   return url ? (
     <Image component="img" image={url} />
   ) : (
     <NoImage>
-      <MyView>MY VIEW</MyView>
+      <Logo style={{ fontSize: '30px' }}>MY VIEW</Logo>
     </NoImage>
   );
 }
@@ -24,11 +25,6 @@ const NoImage = styled(Card)`
   height: 390px;
   background-color: ${({ theme }) => theme.palette.background.disabled};
   border-radius: 8px;
-`;
-
-const MyView = styled(Typography)`
-  font-size: 34px;
-  color: #fc6c2e;
 `;
 
 export default Poster;

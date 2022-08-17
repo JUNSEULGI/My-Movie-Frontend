@@ -7,7 +7,7 @@ import { Box, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import MovieRating from './MovieRating';
-import { Logo } from './ContentLogo';
+import { Logo } from '../../components/Logo';
 import { ReviewIcon, FabContainer } from './MyIconButton';
 import { useDelete } from '../../util/hooks';
 

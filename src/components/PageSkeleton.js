@@ -1,15 +1,10 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { css, keyframes } from '@emotion/react';
-import { Skeleton, Box, Stack } from '@mui/material';
-import { Logo } from '../pages/Movie/ContentLogo';
+import { keyframes } from '@emotion/react';
+import { Logo } from './Logo';
 
 function PageSkeleton() {
-  return (
-    <>
-      <LoadLogo>My View!</LoadLogo>
-    </>
-  );
+  return <LoadLogo>My View!</LoadLogo>;
 }
 
 export default PageSkeleton;
