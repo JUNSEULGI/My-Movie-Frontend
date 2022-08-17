@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { userState } from '../../state';
 import styled from '@emotion/styled';
 import MyViewLayout from '../../layout/Layout';
@@ -12,8 +12,7 @@ import { PeopleProfile, MovieTable, CountReview } from '../People';
 function People() {
   const params = useParams();
   const access_token = localStorage.getItem('access_token');
-
-  const [userInfo, setUserInfo] = useRecoilState(userState);
+  const userInfo = useRecoilValue(userState);
 
   // Real DATA
   const [peopleData, setPeopleData] = useState({});
@@ -72,8 +71,12 @@ function People() {
               }}
             >
               <PeopleName variant="h3">{peopleData.name}</PeopleName>
-              {peopleData.job?.map(job => {
-                return <Job variant="body1">{job}</Job>;
+              {peopleData.job?.map((job, index) => {
+                return (
+                  <Job key={index} variant="body1">
+                    {job}
+                  </Job>
+                );
               })}
             </Box>
             <PeopleProfile profile={peopleData} />

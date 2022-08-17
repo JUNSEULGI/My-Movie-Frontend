@@ -2,34 +2,26 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { movieState, buttonState } from '../state';
-import { BASE_URL } from '../Modules/API';
+import { API, BASE_URL } from '../Modules/API';
 import { timestamp } from './timestamp';
+import { fetcher } from '../Modules/fetcher';
 
 export const useDelete = review_id => {
   const { pathname } = useLocation();
-  const token = localStorage.getItem('access_token');
   const [button, setButton] = useRecoilState(buttonState);
   const resetMovie = useResetRecoilState(movieState);
 
   return useEffect(() => {
     if (!button.isDeleting) return;
     if (window.confirm('정말 삭제시겠습니까?')) {
-      fetch(`${BASE_URL}reviews/${review_id}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: token,
-        },
-      })
-        // .then(res => res.json())
-        .then(result => {
-          console.log(result);
-          // if (result.message === 'SUCCESS') {
+      fetcher.delete(`${API.reviews}/${review_id}`).then(result => {
+        if (result.status === 204) {
           setButton({ ...button, isDeleting: false });
-          if (/\/movie\/*/.test(pathname)) resetMovie();
+          if (!/\/movie\/*/.test(pathname)) resetMovie();
           alert('삭제되었습니다.');
           window.location.replace(pathname);
-          // }
-        });
+        }
+      });
     } else {
       alert('취소합니다.');
       setButton({ ...button, isDeleting: false });
@@ -63,14 +55,11 @@ export const useSave = review => {
       // 리뷰 아이디가 있으므로 이미 작성된 리뷰를 수정하는 중
       formData.append('review_id', review.review_id);
 
-      fetch(`${BASE_URL}reviews`, {
-        method: 'PUT',
-        headers: {
-          Authorization: token,
-        },
-        body: formData,
-      })
-        .then(res => res.json())
+      fetcher
+        .put(API.reviews, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        })
+        .then(res => res.data)
         .then(result => {
           if (result.message === 'SUCCESS') {
             setButton({ ...button, isSaving: false });
