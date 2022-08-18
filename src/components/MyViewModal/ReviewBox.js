@@ -18,7 +18,7 @@ function ReviewBox() {
   const [userInfo] = useRecoilState(userState);
   const [review, setReview] = useState({
     review_id: '',
-    title: '한줄평',
+    title: '',
     content: '',
     watched_date: new Date(),
     place: { name: '', mapx: 0, mapy: 0, link: 'url' },
@@ -61,7 +61,7 @@ function ReviewBox() {
         setReview({
           ...review,
           review_id: result.review_id,
-          title: result.title,
+          title: result.content.substr(0, 30),
           content: result.content,
           watched_date: new Date(result.watched_date),
           place: { ...result.place },

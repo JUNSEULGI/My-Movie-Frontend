@@ -1,16 +1,19 @@
 import React from 'react';
 import { Typography, Breadcrumbs } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { stepState } from '../../state';
+import { useRecoilState } from 'recoil';
 
 function MyStep() {
+  const [step, setStep] = useRecoilState(stepState);
   const breadcrumbs = [
-    <Typography
-      key="1"
-      color="inherit"
-      // onClick={handleClick}
-    >
-      영화
-    </Typography>,
+    // <Typography
+    //   key="1"
+    //   color="inherit"
+    //   // onClick={handleClick}
+    // >
+    //   영화
+    // </Typography>,
     <Typography
       key="2"
       color="inherit"

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
 import { movieState } from '../../state';
@@ -17,18 +17,29 @@ import {
 import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import { Typography } from '@mui/material';
-import LoadContainer from '../../components/Loading/LoadingContainer';
+import LoadWrap from '../../components/Loading/LoadWrap';
 import { fetcher } from '../../Modules/fetcher';
 
 function Movie() {
   const params = useParams();
-  const access_token = localStorage.getItem('access_token');
+  const navigate = useNavigate();
   const [movie, setMovie] = useRecoilState(movieState);
   const [review, setReview] = useState();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const openModal = () => setOpen(true);
+  const openModal = () => {
+    if (!localStorage.access_token) {
+      if (
+        window.confirm(`로그인한 유저만 이용이 가능합니다. 로그인하시겠습니까?`)
+      ) {
+        navigate('/');
+      }
+    } else {
+      setOpen(true);
+    }
+  };
+
   const closeModal = (_, reason) => {
     if (reason === 'backdropClick') return;
     setOpen(false);
@@ -46,25 +57,21 @@ function Movie() {
       });
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      console.log('error', error);
     }
   };
 
   const movieDataApi = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${BASE_URL}movies/detail/${params.id}`, {
-        headers: {
-          Authorization: access_token,
-        },
-      });
-      const result = await response.json();
+      const response = await fetcher(`${API.movies_detail}/${params.id}`);
+      const result = response.data;
       setMovie(prev => {
         return { ...prev, ...result.movie_info };
       });
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      console.log('error', error);
     }
   };
 
@@ -72,6 +79,8 @@ function Movie() {
     movieDataApi();
     reviewDataApi();
   }, [params.id]);
+
+  console.log(movie);
 
   const { title, actor, video_url, image_url } = movie;
 
@@ -122,7 +131,7 @@ function Movie() {
       <MyViewLayout
         movie
         background={image_url[0]}
-        center={<LoadContainer loading={loading} ddd={<MovieContainer />} />}
+        center={<LoadWrap loading={loading} content={<MovieContainer />} />}
       />
     )
   );

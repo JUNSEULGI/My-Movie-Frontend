@@ -19,11 +19,7 @@ function NoReview({ title, openModal }) {
       </CardContainer>
 
       <NoReviewFabContainer>
-        <AddReviewButton
-          onClick={() => {
-            openModal();
-          }}
-        >
+        <AddReviewButton onClick={() => openModal()}>
           <AddCircleOutlineIcon fontSize="large" />
         </AddReviewButton>
       </NoReviewFabContainer>
