@@ -13,6 +13,7 @@ import { useDelete } from '../../util/hooks';
 
 function MyReview({ openModal, review }) {
   const [button, setButton] = useRecoilState(buttonState);
+  console.log('Myreview', review);
 
   const handleDelete = () => setButton({ ...button, isDeleting: true });
   useDelete(review.review_id);
@@ -63,6 +64,9 @@ const MyBox = styled.div``;
 
 const MyReviewTitle = styled(Typography)`
   margin-bottom: 8px;
+  ::after {
+    content: '...';
+  }
 `;
 
 const MyReviewContent = styled(Typography)`

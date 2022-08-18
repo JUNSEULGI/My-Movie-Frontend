@@ -11,9 +11,12 @@ import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import MyStep from './MyStep';
 import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import SearchBox from '../../components/MyViewModal/SearchBox';
-import { BASE_URL } from '../../Modules/API';
+import { BASE_URL, API } from '../../Modules/API';
+import { fetcher } from '../../Modules/fetcher';
+import LoadWrap from '../../components/Loading/LoadWrap';
 
 function List() {
+  const [loading, setLoading] = useState(true);
   function ListLayout() {
     const token = localStorage.getItem('access_token');
     const [userInfo] = useRecoilState(userState);
@@ -29,27 +32,34 @@ function List() {
       setOpen(false);
     };
 
+    // const getData = async (url, state) => {
+    //   setLoading(true);
+    //   try {
+    //     const response = await fetcher(`/${url}`);
+    //     const result = response.data;
+    //     // const {result.data} = result
+    //     state(result.data);
+    //     setLoading(false);
+    //   } catch (error) {
+    //     console.log(`error_${url}`, error);
+    //   }
+    // };
+
     useEffect(() => {
-      fetch(`${BASE_URL}reviews/list`, {
-        headers: {
-          Authorization: token,
-        },
-      })
-        .then(res => res.json())
+      fetcher(API.reviews_list)
+        .then(res => res.data)
         .then(data => {
           setReviewList(data.result);
         });
 
-      fetch(`${BASE_URL}reviews/top3`, {
-        headers: {
-          Authorization: token,
-        },
-      })
-        .then(res => res.json())
+      // getData(reviews_top, setTopMovies);
+      fetcher(API.reviews_top)
+        .then(res => res.data)
         .then(data => {
           setTopMovies(data.result);
         });
     }, []);
+    console.table(topMovies);
 
     // const mockMovies = [
     //   {
@@ -112,7 +122,7 @@ function List() {
   return (
     <MyViewLayout
       // leftMenu={<Aside />}
-      center={<ListLayout />}
+      center={<LoadWrap content={<ListLayout />} />}
     />
   );
 }

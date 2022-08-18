@@ -5,40 +5,60 @@ import { userState } from '../../state';
 import styled from '@emotion/styled';
 import MyViewLayout from '../../layout/Layout';
 import { Box, Typography } from '@mui/material';
-import { BASE_URL } from '../../Modules/API';
+import { BASE_URL, API } from '../../Modules/API';
 import { CardContainer, ActorImg } from '../Movie';
 import { PeopleProfile, MovieTable, CountReview } from '../People';
+import LoadWrap from '../../components/Loading/LoadWrap';
+import { fetcher } from '../../Modules/fetcher';
 
 function People() {
   const params = useParams();
-  const access_token = localStorage.getItem('access_token');
   const userInfo = useRecoilValue(userState);
+  const [loading, setLoading] = useState(true);
 
   // Real DATA
   const [peopleData, setPeopleData] = useState({});
   const [intimacyData, setIntimacyData] = useState({});
 
-  // 친밀도 DATA
-  useEffect(() => {
-    fetch(`${BASE_URL}movies/actor/intimacy/${params.id}`, {
-      headers: {
-        Authorization: access_token,
-      },
-    })
-      .then(res => res.json())
-      .then(res => {
-        console.log(res);
-        setIntimacyData(res.data);
-      });
-  }, []);
+  const intimacyDataApi = async () => {
+    setLoading(true);
+    try {
+      const response = await fetcher(`${API.actor_intimacy}/${params.id}`);
+      const result = response.data;
+      setIntimacyData(result.data);
+      setLoading(false);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
   //전체 데이터
+  // useEffect(() => {
+  //   fetch(`${BASE_URL}movies/actor/${params.id}`)
+  //     .then(res => res.json())
+  //     .then(res => {
+  //       setPeopleData(res.actor_info);
+  //     });
+  // }, []);
+
+  const peopleDataApi = async () => {
+    setLoading(true);
+    try {
+      const response = await fetcher(`${API.actor}/${params.id}`);
+      const result = response.data;
+      setPeopleData(result.actor_info);
+      setLoading(false);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
   useEffect(() => {
-    fetch(`${BASE_URL}movies/actor/${params.id}`)
-      .then(res => res.json())
-      .then(res => {
-        setPeopleData(res.actor_info);
-      });
-  }, []);
+    intimacyDataApi();
+    peopleDataApi();
+  }, [params.id]);
+
+  console.log(intimacyData);
 
   const { starring_list } = peopleData;
 
@@ -97,7 +117,7 @@ function People() {
   return (
     <MyViewLayout
       background={peopleData.background_image}
-      center={<PeopleLayout />}
+      center={<LoadWrap loading={loading} content={<PeopleLayout />} />}
     />
   );
 }

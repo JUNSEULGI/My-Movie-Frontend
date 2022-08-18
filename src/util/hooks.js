@@ -40,7 +40,7 @@ export const useSave = review => {
     if (!button.isSaving) return;
 
     const formData = new FormData();
-    formData.append('title', review.title);
+    formData.append('title', review.content.substr(0, 30));
     formData.append('content', review.content);
     formData.append('watched_date', timestamp(review.watched_date));
     formData.append('place', review.place.mapx);

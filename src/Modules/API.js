@@ -1,4 +1,5 @@
-export const BASE_URL = 'http://localhost:8000/';
+// export const BASE_URL = 'http://localhost:8000/';
+export const BASE_URL = 'http://6a3a-221-147-33-141.ngrok.io/';
 export const API = {
   // 유저
   users_list: '/users/list',
@@ -8,6 +9,7 @@ export const API = {
   reviews_movie: '/reviews/movie',
   review_list: '/review/list',
   reviews_list: '/reviews/list',
+  reviews_top: 'reviews/top3',
   // 영화 정보
   actor: '/movies/actor',
   movies: '/movies',

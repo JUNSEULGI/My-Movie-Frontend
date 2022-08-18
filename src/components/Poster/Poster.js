@@ -8,7 +8,7 @@ function Poster({ url }) {
     <Image component="img" image={url} />
   ) : (
     <NoImage>
-      <Logo style={{ fontSize: '30px' }}>MY VIEW</Logo>
+      <Logo style={{ fontSize: '30px' }}>My View</Logo>
     </NoImage>
   );
 }
