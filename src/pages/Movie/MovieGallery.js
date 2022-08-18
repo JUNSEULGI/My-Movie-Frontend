@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Masonry } from '@mui/lab';
-import { Box, Modal, IconButton, Typography } from '@mui/material';
+import { Box, Modal, IconButton, Typography, createTheme } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
@@ -29,12 +29,24 @@ function MovieGallery({ movie_image }) {
     }
   };
 
+  const theme = createTheme({
+    spacing: -11,
+  });
+
+  const MyMasonry = styled(Masonry)(({ theme }) => ({
+    margin: '-9px',
+
+    '&.MuiMasonry-root>*': {
+      margin: '10.3px',
+    },
+  }));
+
   return (
     <>
       <Box sx={{ width: '100%', minHeight: 429 }}>
-        <Masonry columns={4} spacing={2}>
+        <MyMasonry columns={4} spacing={2}>
           {movie_image?.map((item, index) => (
-            <div key={index}>
+            <Box key={index}>
               <MasonryImg
                 id={index}
                 src={`${item}?w=162&auto=format`}
@@ -51,9 +63,9 @@ function MovieGallery({ movie_image }) {
                   boxShadow: '5px 7px 20px -4px rgba(0, 0, 0, 0.6)',
                 }}
               />
-            </div>
+            </Box>
           ))}
-        </Masonry>
+        </MyMasonry>
       </Box>
       <Box>
         <GalleryModal

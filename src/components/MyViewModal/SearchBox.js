@@ -89,15 +89,13 @@ const SearchBar = styled(Autocomplete)`
   }
 `;
 
-const StyledPopper = styled(Popper)``;
+const StyledPopper = styled(Popper)`
+  color: white;
+`;
 
 const StyledPaper = styled(Paper)`
-  color: white;
   font-weight: bold;
-  background-color: darkgray;
-  :focus {
-    background-color: yellow;
-  }
+  color: white;
 `;
 
 const SearchInput = styled(TextField)`
