@@ -11,19 +11,42 @@ import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import MyStep from './MyStep';
 import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import SearchBox from '../../components/MyViewModal/SearchBox';
-import { BASE_URL, API } from '../../Modules/API';
+import { API } from '../../Modules/API';
 import { fetcher } from '../../Modules/fetcher';
 import LoadWrap from '../../components/Loading/LoadWrap';
 
 function List() {
   const [loading, setLoading] = useState(true);
+  const [reviewList, setReviewList] = useState([]);
+  const [topMovies, setTopMovies] = useState([]);
+
+  const getReviewAndTopMovies = async () => {
+    setLoading(true);
+    try {
+      await fetcher(API.reviews_list)
+        .then(res => res.data)
+        .then(data => {
+          setReviewList(data.result);
+        });
+      await fetcher(API.reviews_top)
+        .then(res => res.data)
+        .then(data => {
+          setTopMovies(data.result);
+        });
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getReviewAndTopMovies();
+  }, []);
+
   function ListLayout() {
-    const token = localStorage.getItem('access_token');
     const [userInfo] = useRecoilState(userState);
     const movie = useRecoilValue(movieState);
     const resetMovie = useResetRecoilState(movieState);
-    const [reviewList, setReviewList] = useState([]);
-    const [topMovies, setTopMovies] = useState([]);
     const [open, setOpen] = useState(false);
 
     const closeModal = (_, reason) => {
@@ -32,33 +55,6 @@ function List() {
       setOpen(false);
     };
 
-    // const getData = async (url, state) => {
-    //   setLoading(true);
-    //   try {
-    //     const response = await fetcher(`/${url}`);
-    //     const result = response.data;
-    //     // const {result.data} = result
-    //     state(result.data);
-    //     setLoading(false);
-    //   } catch (error) {
-    //     console.log(`error_${url}`, error);
-    //   }
-    // };
-
-    useEffect(() => {
-      fetcher(API.reviews_list)
-        .then(res => res.data)
-        .then(data => {
-          setReviewList(data.result);
-        });
-
-      // getData(reviews_top, setTopMovies);
-      fetcher(API.reviews_top)
-        .then(res => res.data)
-        .then(data => {
-          setTopMovies(data.result);
-        });
-    }, []);
     console.table(topMovies);
 
     // const mockMovies = [
@@ -122,7 +118,7 @@ function List() {
   return (
     <MyViewLayout
       // leftMenu={<Aside />}
-      center={<LoadWrap content={<ListLayout />} />}
+      center={<LoadWrap loading={loading} content={<ListLayout />} />}
     />
   );
 }
