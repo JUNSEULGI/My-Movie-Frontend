@@ -32,13 +32,10 @@ function WatchedMovie() {
       });
   }, []);
 
-  console.log(watched.map(el => {}));
-
   let total_watched = 0;
   for (let i = 0; i < watched.length; i++) {
     total_watched += watched[i].movie.running_time;
   }
-  console.log(total_watched);
 
   const moveMoviePage = id => {
     navigate(`/movie/${id}`);

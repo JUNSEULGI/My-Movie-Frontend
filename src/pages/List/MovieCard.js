@@ -81,6 +81,10 @@ const AddBtn = styled.div`
   color: #2222248a;
   font-size: 30px;
   font-weight: 300;
+  transition: all ease 0.4s;
+  &:hover {
+    background-color: ${({ theme }) => theme.palette.test.second};
+  }
 `;
 
 const Poster = styled(CardMedia)`

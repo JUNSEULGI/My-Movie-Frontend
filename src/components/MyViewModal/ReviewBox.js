@@ -54,7 +54,6 @@ function ReviewBox() {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         if (data.message === 'REVIEW_DOSE_NOT_EXISTS') return;
         // 리뷰 있으면 review에 저장하기
         const { result } = data;

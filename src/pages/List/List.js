@@ -32,19 +32,6 @@ function List() {
       setOpen(false);
     };
 
-    // const getData = async (url, state) => {
-    //   setLoading(true);
-    //   try {
-    //     const response = await fetcher(`/${url}`);
-    //     const result = response.data;
-    //     // const {result.data} = result
-    //     state(result.data);
-    //     setLoading(false);
-    //   } catch (error) {
-    //     console.log(`error_${url}`, error);
-    //   }
-    // };
-
     useEffect(() => {
       fetcher(API.reviews_list)
         .then(res => res.data)
@@ -59,7 +46,6 @@ function List() {
           setTopMovies(data.result);
         });
     }, []);
-    console.table(topMovies);
 
     // const mockMovies = [
     //   {
