@@ -58,8 +58,6 @@ function People() {
     peopleDataApi();
   }, [params.id]);
 
-  console.log(intimacyData);
-
   const { starring_list } = peopleData;
 
   let watched_count = 0;

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userState } from '../../state';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import MyAvatar from './Logout';
 import { API } from '../../Modules/API';
@@ -20,6 +20,7 @@ import { fetcher } from '../../Modules/fetcher';
 
 function Nav() {
   const { pathname } = useLocation();
+  const { navigate } = useNavigate();
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const resetUser = useResetRecoilState(userState);
   const [scroll, setScroll] = useState(0);
@@ -42,7 +43,7 @@ function Nav() {
         if (res.message === 'EXPIRED_TOKEN') {
           localStorage.removeItem('access_token');
           resetUser();
-          return;
+          navigate('/');
         }
         setUserInfo(res.result);
       });

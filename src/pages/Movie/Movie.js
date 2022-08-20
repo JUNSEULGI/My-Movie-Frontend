@@ -80,8 +80,6 @@ function Movie() {
     reviewDataApi();
   }, [params.id]);
 
-  console.log(movie);
-
   const { title, actor, video_url, image_url } = movie;
 
   function MovieContainer() {

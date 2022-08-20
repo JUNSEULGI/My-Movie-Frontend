@@ -17,9 +17,9 @@ const darkTheme = createTheme({
       background: 'rgba(15,23,46,0.5)',
     },
     primary: {
-      main: '#90caf9',
+      main: '#FF9201',
       light: '#e3f2fd',
-      dark: '#42a5f5',
+      dark: '#FEAB41',
       contrastText: '#000000de',
     },
     secondary: {
@@ -47,9 +47,9 @@ const darkTheme = createTheme({
       contrastText: '#000000de',
     },
     success: {
-      main: '#02C685',
-      light: '#81c784',
-      dark: '#388e3c',
+      main: '#FF9201',
+      light: '#FF9201',
+      dark: '#FF9201',
       contrastText: '#000000de',
     },
     ageBadge: {
@@ -59,14 +59,14 @@ const darkTheme = createTheme({
       18: '#D61D29',
     },
     text: {
-      primary: '#000000b3',
+      primary: '#FF9201',
       secondary: '#ffffff80',
-      disabled: '#ffffff80',
+      disabled: '#7c7c7c',
       icon: '#ffffff80',
     },
     divider: '#ffffff1f',
     background: {
-      paper: '#080D18',
+      paper: '#484848',
       card: 'rgba(21, 21, 21, 0.9)',
       modal: '#151515',
       disabled: '#535353',

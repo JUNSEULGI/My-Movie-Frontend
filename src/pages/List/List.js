@@ -55,8 +55,6 @@ function List() {
       setOpen(false);
     };
 
-    console.table(topMovies);
-
     // const mockMovies = [
     //   {
     //     id: 1,

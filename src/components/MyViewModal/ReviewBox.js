@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { movieState, userState } from '../../state';
 import styled from '@emotion/styled';
-import { Box, Typography, TextField, Rating } from '@mui/material';
+import { Box, Typography, TextField, Rating, Paper } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
@@ -54,7 +54,6 @@ function ReviewBox() {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         if (data.message === 'REVIEW_DOSE_NOT_EXISTS') return;
         // 리뷰 있으면 review에 저장하기
         const { result } = data;
@@ -126,6 +125,7 @@ function ReviewBox() {
             <WatchInfoLabel variant="subtitle1">when</WatchInfoLabel>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <WatchDate
+                components={Mypaper}
                 label="언제 보셨나요?"
                 inputFormat="yyyy.MM.dd HH:mm"
                 mask="____.__.__ __:__"
@@ -224,7 +224,21 @@ const WatchInfoLabel = styled(BoldText)`
   margin-bottom: 15px;
 `;
 
-const WatchDate = styled(DateTimePicker)``;
+const WatchDate = styled(DateTimePicker)`
+  .MuiCalendarPicker-root {
+    background-color: white;
+    .Mui-selected {
+      font-weight: bold;
+    }
+  }
+`;
+
+const Mypaper = styled(Paper)`
+  background-color: white;
+  .Mui-selected {
+    font-weight: bold;
+  }
+`;
 
 const WhiteTextField = styled(TextField)`
   & .MuiOutlinedInput-root {

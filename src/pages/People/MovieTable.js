@@ -14,8 +14,6 @@ function MovieTable({ movie, reviewdata }) {
     navigate(`/movie/${id}`);
   };
 
-  console.log(reviewdata);
-
   return (
     <>
       <RowTitle>

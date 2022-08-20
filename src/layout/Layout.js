@@ -55,7 +55,7 @@ const MovieScene = styled.div`
   position: absolute;
   z-index: 0;
   width: 100%;
-  height: 300px;
+  height: 320px;
   background: ${({ img }) => `url(${img}) no-repeat`};
   background-size: cover;
   background-position: left -50px;

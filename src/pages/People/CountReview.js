@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { Typography, Box, CircularProgress } from '@mui/material';
+import {
+  Typography,
+  Box,
+  CircularProgress,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  createTheme,
+} from '@mui/material';
 import { CardContainer } from '../Movie';
 import { ReviewIcon } from '../Movie/MyIconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function CountReview({ userInfo, starring_list, actor, watched_count }) {
   const [countReview, setCountReview] = useState(0);
@@ -20,11 +29,19 @@ function CountReview({ userInfo, starring_list, actor, watched_count }) {
   }, []);
 
   if (!access_token) return null;
+
   return (
     <>
-      {close ? (
-        <CountCardContainer>
+      <MyAccordion disableGutters elevation={0}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon sx={{ margin: '0px' }} />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
           <PeopleCardTitle variant="h3">친밀도</PeopleCardTitle>
+        </AccordionSummary>
+
+        <AccordionDetails>
           <Box sx={{ textAlign: 'center' }}>
             <Box sx={{ position: 'relative', display: 'inline-flex' }}>
               <BackProgress variant="determinate" size={140} value={100} />
@@ -45,25 +62,59 @@ function CountReview({ userInfo, starring_list, actor, watched_count }) {
               개의 영화를 시청했습니다.
             </CountIntro>
           </Box>
-
-          <CloseButton onClick={() => setClose(false)}>
-            <CloseIcon />
-          </CloseButton>
-        </CountCardContainer>
-      ) : (
-        ''
-      )}
+        </AccordionDetails>
+      </MyAccordion>
     </>
   );
 }
 
 export default CountReview;
 
-const CountCardContainer = styled(CardContainer)`
-  position: relative;
-  display: block;
-  width: 470px;
-`;
+const MyAccordion = styled(Accordion)(({ theme }) => ({
+  '&:before': { display: 'none' },
+  display: 'block',
+  position: 'relative',
+  padding: '20px',
+  margin: '40px 0 22px 0',
+  width: '470px',
+  boxShadow: '5px 7px 20px -4px rgba(0, 0, 0, 0.6)',
+  borderRadius: '8px',
+  background: `${theme.palette.test.card}`,
+  '.MuiPaper-root-MuiAccordion-root.Mui-expanded': {
+    margin: '0',
+  },
+  '.MuiPaper-root': {
+    margin: '0',
+    '.MuiAccordion-root': {
+      margin: '0',
+      '.Mui-expanded': {
+        margin: '0',
+      },
+    },
+  },
+  '.MuiButtonBase-root.MuiAccordionSummary-root.Mui-expanded': {
+    minHeight: '24px',
+  },
+  '.MuiAccordionSummary-root': {
+    color: 'white',
+    padding: '0',
+    minHeight: '24px',
+    '.MuiTypography-root': {
+      margin: '0',
+      minHeight: '24px',
+    },
+    '.Mui-expanded': {
+      minHeight: '24px',
+      margin: '0',
+    },
+    '.MuiAccordionSummary-content': {
+      margin: '0',
+    },
+  },
+  '.MuiAccordionDetails-root': {
+    color: 'white',
+  },
+}));
 
 const PeopleCardTitle = styled(Typography)`
   margin: 0 0 6px 0;
