@@ -5,7 +5,7 @@ import { userState } from '../../state';
 import styled from '@emotion/styled';
 import MyViewLayout from '../../layout/Layout';
 import { Box, Typography } from '@mui/material';
-import { BASE_URL, API } from '../../Modules/API';
+import { API } from '../../Modules/API';
 import { CardContainer, ActorImg } from '../Movie';
 import { PeopleProfile, MovieTable, CountReview } from '../People';
 import LoadWrap from '../../components/Loading/LoadWrap';

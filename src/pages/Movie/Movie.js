@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
 import { movieState } from '../../state';
 import MyViewLayout from '../../layout/Layout';
-import { BASE_URL, API } from '../../Modules/API';
+import { API } from '../../Modules/API';
 import {
   CardContainer,
   MovieInfo,
