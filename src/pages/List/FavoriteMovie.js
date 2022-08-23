@@ -39,6 +39,7 @@ const BestMovie = styled(Card)`
   padding: 20px;
   background: ${({ theme }) => theme.palette.test.card};
   border-radius: 8px;
+  box-shadow: 5px 7px 20px -4px rgba(0, 0, 0, 0.6);
   cursor: pointer;
 `;
 
