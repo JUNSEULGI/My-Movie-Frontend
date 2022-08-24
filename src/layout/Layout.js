@@ -1,18 +1,21 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import Nav from '../components/Nav/Nav';
+import { Typography } from '@mui/material';
 
+console.log(window.location.pathname);
 const MyViewLayout = ({
   leftMenu,
   movie,
-  login,
+  loginBack,
   background,
   center,
   rightMenu,
 }) => {
+  // const { image_url, title, description } = loginBack;
   return (
     <>
-      <Layout img={login}>
+      <Layout img={loginBack?.image_url}>
         <Nav />
         <Main>
           <MovieScene movie img={background} />
@@ -22,13 +25,20 @@ const MyViewLayout = ({
             <RightMenu>{rightMenu}</RightMenu>
           </Right>
         </Main>
+        {window.location.pathname == '/' && (
+          <BackInfo>
+            <Summary variant="body2">
+              {loginBack?.description?.substr(0, 30)}
+            </Summary>
+            <BackTitle variant="subtitle2">- {loginBack?.title} -</BackTitle>
+          </BackInfo>
+        )}
       </Layout>
     </>
   );
 };
 
 const Layout = styled.div`
-  /* background-color: gray; */
   &:before {
     content: '';
     position: fixed;
@@ -39,15 +49,13 @@ const Layout = styled.div`
     height: 100%;
     opacity: 0.4;
     display: ${({ img }) => (img ? '' : 'none')};
-    background: url('https://an2-img.amz.wtchn.net/image/v2/TT6mOWycO2N8w4PTcUoB_g.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1KbklsMHNJbkFpT2lJdmRqSXZjM1J2Y21VdmFXMWhaMlV2TVRZMU5qUTVNVFEyTmpNek5qVTNOREkyTWlKOS40OF9TeURKU0VFM3hhYkY2Q2xjejQ3Z1JpVC1iRTZCamJReHctazJON1Fn')
-      center center / cover no-repeat;
+    background: ${({ img }) => `url(${img})  center center / cover no-repeat`};
   }
 `;
 
 const Main = styled.div`
   display: flex;
   justify-content: center;
-  /* background-color: #080d18; */
 `;
 
 const MovieScene = styled.div`
@@ -128,6 +136,23 @@ const RightMenu = styled.aside`
   width: 230px;
   right: 18px;
   border-radius: 10px;
+`;
+
+const BackInfo = styled(Typography)`
+  position: absolute;
+  right: 64px;
+  bottom: 40px;
+  display: inline-block;
+`;
+
+const BackTitle = styled(Typography)`
+  text-align: end;
+`;
+
+const Summary = styled(Typography)`
+  ::after {
+    content: '...';
+  }
 `;
 
 export default MyViewLayout;
