@@ -19,7 +19,6 @@ function ReviewBox() {
   const [isReviewLoading, setIsReviewLoading] = useState(true);
   const loading = isMovieLoading || isReviewLoading;
   const [movie, setMovie] = useRecoilState(movieState);
-  const [userInfo] = useRecoilState(userState);
   const [review, setReview] = useState({
     review_id: '',
     title: '',
@@ -32,16 +31,21 @@ function ReviewBox() {
   const { pathname } = useLocation();
 
   const getMovie = async () => {
+    if (pathname.includes('movie')) {
+      setIsMovieLoading(false);
+      return;
+    }
+
     setIsMovieLoading(true);
     try {
       const { data: res } = await fetcher(`${API.movies_detail}/${movie.id}`);
       setMovie(prev => {
         return { ...prev, ...res.movie_info };
       });
+      setIsMovieLoading(false);
     } catch (error) {
       console.log('error', error);
     }
-    setIsMovieLoading(false);
   };
 
   const getReview = async () => {
@@ -76,119 +80,124 @@ function ReviewBox() {
 
   useEffect(() => {
     if (!movie.id) return;
-    // 컴포넌트 최초 렌더링 시 리뷰를 작성할 영화에 대한 정보를 받아오는데, movie 상세 페이지일 땐 필요 없음
+
+    // 컴포넌트 최초 렌더링 시 리뷰를 작성할 영화에 대한 정보를 받아오는데, "movie 상세 페이지일 땐 필요 없음!!!"
     getMovie();
     // 이미 작성한 리뷰의 내용 가져오기
     getReview();
   }, []);
 
-  // console.log(isMovieLoading, isReviewLoading);
-  console.log(movie);
-  function ReviewBoxContent() {
-    const changeContent = e => {
-      setReview(prev => {
-        return { ...prev, content: e.target.value };
-      });
-    };
+  return (
+    <LoadWrap
+      loading={loading}
+      content={<ReviewBoxContent review={review} setReview={setReview} />}
+    />
+  );
+}
 
-    // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송
-    useSave(review);
-    useDelete(review.review_id);
-    console.log('여기는 리뷰박스 content');
-    return (
-      <Column>
-        <Poster url={movie.thumbnail_image_url} />
-        <ReviewContainer>
-          <RowBox>
+function ReviewBoxContent({ review, setReview }) {
+  const [userInfo] = useRecoilState(userState);
+  const [movie] = useRecoilState(movieState);
+
+  // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송
+  useSave(review);
+  useDelete(review.review_id);
+
+  return (
+    <Column>
+      <Poster url={movie.thumbnail_image_url} />
+      <ReviewContainer>
+        <RowBox>
+          <Box>
+            <MovieTitle variant="h1">{movie.title}</MovieTitle>
             <Box>
-              <MovieTitle variant="h1">{movie.title}</MovieTitle>
-              <Box>
-                <BoldText variant="subtitle2">{movie.en_title} </BoldText>
-                <BoldText variant="subtitle2">
-                  2022 · {movie.country} ·{' '}
-                  {movie.genre?.map((genreItems, index) => (
-                    // chip으로 수정 필요
-                    <Genre key={index}>{genreItems}</Genre>
-                  ))}
-                </BoldText>
-                <BoldText variant="subtitle2">
-                  {movie.running_time}분 <AgeBadge age={movie.age} />
-                </BoldText>
-              </Box>
+              <BoldText variant="subtitle2">{movie.en_title} </BoldText>
+              <BoldText variant="subtitle2">
+                2022 · {movie.country} ·{' '}
+                {movie.genre?.map((genreItems, index) => (
+                  // chip으로 수정 필요
+                  <Genre key={index}>{genreItems}</Genre>
+                ))}
+              </BoldText>
+              <BoldText variant="subtitle2">
+                {movie.running_time}분 <AgeBadge age={movie.age} />
+              </BoldText>
             </Box>
-            <Rating
-              value={review.rating}
-              onChange={(e, newValue) => {
-                setReview({ ...review, rating: newValue });
-              }}
-              precision={0.5}
-              size="large"
-            />
-          </RowBox>
-          <RowLabel variant="h2">{userInfo?.nickname}님의 솔직후기</RowLabel>
-          <ReviewField
-            label="리뷰를 남겨보세요."
-            multiline
-            minRows={3}
-            maxRows={20}
-            value={review.content}
-            onChange={e => changeContent(e)}
+          </Box>
+          <Rating
+            value={review.rating}
+            onChange={(e, newValue) => {
+              setReview({ ...review, rating: newValue });
+            }}
+            precision={0.5}
+            size="large"
           />
-          <RowLabel variant="h2">관람정보</RowLabel>
-          <GridBox>
-            <Box>
-              <WatchInfoLabel variant="subtitle1">when</WatchInfoLabel>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <WatchDate
-                  components={Mypaper}
-                  label="언제 보셨나요?"
-                  inputFormat="yyyy.MM.dd HH:mm"
-                  mask="____.__.__ __:__"
-                  disableFuture={true}
-                  renderInput={params => <WhiteTextField {...params} />}
-                  value={review.watched_date}
-                  onChange={newValue => {
-                    setReview(prev => {
-                      return { ...prev, watched_date: newValue };
-                    });
-                  }}
-                />
-              </LocalizationProvider>
-            </Box>
-            <Box>
-              <WatchInfoLabel variant="subtitle1">where</WatchInfoLabel>
-              <WatchInfoField
-                label="어디서 보셨나요?"
-                value={review.place.name}
-                onChange={e => {
+        </RowBox>
+        <RowLabel variant="h2">{userInfo?.nickname}님의 솔직후기</RowLabel>
+        <ReviewField
+          label="리뷰를 남겨보세요."
+          multiline
+          minRows={3}
+          maxRows={20}
+          value={review.content}
+          onChange={e => {
+            setReview(prev => {
+              return { ...prev, content: e.target.value };
+            });
+          }}
+        />
+        <RowLabel variant="h2">관람정보</RowLabel>
+        <GridBox>
+          <Box>
+            <WatchInfoLabel variant="subtitle1">when</WatchInfoLabel>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <WatchDate
+                components={Mypaper}
+                label="언제 보셨나요?"
+                inputFormat="yyyy.MM.dd HH:mm"
+                mask="____.__.__ __:__"
+                disableFuture={true}
+                renderInput={params => <WhiteTextField {...params} />}
+                value={review.watched_date}
+                onChange={newValue => {
                   setReview(prev => {
-                    return {
-                      ...prev,
-                      place: { ...review.place, name: e.target.value },
-                    };
+                    return { ...prev, watched_date: newValue };
                   });
                 }}
               />
-            </Box>
-            <Box>
-              <WatchInfoLabel variant="subtitle1">with</WatchInfoLabel>
-              <WatchInfoField
-                label="누구랑 보셨나요?"
-                value={review.with_user}
-                onChange={e => {
-                  setReview(prev => {
-                    return { ...prev, with_user: e.target.value };
-                  });
-                }}
-              />
-            </Box>
-          </GridBox>
-        </ReviewContainer>
-      </Column>
-    );
-  }
-
-  return <LoadWrap loading={loading} content={<ReviewBoxContent />} />;
+            </LocalizationProvider>
+          </Box>
+          <Box>
+            <WatchInfoLabel variant="subtitle1">where</WatchInfoLabel>
+            <WatchInfoField
+              label="어디서 보셨나요?"
+              value={review.place.name}
+              onChange={e => {
+                setReview(prev => {
+                  return {
+                    ...prev,
+                    place: { ...review.place, name: e.target.value },
+                  };
+                });
+              }}
+            />
+          </Box>
+          <Box>
+            <WatchInfoLabel variant="subtitle1">with</WatchInfoLabel>
+            <WatchInfoField
+              label="누구랑 보셨나요?"
+              value={review.with_user}
+              onChange={e => {
+                setReview(prev => {
+                  return { ...prev, with_user: e.target.value };
+                });
+              }}
+            />
+          </Box>
+        </GridBox>
+      </ReviewContainer>
+    </Column>
+  );
 }
 
 const Column = styled(Box)`
