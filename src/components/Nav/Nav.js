@@ -38,14 +38,13 @@ function Nav() {
   useEffect(() => {
     if (!access_token) return;
     fetcher(API.users_info)
-      .then(res => res.data)
       .then(res => {
-        if (res.message === 'EXPIRED_TOKEN') {
-          localStorage.removeItem('access_token');
-          resetUser();
-          navigate('/');
-        }
-        setUserInfo(res.result);
+        setUserInfo(res.data.result);
+      })
+      .catch(e => {
+        localStorage.removeItem('access_token');
+        resetUser();
+        navigate('/');
       });
   }, [access_token]);
 

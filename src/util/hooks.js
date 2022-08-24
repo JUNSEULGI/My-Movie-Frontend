@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { movieState, buttonState } from '../state';
 import { API, BASE_URL } from '../Modules/API';
-import { timestamp } from './timestamp';
 import { fetcher } from '../Modules/fetcher';
+import moment from 'moment';
 
 export const useDelete = review_id => {
   const { pathname } = useLocation();
@@ -42,7 +42,10 @@ export const useSave = review => {
     const formData = new FormData();
     formData.append('title', review.content.substr(0, 30));
     formData.append('content', review.content);
-    formData.append('watched_date', timestamp(review.watched_date));
+    formData.append(
+      'watched_date',
+      moment(review.watched_date).format('YYYY-MM-DD HH:mm:ss')
+    );
     formData.append('place', review.place.mapx);
     formData.append('place', review.place.mapy);
     formData.append('place', review.place.name);

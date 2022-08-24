@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { userState, movieState } from '../../state';
 import { Box, Typography } from '@mui/material';
@@ -16,6 +17,7 @@ import { fetcher } from '../../Modules/fetcher';
 import LoadWrap from '../../components/Loading/LoadWrap';
 
 function List() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [reviewList, setReviewList] = useState([]);
   const [topMovies, setTopMovies] = useState([]);
@@ -35,7 +37,9 @@ function List() {
         });
       setLoading(false);
     } catch (error) {
-      console.log(error);
+      if (error.response.data.message === 'INVALID_TOKEN') {
+        navigate('/');
+      }
     }
   };
 
@@ -43,7 +47,7 @@ function List() {
     getReviewAndTopMovies();
   }, []);
 
-  function ListLayout() {
+  function ListContent() {
     const [userInfo] = useRecoilState(userState);
     const movie = useRecoilValue(movieState);
     const resetMovie = useResetRecoilState(movieState);
@@ -54,24 +58,6 @@ function List() {
       resetMovie();
       setOpen(false);
     };
-
-    // const mockMovies = [
-    //   {
-    //     id: 1,
-    //     title: '외계+인 1부',
-    //     img: 'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000085/85997/85997204141_727.jpg',
-    //   },
-    //   {
-    //     id: 2,
-    //     title: '한산-용의 출현',
-    //     img: 'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000083/83280/83280202413_727.jpg',
-    //   },
-    //   {
-    //     id: 3,
-    //     title: '탑건-메버릭',
-    //     img: 'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000082/82120/82120202950_727.jpg',
-    //   },
-    // ];
 
     return (
       <>
@@ -116,7 +102,7 @@ function List() {
   return (
     <MyViewLayout
       // leftMenu={<Aside />}
-      center={<LoadWrap loading={loading} content={<ListLayout />} />}
+      center={<LoadWrap loading={loading} content={<ListContent />} />}
     />
   );
 }

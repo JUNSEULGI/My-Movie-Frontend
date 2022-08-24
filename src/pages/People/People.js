@@ -5,7 +5,7 @@ import { userState } from '../../state';
 import styled from '@emotion/styled';
 import MyViewLayout from '../../layout/Layout';
 import { Box, Typography } from '@mui/material';
-import { BASE_URL, API } from '../../Modules/API';
+import { API } from '../../Modules/API';
 import { CardContainer, ActorImg } from '../Movie';
 import { PeopleProfile, MovieTable, CountReview } from '../People';
 import LoadWrap from '../../components/Loading/LoadWrap';
@@ -20,11 +20,12 @@ function People() {
   const [peopleData, setPeopleData] = useState({});
   const [intimacyData, setIntimacyData] = useState({});
 
-  const intimacyDataApi = async () => {
+  const getIntimacy = async () => {
     setLoading(true);
     try {
-      const response = await fetcher(`${API.actor_intimacy}/${params.id}`);
-      const result = response.data;
+      const { data: result } = await fetcher(
+        `${API.actor_intimacy}/${params.id}`
+      );
       setIntimacyData(result.data);
       setLoading(false);
     } catch (error) {
@@ -41,11 +42,10 @@ function People() {
   //     });
   // }, []);
 
-  const peopleDataApi = async () => {
+  const getPeople = async () => {
     setLoading(true);
     try {
-      const response = await fetcher(`${API.actor}/${params.id}`);
-      const result = response.data;
+      const { data: result } = await fetcher(`${API.actor}/${params.id}`);
       setPeopleData(result.actor_info);
       setLoading(false);
     } catch (error) {
@@ -54,8 +54,8 @@ function People() {
   };
 
   useEffect(() => {
-    intimacyDataApi();
-    peopleDataApi();
+    getIntimacy();
+    getPeople();
   }, [params.id]);
 
   const { starring_list } = peopleData;
@@ -76,9 +76,9 @@ function People() {
 
   checkAddMyReview(intimacyData, starring_list);
 
-  function PeopleLayout() {
+  function PeopleContent() {
     return (
-      <PeopleLayoutContainer>
+      <PeopleContentContainer>
         <PeopleCard>
           <PeopleImg src={peopleData.image_url} />
           <Info>
@@ -109,18 +109,18 @@ function People() {
         <Right>
           <MovieTable reviewdata={intimacyData} movie={starring_list} />
         </Right>
-      </PeopleLayoutContainer>
+      </PeopleContentContainer>
     );
   }
   return (
     <MyViewLayout
       background={peopleData.background_image}
-      center={<LoadWrap loading={loading} content={<PeopleLayout />} />}
+      center={<LoadWrap loading={loading} content={<PeopleContent />} />}
     />
   );
 }
 
-const PeopleLayoutContainer = styled.div`
+const PeopleContentContainer = styled.div`
   padding-top: 40px;
 `;
 

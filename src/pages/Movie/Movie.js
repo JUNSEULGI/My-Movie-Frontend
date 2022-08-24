@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
 import { movieState } from '../../state';
 import MyViewLayout from '../../layout/Layout';
-import { BASE_URL, API } from '../../Modules/API';
+import { API } from '../../Modules/API';
 import {
   CardContainer,
   MovieInfo,
@@ -45,15 +45,14 @@ function Movie() {
     setOpen(false);
   };
 
-  const reviewDataApi = async () => {
+  const getReview = async () => {
     setLoading(true);
     try {
-      const response = await fetcher(`${API.reviews_movie}/${params.id}`);
-      const result = response.data;
-      if (result.message === 'REVIEW_DOSE_NOT_EXISTS') return;
-      setReview(result.result);
+      const { data: res } = await fetcher(`${API.reviews_movie}/${params.id}`);
+      if (res.message === 'REVIEW_DOSE_NOT_EXISTS') return;
+      setReview(res.result);
       setMovie(prev => {
-        return { ...prev, review_id: result.result.review_id };
+        return { ...prev, review_id: res.result.review_id };
       });
       setLoading(false);
     } catch (error) {
@@ -61,13 +60,12 @@ function Movie() {
     }
   };
 
-  const movieDataApi = async () => {
+  const getMovie = async () => {
     setLoading(true);
     try {
-      const response = await fetcher(`${API.movies_detail}/${params.id}`);
-      const result = response.data;
+      const { data: res } = await fetcher(`${API.movies_detail}/${params.id}`);
       setMovie(prev => {
-        return { ...prev, ...result.movie_info };
+        return { ...prev, ...res.movie_info };
       });
       setLoading(false);
     } catch (error) {
@@ -76,13 +74,13 @@ function Movie() {
   };
 
   useEffect(() => {
-    movieDataApi();
-    reviewDataApi();
+    getMovie();
+    getReview();
   }, [params.id]);
 
   const { title, actor, video_url, image_url } = movie;
 
-  function MovieContainer() {
+  function MovieContent() {
     return (
       <MovieBackGround>
         {movie.id && <MovieInfo />}
@@ -129,7 +127,7 @@ function Movie() {
       <MyViewLayout
         movie
         background={image_url[0]}
-        center={<LoadWrap loading={loading} content={<MovieContainer />} />}
+        center={<LoadWrap loading={loading} content={<MovieContent />} />}
       />
     )
   );
