@@ -47,7 +47,7 @@ function List() {
     getReviewAndTopMovies();
   }, []);
 
-  function ListLayout() {
+  function ListContent() {
     const [userInfo] = useRecoilState(userState);
     const movie = useRecoilValue(movieState);
     const resetMovie = useResetRecoilState(movieState);
@@ -102,7 +102,7 @@ function List() {
   return (
     <MyViewLayout
       // leftMenu={<Aside />}
-      center={<LoadWrap loading={loading} content={<ListLayout />} />}
+      center={<LoadWrap loading={loading} content={<ListContent />} />}
     />
   );
 }

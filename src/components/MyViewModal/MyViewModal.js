@@ -56,6 +56,7 @@ const Container = styled(Box)`
   left: 50%;
   transform: translate(-50%, 0);
   width: 987px;
+  min-height: 540px;
   padding: 70px 60px;
   margin-bottom: 100px;
   background-color: ${({ theme }) => theme.palette.background.modal};
