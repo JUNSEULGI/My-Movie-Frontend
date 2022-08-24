@@ -10,12 +10,15 @@ import MovieRating from './MovieRating';
 import { Logo } from '../../components/Logo';
 import { ReviewIcon, FabContainer } from './MyIconButton';
 import { useDelete } from '../../util/hooks';
+import { replaceBrTag } from '../../util/replaceBrTag';
 
 function MyReview({ openModal, review }) {
   const [button, setButton] = useRecoilState(buttonState);
 
   const handleDelete = () => setButton({ ...button, isDeleting: true });
   useDelete(review.review_id);
+
+  console.log('review', review.content);
 
   if (!review.review_id) return null;
   return (
@@ -27,7 +30,14 @@ function MyReview({ openModal, review }) {
       <MyBox>
         <MyReviewTitle variant="h1">{review.title}</MyReviewTitle>
       </MyBox>
-      <MyReviewContent variant="body1">{review.content}</MyReviewContent>
+      {review.content.length < 30 ? (
+        ''
+      ) : (
+        <MyReviewContent
+          variant="body1"
+          dangerouslySetInnerHTML={replaceBrTag(review.content)}
+        />
+      )}
       <FabContainer>
         <EditButton onClick={openModal}>
           <EditIcon />
