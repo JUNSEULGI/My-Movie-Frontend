@@ -13,9 +13,13 @@ const FavoriteMovie = ({ topMovies }) => {
           key={item.review_id}
           onClick={() => navigate(`/movie/${item.movie.id}`)}
         >
-          <BackgroundPoster img={item.movie.poster}>
+          <BackgroundPosterWrapper>
+            <BackgroundPoster
+              src={item.movie.poster}
+              alt="poster of my best movie"
+            />
             <Title variant="h1">{item.movie.title}</Title>
-          </BackgroundPoster>
+          </BackgroundPosterWrapper>
         </BestMovie>
       ))}
     </Container>
@@ -43,19 +47,31 @@ const BestMovie = styled(Card)`
   cursor: pointer;
 `;
 
-const BackgroundPoster = styled.div`
+const BackgroundPosterWrapper = styled.div`
+  position: relative;
   display: flex;
   align-items: flex-end;
   width: 100%;
   height: 100%;
-  background-image: url(${props => props.img});
-  background-size: cover;
-  background-position: center;
   border-radius: 8px;
+  overflow: hidden;
+`;
+
+const BackgroundPoster = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  :hover {
+    transform: scale(1.1);
+    transition: all 0.2s;
+  }
 `;
 
 const Title = styled(Typography)`
-  margin: 10px 16px;
+  position: absolute;
+  bottom: 10px;
+  left: 16px;
   color: ${({ theme }) => theme.palette.common.white};
   font-weight: bold;
 `;
