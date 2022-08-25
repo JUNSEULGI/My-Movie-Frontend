@@ -5,7 +5,7 @@ function Trailer({ video }) {
   return (
     <MovieTrailer>
       <DarkPaperContainer>
-        <video controls preload="none" width="560" height="315">
+        <video controls width="560" height="315">
           <source src={video} deletecommandtype="video/webm" />
           <source src={video} deletecommandtype="video/mp4" />
           <source src={video} type="video/quicktime" />

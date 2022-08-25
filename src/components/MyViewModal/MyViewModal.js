@@ -2,9 +2,10 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { buttonState, movieState } from '../../state';
-import { Box, Button, ButtonGroup, Modal } from '@mui/material';
+import { Box, Button, Modal, IconButton } from '@mui/material';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
-function MyViewModal({ open, closeModal, breadcrumbs, content }) {
+function MyViewModal({ open, closeModal, breadcrumbs, content, review }) {
   const movie = useRecoilValue(movieState);
   const [button, setButton] = useRecoilState(buttonState);
 
@@ -16,25 +17,37 @@ function MyViewModal({ open, closeModal, breadcrumbs, content }) {
       disableEscapeKeyDown={true}
     >
       <Container>
-        <Step breadcrumbs={breadcrumbs}>{breadcrumbs}</Step>
-        <Buttons variant="text">
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginBottom: '10px',
+          }}
+        >
+          <Step breadcrumbs={breadcrumbs}>{breadcrumbs}</Step>
+          <IconButton onClick={closeModal}>
+            <HighlightOffIcon />
+          </IconButton>
+        </Box>
+        {content}
+        <Buttons>
           {movie?.review_id && (
             <ModalButton
+              variant="outlined"
               onClick={() => setButton({ ...button, isDeleting: true })}
             >
-              Delete
+              삭제
             </ModalButton>
           )}
           {movie.id && (
-            <ModalButton
+            <SaveButton
+              variant="contained"
               onClick={() => setButton({ ...button, isSaving: true })}
             >
-              Save
-            </ModalButton>
+              저장
+            </SaveButton>
           )}
-          <ModalButton onClick={closeModal}>Close</ModalButton>
         </Buttons>
-        {content}
       </Container>
     </MyModal>
   );
@@ -53,27 +66,28 @@ const Container = styled(Box)`
   // position: relative;
   // 세로 중앙 정렬 위해 top 했으나 바닥에서 띄우는 거 먼저 해결해야 함.
   // top: 50%;
+  outline: none;
   left: 50%;
   transform: translate(-50%, 0);
   width: 987px;
   min-height: 540px;
-  padding: 70px 60px;
+  padding: 20px 30px;
   margin-bottom: 100px;
   background-color: ${({ theme }) => theme.palette.background.modal};
   border-radius: 8px;
 `;
 
 const Step = styled(Box)`
-  ${({ breadcrumbs }) => !breadcrumbs && 'display:none;'}
-  position: absolute;
-  top: 35px;
-  left: 60px;
+  ${({ breadcrumbs }) => !breadcrumbs && 'display:none;'}/* position: absolute;
+  top: 35px; */
+  /* left: 60px; */
 `;
 
-const Buttons = styled(ButtonGroup)`
+const Buttons = styled(Box)`
   position: absolute;
-  top: 30px;
-  right: 60px;
+  /* top: 30px; */
+  margin-top: 20px;
+  right: 30px;
 
   & .MuiButtonGroup-grouped:not(:last-of-type) {
     border-right: 0px;
@@ -82,7 +96,19 @@ const Buttons = styled(ButtonGroup)`
 
 const ModalButton = styled(Button)`
   text-transform: none;
+  font-weight: 600;
   color: #fc6c2e;
+  padding: 5px 22px;
+`;
+
+const SaveButton = styled(ModalButton)`
+  margin-left: 10px;
+  background-color: white;
+  font-weight: bold;
+
+  :hover {
+    color: white;
+  }
 `;
 
 // Poster 컴포넌트 사용하지 않았을 때

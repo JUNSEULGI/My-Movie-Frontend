@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil';
 import { movieState } from '../../state';
 import MyViewLayout from '../../layout/Layout';
 import { API } from '../../Modules/API';
+import MyStep from '../List/MyStep';
 import {
   CardContainer,
   MovieInfo,
@@ -79,6 +80,7 @@ function Movie() {
   }, [params.id]);
 
   const { title, actor, video_url, image_url } = movie;
+  console.log('review?.review_id', review?.review_id);
 
   function MovieContent() {
     return (
@@ -104,6 +106,13 @@ function Movie() {
         )}
         <MyViewModal
           open={open}
+          breadcrumbs={
+            movie.id ? (
+              <MyStep id={movie.id} check={true} />
+            ) : (
+              <MyStep check={false} />
+            )
+          }
           closeModal={closeModal}
           content={<ReviewBox />}
         />
@@ -141,8 +150,7 @@ const MovieBackGround = styled.div`
 
 const ContainerTitle = styled(Typography)`
   font-weight: bold;
-  font-size: 1rem;
-  margin: 20px 0 6px;
+  margin: 80px 0 6px;
   color: ${({ theme }) => theme.palette.common.white};
 `;
 

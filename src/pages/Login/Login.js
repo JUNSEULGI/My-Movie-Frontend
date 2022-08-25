@@ -80,7 +80,7 @@ const LoginBox = styled(CardContainer)`
   position: absolute;
   left: 50%;
   top: 50%;
-  margin: -380px 0 0 -380px;
+  margin: -380px 0 0 -430px;
   padding: 40px 20px;
   width: 760px;
   height: 580px;

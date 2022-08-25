@@ -4,6 +4,7 @@ import { movieState } from '../../state';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Box, Card, CardMedia, Typography, Rating, Chip } from '@mui/material';
+import darkTheme from '../../styles/theme';
 
 function MovieCard({ data, setOpen }) {
   const navigate = useNavigate();
@@ -23,6 +24,14 @@ function MovieCard({ data, setOpen }) {
     resetMovie();
     setOpen(true);
   };
+
+  const tagTheme = darkTheme.palette.tag;
+  let tagBase = [];
+  for (let key in tagTheme) {
+    tagBase.push(key);
+  }
+
+  let randomTag = tagBase[Math.floor(Math.random() * tagBase.length)];
 
   return !data ? (
     <AddCardBox onClick={addMovie}>
@@ -45,7 +54,13 @@ function MovieCard({ data, setOpen }) {
       </InfoContainer>
       <GenreContainer>
         {data.movie.genre.map((item, index) => (
-          <Genre key={index} label={item} color="warning" size="small" />
+          <Genre
+            key={index}
+            label={item}
+            randomTag={randomTag}
+            // color={`${darkTheme.palette.tag.yellow}`}
+            size="small"
+          />
         ))}
       </GenreContainer>
     </CardBox>
@@ -60,6 +75,12 @@ const CardBox = styled(Card)`
   background: ${({ theme }) => theme.palette.test.card};
   box-shadow: 5px 7px 20px -4px rgba(0, 0, 0, 0.6);
   cursor: pointer;
+
+  transition: all ease 0.3s;
+
+  :hover {
+    background: rgb(48 48 48 / 70%);
+  }
 `;
 
 const AddCardBox = styled(CardBox)`
@@ -91,6 +112,7 @@ const AddBtn = styled.div`
 const Poster = styled(CardMedia)`
   width: 100%;
   border-radius: 8px;
+  box-shadow: ${({ theme }) => theme.palette.background.card};
 `;
 
 const InfoContainer = styled(Box)`
@@ -120,12 +142,13 @@ const Star = styled(Rating)`
 
 const Number = styled.span`
   font-size: 15px;
-  color: ${({ theme }) => theme.palette.common.white};
+  color: ${({ theme }) => theme.palette.text.disabled};
 `;
 
 const ThickNumber = styled(Number)`
   font-weight: 700;
   margin-left: 8px;
+  color: ${({ theme }) => theme.palette.common.white};
 `;
 
 const GenreContainer = styled(Box)`
@@ -135,8 +158,9 @@ const GenreContainer = styled(Box)`
 `;
 
 const Genre = styled(Chip)`
-  height: 14px;
+  height: 16px;
   margin-left: 4px;
+  background-color: ${({ randomTag }) => randomTag};
   font-size: 10px;
   font-weight: 700;
   color: ${({ theme }) => theme.palette.common.white};

@@ -5,6 +5,7 @@ import { movieState, buttonState } from '../state';
 import { API, BASE_URL } from '../Modules/API';
 import { fetcher } from '../Modules/fetcher';
 import moment from 'moment';
+import { set } from 'date-fns';
 
 export const useDelete = review_id => {
   const { pathname } = useLocation();
@@ -29,7 +30,7 @@ export const useDelete = review_id => {
   }, [button.isDeleting]);
 };
 
-export const useSave = review => {
+export const useSave = (review, ratingRef) => {
   const { pathname } = useLocation();
   const token = localStorage.getItem('access_token');
   const [button, setButton] = useRecoilState(buttonState);
@@ -38,6 +39,13 @@ export const useSave = review => {
 
   return useEffect(() => {
     if (!button.isSaving) return;
+    if (review.rating === 0) {
+      alert('평점을 매겨주세요');
+      setButton({ ...button, isSaving: false });
+      console.log('ffffff', ratingRef.current.children[0].children);
+      ratingRef.current.children[0].focus();
+      return;
+    }
 
     const formData = new FormData();
     formData.append('title', review.content.substr(0, 30));
@@ -72,6 +80,7 @@ export const useSave = review => {
         });
     } else {
       // 리뷰 아이디가 없으므로 새로운 리뷰 저장하는 중
+
       fetch(`${BASE_URL}reviews`, {
         method: 'POST',
         headers: {
