@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { movieState, userState } from '../../state';
@@ -98,9 +98,10 @@ function ReviewBox() {
 function ReviewBoxContent({ review, setReview }) {
   const [userInfo] = useRecoilState(userState);
   const [movie] = useRecoilState(movieState);
+  const ratingRef = useRef();
 
   // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송
-  useSave(review);
+  useSave(review, ratingRef);
   useDelete(review.review_id);
 
   return (
@@ -124,7 +125,9 @@ function ReviewBoxContent({ review, setReview }) {
               </BoldText>
             </Box>
           </Box>
-          <Rating
+          <MyRating
+            ref={ratingRef}
+            onFocus={() => console.log('focus')}
             value={review.rating}
             onChange={(e, newValue) => {
               setReview({ ...review, rating: newValue });
@@ -227,6 +230,18 @@ const MovieTitle = styled(BoldText)`
 
 const Genre = styled.span`
   margin-right: 10px;
+`;
+
+const MyRating = styled(Rating)`
+  & .MuiRating-iconFocus {
+    color: orange;
+  }
+
+  :focus {
+    svg {
+      fill: orange;
+    }
+  }
 `;
 
 const RowLabel = styled(BoldText)`

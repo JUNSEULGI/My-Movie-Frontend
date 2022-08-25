@@ -61,10 +61,10 @@ const BackgroundPoster = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: all ease 0.4s;
 
   :hover {
     transform: scale(1.1);
-    transition: all 0.2s;
   }
 `;
 
@@ -74,6 +74,7 @@ const Title = styled(Typography)`
   left: 16px;
   color: ${({ theme }) => theme.palette.common.white};
   font-weight: bold;
+  text-shadow: 4px 2px 4px black;
 `;
 
 export default FavoriteMovie;

@@ -91,7 +91,13 @@ function List() {
           <MyViewModal
             open={open}
             closeModal={closeModal}
-            breadcrumbs={<MyStep />}
+            breadcrumbs={
+              movie.id ? (
+                <MyStep id={movie.id} check={true} />
+              ) : (
+                <MyStep review={reviewList.review_id} check={false} />
+              )
+            }
             content={movie.id ? <ReviewBox /> : <SearchBox />}
           />
         )}

@@ -71,6 +71,15 @@ const darkTheme = createTheme({
       modal: '#151515',
       disabled: '#535353',
     },
+    tag: {
+      yellowLight: 'FBF3DA',
+      red: '#E03D3e',
+      purple: '#693FA5',
+      orange: '#D9730B',
+      green: '#0E7B6C',
+
+      brown: '#64473A',
+    },
   },
 });
 

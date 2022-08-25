@@ -78,10 +78,12 @@ const Column = styled(Box)`
 
 const SearchContainer = styled(Box)`
   margin-left: 110px;
+  /* background-color: antiquewhite; */
 `;
 
 const SearchBar = styled(Autocomplete)`
-  width: 478px;
+  /* background-color: red; */
+  width: 98%;
   margin: 30px 0;
 
   & .MuiInputBase-input {
