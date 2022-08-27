@@ -50,10 +50,6 @@ function Login() {
             <KakaoLogin />
           </SocialContainer>
         </LoginBox>
-        {/* <BackInfo>
-          <Summary>어어어어엉</Summary>
-          <BackTitle>스물하나, 스물다섯</BackTitle>
-        </BackInfo> */}
       </LoginPage>
     );
   }
