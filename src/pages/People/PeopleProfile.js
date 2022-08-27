@@ -16,7 +16,7 @@ function PeopleProfile({ profile }) {
   } = profile;
 
   return (
-    <Box
+    <ProfileBox
       sx={{
         display: 'block',
       }}
@@ -60,9 +60,15 @@ function PeopleProfile({ profile }) {
           </>
         )}
       </Profile>
-    </Box>
+    </ProfileBox>
   );
 }
+
+const ProfileBox = styled(Box)`
+  @media screen and (max-width: 600px) {
+    font-size: 14px;
+  }
+`;
 
 const Profile = styled.div`
   display: flex;
@@ -74,10 +80,17 @@ const Title = styled(Typography)`
   font-size: 1rem;
   font-weight: bold;
   width: 50px;
+
+  @media screen and (max-width: 600px) {
+    font-size: 14px;
+  }
 `;
 
 const Info = styled(Typography)`
   margin: 0 8px 0 0;
+  @media screen and (max-width: 600px) {
+    font-size: 14px;
+  }
 `;
 
 export default PeopleProfile;

@@ -81,7 +81,7 @@ function Movie() {
 
   const { title, actor, video_url, image_url } = movie;
   console.log('review?.review_id', review?.review_id);
-
+  console.log(image_url);
   function MovieContent() {
     return (
       <MovieBackGround>
@@ -146,6 +146,11 @@ export default Movie;
 
 const MovieBackGround = styled.div`
   padding: 80px;
+  @media screen and (max-width: 380px) {
+    margin-top: 20px;
+    padding: 0;
+    overflow-x: hidden;
+  }
 `;
 
 const ContainerTitle = styled(Typography)`
@@ -172,5 +177,10 @@ const TrailerContainer = styled.div`
   scrollbar-width: none; /* Firefox */
   ::-webkit-scrollbar {
     display: none; /* Chrome */
+  }
+
+  @media screen and (max-width: 380px) {
+    width: 360px;
+    /* overflow-x: ;/ */
   }
 `;

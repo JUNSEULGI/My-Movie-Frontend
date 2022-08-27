@@ -112,7 +112,6 @@ function List() {
     />
   );
 }
-
 const Section = styled(Box)`
   margin: 80px 0;
 `;
@@ -121,6 +120,11 @@ const CardContainer = styled(Box)`
   display: grid;
   grid-template-columns: repeat(4, 270px);
   gap: 24px;
+  @media screen and (max-width: 600px) {
+    overflow-x: hidden;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+  }
 `;
 
 const SectionTitle = styled(Typography)`

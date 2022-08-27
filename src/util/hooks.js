@@ -30,7 +30,7 @@ export const useDelete = review_id => {
   }, [button.isDeleting]);
 };
 
-export const useSave = (review, ratingRef) => {
+export const useSave = (review, textInput) => {
   const { pathname } = useLocation();
   const token = localStorage.getItem('access_token');
   const [button, setButton] = useRecoilState(buttonState);
@@ -42,8 +42,9 @@ export const useSave = (review, ratingRef) => {
     if (review.rating === 0) {
       alert('평점을 매겨주세요');
       setButton({ ...button, isSaving: false });
-      console.log('ffffff', ratingRef.current.children[0].children);
-      ratingRef.current.children[0].focus();
+      for (let i = 0; i < 5; i++) {
+        textInput.current.children[i].children[2].focus();
+      }
       return;
     }
 

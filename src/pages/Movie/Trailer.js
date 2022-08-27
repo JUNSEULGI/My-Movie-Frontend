@@ -5,11 +5,18 @@ function Trailer({ video }) {
   return (
     <MovieTrailer>
       <DarkPaperContainer>
-        <video controls width="560" height="315">
-          <source src={video} deletecommandtype="video/webm" />
-          <source src={video} deletecommandtype="video/mp4" />
+        <Video
+          preload="auto"
+          controls
+          controlsList="nodownload"
+          width="560"
+          height="315"
+          playsInline
+        >
+          <source src={video} type="video/webm" />
+          <source src={video} type="video/mp4" />
           <source src={video} type="video/quicktime" />
-        </video>
+        </Video>
       </DarkPaperContainer>
     </MovieTrailer>
   );
@@ -25,10 +32,27 @@ const MovieTrailer = styled.div`
   padding: 20px;
   margin-right: 20px;
   margin-bottom: 0;
+  @media screen and (max-width: 380px) {
+    width: 360px;
+    padding: 0;
+    /* background-color: red; */
+  }
 `;
 
 const DarkPaperContainer = styled.div`
   position: relative;
+
+  @media screen and (max-width: 380px) {
+    width: 100%;
+  }
+`;
+
+const Video = styled.video`
+  @media screen and (max-width: 380px) {
+    width: 280px;
+    height: 100%;
+    border-radius: 8px;
+  }
 `;
 
 // const DarkPaper = styled.div`

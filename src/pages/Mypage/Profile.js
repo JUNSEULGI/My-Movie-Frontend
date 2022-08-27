@@ -43,6 +43,9 @@ const MypageCardContainer = styled(CardContainer)`
   flex-direction: column;
   width: fit-content;
   margin-top: 40px;
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const UserName = styled(Typography)`

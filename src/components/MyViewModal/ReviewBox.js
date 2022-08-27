@@ -99,11 +99,12 @@ function ReviewBoxContent({ review, setReview }) {
   const [userInfo] = useRecoilState(userState);
   const [movie] = useRecoilState(movieState);
   const ratingRef = useRef();
-
+  const textInput = useRef(null);
+  console.log(textInput);
   // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송
-  useSave(review, ratingRef);
+  useSave(review, textInput);
   useDelete(review.review_id);
-
+  console.log(textInput);
   return (
     <Column>
       <Poster url={movie.thumbnail_image_url} />
@@ -113,21 +114,20 @@ function ReviewBoxContent({ review, setReview }) {
             <MovieTitle variant="h1">{movie.title}</MovieTitle>
             <Box>
               <BoldText variant="subtitle2">{movie.en_title} </BoldText>
-              <BoldText variant="subtitle2">
+              <MovieInfo variant="subtitle2">
                 2022 · {movie.country} ·{' '}
                 {movie.genre?.map((genreItems, index) => (
                   // chip으로 수정 필요
                   <Genre key={index}>{genreItems}</Genre>
                 ))}
-              </BoldText>
+              </MovieInfo>
               <BoldText variant="subtitle2">
                 {movie.running_time}분 <AgeBadge age={movie.age} />
               </BoldText>
             </Box>
           </Box>
           <MyRating
-            ref={ratingRef}
-            onFocus={() => console.log('focus')}
+            ref={textInput}
             value={review.rating}
             onChange={(e, newValue) => {
               setReview({ ...review, rating: newValue });
@@ -151,7 +151,7 @@ function ReviewBoxContent({ review, setReview }) {
         />
         <RowLabel variant="h2">관람정보</RowLabel>
         <GridBox>
-          <Box>
+          <MBox>
             <WatchInfoLabel variant="subtitle1">when</WatchInfoLabel>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <WatchDate
@@ -169,8 +169,8 @@ function ReviewBoxContent({ review, setReview }) {
                 }}
               />
             </LocalizationProvider>
-          </Box>
-          <Box>
+          </MBox>
+          <MBox>
             <WatchInfoLabel variant="subtitle1">where</WatchInfoLabel>
             <WatchInfoField
               label="어디서 보셨나요?"
@@ -184,8 +184,8 @@ function ReviewBoxContent({ review, setReview }) {
                 });
               }}
             />
-          </Box>
-          <Box>
+          </MBox>
+          <MBox>
             <WatchInfoLabel variant="subtitle1">with</WatchInfoLabel>
             <WatchInfoField
               label="누구랑 보셨나요?"
@@ -196,7 +196,7 @@ function ReviewBoxContent({ review, setReview }) {
                 });
               }}
             />
-          </Box>
+          </MBox>
         </GridBox>
       </ReviewContainer>
     </Column>
@@ -212,6 +212,10 @@ const Column = styled(Box)`
 
 const ReviewContainer = styled(Box)`
   margin-left: 28px;
+  @media screen and (max-width: 600px) {
+    margin-left: 0px;
+    overflow-y: scroll;
+  }
 `;
 
 const RowBox = styled(Box)`
@@ -224,6 +228,12 @@ const BoldText = styled(Typography)`
   font-weight: bold;
 `;
 
+const MovieInfo = styled(BoldText)`
+  @media screen and (max-width: 600px) {
+    width: 160px;
+  }
+`;
+
 const MovieTitle = styled(BoldText)`
   margin-bottom: 6px;
 `;
@@ -233,15 +243,14 @@ const Genre = styled.span`
 `;
 
 const MyRating = styled(Rating)`
-  & .MuiRating-iconFocus {
-    color: orange;
+  @media screen and (max-width: 600px) {
+    margin-left: -40px;
+    margin-top: 100px;
   }
+`;
 
-  :focus {
-    svg {
-      fill: orange;
-    }
-  }
+const MBox = styled(Box)`
+  width: 100%;
 `;
 
 const RowLabel = styled(BoldText)`
@@ -254,12 +263,22 @@ const ReviewField = styled(TextField)`
   & .MuiInputBase-input {
     color: ${({ theme }) => theme.palette.common.white};
   }
+
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const GridBox = styled(Box)`
   display: grid;
   grid-template-columns: 3fr 3fr 2fr;
   column-gap: 12px;
+  @media screen and (max-width: 600px) {
+    display: flex;
+    flex-wrap: wrap;
+    width: 273px;
+    /* grid-template-columns: 1fr 1fr 1fr; */
+  }
 `;
 
 const WatchInfoLabel = styled(BoldText)`
@@ -272,6 +291,10 @@ const WatchDate = styled(DateTimePicker)`
     .Mui-selected {
       font-weight: bold;
     }
+  }
+
+  @media screen and (max-width: 600px) {
+    background-color: antiquewhite;
   }
 `;
 
@@ -286,8 +309,15 @@ const WhiteTextField = styled(TextField)`
   & .MuiOutlinedInput-root {
     color: ${({ theme }) => theme.palette.common.white};
   }
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
-const WatchInfoField = styled(ReviewField)``;
+const WatchInfoField = styled(ReviewField)`
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
+`;
 
 export default ReviewBox;

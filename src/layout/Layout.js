@@ -39,6 +39,11 @@ const MyViewLayout = ({
 };
 
 const Layout = styled.div`
+  overflow: scroll;
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
   &:before {
     content: '';
     position: fixed;
@@ -56,6 +61,12 @@ const Layout = styled.div`
 const Main = styled.div`
   display: flex;
   justify-content: center;
+  /* background-color: antiquewhite; */
+  overflow: scroll;
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const MovieScene = styled.div`
@@ -121,6 +132,9 @@ const Center = styled.main`
   }
   @media screen and (max-width: 600px) {
     width: 360px;
+    padding: 0 16px;
+    /* overflow-x: hidden; */
+    scroll-behavior: smooth;
   }
 `;
 
@@ -143,6 +157,11 @@ const BackInfo = styled(Typography)`
   right: 64px;
   bottom: 40px;
   display: inline-block;
+
+  @media screen and (max-width: 600px) {
+    right: 34px;
+    bottom: 40px;
+  }
 `;
 
 const BackTitle = styled(Typography)`

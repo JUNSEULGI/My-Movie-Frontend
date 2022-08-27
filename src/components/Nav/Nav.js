@@ -128,6 +128,10 @@ const NavBar = styled(AppBar)`
       transition: all 0.3s;
     }
   }
+
+  @media screen and (max-width: 380px) {
+    padding: 8px 20px;
+  }
 `;
 
 const MyToolbar = styled(Toolbar)`
@@ -139,6 +143,12 @@ const MyToolbar = styled(Toolbar)`
   a {
     text-decoration: none;
   }
+
+  @media screen and (max-width: 380px) {
+    font-size: 16px;
+    height: 40px;
+    padding: 10px 0 0 0;
+  }
 `;
 
 const Logo = styled(Typography)`
@@ -147,6 +157,9 @@ const Logo = styled(Typography)`
   font-family: 'Galada', cursive;
   font-weight: bold;
   font-size: 32px;
+  @media screen and (max-width: 380px) {
+    font-size: 20px;
+  }
 `;
 
 const GoLogin = styled(Link)`
@@ -170,6 +183,12 @@ const NavSearch = styled(Autocomplete)`
     color: white;
     font-weight: bold;
 
+    @media screen and (max-width: 380px) {
+      /* width: 125px; */
+      height: 40px;
+      padding: 0;
+    }
+
     & fieldset {
       border-color: translate;
       color: orange;
@@ -181,6 +200,10 @@ const NavSearch = styled(Autocomplete)`
     &.Mui-focused fieldset {
       border-color: orange;
     }
+  }
+  @media screen and (max-width: 380px) {
+    width: 125px;
+    /* height: 20px; */
   }
 `;
 

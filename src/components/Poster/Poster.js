@@ -16,6 +16,10 @@ function Poster({ url }) {
 const Image = styled(CardMedia)`
   width: 100%;
   border-radius: 8px;
+
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const NoImage = styled(Card)`
@@ -25,6 +29,11 @@ const NoImage = styled(Card)`
   height: 390px;
   background-color: ${({ theme }) => theme.palette.background.disabled};
   border-radius: 8px;
+
+  @media screen and (max-width: 600px) {
+    display: none;
+    /* background-color: aqua; */
+  }
 `;
 
 export default Poster;
