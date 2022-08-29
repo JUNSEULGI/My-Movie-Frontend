@@ -9,9 +9,8 @@ import {
   AccordionDetails,
   createTheme,
 } from '@mui/material';
-import { CardContainer } from '../Movie';
 import { ReviewIcon } from '../Movie/MyIconButton';
-import CloseIcon from '@mui/icons-material/Close';
+
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function CountReview({ userInfo, starring_list, actor, watched_count }) {
