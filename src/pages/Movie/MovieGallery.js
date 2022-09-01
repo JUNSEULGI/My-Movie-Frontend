@@ -9,6 +9,7 @@ function MovieGallery({ movie_image }) {
   const [open, setOpen] = useState(false);
   const [imgindex, setImgindex] = useState(0);
 
+  console.log(movie_image);
   const handleOpen = index => {
     setImgindex(index.target.id);
     setOpen(true);
@@ -40,10 +41,16 @@ function MovieGallery({ movie_image }) {
       margin: '10.3px',
     },
   }));
+  // const M = styled(MyMasonry)`
+  //   @media screen and (max-width: 380px) {
+  //     display: block;
+  //     margin-left: -12px;
+  //   }
+  // `;
 
   return (
     <>
-      <Box sx={{ width: '100%', minHeight: 429 }}>
+      <MasonryBox sx={{ width: '100%', minHeight: 429 }}>
         <MyMasonry columns={4} spacing={2}>
           {movie_image?.map((item, index) => (
             <Box key={index}>
@@ -66,7 +73,7 @@ function MovieGallery({ movie_image }) {
             </Box>
           ))}
         </MyMasonry>
-      </Box>
+      </MasonryBox>
       <Box>
         <GalleryModal
           open={open}
@@ -102,6 +109,23 @@ function MovieGallery({ movie_image }) {
 }
 export default MovieGallery;
 
+const MasonryBox = styled(Box)`
+  @media screen and (max-width: 380px) {
+    width: 100%;
+  }
+`;
+
+const MasonryImg = styled.img`
+  cursor: pointer;
+  transition: all ease 0.5s;
+  :hover {
+    transform: scale(1.04, 1.04);
+    @media screen and (max-width: 380px) {
+      transform: none;
+    }
+  }
+`;
+
 const ImgContainer = styled(Box)`
   position: relative;
   top: 50%;
@@ -111,24 +135,29 @@ const ImgContainer = styled(Box)`
   box-shadow: 24px;
   padding: 40px;
   outline: none;
-`;
 
-const MasonryImg = styled.img`
-  cursor: pointer;
-  transition: all ease 0.5s;
-  :hover {
-    transform: scale(1.04, 1.04);
+  @media screen and (max-width: 380px) {
+    width: 100%;
   }
 `;
 
 const Img = styled.img`
   border-radius: 16px;
   width: 100%;
+  /* @media screen and (max-width: 380px) {
+    width: 300px;
+  } */
 `;
 
 const GalleryButton = styled(IconButton)`
   position: absolute;
   top: 50%;
+
+  @media screen and (max-width: 380px) {
+    display: flex;
+    top: 90%;
+    left: 49%;
+  }
 `;
 
 const GalleryModal = styled(Modal)``;

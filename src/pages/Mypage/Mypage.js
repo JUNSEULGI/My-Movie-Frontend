@@ -2,15 +2,16 @@ import React from 'react';
 import MyViewLayout from '../../layout/Layout';
 import { Profile, WatchedMovie } from './index';
 import { Box } from '@mui/material';
+import styled from '@emotion/styled';
 
 function Mypage() {
   function MypageContainer() {
     return (
       <>
-        <Box sx={{ display: 'flex' }}>
+        <MypageBox>
           <Profile />
           <WatchedMovie />
-        </Box>
+        </MypageBox>
       </>
     );
   }
@@ -18,3 +19,11 @@ function Mypage() {
 }
 
 export default Mypage;
+
+const MypageBox = styled(Box)`
+  display: flex;
+  @media screen and (max-width: 600px) {
+    width: 320px;
+    display: block;
+  }
+`;

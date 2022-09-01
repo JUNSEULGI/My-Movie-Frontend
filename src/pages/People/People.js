@@ -124,26 +124,49 @@ const PeopleContentContainer = styled.div`
   padding-top: 40px;
 `;
 
-const PeopleImg = styled(ActorImg)``;
+const PeopleImg = styled(ActorImg)`
+  @media screen and (max-width: 600px) {
+    height: 120px;
+  }
+`;
 
 const PeopleCard = styled(CardContainer)`
   width: 440px;
   height: 210px;
+  @media screen and (max-width: 600px) {
+    width: 100%;
+    height: fit-content;
+  }
 `;
 
 const Info = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media screen and (max-width: 600px) {
+    display: flex;
+    justify-content: start;
+  }
 `;
 
 const PeopleName = styled(Typography)`
   margin: 0 0 0 20px;
+  @media screen and (max-width: 600px) {
+    margin-bottom: 10px;
+  }
 `;
 const Job = styled(Typography)`
   margin: 0 0 0 8px;
+  @media screen and (max-width: 600px) {
+    font-size: 14px;
+  }
 `;
 
-const Right = styled.div``;
+const Right = styled.div`
+  @media screen and (max-width: 600px) {
+    padding: 0px;
+  }
+`;
 
 export default People;

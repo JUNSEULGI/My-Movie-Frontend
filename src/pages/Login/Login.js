@@ -33,7 +33,7 @@ function Login() {
     getBackgroundInfo();
   }, []);
 
-  console.log(backgroundInfo);
+  console.log('backgroundInfo', backgroundInfo);
   function LoginContainer() {
     return (
       <LoginPage>
@@ -50,10 +50,6 @@ function Login() {
             <KakaoLogin />
           </SocialContainer>
         </LoginBox>
-        {/* <BackInfo>
-          <Summary>어어어어엉</Summary>
-          <BackTitle>스물하나, 스물다섯</BackTitle>
-        </BackInfo> */}
       </LoginPage>
     );
   }
@@ -61,7 +57,10 @@ function Login() {
   return (
     <MyViewLayout
       loginBack={backgroundInfo}
-      center={<LoadWrap loading={loading} content={<LoginContainer />} />}
+      center={
+        // <LoadWrap loading={loading} content={
+        <LoginContainer />
+      }
     />
   );
 }
@@ -72,6 +71,9 @@ const LoginPage = styled(Container)`
   position: fixed;
   margin: 0 auto;
   height: 100vh;
+  @media screen and (max-width: 600px) {
+    width: 360px;
+  }
 `;
 
 const LoginBox = styled(CardContainer)`
@@ -86,6 +88,13 @@ const LoginBox = styled(CardContainer)`
   height: 580px;
   text-align: center;
   border-radius: 16px;
+  @media screen and (max-width: 600px) {
+    left: 30%;
+    margin: -90px 0 0 -165px;
+    width: 320px;
+    height: 430px;
+    top: 20%;
+  }
 `;
 
 const LoginLogo = styled(Logo)`
@@ -93,26 +102,23 @@ const LoginLogo = styled(Logo)`
 `;
 
 const Produce = styled(Typography)`
-  color: ${({ theme }) => theme.palette?.common.white};
+  color: ${({ theme }) => theme.palette.common.white};
+
+  @media screen and (max-width: 600px) {
+    font-size: 14px;
+  }
 `;
 
 const SocialContainer = styled(Container)`
   margin-top: 40px;
-  padding: 40px;
+  padding: 30px;
+
+  @media screen and (max-width: 600px) {
+    margin-top: 10px;
+  }
 `;
 
 const LoginText = styled.div`
   margin: 20px 0;
   color: ${({ theme }) => theme.palette?.common.white};
 `;
-
-const BackInfo = styled(Typography)`
-  position: absolute;
-  right: 0;
-  bottom: 100px;
-  display: inline-block;
-`;
-
-const BackTitle = styled(Typography)``;
-
-const Summary = styled(Typography)``;

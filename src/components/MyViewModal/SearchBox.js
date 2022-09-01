@@ -74,11 +74,17 @@ const Column = styled(Box)`
   grid-template-columns: 273px 1fr;
   // 컨테이너가 늘어나면서 높이를 100%로 고정할 수 없게 됨.
   // height: 100%;
+
+  @media screen and (max-width: 600px) {
+    width: 300px;
+  }
 `;
 
 const SearchContainer = styled(Box)`
   margin-left: 110px;
-  /* background-color: antiquewhite; */
+  @media screen and (max-width: 600px) {
+    margin-left: 0px;
+  }
 `;
 
 const SearchBar = styled(Autocomplete)`

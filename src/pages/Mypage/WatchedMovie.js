@@ -11,7 +11,6 @@ import LinearProgress, {
 
 import { Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import movie from '../../state/movie';
 
 function WatchedMovie() {
   const navigate = useNavigate();
@@ -45,17 +44,17 @@ function WatchedMovie() {
   return (
     <MypageCardContainer>
       <WatchedTime>
-        <Typography
+        <WatchedTimeTypo
           variant="h2"
           sx={{ marginBottom: '20px', strong: { color: 'orange' } }}
         >
-          {userInfo.nickname}님은 총 <strong>{watched.length}</strong>개의 영화,{' '}
+          {userInfo.nickname}님은 총 <strong>{watched.length}</strong>개의 영화,
           <strong> {total_watched}</strong>
           분을 시청하셨어요!{' '}
-        </Typography>
+        </WatchedTimeTypo>
       </WatchedTime>
       <SubTitle variant="subtitle1">시청한 영화</SubTitle>
-      <Box sx={{ display: 'flex' }}>
+      <WatchedBox sx={{ display: 'flex' }}>
         {watched.map(watchedMovie => {
           const { rating, movie } = watchedMovie;
           const { id, poster } = movie;
@@ -69,7 +68,7 @@ function WatchedMovie() {
             </Movie>
           );
         })}
-      </Box>
+      </WatchedBox>
     </MypageCardContainer>
   );
 }
@@ -81,13 +80,34 @@ const MypageCardContainer = styled(CardContainer)`
   position: relative;
   width: fit-content;
   margin: 40px 0 20px 20px;
+
+  @media screen and (max-width: 600px) {
+    margin-left: 0px;
+    width: 100%;
+  }
 `;
 
 const Movie = styled.div`
   margin-right: 16px;
+
+  @media screen and (max-width: 600px) {
+    scroll-snap-align: start;
+  }
 `;
 const SubTitle = styled(Typography)`
   margin-bottom: 20px;
+
+  @media screen and (max-width: 600px) {
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+`;
+
+const WatchedBox = styled(Box)`
+  @media screen and (max-width: 600px) {
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+  }
 `;
 
 const PPoster = styled.img`
@@ -109,6 +129,12 @@ const Title = styled.p`
 `;
 
 const WatchedTime = styled.div``;
+
+const WatchedTimeTypo = styled(Typography)`
+  @media screen and (max-width: 600px) {
+    font-size: 16px;
+  }
+`;
 
 const BorderLinearProgress = styled(LinearProgress)`
   height: 10px;

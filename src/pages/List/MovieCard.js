@@ -81,6 +81,10 @@ const CardBox = styled(Card)`
   :hover {
     background: rgb(48 48 48 / 70%);
   }
+
+  @media screen and (max-width: 600px) {
+    scroll-snap-align: start;
+  }
 `;
 
 const AddCardBox = styled(CardBox)`

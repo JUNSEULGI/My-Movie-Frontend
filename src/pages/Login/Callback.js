@@ -11,7 +11,7 @@ function Callback() {
     if (!search) return;
     const access_code = search.split('=')[1];
 
-    fetch(`${BASE_URL}users/login/${params}/callback?code=${access_code}`)
+    fetch(`${BASE_URL}user/login/${params}/callback?code=${access_code}`)
       .then(res => res.json())
       .then(data => {
         if (!data) {

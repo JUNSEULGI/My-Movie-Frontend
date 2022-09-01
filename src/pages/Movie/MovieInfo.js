@@ -6,6 +6,7 @@ import { CardMedia, Typography } from '@mui/material';
 import { CardContainer, MovieRating, AgeBadge } from '../Movie';
 import { Box } from '@mui/system';
 import { replaceBrTag } from '../../util/replaceBrTag';
+import { Title } from '@mui/icons-material';
 
 function MovieInfo() {
   const movie = useRecoilValue(movieState);
@@ -22,12 +23,12 @@ function MovieInfo() {
     thumbnail_image_url,
   } = movie;
 
-  const floorRating = ratings.substr(0, 3);
+  // const floorRating = ratings.substr(0, 3);
   return (
-    <CardContainer>
+    <MovieInfoContainer>
       <MovieImg component="img" height="100%" image={thumbnail_image_url} />
       <Box sx={{ paddingLeft: '22px' }}>
-        <Box
+        <TitleRatingBox
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
@@ -35,8 +36,8 @@ function MovieInfo() {
           }}
         >
           <MovieTitle variant="h2">{title}</MovieTitle>
-          <MovieRating rating={floorRating} />
-        </Box>
+          {/* <MovieRating rating={floorRating} /> */}
+        </TitleRatingBox>
         <SubInfo variant="subtitle2">
           {en_title}
           <br />
@@ -49,26 +50,42 @@ function MovieInfo() {
           <br />
           {running_time}분 · <AgeBadge age={age} />
         </SubInfo>
-        <Summary variant="subtitle1">줄거리</Summary>
-        <SummaryContainer>
-          <Content
-            variant="body1"
-            dangerouslySetInnerHTML={replaceBrTag(description)}
-          />
-        </SummaryContainer>
+        <SummaryBox>
+          <Summary variant="subtitle1">줄거리</Summary>
+          <SummaryContainer>
+            <Content
+              variant="body1"
+              dangerouslySetInnerHTML={replaceBrTag(description)}
+            />
+          </SummaryContainer>
+        </SummaryBox>
       </Box>
-    </CardContainer>
+    </MovieInfoContainer>
   );
 }
 
 export default MovieInfo;
 
-const MovieImg = styled(CardMedia)`
-  width: 239px;
+const MovieInfoContainer = styled(CardContainer)`
+  @media screen and (max-width: 380px) {
+    margin-top: 70px;
+  }
 `;
 
+const MovieImg = styled(CardMedia)`
+  width: 239px;
+  @media screen and (max-width: 380px) {
+    width: 125px;
+  }
+`;
+
+const TitleRatingBox = styled(Box)``;
 const MovieTitle = styled(Typography)`
   font-weight: bold;
+
+  @media screen and (max-width: 380px) {
+    font-size: 1rem;
+  }
 `;
 
 const SubInfo = styled(Typography)`
@@ -77,6 +94,11 @@ const SubInfo = styled(Typography)`
   font-weight: bold;
 `;
 
+const SummaryBox = styled(Box)`
+  @media screen and (max-width: 380px) {
+    display: none;
+  }
+`;
 const SummaryContainer = styled.div`
   -ms-overflow-style: none; /* Explorer */
   scrollbar-width: none; /* Firefox */

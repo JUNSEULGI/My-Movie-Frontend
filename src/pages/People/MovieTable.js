@@ -62,7 +62,7 @@ function MovieTable({ movie, reviewdata }) {
                   {access_token ? (
                     myrating ? (
                       <>
-                        <Logo>My View</Logo>
+                        <MLogo>My View</MLogo>
                         <ReviewRating>{myrating}</ReviewRating>
                       </>
                     ) : (
@@ -146,26 +146,62 @@ const RowTitle = styled(Row)`
       color: ${({ theme }) => theme.palette.test.second};
     }
   }
+
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const Year = styled(Typography)`
   grid-column: span 1 / auto;
   margin-right: 8px;
+  @media screen and (max-width: 600px) {
+    position: absolute;
+    left: 101px;
+    top: 40px;
+    font-size: 14px;
+  }
 `;
 
 const MoviePoster = styled(Typography)`
   grid-column: span 1 / auto;
+
+  @media screen and (max-width: 600px) {
+    position: absolute;
+    left: 10px;
+    width: 80px;
+  }
 `;
 
 const MoiveTitle = styled(Typography)`
   cursor: pointer;
+  overflow-x: scroll;
 
   &:hover {
     color: ${({ theme }) => theme.palette.test.second};
   }
+  @media screen and (max-width: 600px) {
+    position: absolute;
+    left: 100px;
+    top: 16px;
+    /* width: 80px; */
+  }
 `;
 
-const InRole = styled(Typography)``;
+const InRole = styled(Typography)`
+  @media screen and (max-width: 600px) {
+    position: absolute;
+    left: 140px;
+    top: 40px;
+    font-size: 14px;
+    font-weight: 600;
+
+    ::before {
+      content: '| ';
+      /* margin-left: 20px; */
+    }
+  }
+`;
 
 const Rating = styled(Typography)``;
 
@@ -173,10 +209,42 @@ const ReviewRating = styled.p`
   margin: 0;
   font-weight: bold;
   color: ${({ theme }) => theme.palette.test.main};
+  @media screen and (max-width: 600px) {
+    position: absolute;
+    right: 10px;
+    top: 40px;
+    font-size: 16px;
+    /* width: 80px; */
+  }
 `;
 
+const MLogo = styled(Logo)`
+  @media screen and (max-width: 600px) {
+    position: absolute;
+    right: 10px;
+    top: 16px;
+    font-size: 16px;
+    /* width: 80px; */
+  }
+`;
 const AverageRating = styled(ReviewRating)`
   color: white;
+  @media screen and (max-width: 600px) {
+    ::before {
+      content: '평균 점수';
+      border: 1px solid #696969;
+      border-radius: 2px;
+      margin-right: 4px;
+      font-size: 12px;
+      padding: 2px;
+    }
+    position: absolute;
+    left: -40px;
+    top: 60px;
+    font-size: 14px;
+    padding-top: 2px;
+    /* width: 80px; */
+  }
 `;
 
 const Platform = styled(Typography)`
@@ -190,4 +258,10 @@ const MovieImg = styled(CardMedia)`
 
 const MovieTableOTT = styled(OTTLogo)`
   margin: 0 6px 0 0;
+
+  @media screen and (max-width: 600px) {
+    position: absolute;
+    right: 0;
+    bottom: 8px;
+  }
 `;

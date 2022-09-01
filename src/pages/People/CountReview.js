@@ -9,9 +9,8 @@ import {
   AccordionDetails,
   createTheme,
 } from '@mui/material';
-import { CardContainer } from '../Movie';
 import { ReviewIcon } from '../Movie/MyIconButton';
-import CloseIcon from '@mui/icons-material/Close';
+
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function CountReview({ userInfo, starring_list, actor, watched_count }) {
@@ -32,7 +31,7 @@ function CountReview({ userInfo, starring_list, actor, watched_count }) {
 
   return (
     <>
-      <MyAccordion disableGutters elevation={0}>
+      <MAccordion disableGutters elevation={0}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon sx={{ margin: '0px' }} />}
           aria-controls="panel1a-content"
@@ -63,7 +62,7 @@ function CountReview({ userInfo, starring_list, actor, watched_count }) {
             </CountIntro>
           </Box>
         </AccordionDetails>
-      </MyAccordion>
+      </MAccordion>
     </>
   );
 }
@@ -115,6 +114,12 @@ const MyAccordion = styled(Accordion)(({ theme }) => ({
     color: 'white',
   },
 }));
+
+const MAccordion = styled(MyAccordion)`
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
+`;
 
 const PeopleCardTitle = styled(Typography)`
   margin: 0 0 6px 0;
