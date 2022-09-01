@@ -9,9 +9,14 @@ function Actor({ actor }) {
 
   const navigate = useNavigate();
 
+  const actorImage =
+    image == ''
+      ? 'https://kangsblackbeltacademy.com/wp-content/uploads/2017/04/default-image.jpg'
+      : image;
+
   return (
     <ActorCard key={id}>
-      <ActorImg src={image} onClick={() => navigate(`/people/${id}`)} />
+      <ActorImg src={actorImage} onClick={() => navigate(`/people/${id}`)} />
       <Links href={`/people/${id}`}>
         <ActorName variant="h3">{name}</ActorName>
       </Links>
@@ -34,9 +39,11 @@ const ActorCard = styled.div`
 `;
 
 const ActorImg = styled.img`
+  width: 116.66px;
   height: 175px;
   border-radius: 8px;
   cursor: pointer;
+  overflow-x: hidden;
 `;
 
 const ActorName = styled(Typography)`

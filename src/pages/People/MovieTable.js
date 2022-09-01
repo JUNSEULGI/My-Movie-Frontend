@@ -39,7 +39,8 @@ function MovieTable({ movie, reviewdata }) {
             platform_logo_image,
           } = movie;
 
-          const floorRatings = ratings.slice(0, 3);
+          const floorRatings = ratings;
+          // .slice(0, 3);
           return (
             <BackCover key={movie_id} back={movie_image_url}>
               <Row>
