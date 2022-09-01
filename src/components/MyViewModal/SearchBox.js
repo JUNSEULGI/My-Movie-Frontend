@@ -11,24 +11,31 @@ import {
   TextField,
 } from '@mui/material';
 import Poster from '../Poster/Poster';
-import { BASE_URL } from '../../Modules/API';
+import { API } from '../../Modules/API';
+import { fetcher } from '../../Modules/fetcher';
 
 function SearchBox() {
   const setMovie = useSetRecoilState(movieState);
+  const [search, setSearch] = useState('');
   const [titles, setTitles] = useState([]);
   const [ranks, setRanks] = useState([]);
 
   useEffect(() => {
-    fetch(`${BASE_URL}movies/simple`)
-      .then(res => res.json())
-      .then(result => {
-        if (result.message === 'SUCCESS') {
-          setTitles(result.titles);
-          setRanks(result.rank);
-        }
-      });
+    fetcher(API.movie_popular).then(({ data }) => {
+      if (data.message === 'SUCCESS') setRanks(data.rank);
+    });
   }, []);
 
+  useEffect(() => {
+    if (search === '') return;
+    fetcher(`${API.movie}?q=${search}`).then(({ data }) => {
+      console.log(data);
+      if (data.message === 'SUCCESS') {
+        setTitles(data.result);
+      }
+    });
+  }, [search]);
+  console.log(titles);
   return (
     <Column>
       <Poster />
@@ -43,6 +50,9 @@ function SearchBox() {
               {...params}
               color="success"
               label="등록할 영화를 검색하세요"
+              onChange={e => {
+                setSearch(e.target.value);
+              }}
             />
           )}
           autoSelect={true}

@@ -50,18 +50,8 @@ function Nav() {
       });
   }, [access_token]);
 
-  // 검색창이 활성화되었을 때 요청하는 게 좋지 않을까?
-  // useEffect(() => {
-  //   fetcher(API.movies_simple)
-  //     .then(res => res.data)
-  //     .then(data => {
-  //       if (data.message === 'SUCCESS') {
-  //         setPopularList(data.titles);
-  //       }
-  //     });
-  // }, []);
-
   useEffect(() => {
+    if (search === '') return;
     fetcher(`${API.movie}?q=${search}`)
       .then(res => res.data)
       .then(data => {

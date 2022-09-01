@@ -9,16 +9,15 @@ export const API = {
   users_list: '/user/list',
   users_info: '/user/info',
   // 리뷰
-  reviews: '/review',
-  reviews_movie: '/review/movie',
+  review: '/review',
+  review_movie: '/review/movie',
   review_list: '/review/list',
-  reviews_list: '/review/list',
-  reviews_top: 'review/top3',
+  review_top: 'review/top3',
   // 영화 정보
   actor: '/movie/actor',
   movie: '/movie',
-  movies_simple: '/movie/simple',
-  movies_detail: '/movie/detail',
+  movie_popular: '/movie/popular',
+  movie_detail: '/movie/detail',
   actor_intimacy: '/movie/actor/intimacy',
 };
 

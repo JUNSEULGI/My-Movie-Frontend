@@ -31,8 +31,6 @@ function MovieCard({ data, setOpen }) {
     tagBase.push(key);
   }
 
-  let randomTag = tagBase[Math.floor(Math.random() * tagBase.length)];
-
   return !data ? (
     <AddCardBox onClick={addMovie}>
       <AddBtn>+</AddBtn>
@@ -40,24 +38,26 @@ function MovieCard({ data, setOpen }) {
   ) : (
     <CardBox onClick={showReview}>
       <Poster component="img" image={data.movie.poster} />
-      <Title onClick={showMovie}>{data.movie.title}</Title>
-      <InfoContainer>
-        <MovieInfo variant="menuItem">
-          {data.movie.released.split('-')[0]} · {data.movie.country}
-        </MovieInfo>
+      <Box style={{ height: '100%' }}>
+        <Title onClick={showMovie}>{data.movie.title}</Title>
         <InfoContainer>
-          <Star size="small" max={1} value={1} readOnly />
-          <Number>
-            <ThickNumber>{data.rating}</ThickNumber> / 5
-          </Number>
+          <MovieInfo variant="menuItem">
+            {data.movie.released.split('-')[0]} · {data.movie.country}
+          </MovieInfo>
+          <InfoContainer style={{ width: 75 }}>
+            <Star size="small" max={1} value={1} readOnly />
+            <Number>
+              <ThickNumber>{data.rating}</ThickNumber> / 5
+            </Number>
+          </InfoContainer>
         </InfoContainer>
-      </InfoContainer>
+      </Box>
       <GenreContainer>
         {data.movie.genre.map((item, index) => (
           <Genre
             key={index}
             label={item}
-            randomTag={randomTag}
+            randomtag={tagBase[Math.floor(Math.random() * tagBase.length)]}
             // color={`${darkTheme.palette.tag.yellow}`}
             size="small"
           />
@@ -68,14 +68,17 @@ function MovieCard({ data, setOpen }) {
 }
 
 const CardBox = styled(Card)`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
   padding: 14px;
   width: 270px;
-  height: 460px;
+  min-height: 490px;
   border-radius: 8px;
   background: ${({ theme }) => theme.palette.test.card};
   box-shadow: 5px 7px 20px -4px rgba(0, 0, 0, 0.6);
   cursor: pointer;
-
   transition: all ease 0.3s;
 
   :hover {
@@ -126,7 +129,7 @@ const InfoContainer = styled(Box)`
 `;
 
 const Title = styled(Typography)`
-  margin: 10px 0 4px;
+  margin-bottom: 4px;
   font-weight: 700;
   color: ${({ theme }) => theme.palette.common.white};
   cursor: pointer;
@@ -158,14 +161,12 @@ const ThickNumber = styled(Number)`
 const GenreContainer = styled(Box)`
   display: flex;
   justify-content: flex-end;
-  margin-top: 25px;
 `;
 
 const Genre = styled(Chip)`
-  height: 16px;
+  height: 20px;
   margin-left: 4px;
-  background-color: ${({ randomTag }) => randomTag};
-  font-size: 10px;
+  background-color: ${({ randomtag }) => randomtag};
   font-weight: 700;
   color: ${({ theme }) => theme.palette.common.white};
 `;
