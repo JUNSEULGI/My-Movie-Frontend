@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import Nav from '../components/Nav/Nav';
 import { Typography } from '@mui/material';
 
-console.log(window.location.pathname);
 const MyViewLayout = ({
   leftMenu,
   movie,
@@ -12,7 +11,6 @@ const MyViewLayout = ({
   center,
   rightMenu,
 }) => {
-  // const { image_url, title, description } = loginBack;
   return (
     <>
       <Layout img={loginBack?.image_url}>

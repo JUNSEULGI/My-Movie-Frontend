@@ -80,8 +80,9 @@ function Movie() {
   }, [params.id]);
 
   const { title, actor, video_url, image_url } = movie;
-  // console.log('review?.review_id', review?.review_id);
-  console.log(video_url);
+
+  var background = image_url[0] || '#e2e2e2e';
+
   function MovieContent() {
     return (
       <MovieBackGround>
@@ -116,15 +117,26 @@ function Movie() {
           closeModal={closeModal}
           content={<ReviewBox />}
         />
-
-        <ContainerTitle>예고편</ContainerTitle>
-        <TrailerContainer>
-          {video_url.map((video, index) => (
-            <Trailer key={index} video={video} />
-          ))}
-        </TrailerContainer>
-        <ContainerTitle>갤러리</ContainerTitle>
-        <MovieGallery movie_image={image_url} />
+        {video_url.length == 0 ? (
+          ''
+        ) : (
+          <>
+            <ContainerTitle>예고편</ContainerTitle>
+            <TrailerContainer>
+              {video_url.map((video, index) => (
+                <Trailer key={index} video={video} />
+              ))}
+            </TrailerContainer>
+          </>
+        )}
+        {image_url.length == 0 ? (
+          ''
+        ) : (
+          <>
+            <ContainerTitle>갤러리</ContainerTitle>
+            <MovieGallery movie_image={image_url} />
+          </>
+        )}
       </MovieBackGround>
     );
   }
@@ -135,7 +147,7 @@ function Movie() {
     movie && (
       <MyViewLayout
         movie
-        background={image_url[0]}
+        background={background}
         center={<LoadWrap loading={loading} content={<MovieContent />} />}
       />
     )
