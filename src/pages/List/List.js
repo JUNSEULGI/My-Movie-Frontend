@@ -22,16 +22,15 @@ function List() {
   const [reviewList, setReviewList] = useState([]);
   const [topMovies, setTopMovies] = useState([]);
 
-  console.log('access', localStorage.getItem('access_token'));
   const getReviewAndTopMovies = async () => {
     setLoading(true);
     try {
-      await fetcher(API.reviews_list)
+      await fetcher(API.review_list)
         .then(res => res.data)
         .then(data => {
           setReviewList(data.result);
         });
-      await fetcher(API.reviews_top)
+      await fetcher(API.review_top)
         .then(res => res.data)
         .then(data => {
           setTopMovies(data.result);

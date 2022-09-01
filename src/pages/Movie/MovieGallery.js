@@ -9,7 +9,6 @@ function MovieGallery({ movie_image }) {
   const [open, setOpen] = useState(false);
   const [imgindex, setImgindex] = useState(0);
 
-  console.log(movie_image);
   const handleOpen = index => {
     setImgindex(index.target.id);
     setOpen(true);

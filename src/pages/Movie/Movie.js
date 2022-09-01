@@ -49,7 +49,7 @@ function Movie() {
   const getReview = async () => {
     setLoading(true);
     try {
-      const { data: res } = await fetcher(`${API.reviews_movie}/${params.id}`);
+      const { data: res } = await fetcher(`${API.review_movie}/${params.id}`);
       if (res.message === 'REVIEW_DOSE_NOT_EXISTS') return;
       setReview(res.result);
       setMovie(prev => {
@@ -64,7 +64,7 @@ function Movie() {
   const getMovie = async () => {
     setLoading(true);
     try {
-      const { data: res } = await fetcher(`${API.movies_detail}/${params.id}`);
+      const { data: res } = await fetcher(`${API.movie_detail}/${params.id}`);
       setMovie(prev => {
         return { ...prev, ...res.movie_info };
       });
@@ -81,7 +81,6 @@ function Movie() {
 
   const { title, actor, video_url, image_url } = movie;
   // console.log('review?.review_id', review?.review_id);
-  console.log(video_url);
   function MovieContent() {
     return (
       <MovieBackGround>

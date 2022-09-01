@@ -5,7 +5,6 @@ import { movieState, buttonState } from '../state';
 import { API, BASE_URL } from '../Modules/API';
 import { fetcher } from '../Modules/fetcher';
 import moment from 'moment';
-import { set } from 'date-fns';
 
 export const useDelete = review_id => {
   const { pathname } = useLocation();
@@ -15,7 +14,7 @@ export const useDelete = review_id => {
   return useEffect(() => {
     if (!button.isDeleting) return;
     if (window.confirm('정말 삭제시겠습니까?')) {
-      fetcher.delete(`${API.reviews}/${review_id}`).then(result => {
+      fetcher.delete(`${API.review}/${review_id}`).then(result => {
         if (result.status === 204) {
           setButton({ ...button, isDeleting: false });
           if (!/\/movie\/*/.test(pathname)) resetMovie();
@@ -68,7 +67,7 @@ export const useSave = (review, textInput) => {
       formData.append('review_id', review.review_id);
 
       fetcher
-        .put(API.reviews, formData, {
+        .put(API.review, formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
         .then(res => res.data)
@@ -82,14 +81,14 @@ export const useSave = (review, textInput) => {
     } else {
       // 리뷰 아이디가 없으므로 새로운 리뷰 저장하는 중
 
-      fetch(`${BASE_URL}reviews`, {
-        method: 'POST',
-        headers: {
-          Authorization: token,
-        },
-        body: formData,
-      })
-        .then(res => res.json())
+      fetcher
+        .post(API.review, formData, {
+          method: 'POST',
+          headers: {
+            Authorization: token,
+          },
+        })
+        .then(res => res.data)
         .then(result => {
           if (result.message === 'SUCCESS') {
             setButton({ ...button, isSaving: false });

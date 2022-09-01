@@ -38,7 +38,7 @@ function ReviewBox() {
 
     setIsMovieLoading(true);
     try {
-      const { data: res } = await fetcher(`${API.movies_detail}/${movie.id}`);
+      const { data: res } = await fetcher(`${API.movie_detail}/${movie.id}`);
       setMovie(prev => {
         return { ...prev, ...res.movie_info };
       });
@@ -51,7 +51,7 @@ function ReviewBox() {
   const getReview = async () => {
     setIsReviewLoading(true);
     try {
-      const { data: res } = await fetcher(`${API.reviews_movie}/${movie.id}`);
+      const { data: res } = await fetcher(`${API.review_movie}/${movie.id}`);
       // 위 fetch에서 에러가 나지 않으면 즉, 리뷰 있으면 review에 저장하기
       const { result } = res;
       setReview({
@@ -100,11 +100,11 @@ function ReviewBoxContent({ review, setReview }) {
   const [movie] = useRecoilState(movieState);
   const ratingRef = useRef();
   const textInput = useRef(null);
-  console.log(textInput);
+
   // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송
   useSave(review, textInput);
   useDelete(review.review_id);
-  console.log(textInput);
+
   return (
     <Column>
       <Poster url={movie.thumbnail_image_url} />
@@ -141,7 +141,7 @@ function ReviewBoxContent({ review, setReview }) {
           label="리뷰를 남겨보세요."
           multiline
           minRows={3}
-          maxRows={20}
+          maxRows={8}
           value={review.content}
           onChange={e => {
             setReview(prev => {

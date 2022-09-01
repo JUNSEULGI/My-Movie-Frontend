@@ -18,8 +18,6 @@ function MyReview({ openModal, review }) {
   const handleDelete = () => setButton({ ...button, isDeleting: true });
   useDelete(review.review_id);
 
-  console.log('review', review.content);
-
   if (!review.review_id) return null;
   return (
     <MyReviewContainer>

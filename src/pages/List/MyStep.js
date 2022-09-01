@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Typography, Breadcrumbs } from '@mui/material';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -13,7 +12,7 @@ function MyStep({ check, id }) {
   const getReview = async () => {
     // setLoading(true);
     try {
-      const { data: res } = await fetcher(`${API.reviews_movie}/${id}`);
+      const { data: res } = await fetcher(`${API.review_movie}/${id}`);
       if (res.message === 'REVIEW_DOSE_NOT_EXISTS') return;
       setReview(res.result);
       // setLoading(false);

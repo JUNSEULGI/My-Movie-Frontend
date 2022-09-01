@@ -58,14 +58,14 @@ const MyModal = styled(Modal)`
   margin: 100px auto;
   // 위아래 코드 모두 margin-bottom 먹지 않음.
   // margin-bottom: 300px;
-  @media screen and (max-width: 600px) {
+  /* @media screen and (max-width: 600px) {
     overflow-y: hidden;
     overflow-y: scroll;
     scroll-behavior: smooth;
     ::-webkit-scrollbar {
       display: none;
     }
-  }
+  } */
 `;
 
 const Container = styled(Box)`
@@ -77,31 +77,27 @@ const Container = styled(Box)`
   outline: none;
   left: 50%;
   transform: translate(-50%, 0);
-  width: 360px;
+  width: 987px;
   min-height: 540px;
   padding: 20px 30px;
-  margin-bottom: 100px;
   background-color: ${({ theme }) => theme.palette.background.modal};
   border-radius: 8px;
 
-  @media screen and (max-width: 600px) {
+  /* @media screen and (max-width: 600px) {
     position: relative;
     width: 320px;
     padding: 20px 20px;
-  }
+  } */
 `;
 
 const Step = styled(Box)`
-  ${({ breadcrumbs }) => !breadcrumbs && 'display:none;'}/* position: absolute;
-  top: 35px; */
-  /* left: 60px; */
+  ${({ breadcrumbs }) => !breadcrumbs && 'display:none;'}
 `;
 
 const Buttons = styled(Box)`
-  position: absolute;
-  /* top: 30px; */
-  margin-top: 20px;
-  right: 30px;
+  display: flex;
+  justify-content: flex-end;
+  margin: 20px 0 10px;
 
   & .MuiButtonGroup-grouped:not(:last-of-type) {
     border-right: 0px;
