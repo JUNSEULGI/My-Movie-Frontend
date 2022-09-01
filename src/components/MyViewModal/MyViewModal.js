@@ -58,14 +58,14 @@ const MyModal = styled(Modal)`
   margin: 100px auto;
   // 위아래 코드 모두 margin-bottom 먹지 않음.
   // margin-bottom: 300px;
-  @media screen and (max-width: 600px) {
+  /* @media screen and (max-width: 600px) {
     overflow-y: hidden;
     overflow-y: scroll;
     scroll-behavior: smooth;
     ::-webkit-scrollbar {
       display: none;
     }
-  }
+  } */
 `;
 
 const Container = styled(Box)`
@@ -77,18 +77,18 @@ const Container = styled(Box)`
   outline: none;
   left: 50%;
   transform: translate(-50%, 0);
-  width: 360px;
+  width: 978px;
   min-height: 540px;
   padding: 20px 30px;
   margin-bottom: 100px;
   background-color: ${({ theme }) => theme.palette.background.modal};
   border-radius: 8px;
 
-  @media screen and (max-width: 600px) {
+  /* @media screen and (max-width: 600px) {
     position: relative;
     width: 320px;
     padding: 20px 20px;
-  }
+  } */
 `;
 
 const Step = styled(Box)`
@@ -107,16 +107,14 @@ const Buttons = styled(Box)`
     border-right: 0px;
   }
 
-  @media screen and (max-width: 600px) {
+  /* @media screen and (max-width: 600px) {
     display: flex;
     justify-content: end;
     position: relative;
     margin-top: 20px;
     right: 0;
     margin-right: 10px;
-
-    /* left: 0px; */
-  }
+  } */
 `;
 
 const ModalButton = styled(Button)`
