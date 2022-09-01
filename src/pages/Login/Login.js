@@ -33,7 +33,6 @@ function Login() {
     getBackgroundInfo();
   }, []);
 
-  console.log('backgroundInfo', backgroundInfo);
   function LoginContainer() {
     return (
       <LoginPage>

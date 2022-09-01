@@ -103,16 +103,14 @@ const Buttons = styled(Box)`
     border-right: 0px;
   }
 
-  @media screen and (max-width: 600px) {
+  /* @media screen and (max-width: 600px) {
     display: flex;
     justify-content: end;
     position: relative;
     margin-top: 20px;
     right: 0;
     margin-right: 10px;
-
-    /* left: 0px; */
-  }
+  } */
 `;
 
 const ModalButton = styled(Button)`
