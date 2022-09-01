@@ -5,18 +5,7 @@ function Trailer({ video }) {
   return (
     <MovieTrailer>
       <DarkPaperContainer>
-        <Video
-          preload="auto"
-          controls
-          controlsList="nodownload"
-          width="560"
-          height="315"
-          playsInline
-        >
-          <source src={video} type="video/webm" />
-          <source src={video} type="video/mp4" />
-          <source src={video} type="video/quicktime" />
-        </Video>
+        <Video width="300" height="200" src={video}></Video>
       </DarkPaperContainer>
     </MovieTrailer>
   );
@@ -47,7 +36,8 @@ const DarkPaperContainer = styled.div`
   }
 `;
 
-const Video = styled.video`
+const Video = styled.iframe`
+  border: none;
   @media screen and (max-width: 380px) {
     width: 280px;
     height: 100%;

@@ -33,7 +33,7 @@ function Login() {
     getBackgroundInfo();
   }, []);
 
-  console.log(backgroundInfo);
+  console.log('backgroundInfo', backgroundInfo);
   function LoginContainer() {
     return (
       <LoginPage>
@@ -57,7 +57,10 @@ function Login() {
   return (
     <MyViewLayout
       loginBack={backgroundInfo}
-      center={<LoadWrap loading={loading} content={<LoginContainer />} />}
+      center={
+        // <LoadWrap loading={loading} content={
+        <LoginContainer />
+      }
     />
   );
 }

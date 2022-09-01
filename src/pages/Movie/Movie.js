@@ -80,8 +80,8 @@ function Movie() {
   }, [params.id]);
 
   const { title, actor, video_url, image_url } = movie;
-  console.log('review?.review_id', review?.review_id);
-  console.log(image_url);
+  // console.log('review?.review_id', review?.review_id);
+  console.log(video_url);
   function MovieContent() {
     return (
       <MovieBackGround>

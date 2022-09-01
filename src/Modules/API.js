@@ -1,23 +1,23 @@
-export const BASE_URL = 'http://localhost:8000/';
-// export const BASE_URL = 'http://3d7c-221-147-33-141.ngrok.io/';
+// export const BASE_URL = 'http://localhost:8000/';
+export const BASE_URL = 'http://1206-221-147-33-186.ngrok.io/';
 export const API = {
   // 로그인
-  login_back: '/users/login/background',
+  login_back: '/user/login/background',
   // 유저
-  users_list: '/users/list',
-  users_info: '/users/info',
+  users_list: '/user/list',
+  users_info: '/user/info',
   // 리뷰
-  reviews: '/reviews',
-  reviews_movie: '/reviews/movie',
+  reviews: '/review',
+  reviews_movie: '/review/movie',
   review_list: '/review/list',
-  reviews_list: '/reviews/list',
-  reviews_top: 'reviews/top3',
+  reviews_list: '/review/list',
+  reviews_top: 'review/top3',
   // 영화 정보
-  actor: '/movies/actor',
-  movies: '/movies',
-  movies_simple: '/movies/simple',
-  movies_detail: '/movies/detail',
-  actor_intimacy: '/movies/actor/intimacy',
+  actor: '/movie/actor',
+  movie: '/movie',
+  movies_simple: '/movie/simple',
+  movies_detail: '/movie/detail',
+  actor_intimacy: '/movie/actor/intimacy',
 };
 
 // 네이버

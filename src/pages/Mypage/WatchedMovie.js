@@ -11,10 +11,8 @@ import LinearProgress, {
 
 import { Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import movie from '../../state/movie';
 
 function WatchedMovie() {
-  // console.log(window);
   const navigate = useNavigate();
 
   const access_token = localStorage.getItem('access_token');

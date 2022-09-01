@@ -22,6 +22,7 @@ function List() {
   const [reviewList, setReviewList] = useState([]);
   const [topMovies, setTopMovies] = useState([]);
 
+  console.log('access', localStorage.getItem('access_token'));
   const getReviewAndTopMovies = async () => {
     setLoading(true);
     try {

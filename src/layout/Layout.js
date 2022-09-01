@@ -54,6 +54,7 @@ const Layout = styled.div`
     height: 100%;
     opacity: 0.4;
     display: ${({ img }) => (img ? '' : 'none')};
+    /* background: url(""); */
     background: ${({ img }) => `url(${img})  center center / cover no-repeat`};
   }
 `;

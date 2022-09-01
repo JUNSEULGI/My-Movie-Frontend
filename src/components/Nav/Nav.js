@@ -24,8 +24,10 @@ function Nav() {
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const resetUser = useResetRecoilState(userState);
   const [scroll, setScroll] = useState(0);
-  const [titles, setTitles] = useState([]);
+  const [popularList, setPopularList] = useState([]);
   const access_token = localStorage.getItem('access_token');
+  const [search, setSearch] = useState('');
+  const [movieList, setMovieList] = useState([]);
 
   const updateScroll = () => {
     setScroll(window.scrollY);
@@ -54,10 +56,20 @@ function Nav() {
       .then(res => res.data)
       .then(data => {
         if (data.message === 'SUCCESS') {
-          setTitles(data.titles);
+          setPopularList(data.titles);
         }
       });
   }, []);
+
+  useEffect(() => {
+    fetcher(`http://1206-221-147-33-186.ngrok.io/movie?q=${search}`)
+      .then(res => res.data)
+      .then(data => {
+        if (data.message === 'SUCCESS') {
+          setMovieList(data.result);
+        }
+      });
+  }, [search]);
 
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
@@ -87,13 +99,16 @@ function Nav() {
             color="orange"
             id="free-solo-2-demo"
             onChange={(e, value) => {
-              moveMoviePage(value.id);
+              moveMoviePage(value.movie_id);
             }}
             disableClearable
             getOptionLabel={option => option.title}
-            options={titles}
+            options={movieList}
             renderInput={params => (
               <TextField
+                onChange={e => {
+                  setSearch(e.target.value);
+                }}
                 {...params}
                 label="영화 제목을 검색하세요"
                 InputProps={{

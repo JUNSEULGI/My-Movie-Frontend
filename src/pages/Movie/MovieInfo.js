@@ -23,7 +23,7 @@ function MovieInfo() {
     thumbnail_image_url,
   } = movie;
 
-  const floorRating = ratings.substr(0, 3);
+  // const floorRating = ratings.substr(0, 3);
   return (
     <MovieInfoContainer>
       <MovieImg component="img" height="100%" image={thumbnail_image_url} />
@@ -36,7 +36,7 @@ function MovieInfo() {
           }}
         >
           <MovieTitle variant="h2">{title}</MovieTitle>
-          <MovieRating rating={floorRating} />
+          {/* <MovieRating rating={floorRating} /> */}
         </TitleRatingBox>
         <SubInfo variant="subtitle2">
           {en_title}

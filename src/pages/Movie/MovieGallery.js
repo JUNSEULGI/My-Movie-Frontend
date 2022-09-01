@@ -41,17 +41,17 @@ function MovieGallery({ movie_image }) {
       margin: '10.3px',
     },
   }));
-  const M = styled(MyMasonry)`
-    @media screen and (max-width: 380px) {
-      display: block;
-      margin-left: -12px;
-    }
-  `;
+  // const M = styled(MyMasonry)`
+  //   @media screen and (max-width: 380px) {
+  //     display: block;
+  //     margin-left: -12px;
+  //   }
+  // `;
 
   return (
     <>
       <MasonryBox sx={{ width: '100%', minHeight: 429 }}>
-        <M columns={4} spacing={2}>
+        <MyMasonry columns={4} spacing={2}>
           {movie_image?.map((item, index) => (
             <Box key={index}>
               <MasonryImg
@@ -66,13 +66,13 @@ function MovieGallery({ movie_image }) {
                   borderBottomLeftRadius: 8,
                   borderBottomRightRadius: 8,
                   display: 'block',
-                  width: '500%',
+                  width: '100%',
                   boxShadow: '5px 7px 20px -4px rgba(0, 0, 0, 0.6)',
                 }}
               />
             </Box>
           ))}
-        </M>
+        </MyMasonry>
       </MasonryBox>
       <Box>
         <GalleryModal
