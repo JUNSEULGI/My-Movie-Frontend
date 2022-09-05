@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { API } from '../../Modules/API';
 import styled from '@emotion/styled';
-import PropTypes from 'prop-types';
+import { API } from '../../Modules/API';
 import { fetcher } from '../../Modules/fetcher';
+import PropTypes from 'prop-types';
 import { Container, Typography, Tabs, Tab, Box } from '@mui/material';
 import MyViewLayout from '../../layout/Layout';
 import LoadWrap from '../../components/Loading/LoadWrap';
@@ -52,30 +52,24 @@ function Search() {
 
   function SearchContainer() {
     return (
-      <>
-        <Box sx={{ width: '100%' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="basic tabs "
-            >
-              <Tab label="컨텐츠" {...a11yProps(0)} />
-              {/* <Tab label="Item Two" {...a11yProps(1)} />
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs ">
+            <Tab label="컨텐츠" {...a11yProps(0)} />
+            {/* <Tab label="Item Two" {...a11yProps(1)} />
               <Tab label="Item Three" {...a11yProps(2)} /> */}
-            </Tabs>
-          </Box>
-          <TabPanel value={value} index={0}>
-            <Content />
-          </TabPanel>
-          {/* <TabPanel value={value} index={1}>
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <Content />
+        </TabPanel>
+        {/* <TabPanel value={value} index={1}>
             Item Two
           </TabPanel>
           <TabPanel value={value} index={2}>
             Item Three
           </TabPanel> */}
-        </Box>
-      </>
+      </Box>
     );
   }
 
