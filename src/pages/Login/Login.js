@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Container, Typography } from '@mui/material';
-import { CardContainer } from '../Movie/CardContainer';
+import { CardContainer } from '../../components/CardContainer';
 import { Logo } from '../../components/Logo';
 import { API } from '../../Modules/API';
 import { fetcher } from '../../Modules/fetcher';

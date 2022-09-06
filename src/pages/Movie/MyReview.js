@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
 import { buttonState } from '../../state';
-import { CardContainer } from './CardContainer';
+import { CardContainer } from '../../components/CardContainer';
 import { Box, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
