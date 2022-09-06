@@ -1,29 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Container, Typography, Tabs, Tab, Box } from '@mui/material';
 import { API } from '../../Modules/API';
 import { BASE_URL } from '../../Modules/API';
 import { MovieRating } from '../Movie';
-import { useNavigate } from 'react-router-dom';
 
 function Content() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   const [loading, setLoading] = useState(true);
   const [backgroundInfo, setBackgroundInfo] = useState({});
 
   return (
-    <>
-      <Movie>
-        <PPoster
-          src="https://an2-img.amz.wtchn.net/image/v2/5pL_uFIH7pb9V5X3w5g5Uw.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5Ea3dlRGN3TUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk5USTJOakl6TVRVNU1EVTVOemd5TnpVaWZRLnhkRnhjTUFucS1fWFFBZjIyUHBBMWd1WDhuSlpLNDItTG9aWWtqV3Jmclk"
-          id="1"
-        />
-        <Title>제목</Title>
-        <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-          <MovieRating />
-        </Box>
-      </Movie>
-    </>
+    <Movie>
+      <PPoster
+        src="https://an2-img.amz.wtchn.net/image/v2/5pL_uFIH7pb9V5X3w5g5Uw.jpg?jwt=ZXlKaGJHY2lPaUpJVXpJMU5pSjkuZXlKdmNIUnpJanBiSW1SZk5Ea3dlRGN3TUhFNE1DSmRMQ0p3SWpvaUwzWXlMM04wYjNKbEwybHRZV2RsTHpFMk5USTJOakl6TVRVNU1EVTVOemd5TnpVaWZRLnhkRnhjTUFucS1fWFFBZjIyUHBBMWd1WDhuSlpLNDItTG9aWWtqV3Jmclk"
+        id="1"
+      />
+      <Title>제목</Title>
+      <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+        <MovieRating />
+      </Box>
+    </Movie>
   );
 }
 

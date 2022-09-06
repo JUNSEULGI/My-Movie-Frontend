@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { buttonState, movieState } from '../../state';
+import { buttonState, loadingState, movieState } from '../../state';
 import { Box, Button, Modal, IconButton } from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
-function MyViewModal({ open, closeModal, breadcrumbs, content, review }) {
+function MyViewModal({ open, closeModal, breadcrumbs, content }) {
+  const loading = useRecoilValue(loadingState);
   const movie = useRecoilValue(movieState);
   const [button, setButton] = useRecoilState(buttonState);
 
@@ -30,24 +31,26 @@ function MyViewModal({ open, closeModal, breadcrumbs, content, review }) {
           </IconButton>
         </Box>
         {content}
-        <Buttons>
-          {movie?.review_id && (
-            <ModalButton
-              variant="outlined"
-              onClick={() => setButton({ ...button, isDeleting: true })}
-            >
-              삭제
-            </ModalButton>
-          )}
-          {movie.id && (
-            <SaveButton
-              variant="contained"
-              onClick={() => setButton({ ...button, isSaving: true })}
-            >
-              저장
-            </SaveButton>
-          )}
-        </Buttons>
+        {!loading && (
+          <Buttons>
+            {movie?.review_id && (
+              <ModalButton
+                variant="outlined"
+                onClick={() => setButton({ ...button, isDeleting: true })}
+              >
+                삭제
+              </ModalButton>
+            )}
+            {movie.id && (
+              <SaveButton
+                variant="contained"
+                onClick={() => setButton({ ...button, isSaving: true })}
+              >
+                저장
+              </SaveButton>
+            )}
+          </Buttons>
+        )}
       </Container>
     </MyModal>
   );

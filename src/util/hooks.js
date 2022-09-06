@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { movieState, buttonState } from '../state';
-import { API, BASE_URL } from '../Modules/API';
+import { API } from '../Modules/API';
 import { fetcher } from '../Modules/fetcher';
 import moment from 'moment';
 

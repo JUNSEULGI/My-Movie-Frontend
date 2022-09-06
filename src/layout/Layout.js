@@ -12,27 +12,25 @@ const MyViewLayout = ({
   rightMenu,
 }) => {
   return (
-    <>
-      <Layout img={loginBack?.image_url}>
-        <Nav />
-        <Main>
-          <MovieScene movie img={background} />
-          <LeftMenu leftMenu={leftMenu}>{leftMenu}</LeftMenu>
-          <Center>{center}</Center>
-          <Right>
-            <RightMenu>{rightMenu}</RightMenu>
-          </Right>
-        </Main>
-        {window.location.pathname == '/' && (
-          <BackInfo>
-            <Summary variant="body2">
-              {loginBack?.description?.substr(0, 30)}
-            </Summary>
-            <BackTitle variant="subtitle2">- {loginBack?.title} -</BackTitle>
-          </BackInfo>
-        )}
-      </Layout>
-    </>
+    <Layout img={loginBack?.image_url}>
+      <Nav />
+      <Main>
+        <MovieScene movie img={background} />
+        <LeftMenu leftMenu={leftMenu}>{leftMenu}</LeftMenu>
+        <Center>{center}</Center>
+        <Right>
+          <RightMenu>{rightMenu}</RightMenu>
+        </Right>
+      </Main>
+      {window.location.pathname === '/' && (
+        <BackInfo>
+          <Summary variant="body2">
+            {loginBack?.description?.substr(0, 30)}
+          </Summary>
+          <BackTitle variant="subtitle2">- {loginBack?.title} -</BackTitle>
+        </BackInfo>
+      )}
+    </Layout>
   );
 };
 

@@ -9,7 +9,6 @@ import MyViewLayout from '../../layout/Layout';
 import NaverLogin from './NaverLogin';
 import KakaoLogin from './KakaoLogin';
 import LoadWrap from '../../components/Loading/LoadWrap';
-import { Title } from '@mui/icons-material';
 
 function Login() {
   const [loading, setLoading] = useState(true);
@@ -56,10 +55,7 @@ function Login() {
   return (
     <MyViewLayout
       loginBack={backgroundInfo}
-      center={
-        // <LoadWrap loading={loading} content={
-        <LoginContainer />
-      }
+      center={<LoadWrap loading={loading} content={<LoginContainer />} />}
     />
   );
 }

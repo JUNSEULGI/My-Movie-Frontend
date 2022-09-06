@@ -2,8 +2,8 @@ export const BASE_URL = 'http://localhost:8000/';
 
 export const API = {
   // 로그인
-  login: '/users/login',
-  login_back: '/users/login/background',
+  login: '/user/login',
+  login_back: '/user/login/background',
   // 유저
   users_list: '/user/list',
   users_info: '/user/info',

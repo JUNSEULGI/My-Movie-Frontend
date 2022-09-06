@@ -9,13 +9,17 @@ import LoadWrap from '../../components/Loading/LoadWrap';
 import Content from './Content';
 
 function Search() {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   const [loading, setLoading] = useState(true);
   const [backgroundInfo, setBackgroundInfo] = useState({});
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    fetcher(`${API.search}?`);
+  }, []);
 
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -56,8 +60,8 @@ function Search() {
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs ">
             <Tab label="컨텐츠" {...a11yProps(0)} />
-            {/* <Tab label="Item Two" {...a11yProps(1)} />
-              <Tab label="Item Three" {...a11yProps(2)} /> */}
+            <Tab label="인물" {...a11yProps(1)} />
+            {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
@@ -74,7 +78,10 @@ function Search() {
   }
 
   return (
-    <MyViewLayout loginBack={backgroundInfo} center={<SearchContainer />} />
+    <MyViewLayout
+      loginBack={backgroundInfo}
+      center={<LoadWrap loading={loading} content={<SearchContainer />} />}
+    />
   );
 }
 
