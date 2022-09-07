@@ -81,6 +81,11 @@ const darkTheme = createTheme({
       brown: '#64473A',
     },
   },
+  deviceSize: {
+    mobile: '(max-width: 540px)',
+    tablet: '(min-width: 540px) and (max-width: 1080px)',
+    desktop: '(min-width: 1080px)',
+  },
 });
 
 addTypography(darkTheme);

@@ -9,6 +9,8 @@ import MyViewLayout from '../../layout/Layout';
 import LoadWrap from '../../components/Loading/LoadWrap';
 import Content from './Content';
 import { CardContainer } from '../../components/CardContainer';
+import { CONTENTS_MOCK } from '../../assets/mockData/contents';
+import { NoResult } from './NoResult';
 
 function a11yProps(index) {
   return {
@@ -74,14 +76,19 @@ function Search() {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <Content />
+          {CONTENTS_MOCK ? (
+            <ContentsContainer>
+              {CONTENTS_MOCK.map(content => (
+                <Content key={content.id} data={content} />
+              ))}
+            </ContentsContainer>
+          ) : (
+            <NoResult />
+          )}
         </TabPanel>
-        {/* <TabPanel value={value} index={1}>
-            Item Two
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            Item Three
-          </TabPanel> */}
+        <TabPanel value={value} index={1}>
+          Item Two
+        </TabPanel>
       </Box>
     );
   }
@@ -105,6 +112,19 @@ const Title = styled(Typography)`
 
 const OrangeText = styled.span`
   color: ${({ theme }) => theme.palette.primary.main};
+`;
+
+const ContentsContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 30px 10px;
+  margin-bottom: 100px;
+  @media ${p => p.theme.deviceSize.tablet} {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  @media ${p => p.theme.deviceSize.mobile} {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 export default Search;
