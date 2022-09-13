@@ -77,7 +77,6 @@ const darkTheme = createTheme({
       purple: '#693FA5',
       orange: '#D9730B',
       green: '#0E7B6C',
-
       brown: '#64473A',
     },
   },

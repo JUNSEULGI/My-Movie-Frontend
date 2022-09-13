@@ -9,8 +9,10 @@ import MyViewLayout from '../../layout/Layout';
 import LoadWrap from '../../components/Loading/LoadWrap';
 import Content from './Content';
 import { CardContainer } from '../../components/CardContainer';
-import { CONTENTS_MOCK } from '../../assets/mockData/contents';
+import { CONTENTS_MOCK, CHARACTERS_MOCK } from '../../assets/mockData/contents';
 import { NoResult } from './NoResult';
+import NewMovie from './NewMovie';
+import Character from './Character';
 
 function a11yProps(index) {
   return {
@@ -72,12 +74,11 @@ function Search() {
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs ">
             <Tab label="컨텐츠" {...a11yProps(0)} />
             <Tab label="인물" {...a11yProps(1)} />
-            {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
           {CONTENTS_MOCK ? (
-            <ContentsContainer>
+            <ContentsContainer sx={{ borderBottom: 1, borderColor: 'divider' }}>
               {CONTENTS_MOCK.map(content => (
                 <Content key={content.id} data={content} />
               ))}
@@ -87,8 +88,28 @@ function Search() {
           )}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          Item Two
+          {CHARACTERS_MOCK ? (
+            <CharactersContainer>
+              {CHARACTERS_MOCK.map(character => (
+                <Character key={character.id} data={character} />
+              ))}
+            </CharactersContainer>
+          ) : (
+            <NoResult />
+          )}
         </TabPanel>
+        <Box>
+          <Title variant="h3" style={{ marginBottom: 20 }}>
+            최신 개봉작
+          </Title>
+          {CONTENTS_MOCK && (
+            <NewMoviesContainer>
+              {CONTENTS_MOCK.map(content => (
+                <NewMovie key={content.id} data={content} />
+              ))}
+            </NewMoviesContainer>
+          )}
+        </Box>
       </Box>
     );
   }
@@ -114,16 +135,38 @@ const OrangeText = styled.span`
   color: ${({ theme }) => theme.palette.primary.main};
 `;
 
-const ContentsContainer = styled.div`
+const ContentsContainer = styled(Box)`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 30px 10px;
-  margin-bottom: 100px;
+  padding-bottom: 200px;
   @media ${p => p.theme.deviceSize.tablet} {
     grid-template-columns: repeat(4, 1fr);
   }
   @media ${p => p.theme.deviceSize.mobile} {
     grid-template-columns: repeat(2, 1fr);
+  }
+`;
+
+const CharactersContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px 40px;
+  @media ${p => p.theme.deviceSize.mobile} {
+    grid-template-columns: repeat(1, 1fr);
+  }
+`;
+
+const NewMoviesContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px 10px;
+  margin-bottom: 100px;
+  @media ${p => p.theme.deviceSize.tablet} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media ${p => p.theme.deviceSize.mobile} {
+    grid-template-columns: repeat(1, 1fr);
   }
 `;
 
