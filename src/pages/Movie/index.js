@@ -1,6 +1,6 @@
 import Actor from './Actor';
 import AgeBadge from '../../components/AgeBadge';
-import { CardContainer } from './CardContainer';
+import { CardContainer } from '../../components/CardContainer';
 import { Logo } from '../../components/Logo';
 import MovieGallery from './MovieGallery';
 import MovieInfo from './MovieInfo';
@@ -11,7 +11,7 @@ import MyReview from './MyReview';
 import NoReview from './NoReview';
 import SeeMoreButton from './SeeMoreButton';
 import Trailer from './Trailer';
-import { ActorImg } from './ActorImage';
+import { ActorImg } from '../../components/ActorImage';
 
 export {
   ActorImg,

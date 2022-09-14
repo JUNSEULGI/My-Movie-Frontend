@@ -77,9 +77,13 @@ const darkTheme = createTheme({
       purple: '#693FA5',
       orange: '#D9730B',
       green: '#0E7B6C',
-
       brown: '#64473A',
     },
+  },
+  deviceSize: {
+    mobile: '(max-width: 540px)',
+    tablet: '(min-width: 540px) and (max-width: 1080px)',
+    desktop: '(min-width: 1080px)',
   },
 });
 

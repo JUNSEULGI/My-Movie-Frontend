@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Box, Link, Typography } from '@mui/material';
-import { CardContainer } from './CardContainer';
+import { CardContainer } from '../../components/CardContainer';
 import { ReviewIcon, FabContainer } from './MyIconButton';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 

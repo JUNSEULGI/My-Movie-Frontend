@@ -10,12 +10,10 @@ function MyStep({ check, id }) {
   const [review, setReview] = useState({});
   const { content } = review;
   const getReview = async () => {
-    // setLoading(true);
     try {
       const { data: res } = await fetcher(`${API.review_movie}/${id}`);
       if (res.message === 'REVIEW_DOSE_NOT_EXISTS') return;
       setReview(res.result);
-      // setLoading(false);
     } catch (error) {
       console.log('error', error);
     }

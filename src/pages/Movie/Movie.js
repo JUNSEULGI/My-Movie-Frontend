@@ -117,7 +117,7 @@ function Movie() {
           closeModal={closeModal}
           content={<ReviewBox />}
         />
-        {video_url.length == 0 ? (
+        {video_url.length === 0 ? (
           ''
         ) : (
           <>
@@ -129,7 +129,7 @@ function Movie() {
             </TrailerContainer>
           </>
         )}
-        {image_url.length == 0 ? (
+        {image_url.length === 0 ? (
           ''
         ) : (
           <>

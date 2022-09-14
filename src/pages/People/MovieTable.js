@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { CardContainer } from '../Movie/CardContainer';
+import { CardContainer } from '../../components/CardContainer';
 import { CardMedia, Typography } from '@mui/material';
 import { OTTLogo } from '../../components/PlatformAvatar';
 import { Logo } from '../../components/Logo';

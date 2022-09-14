@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { movieState, userState } from '../../state';
+import { loadingState, movieState, userState } from '../../state';
 import styled from '@emotion/styled';
 import { Box, Typography, TextField, Rating, Paper } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -15,10 +15,10 @@ import { API } from '../../Modules/API';
 import { useDelete, useSave } from '../../util/hooks';
 
 function ReviewBox() {
+  const [movie, setMovie] = useRecoilState(movieState);
+  const [loading, setLoading] = useRecoilState(loadingState);
   const [isMovieLoading, setIsMovieLoading] = useState(true);
   const [isReviewLoading, setIsReviewLoading] = useState(true);
-  const loading = isMovieLoading || isReviewLoading;
-  const [movie, setMovie] = useRecoilState(movieState);
   const [review, setReview] = useState({
     review_id: '',
     title: '',
@@ -87,6 +87,10 @@ function ReviewBox() {
     getReview();
   }, []);
 
+  useEffect(() => {
+    setLoading(isMovieLoading || isReviewLoading);
+  }, [isMovieLoading, isReviewLoading, setLoading]);
+
   return (
     <LoadWrap
       loading={loading}
@@ -98,7 +102,7 @@ function ReviewBox() {
 function ReviewBoxContent({ review, setReview }) {
   const [userInfo] = useRecoilState(userState);
   const [movie] = useRecoilState(movieState);
-  const ratingRef = useRef();
+  // const ratingRef = useRef();
   const textInput = useRef(null);
 
   // 저장하기 버튼을 누르면 이때까지 반영된 리뷰 정보를 폼데이터로 담아 전송

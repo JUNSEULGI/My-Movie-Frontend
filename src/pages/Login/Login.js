@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Container, Typography } from '@mui/material';
-import { CardContainer } from '../Movie/CardContainer';
+import { CardContainer } from '../../components/CardContainer';
 import { Logo } from '../../components/Logo';
 import { API } from '../../Modules/API';
 import { fetcher } from '../../Modules/fetcher';
@@ -9,7 +9,6 @@ import MyViewLayout from '../../layout/Layout';
 import NaverLogin from './NaverLogin';
 import KakaoLogin from './KakaoLogin';
 import LoadWrap from '../../components/Loading/LoadWrap';
-import { Title } from '@mui/icons-material';
 
 function Login() {
   const [loading, setLoading] = useState(true);
@@ -56,10 +55,7 @@ function Login() {
   return (
     <MyViewLayout
       loginBack={backgroundInfo}
-      center={
-        // <LoadWrap loading={loading} content={
-        <LoginContainer />
-      }
+      center={<LoadWrap loading={loading} content={<LoginContainer />} />}
     />
   );
 }

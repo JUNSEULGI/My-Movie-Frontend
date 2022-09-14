@@ -18,6 +18,16 @@ import {
 } from '@mui/material';
 import { fetcher } from '../../Modules/fetcher';
 
+const countries = [
+  { code: 'AD', label: 'Andorra', phone: '376' },
+  {
+    code: 'AE',
+    label: 'United Arab Emirates',
+    phone: '971',
+  },
+  { code: 'AF', label: 'Afghanistan', phone: '93' },
+];
+
 function Nav() {
   const { pathname } = useLocation();
   const { navigate } = useNavigate();
@@ -65,16 +75,6 @@ function Nav() {
     window.addEventListener('scroll', updateScroll);
   }, []);
 
-  const countries = [
-    { code: 'AD', label: 'Andorra', phone: '376' },
-    {
-      code: 'AE',
-      label: 'United Arab Emirates',
-      phone: '971',
-    },
-    { code: 'AF', label: 'Afghanistan', phone: '93' },
-  ];
-
   const isUser = localStorage.access_token ? '/list' : '/';
 
   const seeLoginButton =
@@ -99,7 +99,7 @@ function Nav() {
             color="orange"
             id="free-solo-2-demo"
             onChange={(e, value) => {
-              moveMoviePage(value.movie_id);
+              moveMoviePage(value.id);
             }}
             disableClearable
             getOptionLabel={option => option.title}
