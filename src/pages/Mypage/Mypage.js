@@ -22,6 +22,7 @@ export default Mypage;
 
 const MypageBox = styled(Box)`
   display: flex;
+  width: 100%;
   @media screen and (max-width: 600px) {
     width: 320px;
     display: block;

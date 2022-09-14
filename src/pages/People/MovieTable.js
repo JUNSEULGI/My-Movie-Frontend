@@ -14,6 +14,10 @@ function MovieTable({ movie, reviewdata }) {
     navigate(`/movie/${id}`);
   };
 
+  movie.sort((a, b) => b.release - a.release);
+  // console.table(movie);
+  // console.log(reviewdata);
+
   return (
     <>
       <RowTitle>
@@ -40,17 +44,26 @@ function MovieTable({ movie, reviewdata }) {
           } = movie;
 
           const floorRatings = ratings;
+
           // .slice(0, 3);
           return (
             <BackCover key={movie_id} back={movie_image_url}>
               <Row>
                 <Year>{release}</Year>
                 <MoviePoster>
-                  <MovieImg
-                    component="img"
-                    height="100%"
-                    image={thumbnail_image_url}
-                  />
+                  {thumbnail_image_url ? (
+                    <MovieImg
+                      component="img"
+                      height="100%"
+                      image={thumbnail_image_url}
+                    />
+                  ) : (
+                    <MovieImg
+                      component="img"
+                      height="100%"
+                      image="https://kangsblackbeltacademy.com/wp-content/uploads/2017/04/default-image.jpg"
+                    />
+                  )}
                 </MoviePoster>
                 <MoiveTitle
                   variant="subtitle1"

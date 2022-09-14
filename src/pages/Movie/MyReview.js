@@ -18,6 +18,7 @@ function MyReview({ openModal, review }) {
   const handleDelete = () => setButton({ ...button, isDeleting: true });
   useDelete(review.review_id);
 
+  console.log(review);
   if (!review.review_id) return null;
   return (
     <MyReviewContainer>
@@ -25,9 +26,14 @@ function MyReview({ openModal, review }) {
         <Logo>My View!</Logo>
         <MovieRating rating={review.rating} />
       </Box>
-      <MyBox>
-        <MyReviewTitle variant="h1">{review.title}</MyReviewTitle>
-      </MyBox>
+      {review.title.length == 0 || review.title == '\r\n' ? (
+        ''
+      ) : (
+        <MyBox>
+          <MyReviewTitle variant="h1">{review.title}</MyReviewTitle>
+        </MyBox>
+      )}
+
       {review.content.length < 30 ? (
         ''
       ) : (

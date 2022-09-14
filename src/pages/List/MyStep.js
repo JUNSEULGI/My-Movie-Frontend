@@ -8,7 +8,8 @@ import { fetcher } from '../../Modules/fetcher';
 
 function MyStep({ check, id }) {
   const [review, setReview] = useState({});
-  const { content } = review;
+  const { review_id } = review;
+
   const getReview = async () => {
     // setLoading(true);
     try {
@@ -29,14 +30,14 @@ function MyStep({ check, id }) {
     <Step key="1" color={darkTheme.palette.common.white}>
       영화 검색
     </Step>,
-    <SaveStep key="2" check={check}>
-      리뷰 {content ? '수정' : '저장'}
+    <SaveStep key="2" color={check}>
+      리뷰 {review_id ? '수정' : '저장'}
     </SaveStep>,
   ];
 
   return (
     <MyBreadcrumbs
-      check={check}
+      color={check}
       separator={<Next fontSize="small" />}
       aria-label="breadcrumb"
     >
@@ -52,7 +53,7 @@ const Step = styled(Typography)`
 `;
 
 const SaveStep = styled(Step)`
-  color: ${({ check }) => (check ? 'white' : 'gray')};
+  color: ${({ color }) => (color ? 'white' : 'gray')};
 `;
 
 const Next = styled(NavigateNextIcon)``;
@@ -61,7 +62,7 @@ const MyBreadcrumbs = styled(Breadcrumbs)`
   padding-top: 10px;
   & .MuiBreadcrumbs-separator {
     svg {
-      fill: ${({ check }) => (check ? 'white' : 'gray')};
+      fill: ${({ color }) => (color ? 'white' : 'gray')};
     }
   }
 `;

@@ -18,6 +18,7 @@ import LoadWrap from '../../components/Loading/LoadWrap';
 
 function List() {
   const navigate = useNavigate();
+  const [step, setStep] = useState(true);
   const [loading, setLoading] = useState(true);
   const [reviewList, setReviewList] = useState([]);
   const [topMovies, setTopMovies] = useState([]);
@@ -93,9 +94,9 @@ function List() {
             closeModal={closeModal}
             breadcrumbs={
               movie.id ? (
-                <MyStep id={movie.id} check={true} />
+                <MyStep id={movie.id} check={step} />
               ) : (
-                <MyStep review={reviewList.review_id} check={false} />
+                <MyStep review={reviewList.review_id} check={setStep(false)} />
               )
             }
             content={movie.id ? <ReviewBox /> : <SearchBox />}

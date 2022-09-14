@@ -36,6 +36,7 @@ const ActorCard = styled.div`
   }
   margin-right: 22px;
   width: 175px;
+  scroll-snap-align: start;
 `;
 
 const ActorImg = styled.img`
