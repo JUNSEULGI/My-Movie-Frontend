@@ -20,7 +20,7 @@ function WatchedMovie() {
   const [userInfo, setUserInfo] = useRecoilState(userState);
 
   useEffect(() => {
-    fetch(`${BASE_URL}reviews/list`, {
+    fetch(`${BASE_URL}review/list`, {
       headers: {
         Authorization: access_token,
       },
@@ -78,9 +78,8 @@ export default WatchedMovie;
 const MypageCardContainer = styled(CardContainer)`
   display: block;
   position: relative;
-  width: fit-content;
+  width: 800px;
   margin: 40px 0 20px 20px;
-
   @media screen and (max-width: 600px) {
     margin-left: 0px;
     width: 100%;
@@ -89,11 +88,9 @@ const MypageCardContainer = styled(CardContainer)`
 
 const Movie = styled.div`
   margin-right: 16px;
-
-  @media screen and (max-width: 600px) {
-    scroll-snap-align: start;
-  }
+  scroll-snap-align: start;
 `;
+
 const SubTitle = styled(Typography)`
   margin-bottom: 20px;
 
@@ -104,9 +101,10 @@ const SubTitle = styled(Typography)`
 `;
 
 const WatchedBox = styled(Box)`
-  @media screen and (max-width: 600px) {
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  ::-webkit-scrollbar {
+    display: none;
   }
 `;
 
@@ -120,8 +118,9 @@ const PPoster = styled.img`
 `;
 
 const Title = styled.p`
+  width: 131.594px;
   font-weight: bold;
-  text-align: end;
+  text-align: start;
   margin: 8px 0 0 0;
   overflow: hidden;
   white-space: nowrap;

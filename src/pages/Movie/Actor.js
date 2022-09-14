@@ -7,11 +7,16 @@ import { Typography } from '@mui/material';
 function Actor({ actor }) {
   const { id, name, role_name, image, role } = actor;
 
+  const actorImage =
+    image == ''
+      ? 'https://kangsblackbeltacademy.com/wp-content/uploads/2017/04/default-image.jpg'
+      : image;
+
   const navigate = useNavigate();
 
   return (
     <ActorCard key={id}>
-      <ActorImg src={image} onClick={() => navigate(`/people/${id}`)} />
+      <ActorImg src={actorImage} onClick={() => navigate(`/people/${id}`)} />
       <Links href={`/people/${id}`}>
         <ActorName variant="h3">{name}</ActorName>
       </Links>
@@ -31,12 +36,15 @@ const ActorCard = styled.div`
   }
   margin-right: 22px;
   width: 175px;
+  scroll-snap-align: start;
 `;
 
 const ActorImg = styled.img`
+  width: 116.66px;
   height: 175px;
   border-radius: 8px;
   cursor: pointer;
+  overflow-x: hidden;
 `;
 
 const ActorName = styled(Typography)`

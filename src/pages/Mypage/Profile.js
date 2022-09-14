@@ -41,7 +41,7 @@ const MypageCardContainer = styled(CardContainer)`
   display: flex;
   position: relative;
   flex-direction: column;
-  width: fit-content;
+
   margin-top: 40px;
   @media screen and (max-width: 600px) {
     width: 100%;

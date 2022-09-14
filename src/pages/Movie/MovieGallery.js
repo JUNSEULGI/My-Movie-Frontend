@@ -49,7 +49,7 @@ function MovieGallery({ movie_image }) {
 
   return (
     <>
-      <MasonryBox sx={{ width: '100%', minHeight: 429 }}>
+      <MasonryBox sx={{ width: '100%', minHeight: '320' }}>
         <MyMasonry columns={4} spacing={2}>
           {movie_image?.map((item, index) => (
             <Box key={index}>

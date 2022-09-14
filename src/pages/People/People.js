@@ -142,7 +142,7 @@ const PeopleCard = styled(CardContainer)`
 const Info = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 
   @media screen and (max-width: 600px) {
     display: flex;
@@ -151,7 +151,7 @@ const Info = styled.div`
 `;
 
 const PeopleName = styled(Typography)`
-  margin: 0 0 0 20px;
+  margin: 0 0 10px 20px;
   @media screen and (max-width: 600px) {
     margin-bottom: 10px;
   }
