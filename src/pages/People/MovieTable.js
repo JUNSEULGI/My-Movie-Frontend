@@ -10,8 +10,6 @@ function MovieTable({ movie, reviewdata }) {
   const access_token = localStorage.getItem('access_token');
   const navigate = useNavigate();
 
-  movie.sort((a, b) => b.release - a.release);
-
   const moveMoviePage = id => {
     navigate(`/movie/${id}`);
   };
@@ -39,11 +37,12 @@ function MovieTable({ movie, reviewdata }) {
             platform,
             myrating,
             platform_logo_image,
+            background_image_url,
           } = movie;
 
           const floorRatings = ratings;
           return (
-            <BackCover key={movie_id} back={movie_image_url}>
+            <BackCover key={movie_id} back={background_image_url}>
               <Row>
                 <Year>{release}</Year>
                 <MoviePoster>

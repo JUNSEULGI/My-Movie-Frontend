@@ -1,4 +1,5 @@
-export const BASE_URL = 'http://localhost:8000/';
+// export const BASE_URL = 'http://localhost:8000/';
+export const BASE_URL = 'http://accf-221-147-33-141.ngrok.io/';
 
 export const API = {
   // 로그인
@@ -13,7 +14,7 @@ export const API = {
   review_list: '/review/list',
   review_top: 'review/top3',
   // 영화 정보
-  actor: '/movie/actor',
+  actor: '/movie/actor/detail',
   movie: '/movie',
   movie_popular: '/movie/popular',
   movie_detail: '/movie/detail',
