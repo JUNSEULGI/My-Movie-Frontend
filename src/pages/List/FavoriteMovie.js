@@ -1,25 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 import { Box, Card, Typography } from '@mui/material';
+import HiddenReview from './HiddenReview';
 
 const FavoriteMovie = ({ topMovies }) => {
   const navigate = useNavigate();
+  const [isHovering, setIsHovering] = useState(0);
 
   return (
     <Container>
-      {topMovies?.map(item => (
+      {topMovies?.map((item, idx) => (
         <BestMovie
           key={item.review_id}
           onClick={() => navigate(`/movie/${item.movie.id}`)}
         >
-          <BackgroundPosterWrapper>
-            <BackgroundPoster
-              src={item.movie.poster}
-              alt="poster of my best movie"
-            />
-            <Title variant="h1">{item.movie.title}</Title>
-          </BackgroundPosterWrapper>
+          <HiddenReview title={item.title} item={item} idx={idx} />
         </BestMovie>
       ))}
     </Container>
@@ -45,36 +41,6 @@ const BestMovie = styled(Card)`
   border-radius: 8px;
   box-shadow: 5px 7px 20px -4px rgba(0, 0, 0, 0.6);
   cursor: pointer;
-`;
-
-const BackgroundPosterWrapper = styled.div`
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-  overflow: hidden;
-`;
-
-const BackgroundPoster = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: all ease 0.4s;
-
-  :hover {
-    transform: scale(1.1);
-  }
-`;
-
-const Title = styled(Typography)`
-  position: absolute;
-  bottom: 10px;
-  left: 16px;
-  color: ${({ theme }) => theme.palette.common.white};
-  font-weight: bold;
-  text-shadow: 4px 2px 4px black;
 `;
 
 export default FavoriteMovie;

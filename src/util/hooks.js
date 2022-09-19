@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { movieState, buttonState } from '../state';
@@ -98,4 +98,30 @@ export const useSave = (review, textInput) => {
         });
     }
   }, [button.isSaving]);
+};
+
+export const useInfiniteScroll = targetEl => {
+  const observerRef = useRef(null);
+  const [intersecting, setIntersecting] = useState(false);
+  console.log('targetEl', targetEl);
+  console.log('observerRef', observerRef.current);
+
+  const getObserver = useCallback(() => {
+    console.log('usecl]lb');
+    if (!observerRef.current) {
+      observerRef.current = new IntersectionObserver(entries =>
+        setIntersecting(entries.some(entry => entry.isIntersecting))
+      );
+    }
+    return observerRef.current;
+  }, [observerRef.current]);
+
+  useEffect(() => {
+    if (targetEl.current) getObserver().observe(targetEl.current);
+    return () => {
+      getObserver().disconnect();
+    };
+  }, [targetEl.current]);
+
+  return intersecting;
 };

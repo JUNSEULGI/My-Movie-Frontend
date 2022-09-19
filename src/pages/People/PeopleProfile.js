@@ -21,45 +21,47 @@ function PeopleProfile({ profile }) {
         display: 'block',
       }}
     >
-      <Profile>
-        <Title>국적</Title>
-        <Info>{country}</Info>
-      </Profile>
-      <Profile>
-        <Title>출생</Title>
-        <Info>{birth}</Info>
-      </Profile>
-      <Profile>
-        {debut_year == 0 ? (
-          ''
-        ) : (
-          <>
-            <Title>데뷔</Title>
-            <Info>
-              {debut_year} {debut}
-            </Info>
-          </>
-        )}
-      </Profile>
+      {country && (
+        <Profile>
+          <Title>국적</Title>
+          <Info>{country}</Info>
+        </Profile>
+      )}
+      {birth && (
+        <Profile>
+          <Title>출생</Title>
+          <Info>{birth}</Info>
+        </Profile>
+      )}
+      {debut_year && (
+        <Profile>
+          <Title>데뷔</Title>
+          <Info>
+            {debut_year} {debut}
+          </Info>
+        </Profile>
+      )}
       {agency && (
         <Profile>
           <Title>소속사</Title>
           <Info>{agency}</Info>
         </Profile>
       )}
-      <Profile>
-        {height === '' && weight === '' ? (
-          ''
-        ) : (
-          <>
-            <Title>신체</Title>
-            <Info>
-              {height}
-              {weight}
-            </Info>
-          </>
-        )}
-      </Profile>
+      {height && (
+        <Profile>
+          {height === '' && weight === '' ? (
+            ''
+          ) : (
+            <>
+              <Title>신체</Title>
+              <Info>
+                {height}
+                {weight}
+              </Info>
+            </>
+          )}
+        </Profile>
+      )}{' '}
     </ProfileBox>
   );
 }

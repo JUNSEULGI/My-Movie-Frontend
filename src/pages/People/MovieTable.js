@@ -37,19 +37,28 @@ function MovieTable({ movie, reviewdata }) {
             platform,
             myrating,
             platform_logo_image,
+            background_image_url,
           } = movie;
 
-          const floorRatings = ratings.slice(0, 3);
+          const floorRatings = ratings;
           return (
-            <BackCover key={movie_id} back={movie_image_url}>
+            <BackCover key={movie_id} back={background_image_url}>
               <Row>
                 <Year>{release}</Year>
                 <MoviePoster>
-                  <MovieImg
-                    component="img"
-                    height="100%"
-                    image={thumbnail_image_url}
-                  />
+                  {thumbnail_image_url ? (
+                    <MovieImg
+                      component="img"
+                      height="100%"
+                      image={thumbnail_image_url}
+                    />
+                  ) : (
+                    <MovieImg
+                      component="img"
+                      height="100%"
+                      image="https://kangsblackbeltacademy.com/wp-content/uploads/2017/04/default-image.jpg"
+                    />
+                  )}
                 </MoviePoster>
                 <MoiveTitle
                   variant="subtitle1"

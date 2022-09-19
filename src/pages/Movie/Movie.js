@@ -17,7 +17,7 @@ import {
 } from '../Movie';
 import MyViewModal from '../../components/MyViewModal/MyViewModal';
 import ReviewBox from '../../components/MyViewModal/ReviewBox';
-import { Typography } from '@mui/material';
+import { Button, Typography, Box } from '@mui/material';
 import LoadWrap from '../../components/Loading/LoadWrap';
 import { fetcher } from '../../Modules/fetcher';
 
@@ -81,7 +81,13 @@ function Movie() {
 
   const { title, actor, video_url, image_url } = movie;
 
-  const background = image_url[0] || '#e2e2e2e';
+  const background = image_url?.[0] || '#e2e2e2';
+
+  const [imageCount, setImageCount] = useState(8);
+
+  const aa = [...new Set(image_url)];
+  aa.length = imageCount;
+  console.log(aa);
 
   function MovieContent() {
     return (
@@ -134,7 +140,15 @@ function Movie() {
         ) : (
           <>
             <ContainerTitle>갤러리</ContainerTitle>
-            <MovieGallery movie_image={image_url} />
+            <MovieGallery movie_image={aa} />
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Button
+                onClick={() => setImageCount(imageCount + 8)}
+                variant="contained"
+              >
+                더 보기
+              </Button>
+            </Box>
           </>
         )}
       </MovieBackGround>
@@ -177,6 +191,7 @@ const ActorContainer = styled(CardContainer)`
   overflow-x: scroll;
   -ms-overflow-style: none; /* Explorer */
   scrollbar-width: none; /* Firefox */
+  scroll-snap-type: x mandatory;
   ::-webkit-scrollbar {
     display: none; /* Chrome */
   }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userState } from '../../state';
@@ -10,43 +10,55 @@ import { CardContainer, ActorImg } from '../Movie';
 import { PeopleProfile, MovieTable, CountReview } from '../People';
 import LoadWrap from '../../components/Loading/LoadWrap';
 import { fetcher } from '../../Modules/fetcher';
+import { useInfiniteScroll } from '../../util/hooks';
 
 function People() {
   const params = useParams();
   const userInfo = useRecoilValue(userState);
   const [loading, setLoading] = useState(true);
-
-  // Real DATA
   const [peopleData, setPeopleData] = useState({});
   const [intimacyData, setIntimacyData] = useState({});
+  const [starringList, setStarringList] = useState([]);
+  const [page, setPage] = useState(0);
+  const observer = useRef(null);
+  const [intersecting, setIntersecting] = useState(false);
 
-  const getIntimacy = async () => {
-    setLoading(true);
-    try {
-      const { data: result } = await fetcher(
-        `${API.actor_intimacy}/${params.id}`
-      );
-      setIntimacyData(result.data);
-      setLoading(false);
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
+  const fetchMoreEl = useCallback(
+    node => {
+      console.log('sssssadadasdasdasdasasd');
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(entries => {
+        setIntersecting(entries.some(entry => entry.isIntersecting));
+        if (intersecting) {
+          setPage(page + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [intersecting]
+  );
 
-  //전체 데이터
-  // useEffect(() => {
-  //   fetch(`${BASE_URL}movies/actor/${params.id}`)
-  //     .then(res => res.json())
-  //     .then(res => {
-  //       setPeopleData(res.actor_info);
-  //     });
-  // }, []);
+  // const getIntimacy = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const { data: result } = await fetcher(
+  //       `${API.actor_intimacy}/${params.id}`
+  //     );
+  //     setIntimacyData(result.data);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.log('error', error);
+  //   }
+  // };
 
   const getPeople = async () => {
     setLoading(true);
     try {
-      const { data: result } = await fetcher(`${API.actor}/${params.id}`);
+      const { data: result } = await fetcher(
+        `${API.actor}?actor_id=${params.id}&page=${page}`
+      );
       setPeopleData(result.actor_info);
+      setStarringList(result.actor_info.starring_list);
       setLoading(false);
     } catch (error) {
       console.log('error', error);
@@ -54,13 +66,29 @@ function People() {
   };
 
   useEffect(() => {
-    getIntimacy();
-    getPeople();
-  }, [params.id]);
+    // loading
+    if (page === 0) {
+      getPeople();
+      return;
+    }
+  }, []);
 
-  const { starring_list } = peopleData;
+  useEffect(() => {
+    // pagination
+    if (page === 0) return;
+    if (peopleData && page > peopleData.total_page) return;
+    fetcher(`${API.actor}?actor_id=${params.id}&page=${page}`).then(
+      ({ data }) => {
+        setStarringList(prev => [...prev, ...data.actor_info.starring_list]);
+        observer.current = null;
+      }
+    );
+    return;
+  }, [page]);
 
   let watched_count = 0;
+
+  // console.table(starringList);
 
   const checkAddMyReview = (intimacyData, starring_list) => {
     for (let i = 0; i < starring_list?.length; i++) {
@@ -74,7 +102,9 @@ function People() {
     return starring_list;
   };
 
-  checkAddMyReview(intimacyData, starring_list);
+  checkAddMyReview(intimacyData, starringList);
+
+  console.log(peopleData);
 
   function PeopleContent() {
     return (
@@ -103,12 +133,15 @@ function People() {
         <CountReview
           userInfo={userInfo}
           actor={peopleData.name}
-          starring_list={starring_list}
+          starring_list={starringList}
           watched_count={watched_count}
         />
         <Right>
-          <MovieTable reviewdata={intimacyData} movie={starring_list} />
+          <MovieTable reviewdata={intimacyData} movie={starringList} />
         </Right>
+        <OOO sx={{ border: '1px solid white' }} ref={fetchMoreEl}>
+          asdasdas
+        </OOO>
       </PeopleContentContainer>
     );
   }
@@ -142,7 +175,7 @@ const PeopleCard = styled(CardContainer)`
 const Info = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 
   @media screen and (max-width: 600px) {
     display: flex;
@@ -151,7 +184,7 @@ const Info = styled.div`
 `;
 
 const PeopleName = styled(Typography)`
-  margin: 0 0 0 20px;
+  margin: 0 0 10px 20px;
   @media screen and (max-width: 600px) {
     margin-bottom: 10px;
   }
@@ -167,6 +200,10 @@ const Right = styled.div`
   @media screen and (max-width: 600px) {
     padding: 0px;
   }
+`;
+
+const OOO = styled.div`
+  background-color: beige;
 `;
 
 export default People;
