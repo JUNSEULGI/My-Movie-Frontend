@@ -3,18 +3,26 @@ import styled from '@emotion/styled';
 import { Typography, Box } from '@mui/material';
 
 function Character({ data }) {
-  const { id, name, url, sort } = data;
+  const { id, name, profile_image, known_for, sort } = data;
 
   return (
     <FlexBox sx={{ borderBottom: 1, borderColor: 'divider' }}>
       <PortraitWrapper>
-        <Portrait src={url} />
+        <Portrait src={profile_image} />
       </PortraitWrapper>
       <Box style={{ flex: 2 }}>
-        <TitleBox>
+        <TextBox>
           <Title variant="h3">{name}</Title>
           <SubTitle variant="body">{sort}</SubTitle>
-        </TitleBox>
+        </TextBox>
+        <TextBox>
+          <Title variant="body">대표작</Title>
+          {known_for.map(item => (
+            <SubTitle key={item.id} variant="body">
+              {item.title}
+            </SubTitle>
+          ))}
+        </TextBox>
       </Box>
     </FlexBox>
   );
@@ -41,9 +49,10 @@ const Portrait = styled.img`
   object-fit: cover;
 `;
 
-const TitleBox = styled(Box)`
+const TextBox = styled(Box)`
   display: flex;
   align-items: center;
+  margin-bottom: 20px;
 `;
 
 const SubTitle = styled(Typography)`

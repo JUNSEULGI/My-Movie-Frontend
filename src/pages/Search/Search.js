@@ -50,6 +50,10 @@ function TabPanel(props) {
 function Search() {
   const [value, setValue] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [actorLoading, setActorLoading] = useState(false);
+  const [movieLoading, setMovieLoading] = useState(false);
+  const [searchedActor, setSearchedActor] = useState([]);
+  const [searchedMovie, setSearchedMovie] = useState([]);
   const [backgroundInfo, setBackgroundInfo] = useState({});
   const { search } = useLocation();
   const query = new URLSearchParams(search);
@@ -58,9 +62,38 @@ function Search() {
     setValue(newValue);
   };
 
+  console.log(searchedMovie);
+
+  const getMovie = async () => {
+    setMovieLoading(true);
+    try {
+      const { data } = await fetcher(`${API.search_movie}${search}`);
+      setSearchedMovie(data.result);
+    } catch (e) {
+      console.log(e);
+    }
+    setMovieLoading(false);
+  };
+
+  const getActor = async () => {
+    setActorLoading(true);
+    try {
+      const { data } = await fetcher(`${API.search_actor}${search}`);
+      setSearchedActor(data.result);
+    } catch (e) {
+      console.log(e);
+    }
+    setActorLoading(false);
+  };
+
   useEffect(() => {
-    fetcher(`${API.search}?`);
+    // getMovie();
+    getActor();
   }, []);
+
+  useEffect(() => {
+    if (movieLoading && actorLoading) setLoading(false);
+  }, [movieLoading, actorLoading]);
 
   function SearchContainer() {
     return (
@@ -88,9 +121,9 @@ function Search() {
           )}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {CHARACTERS_MOCK ? (
+          {searchedActor ? (
             <CharactersContainer>
-              {CHARACTERS_MOCK.map(character => (
+              {searchedActor.map(character => (
                 <Character key={character.id} data={character} />
               ))}
             </CharactersContainer>

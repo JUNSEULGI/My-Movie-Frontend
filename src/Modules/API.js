@@ -1,5 +1,5 @@
-// export const BASE_URL = 'http://localhost:8000/';
-export const BASE_URL = 'http://accf-221-147-33-141.ngrok.io/';
+export const BASE_URL = 'http://localhost:8000/';
+// export const BASE_URL = 'http://accf-221-147-33-141.ngrok.io/';
 
 export const API = {
   // 로그인
@@ -19,6 +19,9 @@ export const API = {
   movie_popular: '/movie/popular',
   movie_detail: '/movie/detail',
   actor_intimacy: '/movie/actor/intimacy',
+  // 검색
+  search_movie: '/movies',
+  search_actor: '/movie/actor',
 };
 
 // 네이버
