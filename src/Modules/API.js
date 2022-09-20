@@ -15,12 +15,11 @@ export const API = {
   review_top: 'review/top3',
   // 영화 정보
   actor: '/movie/actor/detail',
-  movie: '/movie',
   movie_popular: '/movie/popular',
   movie_detail: '/movie/detail',
   actor_intimacy: '/movie/actor/intimacy',
   // 검색
-  search_movie: '/movies',
+  search_movie: '/movie',
   search_actor: '/movie/actor',
 };
 

@@ -28,14 +28,12 @@ function SearchBox() {
 
   useEffect(() => {
     if (search === '') return;
-    fetcher(`${API.movie}?q=${search}`).then(({ data }) => {
-      console.log(data);
+    fetcher(`${API.search_movie}?q=${search}`).then(({ data }) => {
       if (data.message === 'SUCCESS') {
         setTitles(data.result);
       }
     });
   }, [search]);
-  console.log(titles);
   return (
     <Column>
       <Poster />
@@ -56,9 +54,7 @@ function SearchBox() {
             />
           )}
           autoSelect={true}
-          onChange={(e, value) => {
-            value.title && setMovie(value);
-          }}
+          onChange={(e, value) => value.title && setMovie(value)}
         />
         <Box>
           <NowRunning variant="subtitle1">지금 상영중인 영화</NowRunning>
@@ -66,9 +62,7 @@ function SearchBox() {
             <RankedMovie
               key={movie.id}
               variant="subtitle2"
-              onClick={() => {
-                setMovie(movie);
-              }}
+              onClick={() => setMovie(movie)}
             >
               {index + 1}. {movie.title}
             </RankedMovie>

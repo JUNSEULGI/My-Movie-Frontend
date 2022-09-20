@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userState } from '../../state';
@@ -17,16 +17,7 @@ import {
   Paper,
 } from '@mui/material';
 import { fetcher } from '../../Modules/fetcher';
-
-const countries = [
-  { code: 'AD', label: 'Andorra', phone: '376' },
-  {
-    code: 'AE',
-    label: 'United Arab Emirates',
-    phone: '971',
-  },
-  { code: 'AF', label: 'Afghanistan', phone: '93' },
-];
+import { debounce } from 'lodash';
 
 function Nav() {
   const { pathname } = useLocation();
@@ -35,24 +26,29 @@ function Nav() {
   const resetUser = useResetRecoilState(userState);
   const [scroll, setScroll] = useState(0);
   const [popularList, setPopularList] = useState([]);
-  const access_token = localStorage.getItem('access_token');
   const [search, setSearch] = useState('');
   const [movieList, setMovieList] = useState([]);
+  const access_token = localStorage.getItem('access_token');
+  const IS_USER = localStorage.access_token ? '/list' : '/';
 
-  const updateScroll = () => {
-    setScroll(window.scrollY);
+  const updateScroll = () => setScroll(window.scrollY);
+  const moveMoviePage = id => window.location.replace(`/movie/${id}`);
+  const searchKeyword = keyword => {
+    if (keyword === '') return;
+    fetcher(`${API.search_movie}?q=${keyword}`).then(
+      ({ data }) => data.message === 'SUCCESS' && setMovieList(data.result)
+    );
   };
 
-  const moveMoviePage = id => {
-    window.location.replace(`/movie/${id}`);
-  };
+  const debouncedSearch = useCallback(
+    debounce(keyword => searchKeyword(keyword), 1000),
+    []
+  );
 
   useEffect(() => {
     if (!access_token) return;
     fetcher(API.users_info)
-      .then(res => {
-        setUserInfo(res.data.result);
-      })
+      .then(res => setUserInfo(res.data.result))
       .catch(e => {
         localStorage.removeItem('access_token');
         resetUser();
@@ -61,29 +57,13 @@ function Nav() {
   }, [access_token]);
 
   useEffect(() => {
-    if (search === '') return;
-    fetcher(`${API.movie}?q=${search}`)
-      .then(res => res.data)
-      .then(data => {
-        if (data.message === 'SUCCESS') {
-          setMovieList(data.result);
-        }
-      });
-  }, [search]);
-
-  useEffect(() => {
     window.addEventListener('scroll', updateScroll);
   }, []);
-
-  const isUser = localStorage.access_token ? '/list' : '/';
-
-  const seeLoginButton =
-    pathname === '/' ? '' : <GoLogin to="/">로그인</GoLogin>;
 
   return (
     <NavBar onScroll={updateScroll} scroll={scroll}>
       <MyToolbar sx={{ display: 'flex', alignContent: 'center' }}>
-        <Link to={isUser}>
+        <Link to={IS_USER}>
           <Logo onScroll={updateScroll} scroll={scroll} component="h1">
             My View!
           </Logo>
@@ -98,9 +78,7 @@ function Nav() {
             autoComplete
             color="orange"
             id="free-solo-2-demo"
-            onChange={(e, value) => {
-              moveMoviePage(value.id);
-            }}
+            onChange={(e, value) => moveMoviePage(value.id)}
             disableClearable
             getOptionLabel={option => option.title}
             options={movieList}
@@ -108,6 +86,7 @@ function Nav() {
               <TextField
                 onChange={e => {
                   setSearch(e.target.value);
+                  debouncedSearch(e.target.value);
                 }}
                 {...params}
                 label="영화 제목을 검색하세요"
@@ -121,7 +100,7 @@ function Nav() {
           {localStorage.access_token ? (
             <MyAvatar userInfo={userInfo} />
           ) : (
-            seeLoginButton
+            pathname !== '/' && <GoLogin to="/">로그인</GoLogin>
           )}
         </Box>
       </MyToolbar>
