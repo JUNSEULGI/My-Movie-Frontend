@@ -32,7 +32,10 @@ function Nav() {
   const IS_USER = localStorage.access_token ? '/list' : '/';
 
   const updateScroll = () => setScroll(window.scrollY);
-  const moveMoviePage = id => window.location.replace(`/movie/${id}`);
+  const moveMoviePage = id => {
+    if (id) window.location.replace(`/movie/${id}`);
+    else window.location.replace(`/search?q=${search}`);
+  };
   const searchKeyword = keyword => {
     if (keyword === '') return;
     fetcher(`${API.search_movie}?q=${keyword}`).then(

@@ -9,10 +9,15 @@ import MyViewLayout from '../../layout/Layout';
 import NaverLogin from './NaverLogin';
 import KakaoLogin from './KakaoLogin';
 import LoadWrap from '../../components/Loading/LoadWrap';
+import { useRecoilValue } from 'recoil';
+import { userState } from '../../state';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [loading, setLoading] = useState(true);
   const [backgroundInfo, setBackgroundInfo] = useState({});
+  const user = useRecoilValue(userState);
+  const navigate = useNavigate();
 
   const getBackgroundInfo = async () => {
     setLoading(true);
@@ -29,6 +34,7 @@ function Login() {
   };
 
   useEffect(() => {
+    if (user) navigate('/list');
     getBackgroundInfo();
   }, []);
 
