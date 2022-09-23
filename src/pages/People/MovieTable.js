@@ -38,11 +38,12 @@ function MovieTable({ movie, reviewdata }) {
             myrating,
             platform_logo_image,
             background_image_url,
+            id,
           } = movie;
 
           const floorRatings = ratings;
           return (
-            <BackCover key={movie_id} back={background_image_url}>
+            <BackCover key={id} back={background_image_url}>
               <Row>
                 <Year>{release}</Year>
                 <MoviePoster>
@@ -62,7 +63,7 @@ function MovieTable({ movie, reviewdata }) {
                 </MoviePoster>
                 <MoiveTitle
                   variant="subtitle1"
-                  onClick={() => moveMoviePage(movie_id)}
+                  onClick={() => moveMoviePage(id)}
                 >
                   {title}
                 </MoiveTitle>
