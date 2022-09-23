@@ -85,10 +85,10 @@ function Nav() {
     pathname === '/' ? '' : <GoLogin to="/">로그인</GoLogin>;
 
   return (
-    <NavBar onScroll={updateScroll} scroll={scroll}>
+    <NavBar onScroll={updateScroll} nav={scroll.toString()}>
       <MyToolbar sx={{ display: 'flex', alignContent: 'center' }}>
         <Link to={isUser}>
-          <Logo onScroll={updateScroll} scroll={scroll} component="h1">
+          <Logo onScroll={updateScroll} nav={scroll.toString()} component="h1">
             My View!
           </Logo>
         </Link>
@@ -97,7 +97,7 @@ function Nav() {
             sx={{ marginTop: '-6px' }}
             PaperComponent={StyledPaper}
             PopperComponent={StyledPopper}
-            freeSolo
+            freeSolo={true}
             autoHighlight={true}
             autoComplete
             color="orange"
@@ -142,8 +142,8 @@ const NavBar = styled(AppBar)`
 
     &.MuiAppBar-root {
       box-shadow: none;
-      background-color: ${props => (props.scroll ? 'transparent' : 'black')};
-
+      background-color: ${({ nav }) =>
+        nav === 'true' ? 'transparent' : 'black'};
       transition: all 0.3s;
     }
   }
@@ -171,7 +171,9 @@ const MyToolbar = styled(Toolbar)`
 `;
 
 const Logo = styled(Typography)`
-  color: ${props => (props.scroll ? '#FF6E01' : 'white')};
+  /* display: ${({ img }) => (img ? '' : 'none')}; */
+  color: ${({ nav }) => (nav === 'true' ? '#FF6E01' : 'white')};
+  /* ${nav => ('true' ? '#FF6E01' : 'white')}; */
   transition: all 0.3s;
   font-family: 'Galada', cursive;
   font-weight: bold;

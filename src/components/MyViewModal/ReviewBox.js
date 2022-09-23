@@ -38,7 +38,9 @@ function ReviewBox() {
 
     setIsMovieLoading(true);
     try {
-      const { data: res } = await fetcher(`${API.movie_detail}/${movie.id}`);
+      const { data: res } = await fetcher(
+        `${API.movie_detail}?movie_id=${movie.id}&page=${0}`
+      );
       setMovie(prev => {
         return { ...prev, ...res.movie_info };
       });

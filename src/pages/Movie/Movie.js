@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { constSelector, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { movieState } from '../../state';
 import MyViewLayout from '../../layout/Layout';
 import { API } from '../../Modules/API';
 import MyStep from '../List/MyStep';
+import MyViewModal from '../../components/MyViewModal/MyViewModal';
+import ReviewBox from '../../components/MyViewModal/ReviewBox';
+import { Button, Typography, Box } from '@mui/material';
+import LoadWrap from '../../components/Loading/LoadWrap';
+import { fetcher } from '../../Modules/fetcher';
 import {
   CardContainer,
   MovieInfo,
@@ -15,11 +20,6 @@ import {
   MyReview,
   MovieGallery,
 } from '../Movie';
-import MyViewModal from '../../components/MyViewModal/MyViewModal';
-import ReviewBox from '../../components/MyViewModal/ReviewBox';
-import { Button, Typography, Box } from '@mui/material';
-import LoadWrap from '../../components/Loading/LoadWrap';
-import { fetcher } from '../../Modules/fetcher';
 
 function Movie() {
   const params = useParams();
@@ -28,10 +28,10 @@ function Movie() {
   const [review, setReview] = useState();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const observer = useRef(null);
   const [page, setPage] = useState(0);
   const [intersecting, setIntersecting] = useState(false);
   const [actorList, setActorList] = useState([]);
+  const observer = useRef(null);
 
   const fetchMoreEl = useCallback(
     node => {
@@ -98,7 +98,7 @@ function Movie() {
 
   useEffect(() => {
     if (page === 0) return;
-    if (page > total_page) return;
+    if (movie && page > total_page) return;
     fetcher(`${API.movie_detail}?movie_id=${params.id}&page=${page}`).then(
       ({ data }) => {
         // console.log(movie_info);
@@ -108,8 +108,6 @@ function Movie() {
     );
     return;
   }, [page]);
-  console.log('page', page);
-  console.log('actorList', actorList);
 
   useEffect(() => {
     getMovie();
@@ -117,9 +115,8 @@ function Movie() {
   }, [params.id]);
 
   const { title, actor, video_url, image_url, total_page } = movie;
-  console.log('movie', movie);
 
-  const background = image_url?.[0] || '#e2e2e2';
+  const background = image_url[0];
 
   const [imageCount, setImageCount] = useState(8);
 
@@ -139,7 +136,7 @@ function Movie() {
               {actorList?.map((actor, index) => (
                 <Actor key={index} actor={actor} />
               ))}
-              <NextActor ref={fetchMoreEl}>next</NextActor>
+              <ScrollRef ref={fetchMoreEl}>next</ScrollRef>
             </ActorContainer>
           </>
         ) : (
@@ -257,4 +254,4 @@ const TrailerContainer = styled.div`
   }
 `;
 
-const NextActor = styled(Button)``;
+const ScrollRef = styled.div``;
