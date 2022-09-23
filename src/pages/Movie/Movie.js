@@ -109,6 +109,7 @@ function Movie() {
     return;
   }, [page]);
   console.log('page', page);
+  console.log('actorList', actorList);
 
   useEffect(() => {
     getMovie();

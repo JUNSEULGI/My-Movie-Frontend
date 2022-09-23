@@ -104,7 +104,7 @@ function People() {
 
   checkAddMyReview(intimacyData, starringList);
 
-  console.log(peopleData);
+  console.log('peopleData', peopleData);
 
   function PeopleContent() {
     return (

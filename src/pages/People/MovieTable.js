@@ -14,6 +14,7 @@ function MovieTable({ movie, reviewdata }) {
     navigate(`/movie/${id}`);
   };
 
+  console.log(movie);
   return (
     <>
       <RowTitle>
@@ -69,7 +70,7 @@ function MovieTable({ movie, reviewdata }) {
                 </MoiveTitle>
                 <InRole>{role_name}</InRole>
                 <Rating>
-                  {access_token ? (
+                  {/* {access_token ? (
                     myrating ? (
                       <>
                         <MLogo>My View</MLogo>
@@ -80,6 +81,19 @@ function MovieTable({ movie, reviewdata }) {
                     )
                   ) : (
                     <AverageRating>{floorRatings}</AverageRating>
+                  )} */}
+
+                  {access_token ? (
+                    ratings.review ? (
+                      <>
+                        <MLogo>My View</MLogo>
+                        <ReviewRating>{ratings.rating}</ReviewRating>
+                      </>
+                    ) : (
+                      <AverageRating>{ratings.rating}</AverageRating>
+                    )
+                  ) : (
+                    <AverageRating>{ratings}</AverageRating>
                   )}
                 </Rating>
                 <Platform>
