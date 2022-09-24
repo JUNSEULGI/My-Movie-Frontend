@@ -32,9 +32,8 @@ function Nav() {
   const IS_USER = localStorage.access_token ? '/list' : '/';
 
   const updateScroll = () => setScroll(window.scrollY);
-  const moveMoviePage = id => {
-    if (id) window.location.replace(`/movie/${id}`);
-    else window.location.replace(`/search?q=${search}`);
+  const moveSearchPage = keyword => {
+    if (keyword) window.location.replace(`/search?q=${keyword}`);
   };
   const searchKeyword = keyword => {
     if (keyword === '') return;
@@ -81,9 +80,11 @@ function Nav() {
             autoComplete
             color="orange"
             id="free-solo-2-demo"
-            onChange={(e, value) => moveMoviePage(value.id)}
+            onChange={(e, value) => {
+              moveSearchPage(value.title ?? value);
+            }}
             disableClearable
-            getOptionLabel={option => option.title}
+            getOptionLabel={option => option.title ?? option}
             options={movieList}
             renderInput={params => (
               <TextField

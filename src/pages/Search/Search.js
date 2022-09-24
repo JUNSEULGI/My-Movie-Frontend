@@ -38,20 +38,16 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ py: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ py: 3 }}>{children}</Box>}
     </div>
   );
 }
 
 function Search() {
   const [value, setValue] = useState(0);
-  const [loading, setLoading] = useState(false);
-  const [actorLoading, setActorLoading] = useState(false);
-  const [movieLoading, setMovieLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [actorLoading, setActorLoading] = useState(true);
+  const [movieLoading, setMovieLoading] = useState(true);
   const [searchedActor, setSearchedActor] = useState([]);
   const [searchedMovie, setSearchedMovie] = useState([]);
   const [backgroundInfo, setBackgroundInfo] = useState({});
@@ -62,7 +58,7 @@ function Search() {
     setValue(newValue);
   };
 
-  console.log(searchedMovie);
+  console.log(searchedActor);
 
   const getMovie = async () => {
     setMovieLoading(true);
@@ -87,12 +83,12 @@ function Search() {
   };
 
   useEffect(() => {
-    // getMovie();
+    getMovie();
     getActor();
   }, []);
 
   useEffect(() => {
-    if (movieLoading && actorLoading) setLoading(false);
+    if (!movieLoading && !actorLoading) setLoading(false);
   }, [movieLoading, actorLoading]);
 
   function SearchContainer() {
@@ -110,9 +106,9 @@ function Search() {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          {CONTENTS_MOCK ? (
+          {searchedMovie.length > 0 ? (
             <ContentsContainer sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              {CONTENTS_MOCK.map(content => (
+              {searchedMovie.map(content => (
                 <Content key={content.id} data={content} />
               ))}
             </ContentsContainer>
@@ -121,7 +117,7 @@ function Search() {
           )}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {searchedActor ? (
+          {searchedActor.length > 0 ? (
             <CharactersContainer>
               {searchedActor.map(character => (
                 <Character key={character.id} data={character} />

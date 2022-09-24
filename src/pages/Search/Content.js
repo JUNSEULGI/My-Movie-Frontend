@@ -2,6 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Typography, Box } from '@mui/material';
 import { SearchPoster } from './SearchPoster';
+import moment from 'moment';
 
 function Content({ data }) {
   const { id, title, poster, country, release_date } = data;
@@ -11,7 +12,7 @@ function Content({ data }) {
       <SearchPoster src={poster} />
       <Title>{title}</Title>
       <SubTitle variant="subtitle2">
-        {release_date} · {country}
+        {moment(release_date).format('yyyy')} · {country}
       </SubTitle>
     </Box>
   );

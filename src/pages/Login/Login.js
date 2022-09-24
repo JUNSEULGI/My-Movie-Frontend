@@ -34,7 +34,7 @@ function Login() {
   };
 
   useEffect(() => {
-    if (user) navigate('/list');
+    if (user.nickname) navigate('/list');
     getBackgroundInfo();
   }, []);
 
