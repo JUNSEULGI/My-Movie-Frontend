@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userState } from '../../state';
@@ -6,6 +6,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import MyAvatar from './Logout';
 import { API } from '../../Modules/API';
+import { throttle } from 'lodash';
+import { fetcher } from '../../Modules/fetcher';
 import {
   Typography,
   AppBar,
@@ -16,7 +18,6 @@ import {
   TextField,
   Paper,
 } from '@mui/material';
-import { fetcher } from '../../Modules/fetcher';
 import { debounce } from 'lodash';
 
 function Nav() {
@@ -24,17 +25,32 @@ function Nav() {
   const { navigate } = useNavigate();
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const resetUser = useResetRecoilState(userState);
-  const [scroll, setScroll] = useState(0);
   const [popularList, setPopularList] = useState([]);
   const [search, setSearch] = useState('');
   const [movieList, setMovieList] = useState([]);
+  const [scroll, setScroll] = useState(true);
   const access_token = localStorage.getItem('access_token');
   const IS_USER = localStorage.access_token ? '/list' : '/';
+  const DEFAULT_Y = 60;
 
-  const updateScroll = () => setScroll(window.scrollY);
+  const updateScroll = useMemo(
+    () =>
+      throttle(() => {
+        if (window.pageYOffset > DEFAULT_Y) {
+          setScroll(false);
+          console.log('켜기');
+        } else {
+          setScroll(true);
+          console.log('끄기');
+        }
+      }, 500),
+    [scroll]
+  );
+
   const moveSearchPage = keyword => {
     if (keyword) window.location.replace(`/search?q=${keyword}`);
   };
+
   const searchKeyword = keyword => {
     if (keyword === '') return;
     fetcher(`${API.search_movie}?q=${keyword}`).then(
@@ -60,7 +76,7 @@ function Nav() {
 
   useEffect(() => {
     window.addEventListener('scroll', updateScroll);
-  }, []);
+  }, [scroll]);
 
   return (
     <NavBar onScroll={updateScroll} scroll={scroll}>
@@ -121,8 +137,7 @@ const NavBar = styled(AppBar)`
 
     &.MuiAppBar-root {
       box-shadow: none;
-      background-color: ${props =>
-        props.scroll < 60 ? 'transparent' : 'black'};
+      background-color: ${props => (props.scroll ? 'transparent' : 'black')};
       transition: all 0.3s;
     }
   }
@@ -150,7 +165,7 @@ const MyToolbar = styled(Toolbar)`
 `;
 
 const Logo = styled(Typography)`
-  color: ${props => (props.scroll < 60 ? '#FF6E01' : 'white')};
+  color: ${props => (props.scroll ? '#FF6E01' : 'white')};
   transition: all 0.3s;
   font-family: 'Galada', cursive;
   font-weight: bold;

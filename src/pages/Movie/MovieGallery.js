@@ -49,7 +49,17 @@ function MovieGallery({ movie_image }) {
 
   return (
     <>
-      <MasonryBox sx={{ width: '100%', minHeight: '320' }}>
+      <GalleryImgContainer>
+        {movie_image?.map((item, index) => (
+          <GalleryImg
+            id={index}
+            key={index}
+            onClick={handleOpen}
+            src={`${item}`}
+          />
+        ))}
+      </GalleryImgContainer>
+      {/* <MasonryBox sx={{ width: '100%', minHeight: '320' }}>
         <MyMasonry columns={4} spacing={2}>
           {movie_image?.map((item, index) => (
             <Box key={index}>
@@ -72,7 +82,8 @@ function MovieGallery({ movie_image }) {
             </Box>
           ))}
         </MyMasonry>
-      </MasonryBox>
+      </MasonryBox> */}
+
       <Box>
         <GalleryModal
           open={open}
@@ -107,6 +118,34 @@ function MovieGallery({ movie_image }) {
   );
 }
 export default MovieGallery;
+
+const GalleryImgContainer = styled(Box)`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+`;
+
+const GalleryImg = styled.img`
+  border-radius: 8px;
+  display: block;
+  /* padding: 0 8px; */
+  /* margin-bottom: 12px; */
+  box-shadow: 5px 7px 20px -4px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  transition: all ease 0.5s;
+
+  :hover {
+    transform: scale(1.04, 1.04);
+    @media screen and (max-width: 380px) {
+      transform: none;
+    }
+  }
+
+  @media screen and (min-width: 1080px) {
+    /* width: 24%; */
+    width: 100%;
+  }
+`;
 
 const MasonryBox = styled(Box)`
   @media screen and (max-width: 380px) {
