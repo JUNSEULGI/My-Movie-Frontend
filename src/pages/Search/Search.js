@@ -9,7 +9,7 @@ import MyViewLayout from '../../layout/Layout';
 import LoadWrap from '../../components/Loading/LoadWrap';
 import Content from './Content';
 import { CardContainer } from '../../components/CardContainer';
-import { CONTENTS_MOCK, CHARACTERS_MOCK } from '../../assets/mockData/contents';
+import { CONTENTS_MOCK } from '../../assets/mockData/contents';
 import { NoResult } from './NoResult';
 import NewMovie from './NewMovie';
 import Character from './Character';
@@ -57,8 +57,6 @@ function Search() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  console.log(searchedActor);
 
   const getMovie = async () => {
     setMovieLoading(true);

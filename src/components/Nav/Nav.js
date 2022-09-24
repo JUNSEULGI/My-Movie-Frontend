@@ -25,8 +25,7 @@ function Nav() {
   const { navigate } = useNavigate();
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const resetUser = useResetRecoilState(userState);
-  const [popularList, setPopularList] = useState([]);
-  const [search, setSearch] = useState('');
+  // const [popularList, setPopularList] = useState([]);
   const [movieList, setMovieList] = useState([]);
   const [scroll, setScroll] = useState(true);
   const access_token = localStorage.getItem('access_token');
@@ -104,10 +103,7 @@ function Nav() {
             options={movieList}
             renderInput={params => (
               <TextField
-                onChange={e => {
-                  setSearch(e.target.value);
-                  debouncedSearch(e.target.value);
-                }}
+                onChange={e => debouncedSearch(e.target.value)}
                 {...params}
                 label="영화 제목을 검색하세요"
                 InputProps={{

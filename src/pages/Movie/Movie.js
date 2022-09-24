@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { constSelector, useRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { movieState } from '../../state';
 import MyViewLayout from '../../layout/Layout';
 import { API } from '../../Modules/API';
@@ -10,7 +10,6 @@ import {
   CardContainer,
   MovieInfo,
   Actor,
-  Trailer,
   NoReview,
   MyReview,
   MovieGallery,
@@ -35,7 +34,6 @@ function Movie() {
 
   const fetchMoreEl = useCallback(
     node => {
-      console.log('sssssadadasdasdasdasasd');
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver(entries => {
         setIntersecting(entries.some(entry => entry.isIntersecting));
@@ -108,8 +106,6 @@ function Movie() {
     );
     return;
   }, [page]);
-  console.log('page', page);
-  console.log('actorList', actorList);
 
   useEffect(() => {
     getMovie();
@@ -117,7 +113,6 @@ function Movie() {
   }, [params.id]);
 
   const { title, actor, video_url, image_url, total_page } = movie;
-  console.log('movie', movie);
 
   const background = image_url?.[0] || '#e2e2e2';
 

@@ -1,10 +1,9 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Typography, Box, Chip } from '@mui/material';
-import { Link } from 'react-router-dom';
 
 function Character({ data }) {
-  const { id, name, profile_image, known_for, department } = data;
+  const { name, profile_image, known_for, department } = data;
 
   return (
     <Container sx={{ borderBottom: 1, borderColor: 'divider' }}>

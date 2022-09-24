@@ -5,7 +5,7 @@ import { SearchPoster } from './SearchPoster';
 import moment from 'moment';
 
 function Content({ data }) {
-  const { id, title, poster, country, release_date } = data;
+  const { title, poster, country, release_date } = data;
 
   return (
     <Box>
