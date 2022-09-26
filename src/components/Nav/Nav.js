@@ -30,8 +30,7 @@ function Nav() {
   const [scroll, setScroll] = useState(true);
   const access_token = localStorage.getItem('access_token');
   const IS_USER = localStorage.access_token ? '/list' : '/';
-
-  let DEFAULT_Y = 60;
+  const DEFAULT_Y = 60;
 
   const updateScroll = useMemo(
     () =>
@@ -42,9 +41,8 @@ function Nav() {
     [scroll]
   );
 
-  const moveMoviePage = id => {
-    if (id) window.location.replace(`/movie/${id}`);
-    else window.location.replace(`/search?q=${search}`);
+  const moveSearchPage = keyword => {
+    if (keyword) window.location.replace(`/search?q=${keyword}`);
   };
 
   const searchKeyword = keyword => {
@@ -92,16 +90,13 @@ function Nav() {
             autoComplete
             color="orange"
             id="free-solo-2-demo"
-            onChange={(e, value) => moveMoviePage(value.id)}
+            onChange={(e, value) => moveSearchPage(value.title ?? value)}
             disableClearable
-            getOptionLabel={option => option.title}
+            getOptionLabel={option => option.title ?? option}
             options={movieList}
             renderInput={params => (
               <TextField
-                onChange={e => {
-                  setSearch(e.target.value);
-                  debouncedSearch(e.target.value);
-                }}
+                onChange={e => debouncedSearch(e.target.value)}
                 {...params}
                 label="영화 제목을 검색하세요"
                 InputProps={{
@@ -132,7 +127,6 @@ const NavBar = styled(AppBar)`
     &.MuiAppBar-root {
       box-shadow: none;
       background-color: ${props => (props.scroll ? 'transparent' : 'black')};
-
       transition: all 0.3s;
     }
   }

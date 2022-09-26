@@ -1,34 +1,44 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, Chip } from '@mui/material';
 
 function Character({ data }) {
-  const { id, name, profile_image, known_for, sort } = data;
+  const { name, profile_image, known_for, department } = data;
 
   return (
-    <FlexBox sx={{ borderBottom: 1, borderColor: 'divider' }}>
+    <Container sx={{ borderBottom: 1, borderColor: 'divider' }}>
       <PortraitWrapper>
         <Portrait src={profile_image} />
       </PortraitWrapper>
       <Box style={{ flex: 2 }}>
-        <TextBox>
+        <FlexBox>
+          <SubTitle variant="body">{department}</SubTitle>
           <Title variant="h3">{name}</Title>
-          <SubTitle variant="body">{sort}</SubTitle>
-        </TextBox>
-        <TextBox>
-          <Title variant="body">대표작</Title>
-          {known_for.map(item => (
-            <SubTitle key={item.id} variant="body">
-              {item.title}
-            </SubTitle>
-          ))}
-        </TextBox>
+        </FlexBox>
+        <FlexBox>
+          <Title variant="body" style={{ width: 50 }}>
+            출연작
+          </Title>
+          <ChipBox>
+            {known_for.map(item => (
+              <Chip
+                key={item.id}
+                label={item.title ?? '정보 없음'}
+                variant="outlined"
+                size="small"
+                clickable
+                component="a"
+                href={`/movie/${item.id}`}
+              />
+            ))}
+          </ChipBox>
+        </FlexBox>
       </Box>
-    </FlexBox>
+    </Container>
   );
 }
 
-const FlexBox = styled(Box)`
+const Container = styled(Box)`
   display: flex;
   gap: 20px;
   padding-bottom: 40px;
@@ -49,10 +59,10 @@ const Portrait = styled.img`
   object-fit: cover;
 `;
 
-const TextBox = styled(Box)`
+const FlexBox = styled(Box)`
   display: flex;
-  align-items: center;
   margin-bottom: 20px;
+  gap: 10px;
 `;
 
 const SubTitle = styled(Typography)`
@@ -69,6 +79,13 @@ const Title = styled(Typography)`
   -webkit-line-clamp: 1;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+const ChipBox = styled(Box)`
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 10px;
 `;
 
 export default Character;

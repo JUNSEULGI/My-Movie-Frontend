@@ -1,5 +1,5 @@
 export const BASE_URL = 'http://localhost:8000/';
-// export const BASE_URL = 'http://accf-221-147-33-141.ngrok.io/';
+// export const BASE_URL = 'http://094a-221-147-33-141.ngrok.io/';
 
 export const API = {
   // 로그인
