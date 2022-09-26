@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Typography, Box } from '@mui/material';
-import { SearchPoster } from './SearchPoster';
+import { SearchPoster } from '../../components/Poster/SearchPoster';
+import { MyLink } from '../../components/Link';
 
 function NewMovie({ data }) {
   const { id, title, poster, country, release_date } = data;
@@ -15,9 +16,9 @@ function NewMovie({ data }) {
         </Link>
       </Box>
       <Box style={{ flex: 2 }}>
-        <Link to={`/movie/${id}`}>
-          <Title>{title}</Title>
-        </Link>
+        <MyLink to={`/movie/${id}`}>
+          <Title component="span">{title}</Title>
+        </MyLink>
         <SubTitle variant="subtitle2">
           {release_date} · {country}
         </SubTitle>

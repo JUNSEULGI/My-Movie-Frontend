@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Typography, Box, Chip } from '@mui/material';
+import { MyLink } from '../../components/Link';
 
 function Character({ data }) {
-  const { name, profile_image, known_for, department } = data;
+  const { id, name, profile_image, known_for, department } = data;
 
   return (
     <Container sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -11,10 +12,14 @@ function Character({ data }) {
         <Portrait src={profile_image} />
       </PortraitWrapper>
       <Box style={{ flex: 2 }}>
-        <FlexBox>
-          <SubTitle variant="body">{department}</SubTitle>
-          <Title variant="h3">{name}</Title>
-        </FlexBox>
+        <TitleBox>
+          <SubTitle variant="subtitle2">{department}</SubTitle>
+          <MyLink to={`/people/${id}`}>
+            <Title variant="h3" component="span">
+              {name}
+            </Title>
+          </MyLink>
+        </TitleBox>
         <FlexBox>
           <Title variant="body" style={{ width: 50 }}>
             출연작
@@ -62,11 +67,14 @@ const Portrait = styled.img`
 const FlexBox = styled(Box)`
   display: flex;
   margin-bottom: 20px;
-  gap: 10px;
+  gap: 5px;
+`;
+
+const TitleBox = styled(FlexBox)`
+  flex-direction: column;
 `;
 
 const SubTitle = styled(Typography)`
-  margin-left: 10px;
   font-weight: bold;
   color: gray;
 `;

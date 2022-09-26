@@ -1,16 +1,21 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Typography, Box } from '@mui/material';
-import { SearchPoster } from './SearchPoster';
+import { SearchPoster } from '../../components/Poster/SearchPoster';
 import moment from 'moment';
+import { MyLink } from '../../components/Link';
 
 function Content({ data }) {
-  const { title, poster, country, release_date } = data;
+  const { id, title, poster, country, release_date } = data;
 
   return (
     <Box>
-      <SearchPoster src={poster} />
-      <Title>{title}</Title>
+      <MyLink to={`/movie/${id}`}>
+        <SearchPoster src={poster} />
+      </MyLink>
+      <MyLink to={`/movie/${id}`}>
+        <Title component="span">{title}</Title>
+      </MyLink>
       <SubTitle variant="subtitle2">
         {moment(release_date).format('yyyy')} · {country}
       </SubTitle>

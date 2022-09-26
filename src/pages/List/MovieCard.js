@@ -1,19 +1,15 @@
 import React from 'react';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { movieState } from '../../state';
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { Box, Card, CardMedia, Typography, Rating, Chip } from '@mui/material';
+import { Box, Card, Typography, Rating, Chip } from '@mui/material';
 import darkTheme from '../../styles/theme';
+import { SearchPoster } from '../../components/Poster/SearchPoster';
+import { MyLink } from '../../components/Link';
 
 function MovieCard({ data, setOpen }) {
-  const navigate = useNavigate();
   const setMovie = useSetRecoilState(movieState);
   const resetMovie = useResetRecoilState(movieState);
-
-  const showMovie = () => {
-    navigate(`/movie/${data.movie.id}`);
-  };
 
   const showReview = () => {
     setMovie({ id: data.movie.id, review_id: data.review_id });
@@ -37,9 +33,11 @@ function MovieCard({ data, setOpen }) {
     </AddCardBox>
   ) : (
     <CardBox onClick={showReview}>
-      <Poster component="img" image={data.movie.poster} />
+      <SearchPoster src={data.movie.poster} />
       <Box style={{ height: '100%' }}>
-        <Title onClick={showMovie}>{data.movie.title}</Title>
+        <MyLink to={`/movie/${data.movie.id}`}>
+          <Title component="span">{data.movie.title}</Title>
+        </MyLink>
         <InfoContainer>
           <MovieInfo variant="menuItem">
             {data.movie.released.split('-')[0]} · {data.movie.country}
@@ -116,12 +114,6 @@ const AddBtn = styled.div`
   }
 `;
 
-const Poster = styled(CardMedia)`
-  width: 100%;
-  border-radius: 8px;
-  box-shadow: ${({ theme }) => theme.palette.background.card};
-`;
-
 const InfoContainer = styled(Box)`
   display: flex;
   justify-content: space-between;
@@ -132,11 +124,6 @@ const Title = styled(Typography)`
   margin-bottom: 4px;
   font-weight: 700;
   color: ${({ theme }) => theme.palette.common.white};
-  cursor: pointer;
-
-  :hover {
-    text-decoration: underline;
-  }
 `;
 
 const MovieInfo = styled(Typography)`
