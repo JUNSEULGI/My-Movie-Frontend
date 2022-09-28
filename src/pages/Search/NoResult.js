@@ -19,6 +19,7 @@ const NoResultContainer = styled(CardContainer)`
   height: 300px;
   justify-content: center;
   align-items: center;
+  margin-bottom: 120px;
 `;
 
 const Title = styled(Typography)`

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { movieState } from '../../state';
 import styled from '@emotion/styled';
@@ -13,12 +13,25 @@ import {
 import Poster from '../Poster/Poster';
 import { API } from '../../Modules/API';
 import { fetcher } from '../../Modules/fetcher';
+import { debounce } from 'lodash';
 
 function SearchBox() {
   const setMovie = useSetRecoilState(movieState);
-  const [search, setSearch] = useState('');
   const [titles, setTitles] = useState([]);
   const [ranks, setRanks] = useState([]);
+
+  const searchKeyword = keyword => {
+    fetcher(`${API.search_movie}?q=${keyword}`).then(({ data }) => {
+      if (data.message === 'SUCCESS') {
+        setTitles(data.result);
+      }
+    });
+  };
+
+  const debouncedSearch = useCallback(
+    debounce(keyword => searchKeyword(keyword), 1000),
+    []
+  );
 
   useEffect(() => {
     fetcher(API.movie_popular).then(({ data }) => {
@@ -26,16 +39,6 @@ function SearchBox() {
     });
   }, []);
 
-  useEffect(() => {
-    if (search === '') return;
-    fetcher(`${API.movie}?q=${search}`).then(({ data }) => {
-      console.log(data);
-      if (data.message === 'SUCCESS') {
-        setTitles(data.result);
-      }
-    });
-  }, [search]);
-  console.log(titles);
   return (
     <Column>
       <Poster />
@@ -50,15 +53,11 @@ function SearchBox() {
               {...params}
               color="success"
               label="등록할 영화를 검색하세요"
-              onChange={e => {
-                setSearch(e.target.value);
-              }}
+              onChange={e => debouncedSearch(e.target.value)}
             />
           )}
           autoSelect={true}
-          onChange={(e, value) => {
-            value.title && setMovie(value);
-          }}
+          onChange={(e, value) => value.title && setMovie(value)}
         />
         <Box>
           <NowRunning variant="subtitle1">지금 상영중인 영화</NowRunning>
@@ -66,9 +65,7 @@ function SearchBox() {
             <RankedMovie
               key={movie.id}
               variant="subtitle2"
-              onClick={() => {
-                setMovie(movie);
-              }}
+              onClick={() => setMovie(movie)}
             >
               {index + 1}. {movie.title}
             </RankedMovie>

@@ -25,7 +25,7 @@ function MyReview({ openModal, review }) {
         <Logo>My View!</Logo>
         <MovieRating rating={review.rating} />
       </Box>
-      {review.title.length == 0 || review.title == '\r\n' ? (
+      {review.title.length === 0 || review.title === '\r\n' ? (
         ''
       ) : (
         <MyBox>

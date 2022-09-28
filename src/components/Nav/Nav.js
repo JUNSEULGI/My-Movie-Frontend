@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { userState } from '../../state';
@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import MyAvatar from './Logout';
 import { API } from '../../Modules/API';
-import { throttle } from 'lodash';
+import { throttle, debounce } from 'lodash';
 import { fetcher } from '../../Modules/fetcher';
 import {
   Typography,
@@ -24,39 +24,43 @@ function Nav() {
   const { navigate } = useNavigate();
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const resetUser = useResetRecoilState(userState);
-  // const [scroll, setScroll] = useState(0);
   const [popularList, setPopularList] = useState([]);
-  const access_token = localStorage.getItem('access_token');
   const [search, setSearch] = useState('');
   const [movieList, setMovieList] = useState([]);
   const [scroll, setScroll] = useState(true);
-
-  let defalutY = 60;
+  const access_token = localStorage.getItem('access_token');
+  const IS_USER = localStorage.access_token ? '/list' : '/';
+  const DEFAULT_Y = 60;
 
   const updateScroll = useMemo(
     () =>
       throttle(() => {
-        if (window.pageYOffset > defalutY) {
-          setScroll(false);
-          console.log('켜기');
-        } else {
-          setScroll(true);
-          console.log('끄기');
-        }
+        if (window.pageYOffset > DEFAULT_Y) setScroll(false);
+        else setScroll(true);
       }, 500),
     [scroll]
   );
 
-  const moveMoviePage = id => {
-    window.location.replace(`/movie/${id}`);
+  const moveSearchPage = keyword => {
+    if (keyword) window.location.replace(`/search?q=${keyword}`);
   };
+
+  const searchKeyword = keyword => {
+    if (keyword === '') return;
+    fetcher(`${API.search_movie}?q=${keyword}`).then(
+      ({ data }) => data.message === 'SUCCESS' && setMovieList(data.result)
+    );
+  };
+
+  const debouncedSearch = useCallback(
+    debounce(keyword => searchKeyword(keyword), 1000),
+    []
+  );
 
   useEffect(() => {
     if (!access_token) return;
     fetcher(API.users_info)
-      .then(res => {
-        setUserInfo(res.data.result);
-      })
+      .then(res => setUserInfo(res.data.result))
       .catch(e => {
         localStorage.removeItem('access_token');
         resetUser();
@@ -65,29 +69,13 @@ function Nav() {
   }, [access_token]);
 
   useEffect(() => {
-    if (search === '') return;
-    fetcher(`${API.movie}?q=${search}`)
-      .then(res => res.data)
-      .then(data => {
-        if (data.message === 'SUCCESS') {
-          setMovieList(data.result);
-        }
-      });
-  }, [search]);
-
-  useEffect(() => {
     window.addEventListener('scroll', updateScroll);
   }, [scroll]);
-
-  const isUser = localStorage.access_token ? '/list' : '/';
-
-  const seeLoginButton =
-    pathname === '/' ? '' : <GoLogin to="/">로그인</GoLogin>;
 
   return (
     <NavBar onScroll={updateScroll} scroll={scroll}>
       <MyToolbar sx={{ display: 'flex', alignContent: 'center' }}>
-        <Link to={isUser}>
+        <Link to={IS_USER}>
           <Logo onScroll={updateScroll} scroll={scroll} component="h1">
             My View!
           </Logo>
@@ -102,17 +90,13 @@ function Nav() {
             autoComplete
             color="orange"
             id="free-solo-2-demo"
-            onChange={(e, value) => {
-              moveMoviePage(value.id);
-            }}
+            onChange={(e, value) => moveSearchPage(value.title ?? value)}
             disableClearable
-            getOptionLabel={option => option.title}
+            getOptionLabel={option => option.title ?? option}
             options={movieList}
             renderInput={params => (
               <TextField
-                onChange={e => {
-                  setSearch(e.target.value);
-                }}
+                onChange={e => debouncedSearch(e.target.value)}
                 {...params}
                 label="영화 제목을 검색하세요"
                 InputProps={{
@@ -125,7 +109,7 @@ function Nav() {
           {localStorage.access_token ? (
             <MyAvatar userInfo={userInfo} />
           ) : (
-            seeLoginButton
+            pathname !== '/' && <GoLogin to="/">로그인</GoLogin>
           )}
         </Box>
       </MyToolbar>
@@ -143,7 +127,6 @@ const NavBar = styled(AppBar)`
     &.MuiAppBar-root {
       box-shadow: none;
       background-color: ${props => (props.scroll ? 'transparent' : 'black')};
-
       transition: all 0.3s;
     }
   }
