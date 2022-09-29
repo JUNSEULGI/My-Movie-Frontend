@@ -87,19 +87,22 @@ function List() {
             <MovieCard setOpen={setOpen} />
           </CardContainer>
         </Section>
+
         {open && (
-          <MyViewModal
-            open={open}
-            closeModal={closeModal}
-            breadcrumbs={
-              movie.id ? (
-                <MyStep id={movie.id} check={true} />
-              ) : (
-                <MyStep review={reviewList.review_id} check={false} />
-              )
-            }
-            content={movie.id ? <ReviewBox /> : <SearchBox />}
-          />
+          <>
+            <MyViewModal
+              open={open}
+              closeModal={closeModal}
+              breadcrumbs={
+                movie.id ? (
+                  <MyStep id={movie.id} ischecked={true.toString()} />
+                ) : (
+                  <MyStep ischecked={false.toString()} />
+                )
+              }
+              content={movie.id ? <ReviewBox /> : <SearchBox />}
+            />
+          </>
         )}
       </>
     );

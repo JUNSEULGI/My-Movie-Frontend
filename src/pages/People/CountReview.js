@@ -50,10 +50,11 @@ function CountReview({ userInfo, starring_list, actor, watched_count }) {
                 value={countReview}
               />
               <CountTextCover>
-                <CountText>
-                  {`${Math.round(watched_count)}`}
+                <div>
+                  {/* 여기 스타일 수정~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */}
+                  <CountText>{`${Math.round(watched_count)}`}</CountText>
                   <p>/ {total_count}</p>
-                </CountText>
+                </div>
               </CountTextCover>
             </Box>
             <CountIntro>
