@@ -25,17 +25,20 @@ function Character({ data }) {
             출연작
           </Title>
           <ChipBox>
-            {known_for.map(item => (
-              <Chip
-                key={item.id}
-                label={item.title ?? '정보 없음'}
-                variant="outlined"
-                size="small"
-                clickable
-                component="a"
-                href={`/movie/${item.id}`}
-              />
-            ))}
+            {known_for.map(
+              item =>
+                item.title !== '' && (
+                  <Chip
+                    key={item.id}
+                    label={item.title}
+                    variant="outlined"
+                    size="small"
+                    clickable
+                    component="a"
+                    href={`/movie/${item.id}`}
+                  />
+                )
+            )}
           </ChipBox>
         </FlexBox>
       </Box>

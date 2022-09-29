@@ -73,10 +73,14 @@ function Nav() {
   }, [scroll]);
 
   return (
-    <NavBar onScroll={updateScroll} scroll={scroll}>
+    <NavBar onScroll={updateScroll} scroll={scroll.toString()}>
       <MyToolbar sx={{ display: 'flex', alignContent: 'center' }}>
         <Link to={IS_USER}>
-          <Logo onScroll={updateScroll} scroll={scroll} component="h1">
+          <Logo
+            onScroll={updateScroll}
+            scroll={scroll.toString()}
+            component="h1"
+          >
             My View!
           </Logo>
         </Link>
@@ -158,15 +162,21 @@ const Logo = styled(Typography)`
   transition: all 0.3s;
   font-family: 'Galada', cursive;
   font-weight: bold;
-  font-size: 32px;
+  font-size: 2rem;
   @media screen and (max-width: 380px) {
-    font-size: 20px;
+    font-size: 1rem;
   }
 `;
 
 const GoLogin = styled(Link)`
-  margin: 10px 0 0 10px;
+  margin-left: 10px;
   color: white;
+  border: 1px solid #717171;
+  padding: 10px;
+  border-radius: 100%;
+  :hover {
+    background-color: #717171;
+  }
 `;
 
 const NavSearch = styled(Autocomplete)`
