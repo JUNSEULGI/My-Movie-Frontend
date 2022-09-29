@@ -1,5 +1,5 @@
-export const BASE_URL = 'http://localhost:8000/';
-// export const BASE_URL = 'http://094a-221-147-33-141.ngrok.io/';
+// export const BASE_URL = 'http://localhost:8000/';
+export const BASE_URL = 'https://ccd9-221-147-33-141.ngrok.io/';
 
 export const API = {
   // 로그인
@@ -16,6 +16,7 @@ export const API = {
   // 영화 정보
   actor: '/movie/actor/detail',
   movie_popular: '/movie/popular',
+  movie_latest: '/movie/latest',
   movie_detail: '/movie/detail',
   actor_intimacy: '/movie/actor/intimacy',
   // 검색

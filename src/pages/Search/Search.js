@@ -48,13 +48,15 @@ function Search() {
   const [loading, setLoading] = useState(true);
   const [actorLoading, setActorLoading] = useState(true);
   const [movieLoading, setMovieLoading] = useState(true);
+  const [latestLoading, setLatestLoading] = useState(true);
   const [searchedActor, setSearchedActor] = useState([]);
   const [searchedMovie, setSearchedMovie] = useState([]);
+  const [latestMovie, setLatestMovie] = useState([]);
   const [backgroundInfo, setBackgroundInfo] = useState({});
   const { search } = useLocation();
   const query = new URLSearchParams(search);
 
-  const handleChange = (event, newValue) => {
+  const handleChange = (_, newValue) => {
     setValue(newValue);
   };
 
@@ -80,14 +82,26 @@ function Search() {
     setActorLoading(false);
   };
 
+  const getLatest = async () => {
+    setLatestLoading(true);
+    try {
+      const { data } = await fetcher(API.movie_latest);
+      setLatestMovie(data.result);
+    } catch (e) {
+      console.log(e);
+    }
+    setLatestLoading(false);
+  };
+
   useEffect(() => {
+    getLatest();
     getMovie();
     getActor();
   }, []);
 
   useEffect(() => {
-    if (!movieLoading && !actorLoading) setLoading(false);
-  }, [movieLoading, actorLoading]);
+    if (!movieLoading && !actorLoading && !latestLoading) setLoading(false);
+  }, [movieLoading, actorLoading, latestLoading]);
 
   function SearchContainer() {
     return (
@@ -129,10 +143,10 @@ function Search() {
           <Title variant="h3" style={{ marginBottom: 20 }}>
             최신 개봉작
           </Title>
-          {CONTENTS_MOCK && (
+          {latestMovie && (
             <NewMoviesContainer>
-              {CONTENTS_MOCK.map(content => (
-                <NewMovie key={content.id} data={content} />
+              {latestMovie.map(movie => (
+                <NewMovie key={movie.id} data={movie} />
               ))}
             </NewMoviesContainer>
           )}

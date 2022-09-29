@@ -6,8 +6,7 @@ import { SearchPoster } from '../../components/Poster/SearchPoster';
 import { MyLink } from '../../components/Link';
 
 function NewMovie({ data }) {
-  const { id, title, poster, country, release_date } = data;
-
+  const { id, title, poster, country, ratings, release_date } = data;
   return (
     <FlexBox>
       <Box style={{ flex: 1 }}>
