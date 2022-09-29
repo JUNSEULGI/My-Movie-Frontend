@@ -15,7 +15,6 @@ import {
   CardContainer,
   MovieInfo,
   Actor,
-  Trailer,
   NoReview,
   MyReview,
   MovieGallery,
@@ -35,7 +34,6 @@ function Movie() {
 
   const fetchMoreEl = useCallback(
     node => {
-      console.log('sssssadadasdasdasdasasd');
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver(entries => {
         setIntersecting(entries.some(entry => entry.isIntersecting));
@@ -116,7 +114,7 @@ function Movie() {
 
   const { title, actor, video_url, image_url, total_page } = movie;
 
-  const background = image_url[0];
+  const background = image_url?.[0];
 
   const [imageCount, setImageCount] = useState(8);
 
@@ -152,9 +150,9 @@ function Movie() {
           open={open}
           breadcrumbs={
             movie.id ? (
-              <MyStep id={movie.id} check={true} />
+              <MyStep id={movie.id} ischecked={true.toString()} />
             ) : (
-              <MyStep check={false} />
+              <MyStep ischecked={false.toString()} />
             )
           }
           closeModal={closeModal}

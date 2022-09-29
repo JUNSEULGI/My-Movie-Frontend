@@ -1,20 +1,26 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Typography, Box } from '@mui/material';
-import { SearchPoster } from './SearchPoster';
+import { SearchPoster } from '../../components/Poster/SearchPoster';
+import { MyLink } from '../../components/Link';
 
 function NewMovie({ data }) {
-  const { id, title, url, country, year } = data;
+  const { id, title, poster, country, release_date } = data;
 
   return (
     <FlexBox>
       <Box style={{ flex: 1 }}>
-        <SearchPoster src={url} />
+        <Link to={`/movie/${id}`}>
+          <SearchPoster src={poster} />
+        </Link>
       </Box>
       <Box style={{ flex: 2 }}>
-        <Title>{title}</Title>
+        <MyLink to={`/movie/${id}`}>
+          <Title component="span">{title}</Title>
+        </MyLink>
         <SubTitle variant="subtitle2">
-          {year} · {country}
+          {release_date} · {country}
         </SubTitle>
       </Box>
     </FlexBox>
@@ -34,11 +40,6 @@ const Title = styled(Typography)`
   margin: 8px 0 3px;
   font-weight: bold;
   color: ${({ theme }) => theme.palette.common.white};
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
 `;
 
 export default NewMovie;

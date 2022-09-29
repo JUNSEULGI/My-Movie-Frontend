@@ -1,53 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
-import { Container, Typography, Box } from '@mui/material';
-import { API } from '../../Modules/API';
-import { BASE_URL } from '../../Modules/API';
-import { MovieRating } from '../Movie';
-import { SearchPoster } from './SearchPoster';
+import { Typography, Box } from '@mui/material';
+import { SearchPoster } from '../../components/Poster/SearchPoster';
+import moment from 'moment';
+import { MyLink } from '../../components/Link';
 
 function Content({ data }) {
-  const { id, title, url, country, year } = data;
-  const [value, setValue] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [backgroundInfo, setBackgroundInfo] = useState({});
+  const { id, title, poster, country, release_date } = data;
 
   return (
     <Box>
-      <SearchPoster src={url} />
-      <Title>{title}</Title>
+      <MyLink to={`/movie/${id}`}>
+        <SearchPoster src={poster} />
+      </MyLink>
+      <MyLink to={`/movie/${id}`}>
+        <Title component="span">{title}</Title>
+      </MyLink>
       <SubTitle variant="subtitle2">
-        {year} · {country}
+        {moment(release_date).format('yyyy')} · {country}
       </SubTitle>
-      {/* <MovieRating /> */}
     </Box>
   );
 }
 
 export default Content;
 
-// const ContainerTitle = styled(Typography)`
-//   font-weight: bold;
-//   margin: 80px 0 6px;
-//   color: ${({ theme }) => theme.palette.common.white};
-// `;
-
-// const Movie = styled.div`
-//   @media screen and (max-width: 600px) {
-//     scroll-snap-align: start;
-//   }
-// `;
-
 const SubTitle = styled(Typography)`
   color: ${({ theme }) => theme.palette.common.white};
 `;
-
-// const WatchedBox = styled(Box)`
-//   @media screen and (max-width: 600px) {
-//     overflow-x: scroll;
-//     scroll-snap-type: x mandatory;
-//   }
-// `;
 
 const Title = styled(Typography)`
   margin: 8px 0 3px;
@@ -59,11 +39,3 @@ const Title = styled(Typography)`
   overflow: hidden;
   text-overflow: ellipsis;
 `;
-
-// const WatchedTime = styled.div``;
-
-// const WatchedTimeTypo = styled(Typography)`
-//   @media screen and (max-width: 600px) {
-//     font-size: 16px;
-//   }
-// `;

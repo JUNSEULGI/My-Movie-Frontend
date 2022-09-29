@@ -6,7 +6,7 @@ import darkTheme from '../../styles/theme';
 import { API } from '../../Modules/API';
 import { fetcher } from '../../Modules/fetcher';
 
-function MyStep({ check, id }) {
+function MyStep({ ischecked, id }) {
   const [review, setReview] = useState({});
   const { content } = review;
   const getReview = async () => {
@@ -27,19 +27,21 @@ function MyStep({ check, id }) {
     <Step key="1" color={darkTheme.palette.common.white}>
       영화 검색
     </Step>,
-    <SaveStep key="2" check={check}>
+    <SaveStep key="2" ischecked={ischecked}>
       리뷰 {content ? '수정' : '저장'}
     </SaveStep>,
   ];
 
   return (
-    <MyBreadcrumbs
-      check={check}
-      separator={<Next fontSize="small" />}
-      aria-label="breadcrumb"
-    >
-      {breadcrumbs}
-    </MyBreadcrumbs>
+    <>
+      <MyBreadcrumbs
+        ischecked={ischecked}
+        separator={<Next fontSize="small" />}
+        aria-label="breadcrumb"
+      >
+        {breadcrumbs}
+      </MyBreadcrumbs>
+    </>
   );
 }
 
@@ -50,7 +52,7 @@ const Step = styled(Typography)`
 `;
 
 const SaveStep = styled(Step)`
-  color: ${({ check }) => (check ? 'white' : 'gray')};
+  color: ${({ ischecked }) => (ischecked ? 'white' : 'gray')};
 `;
 
 const Next = styled(NavigateNextIcon)``;
@@ -59,7 +61,7 @@ const MyBreadcrumbs = styled(Breadcrumbs)`
   padding-top: 10px;
   & .MuiBreadcrumbs-separator {
     svg {
-      fill: ${({ check }) => (check ? 'white' : 'gray')};
+      fill: ${({ ischecked }) => (ischecked ? 'white' : 'gray')};
     }
   }
 `;
