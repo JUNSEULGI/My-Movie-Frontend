@@ -16,6 +16,7 @@ export const API = {
   // 영화 정보
   actor: '/movie/actor/detail',
   movie_popular: '/movie/popular',
+  movie_latest: '/movie/latest',
   movie_detail: '/movie/detail',
   actor_intimacy: '/movie/actor/intimacy',
   // 검색

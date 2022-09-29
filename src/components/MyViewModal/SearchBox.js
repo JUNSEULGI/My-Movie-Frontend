@@ -60,7 +60,7 @@ function SearchBox() {
           onChange={(e, value) => value.title && setMovie(value)}
         />
         <Box>
-          <NowRunning variant="subtitle1">지금 상영중인 영화</NowRunning>
+          <NowRunning variant="subtitle1">지금 인기 있는 영화</NowRunning>
           {ranks.map((movie, index) => (
             <RankedMovie
               key={movie.id}
