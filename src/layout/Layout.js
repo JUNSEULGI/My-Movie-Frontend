@@ -72,7 +72,8 @@ const MovieScene = styled.div`
   z-index: 0;
   width: 100%;
   height: 320px;
-  background: ${({ img }) => (img?.length > 8 ? `url(${img}) no-repeat` : img)};
+  background: ${({ img }) => `url(${img})  no-repeat`};
+  /* background: ${({ img }) => `url(${img}) `}; */
   background-size: cover;
   background-position: left -50px;
   /* @media screen and (min-width: 1440px) {

@@ -64,10 +64,11 @@ function CountReview({
                 value={countReview}
               />
               <CountTextCover>
-                <CountText>
-                  {`${Math.round(peopleData.intimacy)}`}
+                <div>
+                  {/* 여기 스타일 수정~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */}
+                  <CountText>{`${Math.round(peopleData.intimacy)}`}</CountText>
                   <p>/ {peopleData.total_movie}</p>
-                </CountText>
+                </div>
               </CountTextCover>
             </Box>
             <CountIntro>

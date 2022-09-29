@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { CardContainer } from '../../components/CardContainer';
-import { CardMedia, Typography } from '@mui/material';
+import { CardMedia, Typography, Box } from '@mui/material';
 import { OTTLogo } from '../../components/PlatformAvatar';
 import { Logo } from '../../components/Logo';
 
@@ -70,19 +70,6 @@ function MovieTable({ movie, reviewdata }) {
                 </MoiveTitle>
                 <InRole>{role_name}</InRole>
                 <Rating>
-                  {/* {access_token ? (
-                    myrating ? (
-                      <>
-                        <MLogo>My View</MLogo>
-                        <ReviewRating>{myrating}</ReviewRating>
-                      </>
-                    ) : (
-                      <AverageRating>{floorRatings}</AverageRating>
-                    )
-                  ) : (
-                    <AverageRating>{floorRatings}</AverageRating>
-                  )} */}
-
                   {access_token ? (
                     ratings.review ? (
                       <>
@@ -97,7 +84,7 @@ function MovieTable({ movie, reviewdata }) {
                   )}
                 </Rating>
                 <Platform>
-                  <MovieTableOTT alt={platform} src={platform_logo_image} />
+                  <MovieTableOTT alt={platform} src={platform} />
                 </Platform>
               </Row>
             </BackCover>
@@ -199,6 +186,9 @@ const MoviePoster = styled(Typography)`
 
 const MoiveTitle = styled(Typography)`
   cursor: pointer;
+  text-align: center;
+  margin: auto;
+  width: fit-content;
   overflow-x: scroll;
 
   &:hover {
@@ -227,7 +217,7 @@ const InRole = styled(Typography)`
   }
 `;
 
-const Rating = styled(Typography)``;
+const Rating = styled(Box)``;
 
 const ReviewRating = styled.p`
   margin: 0;
@@ -271,7 +261,7 @@ const AverageRating = styled(ReviewRating)`
   }
 `;
 
-const Platform = styled(Typography)`
+const Platform = styled(Box)`
   display: flex;
   justify-content: center;
 `;
@@ -280,8 +270,10 @@ const MovieImg = styled(CardMedia)`
   border-radius: 8px;
 `;
 
-const MovieTableOTT = styled(OTTLogo)`
+const MovieTableOTT = styled.img`
   margin: 0 6px 0 0;
+  border-radius: 50px;
+  width: 35px;
 
   @media screen and (max-width: 600px) {
     position: absolute;
