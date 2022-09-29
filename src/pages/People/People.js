@@ -27,12 +27,15 @@ function People() {
     node => {
       console.log('sssssadadasdasdasdasasd');
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver(entries => {
-        setIntersecting(entries.some(entry => entry.isIntersecting));
-        if (intersecting) {
-          setPage(page + 1);
-        }
-      });
+      observer.current = new IntersectionObserver(
+        entries => {
+          setIntersecting(entries.some(entry => entry.isIntersecting));
+          if (intersecting) {
+            setPage(page + 1);
+          }
+        },
+        { rootMargin: '500px 0px 0px 0px' }
+      );
       if (node) observer.current.observe(node);
     },
     [intersecting]
@@ -139,9 +142,7 @@ function People() {
         <Right>
           <MovieTable reviewdata={intimacyData} movie={starringList} />
         </Right>
-        <OOO sx={{ border: '1px solid white' }} ref={fetchMoreEl}>
-          asdasdas
-        </OOO>
+        <OOO sx={{ border: '1px solid white' }} ref={fetchMoreEl}></OOO>
       </PeopleContentContainer>
     );
   }
