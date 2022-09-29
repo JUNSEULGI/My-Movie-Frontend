@@ -25,7 +25,6 @@ function People() {
 
   const fetchMoreEl = useCallback(
     node => {
-      console.log('sssssadadasdasdasdasasd');
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver(
         entries => {
@@ -134,6 +133,7 @@ function People() {
           </Info>
         </PeopleCard>
         <CountReview
+          peopleData={peopleData}
           userInfo={userInfo}
           actor={peopleData.name}
           starring_list={starringList}

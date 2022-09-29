@@ -13,15 +13,24 @@ import { ReviewIcon } from '../Movie/MyIconButton';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-function CountReview({ userInfo, starring_list, actor, watched_count }) {
+function CountReview({
+  userInfo,
+  starring_list,
+  actor,
+  watched_count,
+  peopleData,
+}) {
+  const [expanded, setExpanded] = React.useState('panel1');
   const [countReview, setCountReview] = useState(0);
   const [close, setClose] = useState(true);
   const { nickname } = userInfo;
   const access_token = localStorage.getItem('access_token');
 
-  const total_count = starring_list?.length;
+  const percent = (10 / (peopleData.total_movie / peopleData.intimacy)) * 10;
 
-  const percent = (10 / (total_count / watched_count)) * 10;
+  const handleChange = panel => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
 
   useEffect(() => {
     setCountReview(percent);
@@ -31,7 +40,12 @@ function CountReview({ userInfo, starring_list, actor, watched_count }) {
 
   return (
     <>
-      <MAccordion disableGutters elevation={0}>
+      <MAccordion
+        disableGutters
+        elevation={0}
+        expanded={expanded === 'panel1'}
+        onChange={handleChange('panel1')}
+      >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon sx={{ margin: '0px' }} />}
           aria-controls="panel1a-content"
@@ -52,13 +66,14 @@ function CountReview({ userInfo, starring_list, actor, watched_count }) {
               <CountTextCover>
                 <div>
                   {/* 여기 스타일 수정~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */}
-                  <CountText>{`${Math.round(watched_count)}`}</CountText>
-                  <p>/ {total_count}</p>
+                  <CountText>{`${Math.round(peopleData.intimacy)}`}</CountText>
+                  <p>/ {peopleData.total_movie}</p>
                 </div>
               </CountTextCover>
             </Box>
             <CountIntro>
-              {nickname}님은 {actor}님이 출연한 <strong>{watched_count}</strong>
+              {nickname}님은 {actor}님이 출연한{' '}
+              <strong>{peopleData.intimacy}</strong>
               개의 영화를 시청했습니다.
             </CountIntro>
           </Box>
