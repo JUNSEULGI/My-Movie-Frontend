@@ -11,7 +11,7 @@ function Content({ data }) {
   return (
     <Box>
       <MyLink to={`/movie/${id}`}>
-        <SearchPoster src={poster} />
+        <SearchPoster src={poster || '/images/no-image.svg'} />
       </MyLink>
       <MyLink to={`/movie/${id}`}>
         <Title component="span">{title}</Title>

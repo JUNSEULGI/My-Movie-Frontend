@@ -9,7 +9,7 @@ function Character({ data }) {
   return (
     <Container sx={{ borderBottom: 1, borderColor: 'divider' }}>
       <PortraitWrapper>
-        <Portrait src={profile_image} />
+        <Portrait src={profile_image || '/images/no-image.svg'} />
       </PortraitWrapper>
       <Box style={{ flex: 2 }}>
         <TitleBox>

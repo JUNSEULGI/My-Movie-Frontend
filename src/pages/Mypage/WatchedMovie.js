@@ -3,32 +3,22 @@ import styled from '@emotion/styled';
 import { CardContainer } from '../Movie';
 import { BASE_URL } from '../../Modules/API';
 import { MovieRating } from '../Movie';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { userState } from '../../state';
-import LinearProgress, {
-  linearProgressClasses,
-} from '@mui/material/LinearProgress';
-
+// import LinearProgress from '@mui/material/LinearProgress';
 import { Typography, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { fetcher } from '../../Modules/fetcher';
 
 function WatchedMovie() {
   const navigate = useNavigate();
-
-  const access_token = localStorage.getItem('access_token');
   const [watched, setWatched] = useState([]);
-  const [userInfo, setUserInfo] = useRecoilState(userState);
+  const userInfo = useRecoilValue(userState);
 
   useEffect(() => {
-    fetch(`${BASE_URL}review/list`, {
-      headers: {
-        Authorization: access_token,
-      },
-    })
-      .then(res => res.json())
-      .then(res => {
-        setWatched(res.result);
-      });
+    fetcher(`${BASE_URL}review/list`).then(({ data: res }) => {
+      setWatched(res.result);
+    });
   }, []);
 
   let total_watched = 0;
@@ -36,11 +26,9 @@ function WatchedMovie() {
     total_watched += watched[i].movie.running_time;
   }
 
-  const moveMoviePage = id => {
-    navigate(`/movie/${id}`);
-  };
+  const moveMoviePage = id => navigate(`/movie/${id}`);
 
-  if (watched.length == 0) return null;
+  if (watched.length === 0) return null;
   return (
     <MypageCardContainer>
       <WatchedTime>
@@ -59,7 +47,7 @@ function WatchedMovie() {
           const { rating, movie } = watchedMovie;
           const { id, poster } = movie;
           return (
-            <Movie>
+            <Movie key={id}>
               <PPoster src={poster} id={id} onClick={() => moveMoviePage(id)} />
               <Title>{movie.title} </Title>
               <Box sx={{ display: 'flex', justifyContent: 'end' }}>
@@ -135,12 +123,12 @@ const WatchedTimeTypo = styled(Typography)`
   }
 `;
 
-const BorderLinearProgress = styled(LinearProgress)`
-  height: 10px;
-  border-radius: 5px;
-  background-color: lightgrey;
+// const BorderLinearProgress = styled(LinearProgress)`
+//   height: 10px;
+//   border-radius: 5px;
+//   background-color: lightgrey;
 
-  .MuiLinearProgress-barColorPrimary {
-    background-color: orange;
-  }
-`;
+//   .MuiLinearProgress-barColorPrimary {
+//     background-color: orange;
+//   }
+// `;

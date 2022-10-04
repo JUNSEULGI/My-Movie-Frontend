@@ -7,12 +7,10 @@ import styled from '@emotion/styled';
 function Mypage() {
   function MypageContainer() {
     return (
-      <>
-        <MypageBox>
-          <Profile />
-          <WatchedMovie />
-        </MypageBox>
-      </>
+      <MypageBox>
+        <Profile />
+        <WatchedMovie />
+      </MypageBox>
     );
   }
   return <MyViewLayout center={<MypageContainer />} />;

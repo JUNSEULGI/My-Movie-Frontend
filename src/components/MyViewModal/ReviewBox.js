@@ -13,6 +13,8 @@ import LoadWrap from '../Loading/LoadWrap';
 import { fetcher } from '../../Modules/fetcher';
 import { API } from '../../Modules/API';
 import { useDelete, useSave } from '../../util/hooks';
+import { StarOutlineRounded, StarRounded } from '@mui/icons-material';
+import { GenreChip } from '../GenreChip';
 
 function ReviewBox() {
   const [movie, setMovie] = useRecoilState(movieState);
@@ -121,10 +123,15 @@ function ReviewBoxContent({ review, setReview }) {
             <Box>
               <BoldText variant="subtitle2">{movie.en_title} </BoldText>
               <MovieInfo variant="subtitle2">
-                2022 · {movie.country} ·{' '}
-                {movie.genre?.map((genreItems, index) => (
+                2022 · {movie.country}
+                {movie.genre?.map((item, index) => (
                   // chip으로 수정 필요
-                  <Genre key={index}>{genreItems}</Genre>
+                  <GenreChip
+                    key={index}
+                    label={item.name}
+                    colorcode={item.color_code}
+                    size="small"
+                  />
                 ))}
               </MovieInfo>
               <BoldText variant="subtitle2">
@@ -140,6 +147,8 @@ function ReviewBoxContent({ review, setReview }) {
             }}
             precision={0.5}
             size="large"
+            icon={<StarRounded fontSize="inherit" />}
+            emptyIcon={<StarOutlineRounded fontSize="inherit" />}
           />
         </RowBox>
         <RowLabel variant="h2">{userInfo?.nickname}님의 솔직후기</RowLabel>
@@ -242,10 +251,6 @@ const MovieInfo = styled(BoldText)`
 
 const MovieTitle = styled(BoldText)`
   margin-bottom: 6px;
-`;
-
-const Genre = styled.span`
-  margin-right: 10px;
 `;
 
 const MyRating = styled(Rating)`
