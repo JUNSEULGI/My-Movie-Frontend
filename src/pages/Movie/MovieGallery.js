@@ -29,24 +29,6 @@ function MovieGallery({ movie_image }) {
     }
   };
 
-  const theme = createTheme({
-    spacing: -11,
-  });
-
-  const MyMasonry = styled(Masonry)(({ theme }) => ({
-    margin: '-9px',
-
-    '&.MuiMasonry-root>*': {
-      margin: '10.3px',
-    },
-  }));
-  // const M = styled(MyMasonry)`
-  //   @media screen and (max-width: 380px) {
-  //     display: block;
-  //     margin-left: -12px;
-  //   }
-  // `;
-
   return (
     <>
       <GalleryImgContainer>
@@ -121,8 +103,14 @@ export default MovieGallery;
 
 const GalleryImgContainer = styled(Box)`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+
+  gap: 1rem;
+  @media ${p => p.theme.deviceSize.mobile} {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  @media ${p => p.theme.deviceSize.desktop} {
+    grid-template-columns: repeat(4, 1fr);
+  }
 `;
 
 const GalleryImg = styled.img`
@@ -136,13 +124,13 @@ const GalleryImg = styled.img`
 
   :hover {
     transform: scale(1.04, 1.04);
-    @media screen and (max-width: 380px) {
-      transform: none;
-    }
   }
 
-  @media screen and (min-width: 1080px) {
-    /* width: 24%; */
+  @media ${p => p.theme.deviceSize.mobile} {
+    transform: none;
+    width: 100%;
+  }
+  @media ${p => p.theme.deviceSize.desktop} {
     width: 100%;
   }
 `;
@@ -153,16 +141,16 @@ const MasonryBox = styled(Box)`
   }
 `;
 
-const MasonryImg = styled.img`
-  cursor: pointer;
-  transition: all ease 0.5s;
-  :hover {
-    transform: scale(1.04, 1.04);
-    @media screen and (max-width: 380px) {
-      transform: none;
-    }
-  }
-`;
+// const MasonryImg = styled.img`
+//   cursor: pointer;
+//   transition: all ease 0.5s;
+//   :hover {
+//     transform: scale(1.04, 1.04);
+//     @media screen and (max-width: 380px) {
+//       transform: none;
+//     }
+//   }
+// `;
 
 const ImgContainer = styled(Box)`
   position: relative;
@@ -173,8 +161,7 @@ const ImgContainer = styled(Box)`
   box-shadow: 24px;
   padding: 40px;
   outline: none;
-
-  @media screen and (max-width: 380px) {
+  @media ${p => p.theme.deviceSize.mobile} {
     width: 100%;
   }
 `;
@@ -184,7 +171,7 @@ const Img = styled.img`
   width: 100%;
   /* @media screen and (max-width: 380px) {
     width: 300px;
-  } */
+  } */ ;
 `;
 
 const GalleryButton = styled(IconButton)`
