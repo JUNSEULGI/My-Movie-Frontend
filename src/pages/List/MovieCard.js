@@ -6,8 +6,9 @@ import { Box, Card, Typography, Rating, Chip } from '@mui/material';
 import darkTheme from '../../styles/theme';
 import { SearchPoster } from '../../components/Poster/SearchPoster';
 import { MyLink } from '../../components/Link';
+import { GenreChip } from '../../components/GenreChip';
 
-function MovieCard({ data, setOpen }) {
+function MovieCard({ data, setOpen, genreChip }) {
   const setMovie = useSetRecoilState(movieState);
   const resetMovie = useResetRecoilState(movieState);
 
@@ -26,6 +27,8 @@ function MovieCard({ data, setOpen }) {
   for (let key in tagTheme) {
     tagBase.push(key);
   }
+
+  console.log(genreChip);
 
   return !data ? (
     <AddCardBox onClick={addMovie}>
@@ -51,12 +54,11 @@ function MovieCard({ data, setOpen }) {
         </InfoContainer>
       </Box>
       <GenreContainer>
-        {data.movie.genre.map((item, index) => (
-          <Genre
+        {genreChip.map((item, index) => (
+          <GenreChip
             key={index}
-            label={item}
-            randomtag={tagBase[Math.floor(Math.random() * tagBase.length)]}
-            // color={`${darkTheme.palette.tag.yellow}`}
+            colorcode={item.color_code}
+            label={item.name}
             size="small"
           />
         ))}

@@ -24,7 +24,9 @@ const MypageBox = styled(Box)`
   display: flex;
   width: 100%;
   @media screen and (max-width: 600px) {
-    width: 320px;
+  }
+  @media ${p => p.theme.deviceSize.mobile} {
+    width: 100%;
     display: block;
   }
 `;

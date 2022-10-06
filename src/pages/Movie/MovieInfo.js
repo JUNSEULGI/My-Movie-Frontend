@@ -2,11 +2,12 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import { movieState } from '../../state';
-import { CardMedia, Typography } from '@mui/material';
+import { CardMedia, Typography, Chip } from '@mui/material';
 import { CardContainer, MovieRating, AgeBadge } from '../Movie';
 import { Box } from '@mui/system';
 import { replaceBrTag } from '../../util/replaceBrTag';
 import { Title } from '@mui/icons-material';
+import { GenreChip } from '../../components/GenreChip';
 
 function MovieInfo() {
   const movie = useRecoilValue(movieState);
@@ -24,6 +25,7 @@ function MovieInfo() {
   } = movie;
 
   // const floorRating = ratings.substr(0, 3);
+  console.log(movie);
   return (
     <MovieInfoContainer>
       <MovieImg component="img" height="100%" image={thumbnail_image_url} />
@@ -42,11 +44,17 @@ function MovieInfo() {
           {en_title}
           <br />
           {release_date?.substr(0, 4)} · {country}
-          {genre?.map((genreItems, index) => (
-            <span key={index} style={{ marginRight: '10px' }}>
-              {genreItems}
-            </span>
-          ))}
+          {genre?.map((genreItem, index) => {
+            console.log(genreItem);
+            return (
+              <GenreChip
+                key={index}
+                colorcode={genreItem.color_code}
+                label={genreItem.name}
+                size="small"
+              />
+            );
+          })}
           <br />
           {running_time}분 · <AgeBadge age={age} />
         </SubInfo>
@@ -67,14 +75,16 @@ function MovieInfo() {
 export default MovieInfo;
 
 const MovieInfoContainer = styled(CardContainer)`
-  @media screen and (max-width: 380px) {
+  @media ${p => p.theme.deviceSize.mobile} {
     margin-top: 70px;
   }
+  margin-top: 100px;
 `;
 
 const MovieImg = styled(CardMedia)`
   width: 239px;
-  @media screen and (max-width: 380px) {
+
+  @media ${p => p.theme.deviceSize.mobile} {
     width: 125px;
   }
 `;
@@ -95,16 +105,18 @@ const SubInfo = styled(Typography)`
 `;
 
 const SummaryBox = styled(Box)`
-  @media screen and (max-width: 380px) {
+  @media ${p => p.theme.deviceSize.mobile} {
     display: none;
   }
 `;
+
 const SummaryContainer = styled.div`
   -ms-overflow-style: none; /* Explorer */
   scrollbar-width: none; /* Firefox */
   ::-webkit-scrollbar {
     display: none; /* Chrome */
   }
+
   display: -webkit-box;
   -webkit-line-clamp: 7;
   -webkit-box-orient: vertical;

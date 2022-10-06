@@ -77,8 +77,9 @@ function List() {
             {reviewList.length > 0 &&
               reviewList
                 .slice(0, 7)
-                .map(review => (
+                .map((review, idx) => (
                   <MovieCard
+                    genreChip={reviewList?.[idx].movie.genre}
                     key={review.review_id}
                     data={review}
                     setOpen={setOpen}

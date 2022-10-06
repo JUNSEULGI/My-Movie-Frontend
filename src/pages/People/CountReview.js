@@ -64,11 +64,11 @@ function CountReview({
                 value={countReview}
               />
               <CountTextCover>
-                <div>
-                  {/* 여기 스타일 수정~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */}
+                {/* 여기 스타일 수정~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */}
+                <IntimacyTextCover>
                   <CountText>{`${Math.round(peopleData.intimacy)}`}</CountText>
-                  <p>/ {peopleData.total_movie}</p>
-                </div>
+                  <TotalMovie>{peopleData.total_movie}</TotalMovie>
+                </IntimacyTextCover>
               </CountTextCover>
             </Box>
             <CountIntro>
@@ -167,23 +167,29 @@ const CountTextCover = styled.div`
   justify-content: end;
 `;
 
-const CountText = styled(Typography)`
+const IntimacyTextCover = styled(Box)`
   position: absolute;
   top: 50%;
   left: 48%;
   margin: -20px 0 0 -20px;
   display: flex;
   align-items: baseline;
+`;
+
+const CountText = styled(Typography)`
   color: orange;
-  width: 100px;
   font-size: 1.625rem;
   font-weight: bold;
+`;
 
-  p {
-    margin: 0 0 0 6px;
-    font-size: 0.875rem;
-    color: darkgray;
+const TotalMovie = styled.p`
+  ::before {
+    content: '/';
+    margin-right: 4px;
   }
+  margin: 0 0 0 6px;
+  font-size: 0.875rem;
+  color: darkgray;
 `;
 
 const CountIntro = styled(Typography)`

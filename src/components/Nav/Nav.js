@@ -166,8 +166,11 @@ const Logo = styled(Typography)`
   font-family: 'Galada', cursive;
   font-weight: bold;
   font-size: 2rem;
+
   @media screen and (max-width: 380px) {
-    font-size: 1rem;
+  }
+  @media ${p => p.theme.deviceSize.mobile} {
+    font-size: 1.5rem;
   }
 `;
 
@@ -197,11 +200,12 @@ const NavSearch = styled(Autocomplete)`
   & .MuiOutlinedInput-root {
     color: white;
     font-weight: bold;
+    overflow-x: hidden;
 
-    @media screen and (max-width: 380px) {
-      /* width: 125px; */
+    @media ${p => p.theme.deviceSize.mobile} {
       height: 40px;
       padding: 0;
+      width: 165px;
     }
 
     & fieldset {
@@ -215,10 +219,6 @@ const NavSearch = styled(Autocomplete)`
     &.Mui-focused fieldset {
       border-color: orange;
     }
-  }
-  @media screen and (max-width: 380px) {
-    width: 125px;
-    /* height: 20px; */
   }
 `;
 

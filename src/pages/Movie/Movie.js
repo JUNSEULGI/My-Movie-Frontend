@@ -28,8 +28,9 @@ function Movie() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
-  const [intersecting, setIntersecting] = useState(false);
   const [actorList, setActorList] = useState([]);
+  const [intersecting, setIntersecting] = useState(false);
+
   const observer = useRef(null);
 
   const fetchMoreEl = useCallback(
@@ -100,7 +101,7 @@ function Movie() {
     fetcher(`${API.movie_detail}?movie_id=${params.id}&page=${page}`).then(
       ({ data }) => {
         // console.log(movie_info);
-        setActorList(prev => [...prev, ...data.movie_info.actor]);
+        setActorList(prev => [...prev.actorList, ...data.movie_info.actor]);
         observer.current = null;
       }
     );
@@ -134,7 +135,7 @@ function Movie() {
               {actorList?.map((actor, index) => (
                 <Actor key={index} actor={actor} />
               ))}
-              <ScrollRef ref={fetchMoreEl}>next</ScrollRef>
+              <ScrollRef ref={fetchMoreEl}></ScrollRef>
             </ActorContainer>
           </>
         ) : (
@@ -211,7 +212,8 @@ function Movie() {
 export default Movie;
 
 const MovieBackGround = styled.div`
-  padding: 80px;
+  /* padding: 80px; */
+
   @media screen and (max-width: 380px) {
     margin-top: 20px;
     padding: 0;
