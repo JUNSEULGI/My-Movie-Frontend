@@ -2,11 +2,12 @@ import React from 'react';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { movieState } from '../../state';
 import styled from '@emotion/styled';
-import { Box, Card, Typography, Rating, Chip } from '@mui/material';
+import { Box, Card, Typography } from '@mui/material';
 import darkTheme from '../../styles/theme';
 import { SearchPoster } from '../../components/Poster/SearchPoster';
 import { MyLink } from '../../components/Link';
 import { GenreChip } from '../../components/GenreChip';
+import Star from '../../components/Star';
 
 function MovieCard({ data, setOpen, genreChip }) {
   const setMovie = useSetRecoilState(movieState);
@@ -28,8 +29,6 @@ function MovieCard({ data, setOpen, genreChip }) {
     tagBase.push(key);
   }
 
-  console.log(genreChip);
-
   return !data ? (
     <AddCardBox onClick={addMovie}>
       <AddBtn>+</AddBtn>
@@ -45,8 +44,8 @@ function MovieCard({ data, setOpen, genreChip }) {
           <MovieInfo variant="menuItem">
             {data.movie.released.split('-')[0]} · {data.movie.country}
           </MovieInfo>
-          <InfoContainer style={{ width: 75 }}>
-            <Star size="small" max={1} value={1} readOnly />
+          <InfoContainer style={{ width: 65 }}>
+            <Star />
             <Number>
               <ThickNumber>{data.rating}</ThickNumber> / 5
             </Number>
@@ -73,7 +72,7 @@ const CardBox = styled(Card)`
   justify-content: space-between;
   gap: 10px;
   padding: 14px;
-  width: 270px;
+  width: 100%;
   min-height: 490px;
   border-radius: 8px;
   background: ${({ theme }) => theme.palette.test.card};
@@ -132,10 +131,6 @@ const MovieInfo = styled(Typography)`
   color: ${({ theme }) => theme.palette.common.white};
 `;
 
-const Star = styled(Rating)`
-  color: ${({ theme }) => theme.palette.success.main};
-`;
-
 const Number = styled.span`
   font-size: 15px;
   color: ${({ theme }) => theme.palette.text.disabled};
@@ -143,21 +138,14 @@ const Number = styled.span`
 
 const ThickNumber = styled(Number)`
   font-weight: 700;
-  margin-left: 8px;
   color: ${({ theme }) => theme.palette.common.white};
 `;
 
 const GenreContainer = styled(Box)`
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-end;
-`;
-
-const Genre = styled(Chip)`
-  height: 20px;
-  margin-left: 4px;
-  background-color: ${({ randomtag }) => randomtag};
-  font-weight: 700;
-  color: ${({ theme }) => theme.palette.common.white};
+  gap: 4px;
 `;
 
 export default MovieCard;

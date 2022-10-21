@@ -9,7 +9,6 @@ import MyViewLayout from '../../layout/Layout';
 import LoadWrap from '../../components/Loading/LoadWrap';
 import Content from './Content';
 import { CardContainer } from '../../components/CardContainer';
-import { CONTENTS_MOCK } from '../../assets/mockData/contents';
 import { NoResult } from './NoResult';
 import NewMovie from './NewMovie';
 import Character from './Character';
@@ -180,7 +179,7 @@ const ContentsContainer = styled(Box)`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 30px 10px;
-  padding-bottom: 200px;
+  padding-bottom: 120px;
   @media ${p => p.theme.deviceSize.tablet} {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -193,6 +192,7 @@ const CharactersContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 40px 40px;
+  margin-bottom: 120px;
   @media ${p => p.theme.deviceSize.mobile} {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -202,7 +202,7 @@ const NewMoviesContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px 10px;
-  margin-bottom: 100px;
+  margin-bottom: 120px;
   @media ${p => p.theme.deviceSize.tablet} {
     grid-template-columns: repeat(2, 1fr);
   }

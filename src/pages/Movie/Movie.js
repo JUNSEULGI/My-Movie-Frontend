@@ -11,7 +11,6 @@ import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import { Button, Typography, Box } from '@mui/material';
 import LoadWrap from '../../components/Loading/LoadWrap';
 import { fetcher } from '../../Modules/fetcher';
-import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import {
   CardContainer,
   MovieInfo,
@@ -33,7 +32,6 @@ function Movie() {
   const [intersecting, setIntersecting] = useState(false);
 
   const observer = useRef(null);
-  const containerRefDiv = useRef();
 
   const fetchMoreEl = useCallback(
     node => {
@@ -176,7 +174,7 @@ function Movie() {
               {actorList?.map((actor, index) => (
                 <Actor key={index} actor={actor} />
               ))}
-              <ScrollRef ref={fetchMoreEl}></ScrollRef>
+              <ScrollRef ref={fetchMoreEl} />
             </ActorContainer>
           </>
         ) : (

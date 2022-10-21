@@ -88,22 +88,19 @@ function List() {
             <MovieCard setOpen={setOpen} />
           </CardContainer>
         </Section>
-
         {open && (
-          <>
-            <MyViewModal
-              open={open}
-              closeModal={closeModal}
-              breadcrumbs={
-                movie.id ? (
-                  <MyStep id={movie.id} ischecked={true.toString()} />
-                ) : (
-                  <MyStep ischecked={false.toString()} />
-                )
-              }
-              content={movie.id ? <ReviewBox /> : <SearchBox />}
-            />
-          </>
+          <MyViewModal
+            open={open}
+            closeModal={closeModal}
+            breadcrumbs={
+              movie.id ? (
+                <MyStep id={movie.id} ischecked={true.toString()} />
+              ) : (
+                <MyStep ischecked={false.toString()} />
+              )
+            }
+            content={movie.id ? <ReviewBox /> : <SearchBox />}
+          />
         )}
       </>
     );
@@ -122,13 +119,16 @@ const Section = styled(Box)`
 
 const CardContainer = styled(Box)`
   display: grid;
-  grid-template-columns: repeat(4, 270px);
+  grid-template-columns: repeat(
+    auto-fill,
+    [col-start] minmax(270px, 1fr) [col-end]
+  );
   gap: 24px;
-  @media screen and (max-width: 600px) {
+  /* @media screen and (max-width: 600px) {
     overflow-x: hidden;
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
-  }
+  } */
 `;
 
 const SectionTitle = styled(Typography)`

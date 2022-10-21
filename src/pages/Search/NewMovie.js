@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 import { Typography, Box } from '@mui/material';
 import { SearchPoster } from '../../components/Poster/SearchPoster';
 import { MyLink } from '../../components/Link';
+import moment from 'moment';
+import Star from '../../components/Star';
 
 function NewMovie({ data }) {
   const { id, title, poster, country, ratings, release_date } = data;
@@ -11,16 +13,20 @@ function NewMovie({ data }) {
     <FlexBox>
       <Box style={{ flex: 1 }}>
         <Link to={`/movie/${id}`}>
-          <SearchPoster src={poster} />
+          <SearchPoster src={poster || '/images/no-image.svg'} />
         </Link>
       </Box>
       <Box style={{ flex: 2 }}>
         <MyLink to={`/movie/${id}`}>
           <Title component="span">{title}</Title>
         </MyLink>
+        <SubTitle variant="subtitle2">{country}</SubTitle>
         <SubTitle variant="subtitle2">
-          {release_date} · {country}
+          {moment(release_date).format('yyyy.MM.DD')} 개봉
         </SubTitle>
+        <FlexBox>
+          <Star /> <SubTitle variant="subtitle2">{ratings}</SubTitle>
+        </FlexBox>
       </Box>
     </FlexBox>
   );
