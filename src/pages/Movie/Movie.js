@@ -168,7 +168,6 @@ function Movie() {
             <ContainerTitle>출연/제작</ContainerTitle>
             <ActorContainer
               ref={scrollRef}
-              // ㅐㅜ
               onMouseDown={onDragStart}
               // onMouseMove={onThrottleDragMove}
               // onMouseUp={onDragEnd}
