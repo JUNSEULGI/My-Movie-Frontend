@@ -1,30 +1,24 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled/macro';
 import { Box, Card, Typography } from '@mui/material';
 
 const HiddenReview = ({ title, item, idx }) => {
   const [isHovering, setIsHovering] = useState(0);
-  // console.log(topMovies);
-  // const navigate = useNavigate();
+
+  console.log(isHovering);
 
   return (
     <>
       <BackgroundPosterWrapper>
-        <BackgroundPoster
-          src={item?.movie.poster}
-          alt="poster of my best movie"
-          onMouseOver={() => setIsHovering(1)}
-          onMouseOut={() => setIsHovering(0)}
-        />
-        {isHovering ? (
-          <TopReview hover={isHovering}>
-            <br />
-            {title}
-          </TopReview>
-        ) : (
-          ''
-        )}
+        <HoverArea>
+          <TopReview className="top">{title}</TopReview>
+          <BackgroundPoster
+            src={item?.movie.poster}
+            alt={item?.movie.poster}
+            className="image"
+          />
+        </HoverArea>
+
         <Title variant="h1">
           <Rate>{idx + 1} </Rate>
           {item?.movie.title}
@@ -36,12 +30,26 @@ const HiddenReview = ({ title, item, idx }) => {
 
 export default HiddenReview;
 
-const TopReview = styled(Box)`
-  ::before {
-    content: '나의 한줄평';
-    color: white;
-    font-size: 1rem;
+const HoverArea = styled(Box)`
+  height: 100%;
+  position: relative;
+
+  :hover {
+    .top {
+      display: block;
+      z-index: 4;
+    }
+
+    .image {
+      transform: scale(1.1);
+      filter: grayscale(99%);
+      opacity: 0.7;
+    }
   }
+`;
+
+const TopReview = styled(Box)`
+  display: none;
   top: 0px;
   padding: 20px;
   position: absolute;
@@ -72,16 +80,13 @@ const Title = styled(Typography)`
 `;
 
 const BackgroundPoster = styled.img`
+  ::before {
+    content: '안녕하세요.';
+  }
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  /* object-fit: cover; */
   transition: all ease 0.4s;
-
-  :hover {
-    transform: scale(1.1);
-    filter: grayscale(99%);
-    opacity: 0.7;
-  }
 `;
 
 const Rate = styled(Typography)`
