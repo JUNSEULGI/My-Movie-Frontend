@@ -11,6 +11,7 @@ import ReviewBox from '../../components/MyViewModal/ReviewBox';
 import { Button, Typography, Box } from '@mui/material';
 import LoadWrap from '../../components/Loading/LoadWrap';
 import { fetcher } from '../../Modules/fetcher';
+import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import {
   CardContainer,
   MovieInfo,
@@ -32,6 +33,7 @@ function Movie() {
   const [intersecting, setIntersecting] = useState(false);
 
   const observer = useRef(null);
+  const containerRefDiv = useRef();
 
   const fetchMoreEl = useCallback(
     node => {
@@ -100,13 +102,16 @@ function Movie() {
     if (movie && page > total_page) return;
     fetcher(`${API.movie_detail}?movie_id=${params.id}&page=${page}`).then(
       ({ data }) => {
+        console.log('data', data);
         // console.log(movie_info);
-        setActorList(prev => [...prev.actorList, ...data.movie_info.actor]);
+        setActorList(prev => [...prev, ...data.movie_info.actor]);
         observer.current = null;
       }
     );
     return;
   }, [page]);
+  console.log('page', page);
+  console.log('actorList', actorList);
 
   useEffect(() => {
     getMovie();
@@ -124,6 +129,36 @@ function Movie() {
   // const imageList = (image_url.length = imageCount);
   [...new Set(image_url)].length = imageCount;
 
+  const scrollRef = useRef(null);
+
+  const [isDrag, setIsDrag] = useState(false);
+  const [startX, setStartX] = useState();
+
+  const onDragStart = e => {
+    e.preventDefault();
+    setIsDrag(true);
+    setStartX(e.pageX + scrollRef.current.scrollLeft);
+  };
+
+  const onDragEnd = () => {
+    setIsDrag(false);
+  };
+
+  const onDragMove = e => {
+    if (isDrag) {
+      const { scrollWidth, clientWidth, scrollLeft } = scrollRef.current;
+
+      scrollRef.current.scrollLeft = startX - e.pageX;
+
+      if (scrollLeft === 0) {
+        setStartX(e.pageX);
+      } else if (scrollWidth <= clientWidth + scrollLeft) {
+        setStartX(e.pageX + scrollLeft);
+      }
+    }
+  };
+  console.log(scrollRef?.current?.offsetWidth);
+
   function MovieContent() {
     return (
       <MovieBackGround>
@@ -131,7 +166,13 @@ function Movie() {
         {actor?.length > 0 ? (
           <>
             <ContainerTitle>출연/제작</ContainerTitle>
-            <ActorContainer>
+            <ActorContainer
+              ref={scrollRef}
+              onMouseDown={onDragStart}
+              // onMouseMove={onThrottleDragMove}
+              // onMouseUp={onDragEnd}
+              // onMouseLeave={onDragEnd}
+            >
               {actorList?.map((actor, index) => (
                 <Actor key={index} actor={actor} />
               ))}
@@ -254,4 +295,7 @@ const TrailerContainer = styled.div`
   }
 `;
 
-const ScrollRef = styled.div``;
+const ScrollRef = styled.div`
+  width: 20px;
+  background-color: antiquewhite;
+`;
