@@ -107,7 +107,6 @@ export const useInfiniteScroll = targetEl => {
   console.log('observerRef', observerRef.current);
 
   const getObserver = useCallback(() => {
-    console.log('usecl]lb');
     if (!observerRef.current) {
       observerRef.current = new IntersectionObserver(entries =>
         setIntersecting(entries.some(entry => entry.isIntersecting))

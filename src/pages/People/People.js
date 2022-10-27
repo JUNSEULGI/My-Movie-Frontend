@@ -17,7 +17,6 @@ function People() {
   const userInfo = useRecoilValue(userState);
   const [loading, setLoading] = useState(true);
   const [peopleData, setPeopleData] = useState({});
-  const [intimacyData, setIntimacyData] = useState({});
   const [starringList, setStarringList] = useState([]);
   const [page, setPage] = useState(0);
   const observer = useRef(null);
@@ -77,24 +76,6 @@ function People() {
 
   let watched_count = 0;
 
-  // console.table(starringList);
-
-  const checkAddMyReview = (intimacyData, starring_list) => {
-    for (let i = 0; i < starring_list?.length; i++) {
-      for (let z = 0; z < intimacyData?.length; z++) {
-        if (starring_list[i].movie_id === intimacyData[z].movie_id) {
-          starring_list[i].myrating = intimacyData[z].rating;
-          watched_count += 1;
-        }
-      }
-    }
-    return starring_list;
-  };
-
-  checkAddMyReview(intimacyData, starringList);
-
-  console.log('peopleData', peopleData);
-
   function PeopleContent() {
     return (
       <PeopleContentContainer>
@@ -127,9 +108,9 @@ function People() {
           watched_count={watched_count}
         />
         <Right>
-          <MovieTable reviewdata={intimacyData} movie={starringList} />
+          <MovieTable movie={starringList} />
         </Right>
-        <OOO sx={{ border: '1px solid white' }} ref={fetchMoreEl}></OOO>
+        <OOO sx={{ border: '1px solid white' }} ref={fetchMoreEl} />
       </PeopleContentContainer>
     );
   }

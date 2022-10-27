@@ -9,18 +9,13 @@ import { fetcher } from '../../Modules/fetcher';
 function MyStep({ ischecked, id }) {
   const [review, setReview] = useState({});
   const { content } = review;
-  const getReview = async () => {
-    try {
-      const { data: res } = await fetcher(`${API.review_movie}/${id}`);
-      if (res.message === 'REVIEW_DOSE_NOT_EXISTS') return;
-      setReview(res.result);
-    } catch (error) {
-      console.log('error', error);
-    }
-  };
 
   useEffect(() => {
-    getReview();
+    if (!id) return;
+    fetcher(`${API.review_movie}/${id}`).then(({ data: res }) => {
+      if (res.message === 'REVIEW_DOSE_NOT_EXISTS') return;
+      setReview(res.result);
+    });
   }, [id]);
 
   const breadcrumbs = [
@@ -33,15 +28,13 @@ function MyStep({ ischecked, id }) {
   ];
 
   return (
-    <>
-      <MyBreadcrumbs
-        ischecked={ischecked}
-        separator={<Next fontSize="small" />}
-        aria-label="breadcrumb"
-      >
-        {breadcrumbs}
-      </MyBreadcrumbs>
-    </>
+    <MyBreadcrumbs
+      ischecked={ischecked}
+      separator={<Next fontSize="small" />}
+      aria-label="breadcrumb"
+    >
+      {breadcrumbs}
+    </MyBreadcrumbs>
   );
 }
 
