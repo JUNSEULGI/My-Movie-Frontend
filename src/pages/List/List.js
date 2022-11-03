@@ -74,6 +74,7 @@ function List() {
             {userInfo.nickname}님이 저장한 영화 목록
           </SectionTitle>
           <CardContainer>
+            <MovieCard setOpen={setOpen} />
             {reviewList.length > 0 &&
               reviewList
                 .slice(0, 7)
@@ -85,7 +86,6 @@ function List() {
                     setOpen={setOpen}
                   />
                 ))}
-            <MovieCard setOpen={setOpen} />
           </CardContainer>
         </Section>
         {open && (

@@ -1,24 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import MyViewLayout from '../../layout/Layout';
+import React from 'react';
 import styled from '@emotion/styled';
-import { ReviewIcon, FabContainer } from '../Movie/MyIconButton';
-import { CardContainer, ActorImg } from '../Movie';
-import { useRecoilState } from 'recoil';
+import { CardContainer } from '../Movie';
+import { useRecoilValue } from 'recoil';
 import { userState } from '../../state';
 import LongMenu from './Setting';
-import {
-  IconButton,
-  MenuItem,
-  Menu,
-  Tooltip,
-  Typography,
-  Avatar,
-  Box,
-} from '@mui/material';
-import SettingsIcon from '@mui/icons-material/Settings';
+import { Typography, Avatar } from '@mui/material';
 
 function Profile() {
-  const [userInfo, setUserInfo] = useRecoilState(userState);
+  const userInfo = useRecoilValue(userState);
 
   return (
     <MypageCardContainer>
@@ -56,9 +45,3 @@ const UserName = styled(Typography)`
     font-weight: bold;
   }
 `;
-
-const SettingContainer = styled(FabContainer)`
-  top: 10px;
-  right: 10px;
-`;
-const MySetting = styled(ReviewIcon)``;

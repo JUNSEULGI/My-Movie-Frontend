@@ -3,24 +3,19 @@ import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { CardContainer } from '../../components/CardContainer';
 import { CardMedia, Typography, Box } from '@mui/material';
-import { OTTLogo } from '../../components/PlatformAvatar';
 import { Logo } from '../../components/Logo';
 
-function MovieTable({ movie, reviewdata }) {
+function MovieTable({ movie }) {
   const access_token = localStorage.getItem('access_token');
   const navigate = useNavigate();
+  const moveMoviePage = id => navigate(`/movie/${id}`);
 
-  const moveMoviePage = id => {
-    navigate(`/movie/${id}`);
-  };
-
-  console.log(movie);
   return (
     <>
       <RowTitle>
         <Year variant="subtitle1">연혁</Year>
         <MoviePoster variant="subtitle1" />
-        <MoiveTitle variant="subtitle1">제목</MoiveTitle>
+        <MovieTitle variant="subtitle1">제목</MovieTitle>
         <InRole variant="subtitle1">역할</InRole>
         <Rating variant="subtitle1">평가</Rating>
         <Platform variant="subtitle1">감상 서비스</Platform>
@@ -28,21 +23,15 @@ function MovieTable({ movie, reviewdata }) {
       <Table>
         {movie?.map(movie => {
           const {
-            movie_id,
             title,
             release,
             thumbnail_image_url,
-            movie_image_url,
             role_name,
             ratings,
             platform,
-            myrating,
-            platform_logo_image,
             background_image_url,
             id,
           } = movie;
-
-          const floorRatings = ratings;
           return (
             <BackCover key={id} back={background_image_url}>
               <Row>
@@ -62,12 +51,12 @@ function MovieTable({ movie, reviewdata }) {
                     />
                   )}
                 </MoviePoster>
-                <MoiveTitle
+                <MovieTitle
                   variant="subtitle1"
                   onClick={() => moveMoviePage(id)}
                 >
                   {title}
-                </MoiveTitle>
+                </MovieTitle>
                 <InRole>{role_name}</InRole>
                 <Rating>
                   {access_token ? (
@@ -184,7 +173,7 @@ const MoviePoster = styled(Typography)`
   }
 `;
 
-const MoiveTitle = styled(Typography)`
+const MovieTitle = styled(Typography)`
   cursor: pointer;
   text-align: center;
   margin: auto;

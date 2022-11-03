@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled/macro';
-import { Box, Card, Typography } from '@mui/material';
+import { Box, Card } from '@mui/material';
 import HiddenReview from './HiddenReview';
 
 const FavoriteMovie = ({ topMovies }) => {
   const navigate = useNavigate();
-  const [isHovering, setIsHovering] = useState(0);
 
   return (
     <Container>

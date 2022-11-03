@@ -37,7 +37,6 @@ function ReviewBox() {
       setIsMovieLoading(false);
       return;
     }
-
     setIsMovieLoading(true);
     try {
       const { data: res } = await fetcher(
@@ -84,7 +83,6 @@ function ReviewBox() {
 
   useEffect(() => {
     if (!movie.id) return;
-
     // 컴포넌트 최초 렌더링 시 리뷰를 작성할 영화에 대한 정보를 받아오는데, "movie 상세 페이지일 땐 필요 없음!!!"
     getMovie();
     // 이미 작성한 리뷰의 내용 가져오기

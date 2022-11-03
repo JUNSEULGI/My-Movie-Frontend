@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
@@ -27,25 +27,9 @@ function Movie() {
   const [review, setReview] = useState();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(0);
+  const [isMovieLoading, setIsMovieLoading] = useState(true);
+  const [isReviewLoading, setIsReviewLoading] = useState(true);
   const [actorList, setActorList] = useState([]);
-  const [intersecting, setIntersecting] = useState(false);
-
-  const observer = useRef(null);
-
-  const fetchMoreEl = useCallback(
-    node => {
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver(entries => {
-        setIntersecting(entries.some(entry => entry.isIntersecting));
-        if (intersecting) {
-          setPage(page + 1);
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [intersecting]
-  );
 
   const openModal = () => {
     if (!localStorage.access_token) {
@@ -65,7 +49,7 @@ function Movie() {
   };
 
   const getReview = async () => {
-    // setLoading(true);
+    setIsReviewLoading(true);
     try {
       const { data: res } = await fetcher(`${API.review_movie}/${params.id}`);
       if (res.message === 'REVIEW_DOSE_NOT_EXISTS') return;
@@ -73,50 +57,39 @@ function Movie() {
       setMovie(prev => {
         return { ...prev, review_id: res.result.review_id };
       });
-      // setLoading(false);
+      setIsReviewLoading(false);
     } catch (error) {
       console.log('error', error);
     }
   };
 
   const getMovie = async () => {
-    setLoading(true);
+    setIsMovieLoading(true);
     try {
       const { data: res } = await fetcher(
-        `${API.movie_detail}?movie_id=${params.id}&page=${page}`
+        `${API.movie_detail}?movie_id=${params.id}`
       );
       setMovie(prev => {
         return { ...prev, ...res.movie_info };
       });
       setActorList(res.movie_info.actor);
-      setLoading(false);
+      setIsMovieLoading(false);
     } catch (error) {
       console.log('error', error);
     }
   };
 
   useEffect(() => {
-    if (page === 0) return;
-    if (movie && page > total_page) return;
-    fetcher(`${API.movie_detail}?movie_id=${params.id}&page=${page}`).then(
-      ({ data }) => {
-        console.log('data', data);
-        // console.log(movie_info);
-        setActorList(prev => [...prev, ...data.movie_info.actor]);
-        observer.current = null;
-      }
-    );
-    return;
-  }, [page]);
-  console.log('page', page);
-  console.log('actorList', actorList);
+    setLoading(isMovieLoading || isReviewLoading);
+  }, [isMovieLoading, isReviewLoading, setLoading]);
 
   useEffect(() => {
+    // 페이지 접속 시 최초 fetching(로딩 관여)
     getMovie();
     getReview();
   }, [params.id]);
 
-  const { title, actor, video_url, image_url, total_page } = movie;
+  const { title, actor, video_url, image_url } = movie;
 
   const background = image_url?.[0];
 
@@ -124,38 +97,6 @@ function Movie() {
 
   const aa = [...new Set(image_url)];
   aa.length = imageCount;
-  // const imageList = (image_url.length = imageCount);
-  [...new Set(image_url)].length = imageCount;
-
-  const scrollRef = useRef(null);
-
-  const [isDrag, setIsDrag] = useState(false);
-  const [startX, setStartX] = useState();
-
-  const onDragStart = e => {
-    e.preventDefault();
-    setIsDrag(true);
-    setStartX(e.pageX + scrollRef.current.scrollLeft);
-  };
-
-  const onDragEnd = () => {
-    setIsDrag(false);
-  };
-
-  const onDragMove = e => {
-    if (isDrag) {
-      const { scrollWidth, clientWidth, scrollLeft } = scrollRef.current;
-
-      scrollRef.current.scrollLeft = startX - e.pageX;
-
-      if (scrollLeft === 0) {
-        setStartX(e.pageX);
-      } else if (scrollWidth <= clientWidth + scrollLeft) {
-        setStartX(e.pageX + scrollLeft);
-      }
-    }
-  };
-  console.log(scrollRef?.current?.offsetWidth);
 
   function MovieContent() {
     return (
@@ -164,17 +105,10 @@ function Movie() {
         {actor?.length > 0 ? (
           <>
             <ContainerTitle>출연/제작</ContainerTitle>
-            <ActorContainer
-              ref={scrollRef}
-              onMouseDown={onDragStart}
-              // onMouseMove={onThrottleDragMove}
-              // onMouseUp={onDragEnd}
-              // onMouseLeave={onDragEnd}
-            >
+            <ActorContainer>
               {actorList?.map((actor, index) => (
                 <Actor key={index} actor={actor} />
               ))}
-              <ScrollRef ref={fetchMoreEl} />
             </ActorContainer>
           </>
         ) : (
@@ -272,7 +206,6 @@ const ActorContainer = styled(CardContainer)`
   overflow-x: scroll;
   -ms-overflow-style: none; /* Explorer */
   scrollbar-width: none; /* Firefox */
-  /* scroll-snap-type: x mandatory; */
   ::-webkit-scrollbar {
     display: none; /* Chrome */
   }
@@ -291,9 +224,4 @@ const TrailerContainer = styled.div`
     width: 360px;
     /* overflow-x: ;/ */
   }
-`;
-
-const ScrollRef = styled.div`
-  width: 20px;
-  background-color: antiquewhite;
 `;

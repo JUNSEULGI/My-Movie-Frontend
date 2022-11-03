@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { Masonry } from '@mui/lab';
-import { Box, Modal, IconButton, Typography, createTheme } from '@mui/material';
+import { Box, Modal, IconButton, Typography } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
@@ -108,6 +107,9 @@ const GalleryImgContainer = styled(Box)`
   @media ${p => p.theme.deviceSize.mobile} {
     grid-template-columns: repeat(1, 1fr);
   }
+  @media ${p => p.theme.deviceSize.tablet} {
+    grid-template-columns: repeat(2, 1fr);
+  }
   @media ${p => p.theme.deviceSize.desktop} {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -130,13 +132,10 @@ const GalleryImg = styled.img`
     transform: none;
     width: 100%;
   }
-  @media ${p => p.theme.deviceSize.desktop} {
+  @media ${p => p.theme.deviceSize.tablet} {
     width: 100%;
   }
-`;
-
-const MasonryBox = styled(Box)`
-  @media screen and (max-width: 380px) {
+  @media ${p => p.theme.deviceSize.desktop} {
     width: 100%;
   }
 `;

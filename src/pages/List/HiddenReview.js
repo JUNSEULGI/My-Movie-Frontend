@@ -1,30 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled/macro';
-import { Box, Card, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 const HiddenReview = ({ title, item, idx }) => {
-  const [isHovering, setIsHovering] = useState(0);
-
-  console.log(isHovering);
-
   return (
-    <>
-      <BackgroundPosterWrapper>
-        <HoverArea>
-          <TopReview className="top">{title}</TopReview>
-          <BackgroundPoster
-            src={item?.movie.poster}
-            alt={item?.movie.poster}
-            className="image"
-          />
-        </HoverArea>
-
-        <Title variant="h1">
-          <Rate>{idx + 1} </Rate>
-          {item?.movie.title}
-        </Title>
-      </BackgroundPosterWrapper>
-    </>
+    <BackgroundPosterWrapper>
+      <HoverArea>
+        <TopReview className="top">{title}</TopReview>
+        <BackgroundPoster
+          src={item?.movie.poster}
+          alt={item?.movie.poster}
+          className="image"
+        />
+      </HoverArea>
+      <Title variant="h1">
+        <Rate>{idx + 1} </Rate>
+        {item?.movie.title}
+      </Title>
+    </BackgroundPosterWrapper>
   );
 };
 

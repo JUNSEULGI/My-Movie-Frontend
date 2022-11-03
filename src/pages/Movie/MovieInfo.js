@@ -2,11 +2,10 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { useRecoilValue } from 'recoil';
 import { movieState } from '../../state';
-import { CardMedia, Typography, Chip } from '@mui/material';
-import { CardContainer, MovieRating, AgeBadge } from '../Movie';
+import { CardMedia, Typography } from '@mui/material';
+import { CardContainer, AgeBadge } from '../Movie';
 import { Box } from '@mui/system';
 import { replaceBrTag } from '../../util/replaceBrTag';
-import { Title } from '@mui/icons-material';
 import { GenreChip } from '../../components/GenreChip';
 
 function MovieInfo() {
@@ -18,14 +17,11 @@ function MovieInfo() {
     description,
     release_date,
     country,
-    ratings,
     running_time,
     genre,
     thumbnail_image_url,
   } = movie;
 
-  // const floorRating = ratings.substr(0, 3);
-  // console.log(movie);
   return (
     <MovieInfoContainer>
       <MovieImg component="img" height="100%" image={thumbnail_image_url} />
@@ -38,7 +34,6 @@ function MovieInfo() {
           }}
         >
           <MovieTitle variant="h2">{title}</MovieTitle>
-          <MovieRating rating={ratings} />
         </TitleRatingBox>
         <SubInfo variant="subtitle2">
           {en_title}
