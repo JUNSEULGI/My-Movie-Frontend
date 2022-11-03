@@ -34,7 +34,7 @@ export default function LongMenu() {
   const DeleteAccount = () => {
     if (window.confirm('정말 삭제시겠습니까?')) {
       alert('삭제되었습니다.'); //true
-      fetch(`${BASE_URL}users/delete`, {
+      fetch(`${BASE_URL}user/delete`, {
         method: 'DELETE',
         headers: {
           Authorization: access_token,
