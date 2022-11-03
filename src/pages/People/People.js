@@ -40,19 +40,6 @@ function People() {
     [intersecting]
   );
 
-  // const getIntimacy = async () => {
-  //   setLoading(true);
-  //   try {
-  //     const { data: result } = await fetcher(
-  //       `${API.actor_intimacy}/${params.id}`
-  //     );
-  //     setIntimacyData(result.data);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.log('error', error);
-  //   }
-  // };
-
   const getPeople = async () => {
     setLoading(true);
     try {
