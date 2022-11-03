@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
@@ -29,25 +29,7 @@ function Movie() {
   const [loading, setLoading] = useState(true);
   const [isMovieLoading, setIsMovieLoading] = useState(true);
   const [isReviewLoading, setIsReviewLoading] = useState(true);
-  const [page, setPage] = useState(0);
   const [actorList, setActorList] = useState([]);
-  const [intersecting, setIntersecting] = useState(false);
-
-  const observer = useRef(null);
-
-  const fetchMoreEl = useCallback(
-    node => {
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver(entries => {
-        setIntersecting(entries.some(entry => entry.isIntersecting));
-        if (intersecting) {
-          setPage(prev => prev + 1);
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [intersecting]
-  );
 
   const openModal = () => {
     if (!localStorage.access_token) {
@@ -85,7 +67,7 @@ function Movie() {
     setIsMovieLoading(true);
     try {
       const { data: res } = await fetcher(
-        `${API.movie_detail}?movie_id=${params.id}&page=${page}`
+        `${API.movie_detail}?movie_id=${params.id}`
       );
       setMovie(prev => {
         return { ...prev, ...res.movie_info };
@@ -98,20 +80,6 @@ function Movie() {
   };
 
   useEffect(() => {
-    if (page === 0) return;
-    if (movie && page > total_page) return;
-    fetcher(`${API.movie_detail}?movie_id=${params.id}&page=${page}`).then(
-      ({ data }) => {
-        console.log('new data', data.movie_info.actor);
-        setActorList(prev => [...prev, ...data.movie_info.actor]);
-      }
-    );
-    return;
-  }, [page]);
-
-  console.log('page', page, actorList);
-
-  useEffect(() => {
     setLoading(isMovieLoading || isReviewLoading);
   }, [isMovieLoading, isReviewLoading, setLoading]);
 
@@ -121,7 +89,7 @@ function Movie() {
     getReview();
   }, [params.id]);
 
-  const { title, actor, video_url, image_url, total_page } = movie;
+  const { title, actor, video_url, image_url } = movie;
 
   const background = image_url?.[0];
 
@@ -130,8 +98,6 @@ function Movie() {
   const aa = [...new Set(image_url)];
   aa.length = imageCount;
 
-  const scrollRef = useRef(null);
-
   function MovieContent() {
     return (
       <MovieBackGround>
@@ -139,11 +105,10 @@ function Movie() {
         {actor?.length > 0 ? (
           <>
             <ContainerTitle>출연/제작</ContainerTitle>
-            <ActorContainer ref={scrollRef}>
+            <ActorContainer>
               {actorList?.map((actor, index) => (
                 <Actor key={index} actor={actor} />
               ))}
-              <ScrollRef ref={fetchMoreEl} />
             </ActorContainer>
           </>
         ) : (
@@ -259,9 +224,4 @@ const TrailerContainer = styled.div`
     width: 360px;
     /* overflow-x: ;/ */
   }
-`;
-
-const ScrollRef = styled.div`
-  width: 20px;
-  background-color: antiquewhite;
 `;
