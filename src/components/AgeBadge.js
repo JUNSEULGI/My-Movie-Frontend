@@ -24,6 +24,9 @@ function AgeBadge({ age }) {
   if (age) {
     ageToString = '청소년 관람불가' || '';
     ageColor = '#D61D29' || '';
+  } else {
+    ageToString = '전체 관람' || '';
+    ageColor = '#00b234' || '';
   }
 
   return ageToString && <MovieBadge label={ageToString} agecolor={ageColor} />;
@@ -34,7 +37,7 @@ export default AgeBadge;
 const MovieBadge = styled(Chip)`
   color: white;
   font-weight: bold;
-  width: 4em;
+  width: 5.8em;
   height: 1.57em;
   background-color: ${props => props.agecolor};
 `;

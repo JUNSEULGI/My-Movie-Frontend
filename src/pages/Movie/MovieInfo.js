@@ -25,7 +25,7 @@ function MovieInfo() {
   } = movie;
 
   // const floorRating = ratings.substr(0, 3);
-  console.log(movie);
+  // console.log(movie);
   return (
     <MovieInfoContainer>
       <MovieImg component="img" height="100%" image={thumbnail_image_url} />
@@ -38,14 +38,13 @@ function MovieInfo() {
           }}
         >
           <MovieTitle variant="h2">{title}</MovieTitle>
-          {/* <MovieRating rating={floorRating} /> */}
+          <MovieRating rating={ratings} />
         </TitleRatingBox>
         <SubInfo variant="subtitle2">
           {en_title}
           <br />
           {release_date?.substr(0, 4)} · {country}
           {genre?.map((genreItem, index) => {
-            console.log(genreItem);
             return (
               <GenreChip
                 key={index}
