@@ -7,22 +7,13 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-  createTheme,
 } from '@mui/material';
-import { ReviewIcon } from '../Movie/MyIconButton';
 
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-function CountReview({
-  userInfo,
-  starring_list,
-  actor,
-  watched_count,
-  peopleData,
-}) {
+function CountReview({ userInfo, actor, peopleData }) {
   const [expanded, setExpanded] = React.useState('panel1');
   const [countReview, setCountReview] = useState(0);
-  const [close, setClose] = useState(true);
   const { nickname } = userInfo;
   const access_token = localStorage.getItem('access_token');
 
@@ -39,47 +30,45 @@ function CountReview({
   if (!access_token) return null;
 
   return (
-    <>
-      <MAccordion
-        disableGutters
-        elevation={0}
-        expanded={expanded === 'panel1'}
-        onChange={handleChange('panel1')}
+    <MAccordion
+      disableGutters
+      elevation={0}
+      expanded={expanded === 'panel1'}
+      onChange={handleChange('panel1')}
+    >
+      <AccordionSummary
+        expandIcon={<ExpandMoreIcon sx={{ margin: '0px' }} />}
+        aria-controls="panel1a-content"
+        id="panel1a-header"
       >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon sx={{ margin: '0px' }} />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <PeopleCardTitle variant="h3">친밀도</PeopleCardTitle>
-        </AccordionSummary>
+        <PeopleCardTitle variant="h3">친밀도</PeopleCardTitle>
+      </AccordionSummary>
 
-        <AccordionDetails>
-          <Box sx={{ textAlign: 'center' }}>
-            <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-              <BackProgress variant="determinate" size={140} value={100} />
-              <CountReviewCircularProgress
-                variant="determinate"
-                size={140}
-                value={countReview}
-              />
-              <CountTextCover>
-                {/* 여기 스타일 수정~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */}
-                <IntimacyTextCover>
-                  <CountText>{`${Math.round(peopleData.intimacy)}`}</CountText>
-                  <TotalMovie>{peopleData.total_movie}</TotalMovie>
-                </IntimacyTextCover>
-              </CountTextCover>
-            </Box>
-            <CountIntro>
-              {nickname}님은 {actor}님이 출연한{' '}
-              <strong>{peopleData.intimacy}</strong>
-              개의 영화를 시청했습니다.
-            </CountIntro>
+      <AccordionDetails>
+        <Box sx={{ textAlign: 'center' }}>
+          <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+            <BackProgress variant="determinate" size={140} value={100} />
+            <CountReviewCircularProgress
+              variant="determinate"
+              size={140}
+              value={countReview}
+            />
+            <CountTextCover>
+              {/* 여기 스타일 수정~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */}
+              <IntimacyTextCover>
+                <CountText>{`${Math.round(peopleData.intimacy)}`}</CountText>
+                <TotalMovie>{peopleData.total_movie}</TotalMovie>
+              </IntimacyTextCover>
+            </CountTextCover>
           </Box>
-        </AccordionDetails>
-      </MAccordion>
-    </>
+          <CountIntro>
+            {nickname}님은 {actor}님이 출연한{' '}
+            <strong>{peopleData.intimacy}</strong>
+            개의 영화를 시청했습니다.
+          </CountIntro>
+        </Box>
+      </AccordionDetails>
+    </MAccordion>
   );
 }
 
@@ -199,10 +188,4 @@ const CountIntro = styled(Typography)`
     font-size: 20px;
     color: orange;
   }
-`;
-
-const CloseButton = styled(ReviewIcon)`
-  position: absolute;
-  top: 10px;
-  right: 10px;
 `;

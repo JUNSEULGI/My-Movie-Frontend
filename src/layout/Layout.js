@@ -5,7 +5,6 @@ import { Typography } from '@mui/material';
 
 const MyViewLayout = ({
   leftMenu,
-  movie,
   loginBack,
   background,
   center,

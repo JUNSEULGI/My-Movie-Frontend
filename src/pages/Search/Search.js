@@ -51,9 +51,9 @@ function Search() {
   const [searchedActor, setSearchedActor] = useState([]);
   const [searchedMovie, setSearchedMovie] = useState([]);
   const [latestMovie, setLatestMovie] = useState([]);
-  const [backgroundInfo, setBackgroundInfo] = useState({});
   const { search } = useLocation();
   const query = new URLSearchParams(search);
+  let backgroundInfo = {}; // NOTE: 확인 필요
 
   const handleChange = (_, newValue) => {
     setValue(newValue);
