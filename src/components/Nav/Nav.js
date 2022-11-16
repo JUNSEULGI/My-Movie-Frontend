@@ -24,8 +24,6 @@ function Nav() {
   const { navigate } = useNavigate();
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const resetUser = useResetRecoilState(userState);
-  const [popularList, setPopularList] = useState([]);
-  const [search, setSearch] = useState('');
   const [movieList, setMovieList] = useState([]);
   const [scroll, setScroll] = useState(true);
   const access_token = localStorage.getItem('access_token');

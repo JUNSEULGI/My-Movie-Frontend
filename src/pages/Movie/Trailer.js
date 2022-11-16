@@ -5,7 +5,7 @@ function Trailer({ video }) {
   return (
     <MovieTrailer>
       <DarkPaperContainer>
-        <Video width="300" height="200" src={video}></Video>
+        <Video width="300" height="200" src={video} />
       </DarkPaperContainer>
     </MovieTrailer>
   );

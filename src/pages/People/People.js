@@ -10,7 +10,6 @@ import { CardContainer, ActorImg } from '../Movie';
 import { PeopleProfile, MovieTable, CountReview } from '../People';
 import LoadWrap from '../../components/Loading/LoadWrap';
 import { fetcher } from '../../Modules/fetcher';
-import { useInfiniteScroll } from '../../util/hooks';
 
 function People() {
   const params = useParams();

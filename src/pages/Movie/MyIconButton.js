@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Box, Typography, Fab, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 
 export const ReviewIcon = styled(IconButton)`
   color: #ff9201;
@@ -13,5 +13,3 @@ export const FabContainer = styled.div`
   top: 0;
   right: -60px;
 `;
-
-export default { ReviewIcon, FabContainer };

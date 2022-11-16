@@ -3,17 +3,7 @@ import styled from '@emotion/styled';
 import { Box, Typography } from '@mui/material';
 
 function PeopleProfile({ profile }) {
-  const {
-    country,
-    height,
-    weight,
-    birth,
-    body,
-    debut,
-    debut_year,
-    agency,
-    role,
-  } = profile;
+  const { country, height, weight, birth, debut, debut_year, agency } = profile;
 
   return (
     <ProfileBox
