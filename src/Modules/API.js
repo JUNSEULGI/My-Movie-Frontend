@@ -1,6 +1,6 @@
 // export const BASE_URL = 'http://localhost:8000/';
-// export const BASE_URL = 'http://172.30.1.6:8080/';
-export const BASE_URL = 'https://13.209.67.48:8000/';
+export const BASE_URL = 'https://2400-221-147-33-186.ngrok.io/';
+// export const BASE_URL = 'https://13.209.67.48:8000/';
 
 export const API = {
   // 로그인
