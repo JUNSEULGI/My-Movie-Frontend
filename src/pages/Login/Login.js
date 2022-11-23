@@ -40,21 +40,24 @@ function Login() {
 
   function LoginContainer() {
     return (
-      <LoginPage>
-        <LoginBox>
-          <LoginLogo>My View</LoginLogo>
-          <Produce>
-            <strong>소셜 로그인</strong>으로 <strong>더 간단하게 로그인</strong>
-            하세요.
-          </Produce>
-          <SocialContainer>
-            <LoginText>네이버로 로그인하기</LoginText>
-            <NaverLogin />
-            <LoginText>카카오로 로그인하기</LoginText>
-            <KakaoLogin />
-          </SocialContainer>
-        </LoginBox>
-      </LoginPage>
+      <>
+        <LoginPage>
+          <LoginBox>
+            <LoginLogo>My View</LoginLogo>
+            <Produce>
+              <strong>소셜 로그인</strong>으로{' '}
+              <strong>더 간단하게 로그인</strong>
+              하세요.
+            </Produce>
+            <SocialContainer>
+              <LoginText>네이버로 로그인하기</LoginText>
+              <NaverLogin />
+              <LoginText>카카오로 로그인하기</LoginText>
+              <KakaoLogin />
+            </SocialContainer>
+          </LoginBox>
+        </LoginPage>
+      </>
     );
   }
 
@@ -72,8 +75,13 @@ const LoginPage = styled(Container)`
   position: fixed;
   margin: 0 auto;
   height: 100vh;
-  @media screen and (max-width: 600px) {
+  @media ${p => p.theme.deviceSize.mobile} {
     width: 360px;
+    position: relative;
+    height: 100vh;
+    /* margin: 0 auto; */
+    left: 60px;
+    /* background-color: antiquewhite; */
   }
 `;
 

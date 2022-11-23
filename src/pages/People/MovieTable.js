@@ -257,6 +257,9 @@ const Platform = styled(Box)`
 
 const MovieImg = styled(CardMedia)`
   border-radius: 8px;
+  @media ${p => p.theme.deviceSize.mobile} {
+    margin-top: 10px;
+  }
 `;
 
 const MovieTableOTT = styled.img`

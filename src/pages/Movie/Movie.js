@@ -18,6 +18,7 @@ import {
   NoReview,
   MyReview,
   MovieGallery,
+  Trailer,
 } from '../Movie';
 
 function Movie() {
@@ -60,6 +61,13 @@ function Movie() {
       setIsReviewLoading(false);
     } catch (error) {
       console.log('error', error);
+      // setIsReviewLoading(false);/
+      if (
+        error.response.data.message == 'INVALID_TOKEN' ||
+        error.response.data.message == 'REVIEW_DOSE_NOT_EXISTS'
+      ) {
+        setIsReviewLoading(false);
+      }
     }
   };
 
@@ -97,6 +105,8 @@ function Movie() {
 
   const aa = [...new Set(image_url)];
   aa.length = imageCount;
+
+  console.log(video_url);
 
   function MovieContent() {
     return (
@@ -138,9 +148,9 @@ function Movie() {
           <>
             <ContainerTitle>예고편</ContainerTitle>
             <TrailerContainer>
-              {/* {video_url.map((video, index) => (
-                // <Trailer key={index} video={video} />
-              ))} */}
+              {video_url.map((video, index) => (
+                <Trailer key={index} video={video} />
+              ))}
             </TrailerContainer>
           </>
         )}
