@@ -120,18 +120,22 @@ function ReviewBoxContent({ review, setReview }) {
             <MovieTitle variant="h1">{movie.title}</MovieTitle>
             <Box>
               <BoldText variant="subtitle2">{movie.en_title} </BoldText>
-              <MovieInfo variant="subtitle2">
-                2022 · {movie.country}
-                {movie.genre?.map((item, index) => (
-                  // chip으로 수정 필요
-                  <GenreChip
-                    key={index}
-                    label={item.name}
-                    colorcode={item.color_code}
-                    size="small"
-                  />
-                ))}
-              </MovieInfo>
+              <RowBox>
+                <MovieInfo variant="subtitle2">
+                  2022 · {movie.country}
+                </MovieInfo>
+                <Box>
+                  {movie.genre?.map((item, index) => (
+                    // chip으로 수정 필요
+                    <GenreChip
+                      key={index}
+                      label={item.name}
+                      colorcode={item.color_code}
+                      size="small"
+                    />
+                  ))}
+                </Box>
+              </RowBox>
               <BoldText variant="subtitle2">
                 {movie.running_time}분 <AgeBadge age={movie.age} />
               </BoldText>
@@ -234,6 +238,9 @@ const ReviewContainer = styled(Box)`
 const RowBox = styled(Box)`
   display: flex;
   justify-content: space-between;
+  @media ${p => p.theme.deviceSize.mobile} {
+    flex-direction: column;
+  }
 `;
 
 const BoldText = styled(Typography)`
@@ -242,8 +249,8 @@ const BoldText = styled(Typography)`
 `;
 
 const MovieInfo = styled(BoldText)`
-  @media screen and (max-width: 600px) {
-    width: 160px;
+  @media ${p => p.theme.deviceSize.mobile} {
+    width: 100%;
   }
 `;
 
@@ -252,9 +259,10 @@ const MovieTitle = styled(BoldText)`
 `;
 
 const MyRating = styled(Rating)`
-  @media screen and (max-width: 600px) {
-    margin-left: -40px;
-    margin-top: 100px;
+  @media ${p => p.theme.deviceSize.mobile} {
+    /* margin-left: 40px;
+    margin-top: 100px; */
+    margin-top: 10px;
   }
 `;
 

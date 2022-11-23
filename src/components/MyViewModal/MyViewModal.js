@@ -61,14 +61,14 @@ const MyModal = styled(Modal)`
   margin: 100px auto;
   // 위아래 코드 모두 margin-bottom 먹지 않음.
   // margin-bottom: 300px;
-  /* @media screen and (max-width: 600px) {
+  @media ${p => p.theme.deviceSize.mobile} {
     overflow-y: hidden;
     overflow-y: scroll;
     scroll-behavior: smooth;
     ::-webkit-scrollbar {
       display: none;
     }
-  } */
+  }
 `;
 
 const Container = styled(Box)`
@@ -86,11 +86,11 @@ const Container = styled(Box)`
   background-color: ${({ theme }) => theme.palette.background.modal};
   border-radius: 8px;
 
-  /* @media screen and (max-width: 600px) {
+  @media ${p => p.theme.deviceSize.mobile} {
     position: relative;
     width: 320px;
     padding: 20px 20px;
-  } */
+  }
 `;
 
 const Step = styled(Box)`

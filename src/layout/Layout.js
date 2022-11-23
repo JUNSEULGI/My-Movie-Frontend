@@ -127,10 +127,11 @@ const Center = styled.main`
   @media screen and (max-width: 770px) {
     width: 400px;
   }
-  @media screen and (max-width: 600px) {
+  @media ${p => p.theme.deviceSize.mobile} {
     width: 360px;
-    padding: 0 16px;
+    /* padding: 0 16px; */
     /* overflow-x: hidden; */
+    margin: 30px 20px 0;
     scroll-behavior: smooth;
   }
 `;
