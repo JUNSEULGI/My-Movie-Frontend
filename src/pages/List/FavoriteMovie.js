@@ -32,6 +32,10 @@ const Container = styled(Box)`
     grid-row: 1 / 3;
     // 자기의 첫번째 div만 선택하는 게 아니라, 자식 요소들에도 첫번째 자식 div 죄다 선택되는 문제
   }
+  @media ${p => p.theme.deviceSize.mobile} {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const BestMovie = styled(Card)`

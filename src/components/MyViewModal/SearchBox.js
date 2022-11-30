@@ -89,9 +89,9 @@ const Column = styled(Box)`
 
 const SearchContainer = styled(Box)`
   margin-left: 110px;
-  /* @media screen and (max-width: 600px) {
+  @media screen and (max-width: 600px) {
     margin-left: 0px;
-  } */
+  }
 `;
 
 const SearchBar = styled(Autocomplete)`

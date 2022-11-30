@@ -8,6 +8,7 @@ import MyAvatar from './Logout';
 import { API } from '../../Modules/API';
 import { throttle, debounce } from 'lodash';
 import { fetcher } from '../../Modules/fetcher';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import {
   Typography,
   AppBar,
@@ -111,7 +112,11 @@ function Nav() {
           {localStorage.access_token ? (
             <MyAvatar userInfo={userInfo} />
           ) : (
-            pathname !== '/' && <GoLogin to="/">로그인</GoLogin>
+            pathname !== '/' && (
+              <GoLogin to="/">
+                <AccountCircleIcon fontSize="large" />
+              </GoLogin>
+            )
           )}
         </Box>
       </MyToolbar>
@@ -134,7 +139,7 @@ const NavBar = styled(AppBar)`
     }
   }
 
-  @media screen and (max-width: 380px) {
+  @media ${p => p.theme.deviceSize.mobile} {
     padding: 8px 20px;
   }
 `;
@@ -149,7 +154,7 @@ const MyToolbar = styled(Toolbar)`
     text-decoration: none;
   }
 
-  @media screen and (max-width: 380px) {
+  @media ${p => p.theme.deviceSize.mobile} {
     font-size: 16px;
     height: 40px;
     padding: 10px 0 0 0;
@@ -165,8 +170,6 @@ const Logo = styled(Typography)`
   font-weight: bold;
   font-size: 2rem;
 
-  @media screen and (max-width: 380px) {
-  }
   @media ${p => p.theme.deviceSize.mobile} {
     font-size: 1.5rem;
   }
@@ -175,11 +178,9 @@ const Logo = styled(Typography)`
 const GoLogin = styled(Link)`
   margin-left: 10px;
   color: white;
-  border: 1px solid #717171;
-  padding: 10px;
-  border-radius: 100%;
-  :hover {
-    background-color: #717171;
+  font-size: 1.25rem;
+  @media ${p => p.theme.deviceSize.mobile} {
+    margin-left: 4px;
   }
 `;
 
@@ -217,6 +218,9 @@ const NavSearch = styled(Autocomplete)`
     &.Mui-focused fieldset {
       border-color: orange;
     }
+  }
+  @media ${p => p.theme.deviceSize.mobile} {
+    width: 100%;
   }
 `;
 

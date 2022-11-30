@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useResetRecoilState } from 'recoil';
 import { userState } from '../../state';
+import styled from '@emotion/styled';
 import {
   IconButton,
   MenuItem,
@@ -47,7 +48,7 @@ function MyAvatar({ userInfo }) {
 
   if (!userInfo?.Profile_image) return null;
   return (
-    <Box sx={{ flexGrow: 0, marginLeft: '40px' }}>
+    <AvatarContainer sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar alt={userInfo.nickname} src={userInfo.Profile_image} />
@@ -81,8 +82,15 @@ function MyAvatar({ userInfo }) {
           </MenuItem>
         ))}
       </Menu>
-    </Box>
+    </AvatarContainer>
   );
 }
 
 export default MyAvatar;
+
+const AvatarContainer = styled(Box)`
+  margin-left: 40px;
+  @media ${p => p.theme.deviceSize.mobile} {
+    margin-left: 4px;
+  }
+`;
