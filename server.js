@@ -24,12 +24,8 @@ app.get('/*', (req, res) => {
 });
 
 const options = {
-  key: fs.readFileSync(
-    '/Users/seulgijun/cert/config-dir/live/my-view.app/privkey.pem'
-  ), //(개인키 지정)
-  cert: fs.readFileSync(
-    '/Users/seulgijun/cert/config-dir/live/my-view.app/fullchain.pem'
-  ), //(서버인증서 지정)
+  key: fs.readFileSync('./cert/config-dir/live/my-view.app/privkey.pem'), //(개인키 지정)
+  cert: fs.readFileSync('./cert/config-dir/live/my-view.app/fullchain.pem'), //(서버인증서 지정)
   // ca: fs.readFileSync('인증서경로/ca-chain-bundle.pem'), // (루트체인 지정)
   // minVersion: 'TLSv1.2', //(서버 환경에 따라 선택적 적용)
 };
