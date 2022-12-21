@@ -1,6 +1,4 @@
-// export const BASE_URL = 'http://localhost:8000/';
-// export const BASE_URL = 'http://172.30.1.6:8080/';
-export const BASE_URL = 'http://101.101.216.182:8000/';
+export const BASE_URL = 'https://49.50.160.223/';
 
 export const API = {
   // 로그인
