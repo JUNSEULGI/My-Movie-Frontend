@@ -2,7 +2,6 @@ const https = require('https');
 const fs = require('fs');
 const express = require('express');
 const path = require('path');
-const { BASE_URL } = require('./src/Modules/API');
 
 const app = express();
 
@@ -16,7 +15,6 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/*', (req, res) => {
   console.log(new Date());
-  console.log(BASE_URL);
   res.set({
     'Cache-Control': 'no-cache, no-store, must-revalidate',
     Pragma: 'no-cache',
