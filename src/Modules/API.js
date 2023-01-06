@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://49.50.160.223/';
+export const BASE_URL = 'https://myview.ml/';
 
 export const API = {
   // 로그인
